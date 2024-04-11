@@ -38,7 +38,6 @@ function formatTranslation(trans: Record<string, Translation>): Resource {
 
 export function init() {
   const resources = formatTranslation({ common, 首页 });
-  console.log(resources);
   i18next
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
