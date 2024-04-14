@@ -11,7 +11,7 @@ function Home() {
 
   return (
     <Layout>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
+      <Header className="flex items-center">
         <div className={styles.logo} />
         <Menu
           theme="dark"

@@ -12,11 +12,16 @@ export default defineConfig({
       filename: "stats.html",
     })
   ],
+  define: {
+    'process.env': {}
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@features": path.resolve(__dirname, "./src/features"),
+      "@infra": path.resolve(__dirname, "./src/infra"),
+      "@services": path.resolve(__dirname, "./src/services"),
     },
   },
   build: {
@@ -31,6 +36,5 @@ export default defineConfig({
     }
   },
   css: {
-    transformer: "lightningcss",
   }
 });

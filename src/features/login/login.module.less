@@ -1,0 +1,61 @@
+.layout {
+  background-image: url('https://cloudcache.tencent-cloud.com/qcloud/ui/static/tc_portal/c3f153dd-80a0-40a8-9a54-a3b7d6717ab8.jpg');
+  min-height: 100vh;
+  background-color: #eaebef;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 25px;
+
+  .main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1 1 auto;
+
+    .logo {
+      width: 120px;
+      min-width: 120px;
+      height: 32px;
+      background: rgba(0, 0, 0, .2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .path {
+      color: rgba(0, 0, 0, .9);
+      font-size: 18px;
+      line-height: 26px;
+      margin-left: 16px;
+      padding-left: 17px;
+      position: relative;
+
+      &:before {
+        content: "";
+        border-left: 1px solid rgba(0, 0, 0, .26);
+        height: 20px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -8px;
+      }
+    }
+  }
+}
+
+.input {
+  border-width: 0 0 1px 0;
+  border-radius: 0;
+}

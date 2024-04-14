@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { init } from "./locale";
 import {
   createBrowserRouter,
@@ -11,6 +10,7 @@ import { LoginRouter } from '@features/login/router'
 import ErrorPage from '@features/error/error';
 import Home from '@features/home/home';
 
+import "./index.css";
 
 init();
 
@@ -40,11 +40,10 @@ const router = createBrowserRouter([
         children: [
           { path: 'maintenance', lazy: async () => ({ Component: (await import('@features/trajectory/maintenance')).default }) },
         ]
-      },
-      LoginRouter
+      }
     ]
   },
-  
+  LoginRouter
 ]);
 
 
