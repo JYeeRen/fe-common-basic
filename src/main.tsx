@@ -21,6 +21,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: '/',
+        lazy: async () => ({ Component: (await import('@features/welcome/welcome')).default })
+      },
+      {
         path: 'customs',
         children: [
           { path: 'basic-data', lazy: async () => ({ Component: (await import('@features/customs/basic-data')).default }) },

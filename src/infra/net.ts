@@ -1,15 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { v4 as uuidv4 } from 'uuid';
-import localStorage from '@services/localStorage';
-import { API, ApiRes } from "./net.types";
+import axios, {
+  Axios,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
+import { v4 as uuidv4 } from "uuid";
+import localStorage from "@services/localStorage";
+import { API, ApiRes, ApiSuccess } from "./net.types";
+
+class ServerError extends Error {
+  message: string;
+  code: number;
+
+  constructor(res: { msg?: string; code: number }) {
+    super(res.msg ?? "Server Error");
+    this.message = res.msg ?? "Server Error";
+    this.code = res.code;
+  }
+}
 
 class Net {
   svc: Axios;
 
   constructor() {
     this.svc = axios.create({
-      baseURL: 'http://101.42.42.11:8081/',
+      baseURL: "http://101.42.42.11:8081/",
       timeout: 1000,
     });
 
@@ -17,30 +32,44 @@ class Net {
     this.svc.interceptors.response.use(this.responseInterceptor);
   }
 
-  async post<URL extends keyof API, D = any, T = API[URL]>(url: URL, body?: D, config?: AxiosRequestConfig): Promise<T> {
-    const { data } = await this.request<ApiRes<T>>({  method: "POST", url, data: body, ...config });
+  async post<URL extends keyof API, D = unknown, T = API[URL]>(
+    url: URL,
+    body?: D,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
+    const { data } = await this.request<ApiSuccess<T>>({
+      method: "POST",
+      url,
+      data: body,
+      ...config,
+    });
     return data.data;
-  } 
+  }
 
-  private async request<T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  private async request<T>(
+    config: AxiosRequestConfig
+  ): Promise<AxiosResponse<T>> {
     return await this.svc.request<T>(config);
   }
 
-  private async requestInterceptor(config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
+  private async requestInterceptor(
+    config: InternalAxiosRequestConfig
+  ): Promise<InternalAxiosRequestConfig> {
     config.headers = config.headers || {};
-    config.headers['X-Request-ID'] = uuidv4();
-    config.headers.token =  `bearer ${localStorage.getItem('authToken')}`;
+    config.headers["X-Request-ID"] = uuidv4();
+    config.headers.token = `bearer ${localStorage.getItem("authToken")}`;
     return config;
   }
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
-    // TODO common error handler
     if (response.data === null) {
+      throw new ServerError(response.data);
     }
-    const { data } = response;
+    if (response.data.code !== 0) {
+      throw new ServerError(response.data);
+    }
     return response;
   }
-
 }
 
 export const net = new Net();

@@ -8,7 +8,15 @@ export interface API {
   '/api/account/logout': never;
 }
 
-export interface ApiRes<T = unknown> {
-  code: number;
+export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
+
+export interface ApiSuccess<T = unknown> {
+  code: 0;
   data: T;
+}
+
+export interface ApiError {
+  code: 1002;
+  data: unknown;
+  msg?: string;
 }
