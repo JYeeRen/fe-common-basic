@@ -18,12 +18,13 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styles from "./login.module.less";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import LoginStore from "./login.store";
 
+// TODO 检测到当前已登录账号 Admin
 function Login() {
   const [store] = useState(() => new LoginStore());
-
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [params] = useSearchParams();
   console.log(params.get("redirect"));
@@ -32,7 +33,10 @@ function Login() {
     const { username, password } = await form.validateFields();
     assert(username);
     assert(password);
-    store.login(username, password);
+    const loginSuccess = await store.login(username, password);
+    if (loginSuccess) {
+      navigate("/");
+    }
   };
 
   return (
@@ -86,10 +90,22 @@ function Login() {
                 onClose={store.hideTips.bind(store)}
               />
             )}
-            <Form.Item>
-              <Button type="primary" onClick={handleLogin} className="w-full">
-                登录
-              </Button>
+            <Form.Item shouldUpdate>
+              {() => (
+                <Button
+                  type="primary"
+                  onClick={handleLogin}
+                  className="w-full"
+                  disabled={
+                    !form.isFieldsTouched(true) ||
+                    !!form
+                      .getFieldsError()
+                      .filter(({ errors }) => errors.length).length
+                  }
+                >
+                  登录
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </Card>

@@ -10,11 +10,8 @@ class LocalStorage {
   
   values: Partial<LocalValues> = {};
 
-  constructor() {
-    this.values.user = { name: 'admin' };
-  }
-
   setItem<K extends keyof LocalValues>(key: K, value: LocalValues[K]) {
+    this.values[key] = value;
     store.set(key, value);
   }
 

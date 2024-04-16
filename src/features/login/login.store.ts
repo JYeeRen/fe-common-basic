@@ -11,9 +11,10 @@ class LoginStore {
     makeAutoObservable(this);
   }
 
-  async login(username: string, password: string) {
+  async login(account: string, password: string) {
     try {
-      await authService.signIn({ username, password });
+      await authService.signIn({ account, password });
+      return true;
     } catch (err) {
       this.tipVisible = true;
       if (err instanceof ServerError) {

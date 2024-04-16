@@ -2,7 +2,9 @@ import clsx from "clsx";
 import { Outlet } from "react-router-dom";
 import { Layout, Menu, theme } from "@components";
 import { UserInfo } from "./components/user-info.component";
+import { Lang } from './components/lang.component';
 import styles from "./home.module.less";
+import { MENU } from './menu';
 
 const { Header, Content, Sider } = Layout;
 
@@ -19,18 +21,10 @@ function Home() {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["/customs/basic-data"]}
-          items={[
-            {
-              key: "/customs",
-              label: "关务风控",
-            },
-            {
-              key: "/data-template",
-              label: "权限管理",
-            },
-          ]}
+          items={MENU}
           style={{ flex: 1, minWidth: 0 }}
         />
+        <Lang />
         <UserInfo />
       </Header>
       <Layout>

@@ -24,25 +24,31 @@ const router = createBrowserRouter([
         path: '/',
         lazy: async () => ({ Component: (await import('@features/welcome/welcome')).default })
       },
+      // {
+      //   path: 'customs',
+      //   children: [
+      //     { path: 'basic-data', lazy: async () => ({ Component: (await import('@features/customs/basic-data')).default }) },
+      //     { path: 'declareation', lazy: async () => ({ Component: (await import('@features/customs/declareation')).default }) },
+      //     { path: 'risk-control', lazy: async () => ({ Component: (await import('@features/customs/risk-control')).default }) },
+      //   ]
+      // },
+      // {
+      //   path: 'data-template',
+      //   children: [
+      //     { path: 'maintenance', lazy: async () => ({ Component: (await import('@features/data-template/maintenance')).default }) },
+      //     { path: 'add', lazy: async () => ({ Component: (await import('@features/data-template/addition')).default }) },
+      //   ]
+      // },
+      // {
+      //   path: 'trajectory',
+      //   children: [
+      //     { path: 'maintenance', lazy: async () => ({ Component: (await import('@features/trajectory/maintenance')).default }) },
+      //   ]
+      // },
       {
-        path: 'customs',
+        path: 'account',
         children: [
-          { path: 'basic-data', lazy: async () => ({ Component: (await import('@features/customs/basic-data')).default }) },
-          { path: 'declareation', lazy: async () => ({ Component: (await import('@features/customs/declareation')).default }) },
-          { path: 'risk-control', lazy: async () => ({ Component: (await import('@features/customs/risk-control')).default }) },
-        ]
-      },
-      {
-        path: 'data-template',
-        children: [
-          { path: 'maintenance', lazy: async () => ({ Component: (await import('@features/data-template/maintenance')).default }) },
-          { path: 'add', lazy: async () => ({ Component: (await import('@features/data-template/addition')).default }) },
-        ]
-      },
-      {
-        path: 'trajectory',
-        children: [
-          { path: 'maintenance', lazy: async () => ({ Component: (await import('@features/trajectory/maintenance')).default }) },
+          { path: 'list', lazy: async () => ({ Component: (await import('@features/account/list')).default }) },
         ]
       }
     ]
