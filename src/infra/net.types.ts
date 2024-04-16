@@ -1,11 +1,14 @@
 export interface API {
-  '/api/account/login': {
-    "type": string;
-    "token": string;
-    "expireIn": number;
-    "isManager": boolean;
+  "/api/account/login": {
+    type: string;
+    token: string;
+    expireIn: number;
+    isManager: boolean;
   };
-  '/api/account/logout': never;
+  "/api/account/logout": never;
+  "/api/role/createRole": {
+    id: number;
+  };
 }
 
 export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;

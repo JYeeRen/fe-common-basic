@@ -57,7 +57,7 @@ class Net {
   ): Promise<InternalAxiosRequestConfig> {
     config.headers = config.headers || {};
     config.headers["X-Request-ID"] = uuidv4();
-    config.headers.token = `bearer ${localStorage.getItem("authToken")}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem("authToken")}`;
     return config;
   }
 

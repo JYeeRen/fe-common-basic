@@ -46,9 +46,11 @@ const router = createBrowserRouter([
       //   ]
       // },
       {
-        path: 'account',
+        path: 'management',
         children: [
-          { path: 'list', lazy: async () => ({ Component: (await import('@features/account/list')).default }) },
+          { path: 'account', lazy: async () => ({ Component: (await import('@features/management/account/list')).default }) },
+          { path: 'roles', lazy: async () => ({ Component: (await import('@features/management/role/role-list')).default }) },
+          { path: 'roles/create', lazy: async () => ({ Component: (await import('@features/management/role/create-new-role')).CreateNewRoleComponent }) },
         ]
       }
     ]
