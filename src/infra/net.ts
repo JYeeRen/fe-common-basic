@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import localStorage from "@services/localStorage";
 import { API, ApiRes, ApiSuccess } from "./net.types";
 
-class ServerError extends Error {
+export class ServerError extends Error {
   message: string;
   code: number;
 
@@ -62,10 +62,10 @@ class Net {
   }
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
-    if (response.data === null) {
+    if (response.data.code !== 0) {
       throw new ServerError(response.data);
     }
-    if (response.data.code !== 0) {
+    if (response.data === null) {
       throw new ServerError(response.data);
     }
     return response;

@@ -1,33 +1,38 @@
+import { useState } from "react";
 import assert from "assert";
 import { observer } from "mobx-react-lite";
-import { Form, Button, Input, Layout, Card, Typography, Image } from "@components";
+import {
+  Form,
+  Button,
+  Input,
+  Layout,
+  Card,
+  Typography,
+  Image,
+  Alert,
+} from "@components";
 import {
   EyeTwoTone,
   EyeInvisibleOutlined,
   UserOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import * as authService from "@services/auth.service";
 import styles from "./login.module.less";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import LoginStore from "./login.store";
 
 function Login() {
-  const [form] = Form.useForm();
+  const [store] = useState(() => new LoginStore());
 
-  const navigate = useNavigate();
+  const [form] = Form.useForm();
   const [params] = useSearchParams();
   console.log(params.get("redirect"));
 
   const handleLogin = async () => {
-    try {
-      const { username, password } = await form.validateFields();
-      assert(username);
-      assert(password);
-      await authService.signIn({ username, password });
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
+    const { username, password } = await form.validateFields();
+    assert(username);
+    assert(password);
+    store.login(username, password);
   };
 
   return (
@@ -73,6 +78,14 @@ function Login() {
                 prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
             </Form.Item>
+            {store.tipVisible && (
+              <Alert
+                message={store.tips}
+                type="error"
+                closable
+                onClose={store.hideTips.bind(store)}
+              />
+            )}
             <Form.Item>
               <Button type="primary" onClick={handleLogin} className="w-full">
                 登录
