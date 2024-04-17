@@ -21,6 +21,7 @@ export default defineConfig({
       "@features": path.resolve(__dirname, "./src/features"),
       "@infra": path.resolve(__dirname, "./src/infra"),
       "@services": path.resolve(__dirname, "./src/services"),
+      "@types": path.resolve(__dirname, "./src/types"),
     },
   },
   build: {

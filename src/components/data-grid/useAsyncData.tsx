@@ -14,16 +14,18 @@ import {
   useState,
 } from "react";
 
-type RowCallback<T> = (page: number) => Promise<readonly T[]>;
+type RowCallback<T> = (page: number) => Promise<{ list: readonly T[], total: number }>;
 
 export function useAsyncData<R>(
   pageSize: number,
-  getRowData: RowCallback<R>,
+  getRowData: RowCallback<R> | undefined,
   gridRef: MutableRefObject<DataEditorRef | null>,
   dataRef: MutableRefObject<R[]>
-): Pick<DataEditorProps, "onVisibleRegionChanged"> {
+): Pick<DataEditorProps, "onVisibleRegionChanged" | "rows"> {
   pageSize = Math.max(pageSize, 1);
 
+  const [rows, setRows] = useState(0);
+  // const gridRef = useRef<DataEditorRef>(null);
   const loadingRef = useRef(CompactSelection.empty());
 
   const [visiblePages, setVisiblePages] = useState<Rectangle>({
@@ -55,12 +57,13 @@ export function useAsyncData<R>(
     async (page: number) => {
       loadingRef.current = loadingRef.current.add(page);
       const startIndex = page * pageSize;
-      const d = await getRowData(page + 1);
+      const { list = [], total = 0 } = await getRowData?.(page + 1) || {};
+      setRows(total);
       const vr = visiblePagesRef.current;
 
       const damageList: { cell: Item }[] = [];
       const data = dataRef.current;
-      for (const [i, element] of d.entries()) {
+      for (const [i, element] of list.entries()) {
         data[i + startIndex] = element;
         for (let col = vr.x; col <= vr.x + vr.width; col++) {
           damageList.push({
@@ -84,5 +87,9 @@ export function useAsyncData<R>(
   }, [loadPage, pageSize, visiblePages]);
 
 
-  return { onVisibleRegionChanged };
+  if (!getRowData) {
+    return { rows };
+  }
+
+  return { rows, onVisibleRegionChanged };
 }

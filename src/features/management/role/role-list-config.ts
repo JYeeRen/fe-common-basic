@@ -1,4 +1,7 @@
-import { GridColumn } from "@/components";
+import { GridColumn } from "@components";
+import { net } from "@infra";
+
+export const pageSize = 100;
 
 export const getGridColumns = (): GridColumn[] => {
   return [
@@ -9,13 +12,17 @@ export const getGridColumns = (): GridColumn[] => {
     },
     {
       id: "linkedCount",
-      title: "账号角色",
+      title: "关联账号",
       width: 200,
     },
     {
       id: "active",
-      title: "账号角色",
+      title: "角色状态",
       width: 200,
     },
   ];
 };
+
+export const getData = async (page: number) => {
+  return await net.post('/api/role/getRoles', { page, size: pageSize });
+}

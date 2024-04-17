@@ -27,7 +27,8 @@
       "@infra": ["./src/infra"],
       "@infra/*": ["./src/infra/*"],
       "@services": ["./src/services"],
-      "@services/*": ["./src/services/*"]
+      "@services/*": ["./src/services/*"],
+      "@types": ["./src/types"],
     }
   },
   "include": ["src", "types"],

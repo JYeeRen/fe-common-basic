@@ -1,4 +1,26 @@
-export interface API {
+import { Schema } from "@types";
+
+interface List<T> {
+  list: T[];
+  total: number;
+  page: number;
+  size: number;
+}
+
+interface Role {
+  "/api/role/createRole": {
+    id: number;
+  };
+  "/api/role/getRoles": List<
+    Pick<Schema.Role, "id" | "name" | "active" | "linkedCount">
+  >;
+  "/api/role/getRoleInfo": Pick<
+    Schema.Role,
+    "id" | "name" | "active" | "permissions" | "linkedAccounts"
+  >;
+}
+
+interface Account {
   "/api/account/login": {
     type: string;
     token: string;
@@ -6,10 +28,9 @@ export interface API {
     isManager: boolean;
   };
   "/api/account/logout": never;
-  "/api/role/createRole": {
-    id: number;
-  };
 }
+
+export interface API extends Role, Account {}
 
 export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
 

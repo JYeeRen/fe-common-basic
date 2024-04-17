@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  DataEditorProps,
   GridCell,
   GridCellKind,
   GridColumn,
@@ -74,35 +73,10 @@ export function useDataGrid<R extends AnyObject>(
     [dataRef, toCell]
   );
 
-  const theme = useMemo(
-    () => ({
-      baseFontStyle: "0.8125rem",
-      headerFontStyle: "600 0.8125rem",
-      editorFontSize: "0.8125rem",
-    }),
-    []
-  );
-
-  const defaultProps: Partial<DataEditorProps> = useMemo(
-    () => ({
-      theme,
-      smoothScrollX: true,
-      smoothScrollY: true,
-      getCellsForSelection: true,
-      width: "100%",
-      isDraggable: false,
-      scaleToRem: true,
-      maxColumnWidth: 1000,
-      maxColumnAutoWidth: 1000
-    }),
-    []
-  );
-
   return {
     columns: memoColumns,
     getCellContent,
     onColumnResize,
     onColumnMoved,
-    ...defaultProps,
   };
 }

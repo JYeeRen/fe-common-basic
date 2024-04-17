@@ -1,3 +1,7 @@
+export * from "./antConfigProvider";
+export { default as DataGrid } from "./data-grid";
+export type { GridColumn, DataEditorRef } from './data-grid';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";
@@ -169,5 +173,3 @@ export { Watermark } from "antd";
 export type { WatermarkProps } from "antd";
 // antd end
 
-export * from "./antConfigProvider";
-export * from "./data-grid";
