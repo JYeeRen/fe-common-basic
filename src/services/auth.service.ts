@@ -1,4 +1,4 @@
-import { net } from "@/infra";
+import { net } from "@infra";
 import localStorage from "./localStorage";
 interface Credenial {
   account: string;

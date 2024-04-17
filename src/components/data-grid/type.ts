@@ -32,7 +32,13 @@ type SpecialString<T> = T | (string & {});
 
 export type DataIndex<T = any> = DeepNamePath<T> | SpecialString<T> | number | (SpecialString<T> | number)[];
 
+export interface ColSchema {
+  id: string;
+  title: string;
+  width?: number;
+}
+
 export interface DataGridProps<RecordType = any> {
   dataSource?: RecordType[];
-  columns?: Column<RecordType>[];
+  columns?: ColSchema[];
 }
