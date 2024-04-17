@@ -62,7 +62,7 @@ function Home() {
             ]}
           />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: "24px 24px 0 24px" }}>
           <Content
             style={{
               padding: 24,

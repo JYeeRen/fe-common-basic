@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import * as authService from "@services/auth.service";
-import { ServerError } from "@/infra";
+import { ServerError } from "@infra";
 
 class LoginStore {
 
