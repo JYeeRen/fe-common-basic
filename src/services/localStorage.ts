@@ -2,8 +2,8 @@ import store from 'store2';
 import { User } from './types';
 
 interface LocalValues {
-  authToken: string;
-  user: User;
+  authToken?: string;
+  user?: User;
 }
 
 class LocalStorage {

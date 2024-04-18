@@ -23,10 +23,11 @@ export function useDataGrid<R extends AnyObject>(
   dataRef: MutableRefObject<R[]>
 ) {
   const [schemas, setSchemas] = useState(_schemas);
-  const schemasRef = useRef(schemas);
+  const schemasRef = useRef<ColSchema[]>(schemas);
+  schemasRef.current = schemas;
 
   const onColumnResize = useCallback(
-    (column: GridColumn, newSize: number, colIndex: number) => {
+    (_column: GridColumn, newSize: number, colIndex: number) => {
       setSchemas((prevCols) => {
         const colSchema = schemas[colIndex];
         prevCols.splice(colIndex, 1, { ...colSchema, width: newSize });
@@ -48,8 +49,8 @@ export function useDataGrid<R extends AnyObject>(
   const memoColumns = useMemo(() => schemas.map(getGridColumn), [schemas]);
 
   const toCell = useCallback((rowData: R, col: number): GridCell => {
-    const colSchema = schemasRef.current[col];
-    const val = `${rowData[colSchema.id]}`;
+    const colSchema = schemas[col];
+    const val = rowData[colSchema.id]?.toString() ?? '';
     return {
       kind: GridCellKind.Text,
       data: rowData[colSchema.id],
@@ -57,10 +58,11 @@ export function useDataGrid<R extends AnyObject>(
       allowOverlay: true,
       readonly: true,
     };
-  }, []);
+  }, [schemas]);
 
   const getCellContent = useCallback(
     ([col, row]: Item): GridCell => {
+      console.log(col, row, dataRef.current);
       const record = dataRef.current[row];
       if (record !== undefined) {
         return toCell(record, col);
