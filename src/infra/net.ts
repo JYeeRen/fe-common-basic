@@ -20,7 +20,7 @@ export class ServerError extends Error {
 }
 
 class Net {
-  svc: Axios;
+  private readonly svc: Axios;
 
   constructor() {
     this.svc = axios.create({
