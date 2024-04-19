@@ -18,7 +18,7 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styles from "./login.module.less";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoginStore from "./login.store";
 
 // TODO 检测到当前已登录账号 Admin
@@ -26,8 +26,6 @@ function Login() {
   const [store] = useState(() => new LoginStore());
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [params] = useSearchParams();
-  console.log(params.get("redirect"));
 
   const handleLogin = async () => {
     const { username, password } = await form.validateFields();
@@ -61,7 +59,7 @@ function Login() {
             />
           </div>
           <div className="w-full text-center">
-            <Typography.Title level={4}>报关系统</Typography.Title>
+            <Typography.Title level={4}>R&T</Typography.Title>
           </div>
 
           <Form form={form} layout="vertical" className="w-full mx-auto">

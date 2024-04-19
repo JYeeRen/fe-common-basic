@@ -22,6 +22,7 @@ export default defineConfig({
       "@infra": path.resolve(__dirname, "./src/infra"),
       "@services": path.resolve(__dirname, "./src/services"),
       "@types": path.resolve(__dirname, "./src/types"),
+      "@routers": path.resolve(__dirname, "./src/routers"),
     },
   },
   build: {

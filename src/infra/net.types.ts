@@ -26,6 +26,8 @@ interface Account {
     token: string;
     expireIn: number;
     isManager: boolean;
+    username: string;
+    permissions: string[];
   };
   "/api/account/logout": never;
 }

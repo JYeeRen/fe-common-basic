@@ -29,6 +29,7 @@
       "@services": ["./src/services"],
       "@services/*": ["./src/services/*"],
       "@types": ["./src/types"],
+      "@routers": ["./src/routers"],
     }
   },
   "include": ["src", "types"],

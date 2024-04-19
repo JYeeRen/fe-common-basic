@@ -13,7 +13,7 @@ class LoginStore {
 
   async login(account: string, password: string) {
     try {
-      await authService.signIn({ account, password });
+      await authService.signin({ account, password });
       return true;
     } catch (err) {
       this.tipVisible = true;

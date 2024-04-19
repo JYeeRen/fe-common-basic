@@ -1,11 +1,8 @@
-import { AntConfigProvider } from "@components";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@routers";
 
 function App() {
-
-  return (
-    <AntConfigProvider>
-    </AntConfigProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

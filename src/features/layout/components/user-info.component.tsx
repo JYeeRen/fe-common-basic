@@ -2,11 +2,10 @@ import { useMemo } from 'react';
 import { Avatar, Dropdown, MenuProps } from '@components';
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import localStorage from '@services/localStorage';
-import * as authService from '@services/auth.service';
 import { useNavigate } from 'react-router-dom';
+import { authProvider } from '@services/auth.service';
 
 export function UserInfo() {
-
   const navigate = useNavigate();
   const userName =  useMemo(() => localStorage.getItem('user')?.name ?? '', []);
 
@@ -21,8 +20,8 @@ export function UserInfo() {
       icon: <LogoutOutlined />,
       key: 'logout',
       onClick: async () => {
-        await authService.signout();
-        navigate('/login');
+        await authProvider.signout();
+        navigate('/');
       },
     },
   ];
