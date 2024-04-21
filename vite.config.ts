@@ -17,12 +17,14 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@assets": path.resolve(__dirname, "./src/assets"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@features": path.resolve(__dirname, "./src/features"),
       "@infra": path.resolve(__dirname, "./src/infra"),
       "@services": path.resolve(__dirname, "./src/services"),
       "@types": path.resolve(__dirname, "./src/types"),
       "@routers": path.resolve(__dirname, "./src/routers"),
+      "@locale": path.resolve(__dirname, "./src/locale"),
     },
   },
   build: {

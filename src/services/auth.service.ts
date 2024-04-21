@@ -5,7 +5,7 @@ import { redirect } from "react-router-dom";
 export async function signin(credential: { account: string; password: string }) {
   const res = await authProvider.signin(credential);
   localStorage.setItem('authToken', res.token);
-  localStorage.setItem('user', { name: 'admin' });
+  localStorage.setItem('user', { name: res.username });
 }
 
 export async function signout() {
@@ -34,7 +34,6 @@ export const authProvider: AuthProvider = {
   init() {
     authProvider.isAuthenticated = Boolean(localStorage.getItem('authToken'));
     authProvider.username = localStorage.getItem('user')?.name ?? '';
-    console.log(localStorage.getItem('authToken'), authProvider);
   },
 
   async signin(credential) {

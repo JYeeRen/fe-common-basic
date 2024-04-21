@@ -5,6 +5,49 @@ import { protectedLoader } from "./protectedLoader";
 import { loginLoader } from "./loginLoader";
 import { authProvider } from "@services/auth.service";
 
+const accountRouters = [
+  {
+    path: "accounts",
+    lazy: async () => ({
+      Component: (await import("@features/management/account/account-list.component"))
+        .default,
+    }),
+  },
+  {
+    path: "accounts/create",
+    lazy: async () => ({
+      Component: (await import("@features/management/account/account-create.component"))
+        .default,
+    }),
+  },
+  {
+    path: "accounts/:id",
+    lazy: async () => ({
+      Component: (await import("@features/management/account/account-edit.component"))
+        .default,
+    }),
+  }
+];
+
+const rolesRouters = [
+  {
+    path: "roles",
+    lazy: async () => ({ Component: (await import("@features/management/role/role-list.component")).default }),
+  },
+  {
+    path: "roles/create",
+    lazy: async () => ({ Component: ( await import("@features/management/role/role-detail-create.component")).default }),
+  },
+  {
+    path: "roles/:id/edit",
+    lazy: async () => ({ Component: ( await import("@features/management/role/role-detail-edit.component")).default }),
+  },
+  {
+    path: "roles/:id",
+    lazy: async () => ({ Component: ( await import("@features/management/role/role-detail-view.component")).default }),
+  }
+];
+
 export const routesConfig = [
   {
     path: "/",
@@ -23,23 +66,15 @@ export const routesConfig = [
         children: [
           {
             path: "basic-data",
-            lazy: async () => ({
-              Component: (await import("@features/customs/basic-data")).default,
-            }),
+            lazy: async () => ({ Component: (await import("@features/customs/basic-data")).default }),
           },
           {
             path: "declareation",
-            lazy: async () => ({
-              Component: (await import("@features/customs/declareation"))
-                .default,
-            }),
+            lazy: async () => ({ Component: (await import("@features/customs/declareation")).default }),
           },
           {
             path: "risk-control",
-            lazy: async () => ({
-              Component: (await import("@features/customs/risk-control"))
-                .default,
-            }),
+            lazy: async () => ({ Component: (await import("@features/customs/risk-control")).default }),
           },
         ],
       },
@@ -77,28 +112,8 @@ export const routesConfig = [
       {
         path: "management",
         children: [
-          {
-            path: "account",
-            lazy: async () => ({
-              Component: (await import("@features/management/account/list"))
-                .default,
-            }),
-          },
-          {
-            path: "roles",
-            lazy: async () => ({
-              Component: (await import("@features/management/role/role-list"))
-                .default,
-            }),
-          },
-          {
-            path: "roles/create",
-            lazy: async () => ({
-              Component: (
-                await import("@features/management/role/create-new-role")
-              ).CreateNewRoleComponent,
-            }),
-          },
+          ...accountRouters,
+          ...rolesRouters,
         ],
       },
     ],
@@ -114,8 +129,8 @@ export const routesConfig = [
     path: "/logout",
     async action() {
       await authProvider.signout();
-      return redirect('/');
-    }
+      return redirect("/");
+    },
   },
   {
     path: "*",

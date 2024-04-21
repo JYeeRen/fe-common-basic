@@ -20,6 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "@assets/*": ["./src/assets/*"],
       "@components": ["./src/components"],
       "@components/*": ["./src/components/*"],
       "@features": ["./src/features"],
@@ -30,6 +31,7 @@
       "@services/*": ["./src/services/*"],
       "@types": ["./src/types"],
       "@routers": ["./src/routers"],
+      "@locale": ["./src/locale"],
     }
   },
   "include": ["src", "types"],

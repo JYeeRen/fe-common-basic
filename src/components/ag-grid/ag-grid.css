@@ -1,0 +1,3 @@
+.ag-theme-quartz {
+  --ag-cell-horizontal-border: solid var(--ag-row-border-color);
+}

@@ -1,7 +1,9 @@
-export const topnavConfig = [
+import { t } from '@locale';
+
+export const topnavConfig = () => [
   {
     key: "customs_risk_control",
-    label: "关务风控",
+    label: t("关务风控"),
     subs: [
       {
         key: "/customs",
@@ -31,10 +33,10 @@ export const topnavConfig = [
   },
   {
     key: "permission_mgmt",
-    label: "权限管理",
+    label: t("权限管理"),
     subs: [
-      { key: '/management/roles/1', label: '账号管理' },
-      { key: '/management/roles', label: '角色权限管理' },
+      { key: '/management/accounts', label: t('账号管理') },
+      { key: '/management/roles', label: t('权限管理') },
     ]
   },
 ];

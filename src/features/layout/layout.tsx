@@ -17,7 +17,7 @@ function Home() {
 
   const [activeNav, setActiveNav] = useState<string>("");
 
-  const topNavItems = useMemo(() => topnavConfig, []);
+  const topNavItems = useMemo(() => topnavConfig(), []);
 
   const sideNavItem = useMemo(() => {
     return topNavItems.find((item) => item.key === activeNav)?.subs || [];
@@ -26,9 +26,11 @@ function Home() {
   const handleLogoClick = () => navigate('/');
 
   return (
-    <Layout>
+    <Layout className={styles.layout}>
       <Header className={styles.header}>
-        <div className={styles.logo} onClick={handleLogoClick} />
+        <div className={styles.logo} onClick={handleLogoClick}>
+          R&T
+        </div>
         <Menu
           theme="light"
           mode="horizontal"
@@ -49,12 +51,13 @@ function Home() {
             onSelect={({ key }) => navigate(key)}
           />
         </Sider>
-        <Layout className={styles.main} style={{ padding: "24px 24px 0 24px" }}>
+        <Layout className={styles.main}>
           <Content
             className={styles.content}
             style={{
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              flex: 1
             }}
           >
             <Outlet />

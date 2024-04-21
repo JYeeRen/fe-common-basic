@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { DataEditor, DataEditorRef } from "@glideapps/glide-data-grid";
 import { AnyObject, DataGridProps } from "./type";
 import { useDataGrid } from "./useDataGrid";
@@ -61,6 +61,6 @@ export function DataGridImpl<R extends AnyObject>(props: DataGridProps<R>) {
   );
 }
 
-const DataGrid = forwardRef(DataGridImpl);
+const DataGrid = DataGridImpl;
 
 export default DataGrid;

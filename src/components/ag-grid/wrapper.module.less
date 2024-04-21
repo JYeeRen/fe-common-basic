@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-height: 400px;
+  height: 100%;
+
+  &>h1 {
+    font-size: 50px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin: 0 0 12px 0;
+  }
+
+  .sizer {
+    flex-grow: 1;
+
+    background-color: white;
+
+    border-radius: 6px;
+    box-shadow:
+      rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+    .sizer-clip {
+      border-radius: 6px;
+      overflow: hidden;
+      transform: translateZ(0);
+
+      height: 100%;
+    }
+  }
+}

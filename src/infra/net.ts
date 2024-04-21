@@ -32,11 +32,14 @@ class Net {
     this.svc.interceptors.response.use(this.responseInterceptor);
   }
 
-  async post<URL extends keyof API, D = unknown, T = API[URL]>(
+  async post<URL extends keyof API, D = API[URL]['params'], T = API[URL]['response']>(
     url: URL,
     body?: D,
     config?: AxiosRequestConfig
   ): Promise<T> {
+    if (typeof url !== 'string') {
+      throw new Error('miss url');
+    }
     const { data } = await this.request<ApiSuccess<T>>({
       method: "POST",
       url,
@@ -49,7 +52,7 @@ class Net {
   private async request<T>(
     config: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
-    return await this.svc.request<T>(config);
+      return await this.svc.request<T>(config);
   }
 
   private async requestInterceptor(

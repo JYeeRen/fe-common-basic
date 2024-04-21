@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ag-grid-community/styles": "^31.2.1",
     "@ant-design/icons": "^5.3.6",
     "@glideapps/glide-data-grid": "^6.0.3",
+    "ag-grid-react": "^31.2.1",
     "antd": "^5.16.1",
     "assert": "^2.1.0",
     "axios": "^1.6.8",
@@ -28,6 +30,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.0",
+    "react-resize-detector": "^10.0.1",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.22.3",
     "sort-by": "^1.2.0",
@@ -35,6 +38,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@ag-grid-community/core": "^31.2.1",
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
     "@types/debug": "^4.1.12",

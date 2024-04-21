@@ -2,7 +2,6 @@ import i18next, { Resource } from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import common from "./trans/common.json";
-import 首页 from "./trans/首页.json";
 
 type Lng = "en" | "zh";
 type Entry = Record<Lng, string>;
@@ -37,16 +36,18 @@ function formatTranslation(trans: Record<string, Translation>): Resource {
 }
 
 export function init() {
-  const resources = formatTranslation({ common, 首页 });
+  const resources = formatTranslation({ common });
   i18next
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
+      debug: true,
       lng: "zh",
       fallbackLng: "zh",
-      ns: ["common", "首页"],
+      ns: ["common"],
       defaultNS: "common",
       resources: resources,
     });
 }
 
+export const t = i18next.t.bind(i18next);
 export { useTranslation } from "react-i18next";

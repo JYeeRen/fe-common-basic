@@ -1,6 +1,13 @@
 export * from "./antConfigProvider";
 export { default as DataGrid } from "./data-grid";
-export type { GridColumn, DataEditorRef } from './data-grid';
+export type { GridColumn, DataEditorRef } from "./data-grid";
+
+export { default as AgGrid } from "./ag-grid";
+export type { AgGridTypes } from "./ag-grid";
+
+export { Container } from "./container/container";
+export { Block } from "./block/block";
+export { SubmitButton } from "./submit-button";
 
 // antd begin
 export type { Breakpoint } from "antd";
@@ -172,4 +179,3 @@ export { version } from "antd";
 export { Watermark } from "antd";
 export type { WatermarkProps } from "antd";
 // antd end
-

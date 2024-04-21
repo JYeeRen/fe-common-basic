@@ -62,7 +62,6 @@ export function useDataGrid<R extends AnyObject>(
 
   const getCellContent = useCallback(
     ([col, row]: Item): GridCell => {
-      console.log(col, row, dataRef.current);
       const record = dataRef.current[row];
       if (record !== undefined) {
         return toCell(record, col);
