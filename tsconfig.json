@@ -31,7 +31,7 @@
       "@services/*": ["./src/services/*"],
       "@types": ["./src/types"],
       "@routers": ["./src/routers"],
-      "@locale": ["./src/locale"],
+      "@locale": ["./src/locale"]
     }
   },
   "include": ["src", "types"],

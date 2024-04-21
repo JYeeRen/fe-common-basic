@@ -34,6 +34,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'data-grid': ['@components/data-grid'],
           'antd': ['antd'],
+          'ag-grid': ['ag-grid-react']
         }
       }
     }
