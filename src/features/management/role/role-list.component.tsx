@@ -1,4 +1,4 @@
-import { Button, AgGrid, Container, Modal, App } from "@components";
+import { Button, ClientGrid, AgGrid, Container, Modal, App } from "@components";
 import { observer } from "mobx-react-lite";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as roleListConfig from "./role-list-config";
@@ -11,6 +11,7 @@ import { AgGridReact } from "ag-grid-react";
 function RoleList() {
   const { notification } = App.useApp();
   const gridRef = useRef<AgGridReact>(null);
+  const [gridStore] = useState(new ClientGrid.GridStore(roleListConfig.getRows));
   const [t] = useTranslation();
   const [store] = useState(new RoleListStore);
   const navigate = useNavigate();
@@ -54,6 +55,11 @@ function RoleList() {
 
   return (
     <Container title={t("角色管理")} operation={operation}>
+      <ClientGrid
+        columns={columns}
+        gridStore={gridStore}
+        getRows={roleListConfig.getRows}
+      />
       <AgGrid
         ref={gridRef}
         columns={columns}
