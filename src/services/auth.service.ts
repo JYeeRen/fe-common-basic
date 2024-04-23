@@ -1,6 +1,7 @@
 import { net } from "@infra";
 import localStorage from "./localStorage";
-import { redirect } from "react-router-dom";
+import { debug } from '@infra';
+import appService from "./app.service";
 
 export async function signin(credential: { account: string; password: string }) {
   const res = await authProvider.signin(credential);
@@ -18,6 +19,7 @@ interface AuthProvider {
   isAuthenticated: boolean;
   username: null | string;
   expireIn: number;
+  expired(): void;
   init(): void;
   signin(credential: { account: string; password: string }): Promise<{ token: string; username: string; expireIn: number }>;
   signout(): Promise<void>;
@@ -30,6 +32,15 @@ export const authProvider: AuthProvider = {
   isAuthenticated: false,
   username: null,
   expireIn: 0,
+
+  expired() {
+    debug.auth('login expired');
+    authProvider.isAuthenticated = false;
+    localStorage.setItem('authToken', '');
+    authProvider.expireIn = 0;
+    const from = encodeURIComponent(window.location.hash.replace(/^#(.+)$/, '$1'));
+    appService.navigate?.(`/login?from=${from}`);
+  },
 
   init() {
     authProvider.isAuthenticated = Boolean(localStorage.getItem('authToken'));
@@ -53,6 +64,5 @@ export const authProvider: AuthProvider = {
     authProvider.isAuthenticated = false;
     authProvider.username = "";
     authProvider.expireIn = 0;
-    redirect('/');
   },
 };

@@ -51,8 +51,8 @@ const rolesRouters = [
 export const routesConfig = [
   {
     path: "/",
+    loader: protectedLoader,
     Component: Layout,
-    // errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

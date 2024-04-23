@@ -25,6 +25,7 @@ export default defineConfig({
       "@types": path.resolve(__dirname, "./src/types"),
       "@routers": path.resolve(__dirname, "./src/routers"),
       "@locale": path.resolve(__dirname, "./src/locale"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
     },
   },
   build: {

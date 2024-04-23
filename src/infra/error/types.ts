@@ -1,19 +1,11 @@
 export type ErrCode =
   | HttpErrCode
-  | UploadErrCode
-  | PutNetErrCode
-  | DeleteNetErrCode;
+  | ServerErrCode
+  ;
 
-export enum UploadErrCode {
-  UPLOAD_ERROR = "U0001",
-}
-
-export enum PutNetErrCode {
-  PUT_NET_ERROR = "P0001",
-}
-
-export enum DeleteNetErrCode {
-  DELETE_NET_ERROR = "D0001",
+export enum ServerErrCode {
+  C401 = -401,
+  C99 = -99,
 }
 
 export enum HttpErrCode {
@@ -45,3 +37,28 @@ export enum HttpErrCode {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyError = any;
+
+export interface ParseError {
+  kind: "onerror" | "onunhandledrejection" | "componentdidcatch";
+  timestamp: number;
+  message: string;
+  stack?: string;
+  code?: ErrCode;
+  error: AnyError;
+}
+
+export interface ParseResult extends ParseError {
+  /**
+   * 显示异常的方式
+   * show: 显示异常页面
+   * alert: toast显示异常信息
+   * confirm: 显示确认框
+   * ignore: 忽略异常
+   */
+  type: "show" | "alert" | "confirm" | "ignore";
+
+  /**
+   * 格式化后的信息
+   */
+  formatted?: string | string[];
+}

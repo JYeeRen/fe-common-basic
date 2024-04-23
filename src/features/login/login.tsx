@@ -18,12 +18,12 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import styles from "./login.module.less";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import LoginStore from "./login.store";
 
-// TODO 检测到当前已登录账号 Admin
 function Login() {
   const [store] = useState(() => new LoginStore());
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
@@ -33,7 +33,7 @@ function Login() {
     assert(password);
     const loginSuccess = await store.login(username, password);
     if (loginSuccess) {
-      navigate("/");
+      navigate(searchParams.get('from') || "/");
     }
   };
 

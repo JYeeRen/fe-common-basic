@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from "@components";
+import appService from "@services/app.service";
 import { UserInfo } from "./components/user-info.component";
 import { Lang } from "./components/lang.component";
 import { topnavConfig } from "./nav-config";
@@ -14,6 +15,10 @@ function Home() {
   } = theme.useToken();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    appService.init({ navigate });
+  }, [navigate]);
 
   const [activeNav, setActiveNav] = useState<string>("");
 
