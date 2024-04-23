@@ -7,17 +7,7 @@ import axios, {
 import { v4 as uuidv4 } from "uuid";
 import localStorage from "@services/localStorage";
 import { API, ApiRes, ApiSuccess } from "./net.types";
-
-export class ServerError extends Error {
-  message: string;
-  code: number;
-
-  constructor(res: { msg?: string; code: number }) {
-    super(res.msg ?? "Server Error");
-    this.message = res.msg ?? "Server Error";
-    this.code = res.code;
-  }
-}
+import { ServerError } from "./error";
 
 class Net {
   private readonly svc: Axios;

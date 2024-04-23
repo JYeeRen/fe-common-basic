@@ -1,49 +1,50 @@
 import clsx from "clsx";
-import { observer } from "mobx-react-lite";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pagination } from "antd";
 import { AgGridReact } from "ag-grid-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "@locale";
 import { AnyObject } from "@types";
-// import columnTypes from "@components/ag-grid/column-types";
+import { stateFormatter } from "./value-formatter/state-formatter";
+import { CustomLoadingOverlay } from './custom-loading-overlay';
+import { CustomNoRowsOverlay } from "./custom-norows-overlay";
 import { ClientGridProps } from "./types";
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-quartz.css";
 import "./ag-grid.css";
 
-function InternalClientGrid<T extends AnyObject>({
-  columns = [],
-  gridStore,
-  getRows,
-}: ClientGridProps<T>) {
-  const [rowData, setRowData] = useState<T[]>([]);
-  const [{ page, pageSize }, onTableChange2] = useState({ page: 1, pageSize: 50 });
-  const [total, setTotal] = useState(0);
+function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
+  const { columns = [], getRows } = props;
 
-  const onTableChange = (page: number, pageSize: number) => {
-    onTableChange2({ page, pageSize });
-  }
+  const ref = useRef<AgGridReact>(null);
+
+  const [t] = useTranslation();
+
+  const [rowData, setRowData] = useState<T[]>([]);
+  const [total, setTotal] = useState(0);
+  const [{ page, pageSize }, setPagination] = useState({ page: 1, pageSize: 50 });
+
+  const onPaginationChange = useCallback((page: number, pageSize: number) => {
+    setPagination({ page, pageSize });
+  }, []);
+
+  ref.current?.api?.showLoadingOverlay();
 
   useEffect(() => {
     getRows({ page, size: pageSize }).then(({ list, total }) => {
       setRowData(list);
       setTotal(total);
-    })
-  }, [gridStore, page, pageSize]);
+    });
+  }, [ref, getRows, page, pageSize]);
 
-  const [t] = useTranslation();
-  const ref = useRef<AgGridReact>(null);
 
   const columnTypes = useMemo(() => {
     return {
-      custom_state: {
-        valueFormatter: (params: { value: boolean }) => {
-          return params.value === true ? "启用" : "停用";
-        }
-      },
+      state: {
+        width: 150,
+        valueFormatter: stateFormatter,
+      }
     };
   }, []);
-  console.log(columnTypes);
 
   const [columnDefs] = useState(columns);
 
@@ -55,28 +56,33 @@ function InternalClientGrid<T extends AnyObject>({
       sortable: false,
     };
   }, []);
-  const showTotal = useCallback(
-    (total: number) => {
-      return t("共{{total}}条", { total });
-    },
-    [t]
-  );
 
-  useEffect(() => {
-    gridStore.loadData();
-  }, [gridStore]);
+  const showTotal = useCallback((total: number) => t("共{{total}}条", { total }), [t]);
+
+  const onGridReady = useCallback(() => {}, []);
+
+  const loadingOverlayComponent = useMemo(() => CustomLoadingOverlay, []);
+  const loadingOverlayComponentParams = useMemo(() => ({ loadingMessage: t('请稍后...') }), [t]);
+  const noRowsOverlayComponent = useMemo(() => { return CustomNoRowsOverlay }, []);
+  const noRowsOverlayComponentParams = useMemo(() => ({}), []);
 
   return (
     <div className="flex flex-col w-full h-full overflow-visible">
       <div className={clsx("ag-theme-quartz")}>
         <AgGridReact
           ref={ref}
+          rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
-          rowData={rowData}
           rowSelection="multiple"
           rowModelType="clientSide"
           columnTypes={columnTypes}
+          onGridReady={onGridReady}
+          reactiveCustomComponents
+          loadingOverlayComponent={loadingOverlayComponent}
+          loadingOverlayComponentParams={loadingOverlayComponentParams}
+          noRowsOverlayComponent={noRowsOverlayComponent}
+          noRowsOverlayComponentParams={noRowsOverlayComponentParams}
         />
       </div>
       <Pagination
@@ -87,7 +93,7 @@ function InternalClientGrid<T extends AnyObject>({
         pageSizeOptions={pageSizeOptions}
         showSizeChanger
         showQuickJumper
-        onChange={onTableChange}
+        onChange={onPaginationChange}
         showTotal={showTotal}
       />
     </div>

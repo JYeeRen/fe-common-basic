@@ -21,25 +21,24 @@ export const getGridColumns = (operatons: Operations): AgGridTypes.ColumnDefs<Ro
     {
       field: "name",
       headerName: t("账号角色"),
-      flex: 2,
+      pinned: 'left',
       cellRenderer: AgGrid.renderer.loading,
     },
     {
       field: "linkedCount",
       headerName: t("关联账号"),
-      flex: 1,
+      pinned: 'left',
       valueFormatter: (params) => `${params.value}个`,
     },
     {
       field: "active",
       headerName: t("角色状态"),
-      flex: 1,
-      type: "custom_state",
+      cellDataType: false,
+      type: "state",
     },
     {
       colId: "operation",
       headerName: t("操作"),
-      flex: 2,
       cellRenderer: AgGrid.renderer.operations([
         {
           key: "view",

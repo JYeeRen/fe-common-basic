@@ -1,5 +1,5 @@
 import { Navigate, redirect } from "react-router-dom";
-import ErrorPage from "@features/error/error";
+// import ErrorPage from "@features/error/error";
 import Layout from "@features/layout/layout";
 import { protectedLoader } from "./protectedLoader";
 import { loginLoader } from "./loginLoader";
@@ -52,7 +52,7 @@ export const routesConfig = [
   {
     path: "/",
     Component: Layout,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
