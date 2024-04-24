@@ -61,16 +61,16 @@ export class ErrorParser {
       return { ...error, type: "alert", formatted: t(error.message as any) };
     }
 
-    // 处理400系列错误，跳转错误页面
+    // 处理400系列错误
     if (this.parseRequestError(error)) {
       debug.common("request error");
-      return { ...error, type: "show" };
+      return { ...error, type: "alert" };
     }
 
-    // 处理500系列错误，跳转错误页面
+    // 处理500系列错误
     if (this.parseResponseError(error)) {
       debug.common("response error");
-      return { ...error, type: "show" };
+      return { ...error, type: "alert" };
     }
 
     debug.common("unknown error");

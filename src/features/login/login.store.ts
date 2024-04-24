@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import * as authService from "@services/auth.service";
-import { ServerError } from "@infra";
 
 class LoginStore {
 
@@ -12,16 +11,7 @@ class LoginStore {
   }
 
   async login(account: string, password: string) {
-    try {
       await authService.signin({ account, password });
-      return true;
-    } catch (err) {
-      this.tipVisible = true;
-      if (err instanceof ServerError) {
-        this.tips = err.message;
-      }
-      console.error(err);
-    }
   }
 
 

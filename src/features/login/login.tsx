@@ -31,10 +31,8 @@ function Login() {
     const { username, password } = await form.validateFields();
     assert(username);
     assert(password);
-    const loginSuccess = await store.login(username, password);
-    if (loginSuccess) {
-      navigate(searchParams.get('from') || "/");
-    }
+    await store.login(username, password);
+    navigate(searchParams.get('from') || "/");
   };
 
   return (
@@ -62,7 +60,16 @@ function Login() {
             <Typography.Title level={4}>R&T</Typography.Title>
           </div>
 
-          <Form form={form} layout="vertical" className="w-full mx-auto">
+          <Form
+            form={form}
+            layout="vertical"
+            className="w-full mx-auto"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                form.submit();
+              }
+            }}
+          >
             <Form.Item label="" name="username" rules={[{ required: true }]}>
               <Input
                 className={styles.input}
@@ -91,6 +98,7 @@ function Login() {
             <Form.Item shouldUpdate>
               {() => (
                 <Button
+                  htmlType="submit"
                   type="primary"
                   onClick={handleLogin}
                   className="w-full"

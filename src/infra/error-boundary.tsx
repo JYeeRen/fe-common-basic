@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ErrorInfo, PropsWithChildren } from "react";
+import { message } from "@components";
 import { AnyError } from "./error/types";
 import { ErrorHandler } from "./error/handler";
 
@@ -84,6 +85,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
    */
   private catchRejectEvent(error: PromiseRejectionEvent): void {
     const parsed = this.handler.handleRejectError(error);
+    console.log(parsed);
     if (parsed.type === "ignore") {
       return;
     }
@@ -98,7 +100,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
   }
 
   alert(msg: string | string[]) {
-    console.log("alert", msg);
+    message.error(msg);
   }
 
   confirm(msg: string | string[]) {
