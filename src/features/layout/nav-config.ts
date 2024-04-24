@@ -1,10 +1,22 @@
 import { t } from '@locale';
 
-export const topnavConfig = () => [
+interface NavItem {
+  key: string;
+  label: string;
+  children?: NavItem[];
+}
+
+export type NavConfig = {
+  key: string;
+  label: string;
+  sidenavs: NavItem[];
+}[];
+
+export const topnavConfig = (): NavConfig => [
   {
     key: "customs_risk_control",
     label: t("关务风控"),
-    subs: [
+    sidenavs: [
       {
         key: "/customs",
         label: "关务",
@@ -34,7 +46,7 @@ export const topnavConfig = () => [
   {
     key: "permission_mgmt",
     label: t("权限管理"),
-    subs: [
+    sidenavs: [
       { key: '/management/accounts', label: t('账号管理') },
       { key: '/management/roles', label: t('权限管理') },
     ]

@@ -8,6 +8,8 @@ interface AppServiceParams {
 class AppService {
 
   navigate?: NavigateFunction = undefined;
+  activeTopNav: string = "";
+  activeSideNav: string = "";
 
   constructor() {
     makeAutoObservable(this);

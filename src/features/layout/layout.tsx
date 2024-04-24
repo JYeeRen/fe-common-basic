@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from "@components";
+import { useNav } from '@hooks';
 import appService from "@services/app.service";
 import { UserInfo } from "./components/user-info.component";
 import { Lang } from "./components/lang.component";
@@ -22,11 +23,14 @@ function Home() {
 
   const [activeNav, setActiveNav] = useState<string>("");
 
-  const topNavItems = useMemo(() => topnavConfig(), []);
+  const navConfig = useMemo(() => topnavConfig(), []);
+
+  const { activeTopNav, activeSideNav, openSideKeys } = useNav(navConfig);
+  console.log({ activeTopNav, activeSideNav, openSideKeys });
 
   const sideNavItem = useMemo(() => {
-    return topNavItems.find((item) => item.key === activeNav)?.subs || [];
-  }, [activeNav, topNavItems]);
+    return navConfig.find((item) => item.key === activeNav)?.sidenavs || [];
+  }, [activeNav, navConfig]);
 
   const handleLogoClick = () => navigate('/');
 
@@ -40,9 +44,10 @@ function Home() {
           theme="light"
           mode="horizontal"
           defaultSelectedKeys={["/customs/basic-data"]}
-          items={topNavItems}
+          items={navConfig}
           className={styles.topnav}
           onSelect={({ key }) =>setActiveNav(key)}
+          activeKey={activeTopNav}
         />
         <Lang />
         <UserInfo />
@@ -54,6 +59,8 @@ function Home() {
             mode="inline"
             items={sideNavItem}
             onSelect={({ key }) => navigate(key)}
+            activeKey={activeSideNav}
+            openKeys={openSideKeys}
           />
         </Sider>
         <Layout className={styles.main}>
