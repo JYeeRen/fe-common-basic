@@ -1,30 +1,8 @@
-import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
-import { NavConfig } from "@features/layout/nav-config";
+import { useEffect } from "react";
+import appService from "@services/app.service";
 
-export function useNav(navConfig: NavConfig) {
-  const location = useLocation();
-
-  const keys = useMemo(() => {
-    for (const topNav of navConfig) {
-      for (const side of topNav.sidenavs || []) {
-        for (const child of side.children || []) {
-          if (child.key === location.pathname) {
-            return {
-              activeTopNav: topNav.key,
-              activeSideNav: side.key,
-              openSideKeys: [side.key],
-            };
-          }
-        }
-      }
-    }
-    return {
-      activeTopNav: '',
-      activeSideNav: '',
-      openSideKeys: [],
-    };
-  }, [location.pathname, navConfig]);
-
-  return keys;
+export function useNav(topnav: string, sidenav: string, opensidenav?: string[]) {
+  useEffect(() => {
+    appService.setNav(topnav, sidenav, opensidenav);
+  }, [sidenav, topnav, opensidenav]);
 }

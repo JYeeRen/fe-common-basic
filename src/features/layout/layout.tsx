@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Layout, Menu, theme } from "@components";
-import { useNav } from '@hooks';
+import { Layout, Menu, MenuProps, theme } from "@components";
 import appService from "@services/app.service";
 import { UserInfo } from "./components/user-info.component";
 import { Lang } from "./components/lang.component";
-import { topnavConfig } from "./nav-config";
+import { formatNavItems, getNavItems, topnavConfig } from "./nav-config";
 import styles from "./layout.module.less";
+import { observer } from "mobx-react-lite";
+import { t } from "i18next";
 
 const { Header, Content, Sider } = Layout;
 
-function Home() {
+const MainLayout = observer(() => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -21,18 +22,25 @@ function Home() {
     appService.init({ navigate });
   }, [navigate]);
 
-  const [activeNav, setActiveNav] = useState<string>("");
+  const [topnav, setTopnav] = useState('权限管理');
 
-  const navConfig = useMemo(() => topnavConfig(), []);
+  const navitemDict = useMemo(() => (formatNavItems(getNavItems())), []);
 
-  const { activeTopNav, activeSideNav, openSideKeys } = useNav(navConfig);
-  console.log({ activeTopNav, activeSideNav, openSideKeys });
-
-  const sideNavItem = useMemo(() => {
-    return navConfig.find((item) => item.key === activeNav)?.sidenavs || [];
-  }, [activeNav, navConfig]);
+  const sideNavItem = useMemo(() => navitemDict[topnav], [navitemDict, topnav]);
 
   const handleLogoClick = () => navigate('/');
+
+  const topnavItems = useMemo(() => [
+    { key: '关务风控', label: t('关务风控') },
+    { key: '权限管理', label: t('权限管理') },
+  ], []);
+
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+
+  const handleSideNacSelect: MenuProps['onSelect'] = ({ key, selectedKeys }) => {
+    navigate(key);
+    setSelectedKeys(selectedKeys);
+  };
 
   return (
     <Layout className={styles.layout}>
@@ -44,10 +52,10 @@ function Home() {
           theme="light"
           mode="horizontal"
           defaultSelectedKeys={["/customs/basic-data"]}
-          items={navConfig}
+          items={topnavItems}
           className={styles.topnav}
-          onSelect={({ key }) =>setActiveNav(key)}
-          activeKey={activeTopNav}
+          onSelect={({ key }) => setTopnav(key)}
+          selectedKeys={[topnav]}
         />
         <Lang />
         <UserInfo />
@@ -58,9 +66,9 @@ function Home() {
             className={styles.sidenav}
             mode="inline"
             items={sideNavItem}
-            onSelect={({ key }) => navigate(key)}
-            activeKey={activeSideNav}
-            openKeys={openSideKeys}
+            onSelect={handleSideNacSelect}
+            selectedKeys={selectedKeys}
+            openKeys={appService.opensidenav}
           />
         </Sider>
         <Layout className={styles.main}>
@@ -78,6 +86,6 @@ function Home() {
       </Layout>
     </Layout>
   );
-}
+});
 
-export default Home;
+export default MainLayout;
