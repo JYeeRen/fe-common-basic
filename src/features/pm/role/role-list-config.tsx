@@ -16,18 +16,19 @@ interface Operations {
   delete?: (id: number) => void;
 }
 
-export const getGridColumns = (operatons: Operations): AgGridTypes.ColumnDefs<Role> => {
+export const getGridColumns = (
+  operatons: Operations
+): AgGridTypes.ColumnDefs<Role> => {
   return [
     {
       field: "name",
       headerName: t("账号角色"),
-      pinned: 'left',
-      cellRenderer: AgGrid.renderer.loading,
+      pinned: "left",
     },
     {
       field: "linkedCount",
       headerName: t("关联账号"),
-      pinned: 'left',
+      pinned: "left",
       valueFormatter: (params) => `${params.value}个`,
     },
     {

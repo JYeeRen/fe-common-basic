@@ -21,4 +21,6 @@ export interface Account {
   active: boolean;
   roleId: Role['id'];
   isManager: boolean;
+  /**  */
+  scope: 1 | 2;
 }

@@ -2,7 +2,7 @@ import { Schema } from "@types";
 
 export type AccountItem = Pick<
   Schema.Account,
-  "id" | "account" | "username" | "roleName" | "active" | 'isManager'
+  "id" | "account" | "username" | "roleName" | "active" | 'isManager' | 'scope'
 >;
 
 export type Account = Pick<

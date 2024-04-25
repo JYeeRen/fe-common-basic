@@ -67,7 +67,7 @@ function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
   const noRowsOverlayComponentParams = useMemo(() => ({}), []);
 
   return (
-    <div className="flex flex-col w-full h-full overflow-visible">
+    <div className="flex flex-col w-full h-[99%] overflow-visible">
       <div className={clsx("ag-theme-quartz")}>
         <AgGridReact
           ref={ref}

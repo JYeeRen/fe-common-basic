@@ -70,7 +70,7 @@ export class RoleDetailStore {
 
   get initialValue() {
     if(!this.role) {
-      return {};
+      return { active: true };
     }
 
     const initialValue = {

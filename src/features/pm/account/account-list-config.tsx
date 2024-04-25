@@ -24,7 +24,6 @@ export const getGridColumns = (
       field: "id",
       headerName: t("ID"),
       flex: 1,
-      cellRenderer: AgGrid.renderer.loading,
     },
     {
       field: "account",
@@ -45,7 +44,8 @@ export const getGridColumns = (
       field: "active",
       headerName: t("账号状态"),
       flex: 1,
-      type: "custom_state",
+      cellDataType: false,
+      type: "state",
     },
     {
       colId: "operation",
@@ -72,7 +72,7 @@ export const getGridColumns = (
             label: t("重置初始密码"),
           },
         ],
-        (data) => data?.isManager ?? true
+        (data) => data?.scope !== 1
       ),
     },
   ];

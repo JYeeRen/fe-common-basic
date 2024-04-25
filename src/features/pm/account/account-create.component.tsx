@@ -21,7 +21,7 @@ const AccountCreate = observer(() => {
   return (
     <AccountDetailComponent
       onCommit={handleCommit}
-      initialValues={undefined}
+      initialValues={store.initialValues}
       roleOptions={store.roles}
     />
   );

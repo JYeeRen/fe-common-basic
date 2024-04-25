@@ -6,7 +6,7 @@ import appService from "./app.service";
 export async function signin(credential: { account: string; password: string }) {
   const res = await authProvider.signin(credential);
   localStorage.setItem('authToken', res.token);
-  localStorage.setItem('user', { name: res.username });
+  localStorage.setItem('user', { name: res.username, userId: res.userId });
 }
 
 export async function signout() {
@@ -21,7 +21,7 @@ interface AuthProvider {
   expireIn: number;
   expired(): void;
   init(): void;
-  signin(credential: { account: string; password: string }): Promise<{ token: string; username: string; expireIn: number }>;
+  signin(credential: { account: string; password: string }): Promise<{ token: string; username: string; expireIn: number, userId: number }>;
   signout(): Promise<void>;
 }
 
@@ -48,19 +48,19 @@ export const authProvider: AuthProvider = {
   },
 
   async signin(credential) {
-    const { token, username, expireIn } = await net.post('/api/account/login', credential);
+    const { token, username, userId, expireIn } = await net.post('/api/account/login', credential);
     localStorage.setItem('authToken', token);
-    localStorage.setItem('user', { name: username });
+    localStorage.setItem('user', { name: username, userId });
     authProvider.isAuthenticated = true;
     authProvider.username = username;
     authProvider.expireIn = expireIn;
 
-    return { token, username, expireIn };
+    return { token, username, expireIn, userId };
   },
   async signout() {
     await net.post('/api/account/logout');
     localStorage.setItem('authToken', '');
-    localStorage.setItem('user', { name: '' });
+    localStorage.setItem('user', { name: '', userId: 0 });
     authProvider.isAuthenticated = false;
     authProvider.username = "";
     authProvider.expireIn = 0;

@@ -127,18 +127,18 @@ export class ErrorParser {
     return true;
   }
 
-  /**
-   * 表单输入异常
-   * TODO: 应该换更明确的异常判断方法 reason.errorFields 有数据属于 antd 表单错误不需alert
-   * @param error
-   * @returns
-   */
-  private isFormError({ error }: ParseError): boolean {
-    if (error.errorFields == null) {
-      return false;
-    }
-    return true;
-  }
+  // /**
+  //  * 表单输入异常
+  //  * TODO: 应该换更明确的异常判断方法 reason.errorFields 有数据属于 antd 表单错误不需alert
+  //  * @param error
+  //  * @returns
+  //  */
+  // private isFormError({ error }: ParseError): boolean {
+  //   if (error.errorFields == null) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   /**
    * 抑制相同的异常

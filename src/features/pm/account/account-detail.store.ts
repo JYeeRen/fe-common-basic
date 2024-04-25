@@ -58,6 +58,7 @@ export class AccountDetailStore {
   get initialValues() {
     const roleId = this.account?.roleId;
     return {
+      active: true,
       ...this.account,
       roleId: roleId || undefined,
     };

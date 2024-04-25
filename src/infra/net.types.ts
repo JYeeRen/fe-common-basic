@@ -57,6 +57,7 @@ interface Role extends Api {
 interface Account extends Api {
   "/api/account/login": {
     response: {
+      userId: number;
       type: string;
       token: string;
       expireIn: number;
@@ -77,7 +78,13 @@ interface Account extends Api {
     response: ListRes<
       Pick<
         Schema.Account,
-        "id" | "account" | "username" | "active" | "roleName" | "isManager"
+        | "id"
+        | "account"
+        | "username"
+        | "active"
+        | "roleName"
+        | "isManager"
+        | "scope"
       >
     >;
   };

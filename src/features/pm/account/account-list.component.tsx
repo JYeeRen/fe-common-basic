@@ -1,4 +1,4 @@
-import { Button, AgGrid, Container, Modal, App } from "@components";
+import { Button, Container, Modal, App, ClientGrid } from "@components";
 import { observer } from "mobx-react-lite";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as accountListConfig from "./account-list-config";
@@ -72,13 +72,17 @@ function AccountList() {
 
   return (
     <Container title={t("账号列表")} operation={operation}>
-      <AgGrid
+      <ClientGrid
+        columns={columns}
+        getRows={accountListConfig.getRows}
+      />
+      {/* <AgGrid
         ref={gridRef}
         columns={columns}
         useAsyncData
         getRows={accountListConfig.getRows}
         getTotalCount={accountListConfig.getTotalCount}
-      />
+      /> */}
     </Container>
   );
 }

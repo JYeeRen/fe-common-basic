@@ -46,7 +46,7 @@ function RoleList() {
     <Button
       className="operation-btn"
       icon={<UsergroupAddOutlined />}
-      onClick={() => navigate('/management/roles/create')}
+      onClick={() => navigate('/pm/roles/create')}
     >
       {t("新增角色")}
     </Button>
