@@ -38,9 +38,8 @@ const AccountEdit = observer(() => {
       return;
     }
 
-    if (await store.update(params)) {
-      navigate(-1);
-    }
+    await store.update(params);
+    navigate(-1);
   };
 
   return (

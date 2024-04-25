@@ -27,7 +27,7 @@ export class AccountDetailStore {
     runInAction(() => {
       this.roles = options;
     });
-  } 
+  }
 
   async getAccount(id: number) {
     return await net.post("/api/account/getAccountInfo", { id });
@@ -45,14 +45,8 @@ export class AccountDetailStore {
   }
 
   async update(params: AccountParams) {
-    try {
-      await net.post("/api/account/editAccount", { id: this.id, ...params });
-      return true;
-    } catch (err) {
-      if (err instanceof ServerError) {
-        message.error(err.message);
-      }
-    }
+    await net.post("/api/account/editAccount", { id: this.id, ...params });
+    return true;
   }
 
   get initialValues() {
@@ -63,5 +57,4 @@ export class AccountDetailStore {
       roleId: roleId || undefined,
     };
   }
-
 }

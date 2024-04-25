@@ -71,6 +71,8 @@ function AccountList() {
   );
 
   return (
+    <Container>
+      <div style={{ height: '200px', width: '100%' }}>1</div>
     <Container title={t("账号列表")} operation={operation}>
       <ClientGrid
         columns={columns}
@@ -83,6 +85,7 @@ function AccountList() {
         getRows={accountListConfig.getRows}
         getTotalCount={accountListConfig.getTotalCount}
       /> */}
+    </Container>
     </Container>
   );
 }

@@ -21,7 +21,7 @@ export function Container(props: ContainerProps) {
       <Block if={Boolean(operation)}>
         <Row className={styles.operation}>{operation}</Row>
       </Block>
-      <div className="flex flex-1 overflow-auto">{children}</div>
+      <div className="flex flex-col flex-1 overflow-auto">{children}</div>
     </div>
   );
 }

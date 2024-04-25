@@ -67,8 +67,8 @@ function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
   const noRowsOverlayComponentParams = useMemo(() => ({}), []);
 
   return (
-    <div className="flex flex-col w-full h-[99%] overflow-visible">
-      <div className={clsx("ag-theme-quartz")}>
+    <div className="flex flex-col w-full flex-1 overflow-hidden">
+      <div className={clsx("ag-theme-quartz", "w-full flex-1")}>
         <AgGridReact
           ref={ref}
           rowData={rowData}
@@ -86,7 +86,7 @@ function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
         />
       </div>
       <Pagination
-        className="mt-4 mr-5 flex justify-end"
+        className="flex justify-end mt-4 mr-4 mb-20"
         total={total}
         current={page}
         pageSize={pageSize}

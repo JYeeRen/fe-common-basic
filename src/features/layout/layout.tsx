@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Layout, Menu, theme } from "@components";
+import { Layout, Menu } from "@components";
 import appService from "@services/app.service";
 import { UserInfo } from "./components/user-info.component";
 import { Lang } from "./components/lang.component";
@@ -11,13 +11,8 @@ import styles from "./layout.module.less";
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = observer(() => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
   const navigate = useNavigate();
   useEffect(() => (appService.init({ navigate }), undefined), [navigate]);
-
 
   const {
     topnav, topnavs, sidenavs, defaultSelectedKeys, defaultOpenKeys, onOpenChange, setTopnav
@@ -44,7 +39,7 @@ const MainLayout = observer(() => {
         <UserInfo />
       </Header>
       <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider width={200} className={styles.sider}>
           <Menu
             className={styles.sidenav}
             mode="inline"
@@ -56,14 +51,7 @@ const MainLayout = observer(() => {
           />
         </Sider>
         <Layout className={styles.main}>
-          <Content
-            className={styles.content}
-            style={{
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-              flex: 1
-            }}
-          >
+          <Content className={styles.content}>
             <Outlet />
           </Content>
         </Layout>
