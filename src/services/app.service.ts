@@ -8,9 +8,6 @@ interface AppServiceParams {
 class AppService {
 
   navigate?: NavigateFunction = undefined;
-  topnav = '';
-  sidenav = '';
-  opensidenav: string[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -18,12 +15,6 @@ class AppService {
 
   init({ navigate }: AppServiceParams) {
     this.navigate = navigate;
-  }
-
-  setNav(topnav: string, sidenav: string, opensidenav?: string[]) {
-    this.topnav = topnav;
-    this.sidenav = sidenav;
-    this.opensidenav = this.opensidenav || opensidenav;
   }
 
 }

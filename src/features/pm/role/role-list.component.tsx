@@ -7,12 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { RoleListStore } from "./role-list.store";
 import { AgGridReact } from "ag-grid-react";
-import { useNav } from "@hooks";
 
 function RoleList() {
-
-  useNav('permission_mgmt', '/management/roles');
-
   const { notification } = App.useApp();
   const gridRef = useRef<AgGridReact>(null);
   const [t] = useTranslation();
