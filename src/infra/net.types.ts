@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Schema } from "@types";
+import { Schema, Option } from "@types";
 
 export interface ListRes<T> {
   list: T[];
@@ -106,7 +106,13 @@ interface Account extends Api {
   };
 }
 
-export type API = Role & Account & Options;
+export type API = Role & Account & Options & {
+  '/api/option/getBase': {
+    response: {
+      actives: Option[];
+    }
+  }
+};
 
 export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
 

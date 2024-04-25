@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { AccountListStore } from "./account-list.store";
 import { AgGridReact } from "ag-grid-react";
+import { Filter } from "./filter.component";
 
 function AccountList() {
   const { notification } = App.useApp();
@@ -72,7 +73,8 @@ function AccountList() {
 
   return (
     <Container>
-      <div style={{ height: '200px', width: '100%' }}>1</div>
+      <Filter />
+      <div className="w-full"></div>
     <Container title={t("账号列表")} operation={operation}>
       <ClientGrid
         columns={columns}

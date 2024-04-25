@@ -1,13 +1,21 @@
-import store from 'store2';
-import { User } from './types';
+import store from "store2";
+import { User } from "./types";
+import { Option } from "@types";
+
+interface CacheOptions {
+  data: Option[];
+  params: [];
+  time: number;
+}
 
 interface LocalValues {
   authToken?: string;
   user?: User;
+  "options.roles"?: CacheOptions;
+  "options.base"?: CacheOptions;
 }
 
 class LocalStorage {
-  
   values: Partial<LocalValues> = {};
 
   setItem<K extends keyof LocalValues>(key: K, value: LocalValues[K]) {
@@ -28,4 +36,4 @@ class LocalStorage {
   }
 }
 
-export default new LocalStorage;
+export default new LocalStorage();

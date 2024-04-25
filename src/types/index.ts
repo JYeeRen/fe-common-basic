@@ -2,3 +2,8 @@
 export * as Schema from './schema';
 
 export type AnyObject = Record<PropertyKey, any>;
+
+export interface Option {
+  val: string;
+  id: number;
+}
