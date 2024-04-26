@@ -4,15 +4,15 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as roleListConfig from "./role-list-config";
 import { useTranslation } from "@locale";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { RoleListStore } from "./role-list.store";
-import { AgGridReact } from "ag-grid-react";
 
 function RoleList() {
   const { notification } = App.useApp();
-  const gridRef = useRef<AgGridReact>(null);
   const [t] = useTranslation();
   const [store] = useState(new RoleListStore);
+  const gridStore = ClientGrid.useGridStore(roleListConfig.getRows);
+
   const navigate = useNavigate();
   const viewRole = useCallback((id: number) => navigate(`${id}`), [navigate]);
   const editRole = useCallback((id: number) => navigate(`${id}/edit`), [navigate]);
@@ -27,7 +27,7 @@ function RoleList() {
           message: t('用户删除成功'),
           description: t('用户删除成功')
         });
-        gridRef.current?.api.purgeInfiniteCache();
+        gridStore.loadData();
       },
       okText: t('确认删除'),
       cancelText: t('取消'),
@@ -56,7 +56,7 @@ function RoleList() {
     <Container title={t("角色管理")} operation={operation}>
       <ClientGrid
         columns={columns}
-        getRows={roleListConfig.getRows}
+        store={gridStore}
       />
     </Container>
   );

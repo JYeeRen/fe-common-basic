@@ -6,7 +6,7 @@ import {
 import { AgGrid, AgGridTypes } from "@components";
 import { net } from "@infra";
 import { t } from "@locale";
-import { AccountItem } from "./types";
+import { AccountItem, QueryParams } from "./types";
 
 export const pageSize = 100;
 
@@ -78,13 +78,8 @@ export const getGridColumns = (
   ];
 };
 
-export const getRows = async (params: { page: number; size: number }) => {
-  return await net.post("/api/account/findAccounts", {
-    ...params,
-    account: "",
-    roleId: 0,
-    activeType: true,
-  });
+export const getRows = async (params: QueryParams) => {
+  return await net.post("/api/account/findAccounts", params);
 };
 
 export const getTotalCount = async () => {

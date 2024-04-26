@@ -2,17 +2,19 @@ import { Row } from "antd";
 import { PropsWithChildren, ReactNode } from "react";
 import { Block } from "@components/block/block";
 import styles from "./container.module.less";
+import clsx from "clsx";
 
 interface ContainerProps extends PropsWithChildren {
   title?: string;
   operation?: ReactNode;
+  className?: string;
 }
 
 export function Container(props: ContainerProps) {
-  const { title, operation, children } = props;
+  const { title, operation, children, className } = props;
 
   return (
-    <div className="flex h-full flex-col">
+    <div className={clsx("flex h-full flex-col", styles.content, className)}>
       <Block if={title}>
         <Row className={styles.header}>
           <span className={styles.title}>{title}</span>

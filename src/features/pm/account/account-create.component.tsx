@@ -4,8 +4,10 @@ import AccountDetailComponent from "./account-detail.component";
 import { AccountDetailStore } from "./account-detail.store";
 import { AccountParams } from "./types";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "@locale";
 
 const AccountCreate = observer(() => {
+  const [t] = useTranslation();
   const [store] = useState(new AccountDetailStore());
   const navigate = useNavigate();
   useEffect(() => {
@@ -20,6 +22,7 @@ const AccountCreate = observer(() => {
 
   return (
     <AccountDetailComponent
+      title={t('新增账号')}
       onCommit={handleCommit}
       initialValues={store.initialValues}
       roleOptions={store.roles}

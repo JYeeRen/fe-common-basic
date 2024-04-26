@@ -1,0 +1,20 @@
+import { AccountAPI } from "./account.types";
+import { OptionsAPI } from "./options.types";
+import { RoleAPI } from "./role.trypes";
+
+export interface ApiError {
+  code: number;
+  data: unknown;
+  msg?: string;
+}
+
+export interface ApiSuccess<T = unknown> {
+  code: 0;
+  data: T;
+}
+
+export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
+
+export interface Sources extends AccountAPI, RoleAPI, OptionsAPI {}
+
+export type URLs = keyof Sources;

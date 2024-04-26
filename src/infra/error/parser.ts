@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { t } from "@locale";
-import {
-  HttpErrCode,
-  ServerErrCode,
-  ParseError,
-  ParseResult,
-} from "./types";
+import { HttpErrCode, ServerErrCode, ParseError, ParseResult } from "./types";
 import { debug } from "../debug";
 import { authProvider } from "@services/auth.service";
 
@@ -112,7 +107,10 @@ export class ErrorParser {
   }
 
   private isLoginTimeout(error: ParseError): boolean {
-    if (error.code !== ServerErrCode.C401 && error.message !== "login timeout or not login") {
+    if (
+      error.code !== ServerErrCode.C401 &&
+      error.message !== "login timeout or not login"
+    ) {
       return false;
     }
     setTimeout(() => authProvider.expired(), 500);
@@ -120,7 +118,12 @@ export class ErrorParser {
   }
 
   private isTokenError(error: ParseError): boolean {
-    if (error.code !== ServerErrCode.C99 && error.message !== "token decode error") {
+    console.log('>>>>>>>>>', error)
+    if (
+      error.code !== ServerErrCode.C99 &&
+      error.message !== "token decode error" &&
+      error.message !== "token encrypt error"
+    ) {
       return false;
     }
     setTimeout(() => authProvider.expired(), 500);

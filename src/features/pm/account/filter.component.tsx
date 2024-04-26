@@ -12,6 +12,9 @@ import { net } from "@infra";
 import localStorage from "@services/localStorage";
 import { useRequest } from "ahooks";
 import { useCallback, useMemo } from "react";
+import styles from "./filter.module.less";
+import clsx from "clsx";
+import { t } from "@locale";
 
 const fetchOptions = () => ({
   base: async () => (await net.post("/api/option/getBase")).actives,
@@ -29,6 +32,7 @@ const RemoteSelect = (props: RemoteSelectProps) => {
     [type]
   );
   const request = useMemo(() => fetchOptions()[type], [type]);
+
   const { data, loading } = useRequest(request, {
     cacheKey,
     setCache: (data) => localStorage.setItem(cacheKey, data),
@@ -47,7 +51,7 @@ const RemoteSelect = (props: RemoteSelectProps) => {
   );
 
   return (
-    <Select
+    <Select<number, { value: number; label: string }>
       {...props}
       loading={loading}
       options={options}
@@ -59,25 +63,35 @@ const RemoteSelect = (props: RemoteSelectProps) => {
   );
 };
 
-export function Filter() {
+interface FilterProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onFinish?: (values?: any) => void;
+}
+
+export function Filter(props: FilterProps) {
+  const { onFinish } = props;
+
   return (
-    <div className="mb-4">
-      <Form>
+    <div className={styles.container}>
+      <div className={styles.title}>{t("数据筛选")}</div>
+      <div className={styles.divider} />
+    <div className={clsx("mb-4", styles.filter)}>
+      <Form onFinish={onFinish} onReset={() => onFinish?.()}>
         <Row>
           <Col span={18}>
             <Row justify="space-around">
               <Col span={7}>
-                <Form.Item name="account" label="输入查询">
-                  <Input placeholder="用户账号/名称" />
+                <Form.Item name="account" label={t("输入查询")}>
+                  <Input placeholder={t("用户账号/名称")} />
                 </Form.Item>
               </Col>
               <Col span={7}>
-                <Form.Item name="roleId" label="账号角色">
+                <Form.Item name="roleId" label={t("账号角色")}>
                   <RemoteSelect type="roles" />
                 </Form.Item>
               </Col>
               <Col span={7}>
-                <Form.Item name="activeType" label="账号状态">
+                <Form.Item name="activeType" label={t("账号状态")}>
                   <RemoteSelect type="base" />
                 </Form.Item>
               </Col>
@@ -87,14 +101,15 @@ export function Filter() {
             <Form.Item>
               <Space>
                 <Button type="primary" htmlType="submit">
-                  查询
+                  {t("查询")}
                 </Button>
-                <Button htmlType="reset">重置</Button>
+                <Button htmlType="reset">{t("重置")}</Button>
               </Space>
             </Form.Item>
           </Col>
         </Row>
       </Form>
+    </div>
     </div>
   );
 }

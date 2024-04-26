@@ -1,41 +1,31 @@
 import clsx from "clsx";
 import { Pagination } from "antd";
+import { observer } from "mobx-react-lite";
 import { AgGridReact } from "ag-grid-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "@locale";
-import { AnyObject } from "@types";
 import { stateFormatter } from "./value-formatter/state-formatter";
 import { CustomLoadingOverlay } from './custom-loading-overlay';
 import { CustomNoRowsOverlay } from "./custom-norows-overlay";
-import { ClientGridProps } from "./types";
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-quartz.css";
 import "./ag-grid.css";
+import { ColumnDefs } from "@components/ag-grid/types";
+import { Block } from "@components/block/block";
+import { ClientGridStore } from "./client-grid.store";
 
-function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
-  const { columns = [], getRows } = props;
+interface ClientGridProps<T> {
+  columns?: ColumnDefs<T>;
+  store: ClientGridStore<T>;
+  pagination?: boolean;
+}
+
+function InternalClientGrid<T>(props: ClientGridProps<T>) {
+  const { columns = [], store, pagination = true } = props;
 
   const ref = useRef<AgGridReact>(null);
 
   const [t] = useTranslation();
-
-  const [rowData, setRowData] = useState<T[]>([]);
-  const [total, setTotal] = useState(0);
-  const [{ page, pageSize }, setPagination] = useState({ page: 1, pageSize: 50 });
-
-  const onPaginationChange = useCallback((page: number, pageSize: number) => {
-    setPagination({ page, pageSize });
-  }, []);
-
-  ref.current?.api?.showLoadingOverlay();
-
-  useEffect(() => {
-    getRows({ page, size: pageSize }).then(({ list, total }) => {
-      setRowData(list);
-      setTotal(total);
-    });
-  }, [ref, getRows, page, pageSize]);
-
 
   const columnTypes = useMemo(() => {
     return {
@@ -71,7 +61,7 @@ function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
       <div className={clsx("ag-theme-quartz", "w-full flex-1")}>
         <AgGridReact
           ref={ref}
-          rowData={rowData}
+          rowData={store.rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           rowSelection="multiple"
@@ -85,22 +75,25 @@ function InternalClientGrid<T extends AnyObject>(props: ClientGridProps<T>) {
           noRowsOverlayComponentParams={noRowsOverlayComponentParams}
         />
       </div>
-      <Pagination
-        className="flex justify-end mt-4 mr-4 mb-20"
-        total={total}
-        current={page}
-        pageSize={pageSize}
-        pageSizeOptions={pageSizeOptions}
-        showSizeChanger
-        showQuickJumper
-        onChange={onPaginationChange}
-        showTotal={showTotal}
-      />
+      <Block if={pagination}>
+        <Pagination
+          className="flex justify-end mt-4 mr-4 mb-20"
+          total={store.total}
+          current={store.page}
+          pageSize={store.pageSize}
+          pageSizeOptions={pageSizeOptions}
+          showSizeChanger
+          showQuickJumper
+          onChange={store.onTableChange.bind(store)}
+          showTotal={showTotal}
+        />
+
+      </Block>
     </div>
   );
 }
 
-export const ClientGridImpl = InternalClientGrid;
+export const ClientGridImpl = observer(InternalClientGrid);
 
 // const ClientGrid = forwardRef(ClientGridImpl) as <R extends AnyObject = AnyObject>(
 //   props: React.PropsWithChildren<AgGridProps<R>> &

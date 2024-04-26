@@ -40,10 +40,12 @@ const RoleDetailEdit = observer(() => {
     }
 
     await store.updateRole(params);
+    navigate(-1);
   };
 
   return (
     <RoleDetailComponent
+      title={t('编辑角色信息')}
       permissions={store.permissions}
       onCommit={onCommit}
       initialValues={store.initialValue}

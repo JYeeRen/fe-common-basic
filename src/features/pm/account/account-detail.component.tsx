@@ -20,10 +20,11 @@ interface RoleDetailProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialValues?: any;
   roleOptions: { id: number; val: string }[];
+  title: string;
 }
 
 function AccountDetailComponent(props: RoleDetailProps) {
-  const { onCommit, initialValues, roleOptions } = props;
+  const { title, onCommit, initialValues, roleOptions } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
@@ -52,7 +53,7 @@ function AccountDetailComponent(props: RoleDetailProps) {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
-    <Container title={t("新增账号")}>
+    <Container title={title}>
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}

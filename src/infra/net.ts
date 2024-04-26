@@ -6,8 +6,10 @@ import axios, {
 } from "axios";
 import { v4 as uuidv4 } from "uuid";
 import localStorage from "@services/localStorage";
-import { API, ApiRes, ApiSuccess } from "./net.types";
+import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
+
+type OptionalParams<URL extends URLs, D = Sources[URL]['params']> = D extends undefined ? [D?, AxiosRequestConfig?] : [D, AxiosRequestConfig?];
 
 class Net {
   private readonly svc: Axios;
@@ -22,15 +24,14 @@ class Net {
     this.svc.interceptors.response.use(this.responseInterceptor);
   }
 
-  async post<URL extends keyof API, D = API[URL]['params'], T = API[URL]['response']>(
+  async post<URL extends URLs, R = Sources[URL]['res']>(
     url: URL,
-    body?: D,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+    ...[body, config]: OptionalParams<URL>
+  ): Promise<R> {
     if (typeof url !== 'string') {
       throw new Error('miss url');
     }
-    const { data } = await this.request<ApiSuccess<T>>({
+    const { data } = await this.request<ApiSuccess<R>>({
       method: "POST",
       url,
       data: body,
@@ -56,6 +57,7 @@ class Net {
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
     if (response.data.code !== 0) {
+      console.log(response.data.code);
       throw new ServerError(response.data);
     }
     if (response.data === null) {

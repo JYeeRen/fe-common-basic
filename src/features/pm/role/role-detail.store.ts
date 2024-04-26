@@ -1,13 +1,11 @@
 import { groupBy } from "lodash";
 import { makeAutoObservable, runInAction } from "mobx";
-import { ServerError, net } from "@infra";
-import { message } from '@components';
+import { net } from "@infra";
 import { RoleDetail, RoleCreateParams, Permission } from "./types";
 
 export class RoleDetailStore {
-
   id?: number = undefined;
-  mode: 'create' | 'edit' | 'view' = 'create';
+  mode: "create" | "edit" | "view" = "create";
   role?: RoleDetail = undefined;
 
   permissions: Permission[] = [];
@@ -23,35 +21,23 @@ export class RoleDetailStore {
   }
 
   async loadPermissions() {
-    const { permissions } = await net.post('/api/option/getPermissions');
+    const { permissions } = await net.post("/api/option/getPermissions");
     runInAction(() => {
       this.permissions = permissions;
     });
   }
 
   async createRole(params: RoleCreateParams) {
-    try {
-      await net.post('/api/role/createRole', params);
-      return true;
-    } catch (err) {
-      if (err instanceof ServerError) {
-        message.error(err.message);
-      }
-    }
+    await net.post("/api/role/createRole", params);
   }
 
   async updateRole(params: RoleCreateParams) {
-    try {
-      await net.post('/api/role/editRole', { id: this.id, ...params });
-    } catch (err) {
-      if (err instanceof ServerError) {
-        message.error(err.message);
-      }
-    }
+    if (!this.id) return;
+    await net.post("/api/role/editRole", { id: this.id, ...params });
   }
 
   async loadRole(id: number) {
-    const role = await net.post('/api/role/getRoleInfo', { id });
+    const role = await net.post("/api/role/getRoleInfo", { id });
     runInAction(() => {
       this.role = role;
     });
@@ -60,26 +46,25 @@ export class RoleDetailStore {
   async unlinkAccount(accountId: number) {
     if (!this.id) return;
 
-    await net.post('/api/role/unlinkAccount', { accountId });
+    await net.post("/api/role/unlinkAccount", { accountId });
     this.loadRole(this.id);
   }
 
   get readonly() {
-    return this.mode === 'view';
+    return this.mode === "view";
   }
 
   get initialValue() {
-    if(!this.role) {
+    if (!this.role) {
       return { active: true };
     }
 
     const initialValue = {
       name: this.role.name,
       active: this.role.active,
-      ...groupBy(this.role.permissions, (item) => item.split('.')[0])
+      ...groupBy(this.role.permissions, (item) => item.split(".")[0]),
     };
 
     return initialValue;
   }
-
 }

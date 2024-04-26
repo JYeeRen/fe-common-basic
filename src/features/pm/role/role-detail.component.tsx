@@ -26,10 +26,12 @@ interface RoleDetailProps {
   unlinkAccount?: (accountId: number) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialValues: any;
+  title: string;
 }
 
 function RoleDetailComponent(props: RoleDetailProps) {
   const {
+    title,
     permissions,
     onCommit,
     initialValues,
@@ -93,7 +95,7 @@ function RoleDetailComponent(props: RoleDetailProps) {
   };
 
   return (
-    <Container title={t("新增角色")}>
+    <Container title={title}>
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 16 }}

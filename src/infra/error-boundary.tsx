@@ -3,6 +3,7 @@ import { Component, ErrorInfo, PropsWithChildren } from "react";
 import { message } from "@components";
 import { AnyError } from "./error/types";
 import { ErrorHandler } from "./error/handler";
+import { debug } from "./debug";
 
 type ErrorBoundaryState =
   | {
@@ -40,6 +41,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
    * 返回值会更新到组件的 state 中
    */
   static getDerivedStateFromError(error: Error) {
+    debug.infra("getDerivedStateFromError");
     return { didCatch: true, error, block: true };
   }  
 
@@ -55,7 +57,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
    */ 
   componentDidCatch(error: AnyError, info: ErrorInfo) {
     this.handler.handleRenderError(error, info);
-    console.log("TODO 解析错误类型");
+    debug.infra("TODO 解析错误类型");
   }
 
   componentDidMount(): void {
@@ -84,8 +86,8 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
    * 捕获「promise & async/await 异常」
    */
   private catchRejectEvent(error: PromiseRejectionEvent): void {
+    debug.infra("catchRejectEvent");
     const parsed = this.handler.handleRejectError(error);
-    console.log(parsed);
     if (parsed.type === "ignore") {
       return;
     }
@@ -104,7 +106,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
   }
 
   confirm(msg: string | string[]) {
-    console.log("confirm", msg);
+    debug.infra("confrim", msg);
   }
 
   render() {

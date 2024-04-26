@@ -1,26 +1,20 @@
-import { useEffect, useState } from 'react';
-import RoleDetailComponent from './role-detail.component';
-import { RoleDetailStore } from './role-detail.store';
-import { observer } from 'mobx-react-lite';
-import { RoleParams } from './types';
-import { useNavigate } from 'react-router-dom';
+import RoleDetailComponent from "./role-detail.component";
+import { RoleDetailStore } from "./role-detail.store";
+import { observer } from "mobx-react-lite";
+import { RoleParams } from "./types";
+import { useStore } from "@hooks";
 
 const RoleDetailCreate = observer(() => {
-  const [store] = useState(new RoleDetailStore);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    store.onLoad();
-  }, [store]);
+  const { store, navigate, t } = useStore(RoleDetailStore)();
 
   const onCommit = async (params: RoleParams) => {
-    if (await store.createRole(params)) {
-      navigate(-1);
-    }
+    await store.createRole(params);
+    navigate(-1);
   };
 
   return (
     <RoleDetailComponent
+      title={t("新增角色")}
       permissions={store.permissions}
       onCommit={onCommit}
       initialValues={store.initialValue}

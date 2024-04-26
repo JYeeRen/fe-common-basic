@@ -44,6 +44,7 @@ const AccountEdit = observer(() => {
 
   return (
     <AccountDetailComponent
+      title={t('编辑账号信息')}
       onCommit={onCommit}
       initialValues={store.initialValues}
       roleOptions={store.roles}

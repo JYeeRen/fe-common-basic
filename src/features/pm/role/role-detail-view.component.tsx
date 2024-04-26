@@ -46,7 +46,7 @@ function RoleDetailComponent() {
               key={permission.key}
               noStyle
             >
-              <PermissionGroup permission={permission} readonly />
+              <PermissionGroup permission={permission} readonly value={store.role?.permissions} />
             </Form.Item>
           ))}
         </Form.Item>
