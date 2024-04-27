@@ -42,7 +42,7 @@ export const routesConfig: RouteObject[] = [
           {
             path: "template",
             lazy: async () => ({
-              Component: (await import("@features/customs/template"))
+              Component: (await import("@features/customs/template-list.component"))
                 .default,
             }),
           },
