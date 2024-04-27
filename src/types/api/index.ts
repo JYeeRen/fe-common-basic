@@ -1,6 +1,7 @@
 import { AccountAPI } from "./account.types";
 import { OptionsAPI } from "./options.types";
 import { RoleAPI } from "./role.trypes";
+import { CustomsItemAPI} from './customs-item.types';
 
 export interface ApiError {
   code: number;
@@ -15,6 +16,6 @@ export interface ApiSuccess<T = unknown> {
 
 export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
 
-export interface Sources extends AccountAPI, RoleAPI, OptionsAPI {}
+export interface Sources extends AccountAPI, RoleAPI, OptionsAPI, CustomsItemAPI {}
 
 export type URLs = keyof Sources;

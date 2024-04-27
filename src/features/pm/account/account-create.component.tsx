@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import AccountDetailComponent from "./account-detail.component";
 import { AccountDetailStore } from "./account-detail.store";
 import { AccountParams } from "./types";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "@locale";
+import { useStore } from "@hooks";
 
 const AccountCreate = observer(() => {
-  const [t] = useTranslation();
-  const [store] = useState(new AccountDetailStore());
-  const navigate = useNavigate();
+  const { store, t, navigate } = useStore(AccountDetailStore)();
+
   useEffect(() => {
     store.onLoad();
   }, [store]);
 
   const handleCommit = async (params: AccountParams) => {
-    if (await store.create(params)) {
-      navigate(-1);
-    }
+    await store.create(params)
+    navigate(-1);
   } 
 
   return (
@@ -26,6 +23,7 @@ const AccountCreate = observer(() => {
       onCommit={handleCommit}
       initialValues={store.initialValues}
       roleOptions={store.roles}
+      loading={store.loading}
     />
   );
 });

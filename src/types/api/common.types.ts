@@ -1,5 +1,5 @@
 export interface ListRes<T> {
-  list: T[];
+  list: T[] | null;
   total: number;
   page: number;
   size: number;

@@ -1,5 +1,5 @@
 .ag-theme-quartz {
-  min-height: 300px;
+  min-height: 100px;
   --ag-cell-horizontal-border: solid var(--ag-row-border-color);
 }
 

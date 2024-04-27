@@ -59,6 +59,13 @@ export interface AccountAPI {
     params: { id: number };
     res: never;
   };
+  "/api/account/changePassword": {
+    params: {
+      oldPassword: string;
+      newPassword: string;
+    };
+    res: never;
+  }
 }
 
 

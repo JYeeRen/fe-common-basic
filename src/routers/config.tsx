@@ -21,7 +21,7 @@ export const routesConfig: RouteObject[] = [
           {
             path: "clearance-of-goods",
             lazy: async () => ({
-              Component: (await import("@features/customs/clearance-of-goods"))
+              Component: (await import("@features/customs/clearance-of-goods.component"))
                 .default,
             }),
           },
@@ -131,6 +131,14 @@ export const routesConfig: RouteObject[] = [
                   ).default,
                 }),
               },
+              {
+                path: "/pm/accounts/change-passwd",
+                lazy: async () => ({
+                  Component: (
+                    await import("@features/pm/account/change-passwd.component")
+                  ).default,
+                }),
+              }
             ],
           },
         ],

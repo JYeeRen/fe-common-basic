@@ -43,7 +43,7 @@ class Net {
   private async request<T>(
     config: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
-      return await this.svc.request<T>(config);
+    return await this.svc.request<T>(config);
   }
 
   private async requestInterceptor(

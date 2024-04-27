@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import AccountDetailComponent from "./account-detail.component";
 import { AccountDetailStore } from "./account-detail.store";
 import { AccountParams } from "./types";
-import { useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "@locale";
+import { useParams } from "react-router-dom";
 import { Modal } from "@components";
+import { useStore } from "@hooks";
 
 const AccountEdit = observer(() => {
-  const [store] = useState(new AccountDetailStore());
-  const navigate = useNavigate();
+  const { store, t, navigate } = useStore(AccountDetailStore)();
   const { id } = useParams();
-  const [t] = useTranslation();
   useEffect(() => {
     store.onLoad(Number(id));
   }, [id, store]);
@@ -44,6 +42,7 @@ const AccountEdit = observer(() => {
 
   return (
     <AccountDetailComponent
+      loading={store.loading}
       title={t('编辑账号信息')}
       onCommit={onCommit}
       initialValues={store.initialValues}

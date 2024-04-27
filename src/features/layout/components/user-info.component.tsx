@@ -14,6 +14,9 @@ export function UserInfo() {
       label: '修改密码',
       icon: <UserOutlined />,
       key: 'changepassword',
+      onClick: () => {
+        navigate('/pm/accounts/change-passwd');
+      }
     },
     {
       label: '注销登录',
@@ -21,7 +24,7 @@ export function UserInfo() {
       key: 'logout',
       onClick: async () => {
         await authProvider.signout();
-        navigate('/');
+        navigate('/login');
       },
     },
   ];

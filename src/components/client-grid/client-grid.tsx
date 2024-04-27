@@ -77,7 +77,7 @@ function InternalClientGrid<T>(props: ClientGridProps<T>) {
       </div>
       <Block if={pagination}>
         <Pagination
-          className="flex justify-end mt-4 mr-4 mb-20"
+          className="flex justify-end mt-4 mr-4 mb-8"
           total={store.total}
           current={store.page}
           pageSize={store.pageSize}

@@ -1,12 +1,12 @@
-import { ServerError, net } from "@infra";
+import { loading, net } from "@infra";
 import { makeAutoObservable, runInAction } from "mobx";
 import { Account, AccountParams } from "./types";
-import { message } from "@components";
 
 export class AccountDetailStore {
   id: number = 0;
   account?: Account = undefined;
   roles: { id: number; val: string }[] = [];
+  loading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,6 +22,7 @@ export class AccountDetailStore {
     });
   }
 
+  @loading()
   async loadRoles() {
     const { options } = await net.post("/api/option/getRoleNames");
     runInAction(() => {
@@ -29,21 +30,17 @@ export class AccountDetailStore {
     });
   }
 
+  @loading()
   async getAccount(id: number) {
     return await net.post("/api/account/getAccountInfo", { id });
   }
 
+  @loading()
   async create(params: AccountParams) {
-    try {
-      await net.post("/api/account/createAccount", params);
-      return true;
-    } catch (err) {
-      if (err instanceof ServerError) {
-        message.error(err.message);
-      }
-    }
+    await net.post("/api/account/createAccount", params);
   }
 
+  @loading()
   async update(params: AccountParams) {
     await net.post("/api/account/editAccount", { id: this.id, ...params });
     return true;

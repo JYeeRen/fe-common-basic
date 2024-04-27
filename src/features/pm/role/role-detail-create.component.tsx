@@ -14,6 +14,7 @@ const RoleDetailCreate = observer(() => {
 
   return (
     <RoleDetailComponent
+      loading={store.loading}
       title={t("新增角色")}
       permissions={store.permissions}
       onCommit={onCommit}

@@ -45,6 +45,7 @@ const RoleDetailEdit = observer(() => {
 
   return (
     <RoleDetailComponent
+      loading={store.loading}
       title={t('编辑角色信息')}
       permissions={store.permissions}
       onCommit={onCommit}

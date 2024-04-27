@@ -1,12 +1,13 @@
 import { groupBy } from "lodash";
 import { makeAutoObservable, runInAction } from "mobx";
-import { net } from "@infra";
+import { loading, net } from "@infra";
 import { RoleDetail, RoleCreateParams, Permission } from "./types";
 
 export class RoleDetailStore {
   id?: number = undefined;
   mode: "create" | "edit" | "view" = "create";
   role?: RoleDetail = undefined;
+  loading = false;
 
   permissions: Permission[] = [];
 
@@ -20,6 +21,7 @@ export class RoleDetailStore {
     if (this.id) this.loadRole(this.id);
   }
 
+  @loading()
   async loadPermissions() {
     const { permissions } = await net.post("/api/option/getPermissions");
     runInAction(() => {
@@ -27,15 +29,18 @@ export class RoleDetailStore {
     });
   }
 
+  @loading()
   async createRole(params: RoleCreateParams) {
     await net.post("/api/role/createRole", params);
   }
 
+  @loading()
   async updateRole(params: RoleCreateParams) {
     if (!this.id) return;
     await net.post("/api/role/editRole", { id: this.id, ...params });
   }
 
+  @loading()
   async loadRole(id: number) {
     const role = await net.post("/api/role/getRoleInfo", { id });
     runInAction(() => {
@@ -43,6 +48,7 @@ export class RoleDetailStore {
     });
   }
 
+  @loading()
   async unlinkAccount(accountId: number) {
     if (!this.id) return;
 

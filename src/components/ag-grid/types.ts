@@ -23,7 +23,7 @@ export type OnGridReady<T> = Exclude<
 export type getRowsFunc<T> = (params: {
   page: number;
   size: number;
-}) => Promise<{ list: T[]; total: number }>;
+}) => Promise<{ list: T[] | null; total: number }>;
 
 export interface AgGridProps<T extends AnyObject> {
   columns?: ColumnDefs<T>;

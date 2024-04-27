@@ -27,6 +27,7 @@ interface RoleDetailProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialValues: any;
   title: string;
+  loading?: boolean;
 }
 
 function RoleDetailComponent(props: RoleDetailProps) {
@@ -37,6 +38,7 @@ function RoleDetailComponent(props: RoleDetailProps) {
     initialValues,
     linkedAccounts,
     unlinkAccount,
+    loading
   } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
@@ -95,7 +97,7 @@ function RoleDetailComponent(props: RoleDetailProps) {
   };
 
   return (
-    <Container title={title}>
+    <Container title={title} loading={loading}>
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 16 }}

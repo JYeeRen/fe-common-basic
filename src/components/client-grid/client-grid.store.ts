@@ -31,7 +31,7 @@ export class ClientGridStore<T> {
       });
     runInAction(() => {
       this.total = total;
-      this.rowData = list;
+      this.rowData = list || [];
     });
   }
 

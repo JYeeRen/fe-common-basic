@@ -21,10 +21,11 @@ interface RoleDetailProps {
   initialValues?: any;
   roleOptions: { id: number; val: string }[];
   title: string;
+  loading?: boolean;
 }
 
 function AccountDetailComponent(props: RoleDetailProps) {
-  const { title, onCommit, initialValues, roleOptions } = props;
+  const { title, onCommit, initialValues, roleOptions, loading } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
@@ -53,7 +54,7 @@ function AccountDetailComponent(props: RoleDetailProps) {
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
-    <Container title={title}>
+    <Container title={title} loading={loading}>
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}

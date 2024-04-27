@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AccountListStore } from "./account-list.store";
 import { Filter } from "./filter.component";
-import styles from './account-list.module.less';
+import styles from "./account-list.module.less";
 
 function AccountList() {
   const { notification } = App.useApp();
