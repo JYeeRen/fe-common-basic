@@ -19,7 +19,7 @@ export class GridStore<T> {
     const { list, total } = await this.getRows({ page: this.page, size: this.pageSize });
     runInAction(() => {
       this.total = total;
-      this.rowData = list;
+      this.rowData = list || [];
     });
   }
 

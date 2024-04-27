@@ -43,7 +43,7 @@ function AgGridImpl<T extends AnyObject>(
             page: params.startRow / 100 + 1,
             size: 100,
           });
-          params.successCallback(list, total);
+          params.successCallback(list || [], total);
         },
       };
       params.api.setGridOption("datasource", dataSource);

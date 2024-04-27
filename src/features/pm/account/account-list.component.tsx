@@ -4,7 +4,7 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as accountListConfig from "./account-list-config";
 import { useTranslation } from "@locale";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AccountListStore } from "./account-list.store";
 import { Filter } from "./filter.component";
 import styles from "./account-list.module.less";
@@ -15,13 +15,8 @@ function AccountList() {
   const [store] = useState(new AccountListStore());
   const navigate = useNavigate();
 
-  const gridStore = useMemo(
-    () => new ClientGrid.GridStore(accountListConfig.getRows),
-    []
-  );
-
-  useEffect(() => (gridStore.loadData(), undefined), []);
-
+  const gridStore = ClientGrid.useGridStore(accountListConfig.getRows);
+  
   const resetPassword = useCallback(
     (id: number, account: string) => {
       Modal.confirm({

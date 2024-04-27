@@ -1,7 +1,6 @@
 import { net } from "@infra";
-import { makeAutoObservable, runInAction, reaction } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { AccountItem, QueryParams } from "./types";
-import * as accountListConfig from "./account-list-config";
 
 
 export class AccountListStore {
@@ -15,27 +14,6 @@ export class AccountListStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    reaction(
-      () => this.queryParams,
-      () => this.loadData()
-    )
-  }
-
-  async loadData() {
-    const { list, total } = await accountListConfig.getRows(this.queryParams);
-    runInAction(() => {
-      this.rowData = list;
-      this.total = total;
-    });
-  }
-
-  get pagination() {
-    return {
-      page: this.queryParams.page,
-      size: this.queryParams.size,
-      total: this.total,
-    };
   }
 
   onQueryParamsChange(queryParams: QueryParams) {
