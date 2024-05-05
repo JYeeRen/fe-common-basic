@@ -31,7 +31,7 @@ export class CustomTemplateOperationStore {
   }
 
   @loading()
-  async onLoad({ id }: { id: number } = { id: 0 }) {
+  async onLoad(id = 0) {
     this.id = id;
     if (this.id) {
       await this.loadTemplate(id);

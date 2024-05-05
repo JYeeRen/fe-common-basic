@@ -65,6 +65,7 @@ const Row = (props: RowProps) => {
 };
 
 interface DragableTableProps {
+  readonly?: boolean;
   dataSource: CustomTemplateCol[];
   handleRecordFieldChange: <K extends keyof CustomTemplateCol>(
     key: K,
@@ -75,7 +76,12 @@ interface DragableTableProps {
 }
 
 export function DragableTable(props: DragableTableProps) {
-  const { dataSource, setDataSource, handleRecordFieldChange } = props;
+  const {
+    readonly = false,
+    dataSource,
+    setDataSource,
+    handleRecordFieldChange,
+  } = props;
   const [t] = useTranslation();
 
   const columnDefs: (TableColumnType<CustomTemplateCol> & {
@@ -122,12 +128,34 @@ export function DragableTable(props: DragableTableProps) {
         key: "intercept",
         dataIndex: "intercept",
         title: t("截取字段"),
-        render: (__v, record) => (
-          <Intercept
-            record={record}
-            handleRecordFieldChange={handleRecordFieldChange}
-          />
-        ),
+        render: (__v, record) =>
+          readonly ? (
+            <>
+              {record.interceptBefore && (
+                <p>
+                  <span className="mr-2">{t("从前段截取")}</span>
+                  <span>
+                    {t("从第")} {record.interceptBeforeStart} {t("位")}{" "}
+                    {t("到第")} {record.interceptBeforeEnd} {t("位")}
+                  </span>
+                </p>
+              )}
+              {record.interceptAfter && (
+                <p>
+                  <span className="mr-2">{t("从后段截取")}</span>
+                  <span>
+                    {t("从第")} {record.interceptAfterStart} {t("位")}{" "}
+                    {t("到第")} {record.interceptAfterEnd} {t("位")}
+                  </span>
+                </p>
+              )}
+            </>
+          ) : (
+            <Intercept
+              record={record}
+              handleRecordFieldChange={handleRecordFieldChange}
+            />
+          ),
       },
       {
         width: 100,
@@ -142,7 +170,7 @@ export function DragableTable(props: DragableTableProps) {
   const columns = useMemo(
     () =>
       columnDefs.map((col) => {
-        if (!col.editable) {
+        if (!col.editable || readonly) {
           return col;
         }
         return {
@@ -156,7 +184,7 @@ export function DragableTable(props: DragableTableProps) {
           }),
         };
       }),
-    [columnDefs, handleRecordFieldChange]
+    [columnDefs, handleRecordFieldChange, readonly]
   );
 
   const sensors = useSensors(
@@ -181,14 +209,16 @@ export function DragableTable(props: DragableTableProps) {
     }
   };
 
-  if (dataSource.length === 0) {
+  if (dataSource.length === 0 || readonly) {
     return (
       <Table
-        columns={columns as TableColumnsType}
-        dataSource={[]}
-        size="small"
-        scroll={{ x: "max-content" }}
-        pagination={false}
+      bordered
+      rowKey="key"
+      columns={columns as TableColumnsType<CustomTemplateCol>}
+      dataSource={dataSource}
+      size="small"
+      scroll={{ x: "max-content", y: 300 }}
+      pagination={false}
       />
     );
   }

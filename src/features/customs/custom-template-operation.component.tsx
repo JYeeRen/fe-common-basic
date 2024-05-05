@@ -58,6 +58,7 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
       className={styles.container}
       title={title}
       loading={store.loading}
+      backable
     >
       <ColumnSelectModal
         open={store.isColumnSelectModalOpen}

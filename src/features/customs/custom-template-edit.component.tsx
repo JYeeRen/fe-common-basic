@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const CustomTemplateDetail = observer(() => {
   const { id } = useParams();
-  const { store, t } = useStore(CustomTemplateOperationStore)({ id });
+  const { store, t } = useStore(CustomTemplateOperationStore)(id);
 
   return (
     <CustomTemplateComponent
