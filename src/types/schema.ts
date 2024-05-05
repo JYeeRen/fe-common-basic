@@ -3,7 +3,7 @@ export interface Role {
   name: string;
   active: boolean;
   permissions: string[];
-  linkedAccounts: Pick<Account, 'id' | 'account' | 'username'>[];
+  linkedAccounts: Pick<Account, "id" | "account" | "username">[];
   linkedCount: number;
 }
 
@@ -19,7 +19,7 @@ export interface Account {
   account: string;
   username: string;
   active: boolean;
-  roleId: Role['id'];
+  roleId: Role["id"];
   isManager: boolean;
   /**  */
   scope: 1 | 2;
@@ -75,4 +75,27 @@ export interface CustomItem {
     itemUrl: string;
     taxMark: string;
   };
+}
+
+export interface CustomTemplateCol {
+  key: string;
+  index: number;
+  cnName: string;
+  enName: string;
+  exportName: string;
+  fixedValue: string;
+  interceptBeforeStart?: number;
+  interceptBeforeEnd?: number;
+  interceptAfterStart?: number;
+  interceptAfterEnd?: number;
+  targetUnit: string;
+}
+
+export interface CustomTemplate {
+  id: number;
+  name: string;
+  type: number;
+  active: boolean;
+  mergeOrderNumber: boolean;
+  columns: CustomTemplateCol[];
 }

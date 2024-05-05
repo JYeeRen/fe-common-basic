@@ -19,7 +19,7 @@ export function useStore<T extends Newable>(Store: T) {
 
   function useOnload(...args: unknown[]): ContentResult<T> {
     useEffect(() => {
-      store.onLoad?.();
+      store.onLoad?.(...args);
     }, [...args]);
 
     return { store, navigate, t };

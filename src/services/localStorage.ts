@@ -1,9 +1,10 @@
 import store from "store2";
 import { User } from "./types";
 import { Option } from "@types";
+import { Options } from "./options.service";
 
-interface CacheOptions {
-  data: Option[];
+interface CachedData<T = Option[]> {
+  data: T;
   params: [];
   time: number;
 }
@@ -11,8 +12,10 @@ interface CacheOptions {
 interface LocalValues {
   authToken?: string;
   user?: User;
-  "options.roles"?: CacheOptions;
-  "options.base"?: CacheOptions;
+  "options.roles"?: CachedData;
+  "options.base"?: CachedData;
+  "options.templateColumns"?: CachedData<{ key: string; cnName: string; enName: string }[]>;
+  options?: CachedData<Omit<Options, 'templateColumns'>>;
 }
 
 class LocalStorage {

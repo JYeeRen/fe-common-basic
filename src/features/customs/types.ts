@@ -2,4 +2,56 @@ import { Schema, Sources } from "@types";
 
 export type CustomItem = Schema.CustomItem;
 
-export type TemplateListQueryParams = Sources["/api/account/findAccounts"]["params"];
+export type TemplateListQueryParams =
+  Sources["/api/customsTemplate/findList"]["params"];
+
+export type CustomTemplate = Pick<
+  Schema.CustomTemplate,
+  "id" | "name" | "active" | "type"
+>;
+
+export interface CustomTemplateListOperations {
+  view: (id: number) => void;
+  edit: (id: number) => void;
+  delete: (id: number) => void;
+}
+
+export type CustomsTemplate = Schema.CustomTemplate;
+
+export type CustomTemplateCol = {
+  type?: 'predefined' | 'custom';
+  key: string;
+  index?: number;
+  cnName: string;
+  enName: string;
+  exportName?: string;
+  fixedValue?: string;
+  interceptBefore?: boolean;
+  interceptBeforeStart?: number;
+  interceptBeforeEnd?: number;
+  interceptAfter?: boolean;
+  interceptAfterStart?: number;
+  interceptAfterEnd?: number;
+  targetUnit?: string;
+}
+
+export interface CustomTemplateParams {
+  name: string;
+  type: number;
+  active: boolean;
+  mergeOrderNumber: boolean;
+  columns: CustomTemplateCol[];
+}
+
+export interface CustomTemplateFormValues {
+  name: string;
+  type: number;
+  active: boolean;
+  mergeOrderNumber: boolean;
+}
+
+export interface TemplateColOption {
+  key: string;
+  cnName: string;
+  enName: string;
+}

@@ -7,12 +7,14 @@ import { Lang } from "./components/lang.component";
 import { observer } from "mobx-react-lite";
 import { useMenuCtrl } from "./useMenuCtrl";
 import styles from "./layout.module.less";
+import optionsService from "@services/options.service";
 
 const { Header, Content, Sider } = Layout;
 
 const MainLayout = observer(() => {
   const navigate = useNavigate();
   useEffect(() => (appService.init({ navigate }), undefined), [navigate]);
+  useEffect(() => (optionsService.init(), undefined), []);
 
   const {
     topnav, topnavs, sidenavs, defaultSelectedKeys, defaultOpenKeys, onOpenChange, setTopnav

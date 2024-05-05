@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AnyObject } from "@types";
+import { runInAction } from "mobx";
 
 export function loading(loadingKey: string = 'loading') {
   return function (
@@ -13,7 +14,9 @@ export function loading(loadingKey: string = 'loading') {
       try {
         await originalMethod.apply(this, args);
       } finally {
-        (this as any)[loadingKey] = false;
+        runInAction(() => {
+          (this as any)[loadingKey] = false;
+        });
       }
     };
   };

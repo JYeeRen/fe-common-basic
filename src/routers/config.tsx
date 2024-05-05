@@ -5,6 +5,13 @@ import { authProvider } from "@services/auth.service";
 
 export const routesConfig: RouteObject[] = [
   {
+    path: "declare-status",
+    lazy: async () => ({
+      Component: (await import("@features/customs/declare-status"))
+        .default,
+    }),
+  },
+  {
     path: "/",
     // loader: protectedLoader, // 会导致无法直接访问子路由
     Component: Layout,
@@ -21,8 +28,9 @@ export const routesConfig: RouteObject[] = [
           {
             path: "clearance-of-goods",
             lazy: async () => ({
-              Component: (await import("@features/customs/clearance-of-goods.component"))
-                .default,
+              Component: (
+                await import("@features/customs/clearance-of-goods.component")
+              ).default,
             }),
           },
           {
@@ -42,8 +50,37 @@ export const routesConfig: RouteObject[] = [
           {
             path: "template",
             lazy: async () => ({
-              Component: (await import("@features/customs/template-list.component"))
-                .default,
+              Component: (
+                await import("@features/customs/template-list.component")
+              ).default,
+            }),
+          },
+          {
+            path: "template/create",
+            lazy: async () => ({
+              Component: (
+                await import(
+                  "@features/customs/custom-template-create.component"
+                )
+              ).default,
+            }),
+          },
+          {
+            path: "template/:id/edit",
+            lazy: async () => ({
+              Component: (
+                await import("@features/customs/custom-template-edit.component")
+              ).default,
+            }),
+          },
+          {
+            path: "template/:id",
+            lazy: async () => ({
+              Component: (
+                await import(
+                  "@features/customs/custom-template-detail.component"
+                )
+              ).default,
             }),
           },
           {
@@ -138,7 +175,7 @@ export const routesConfig: RouteObject[] = [
                     await import("@features/pm/account/change-passwd.component")
                   ).default,
                 }),
-              }
+              },
             ],
           },
         ],

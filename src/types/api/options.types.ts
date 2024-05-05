@@ -6,9 +6,18 @@ export interface OptionsAPI {
     params?: never;
     res: {
       actives: Option[];
-      commodityInformationOtherTypes: Option[];
+      customsItemInfoOtherTypes: Option[];
       mawbStatuses: Option[];
       packageStatuses: Option[];
+      customsStatusNoTypes: Option[];
+      customsStatusTypes: Option[];
+      timeZones: Option[];
+      templateTypes: Option[];
+      templateColumns: { key: string; cnName: string; enName: string }[];
+      unitTypes: Option[];
+      tikTokActionCodeList: Option[];
+      tikTokReasonCodeList: Option[];
+      tikTokWaybillStatusList: Option[];
     };
   };
   "/api/option/getRoleNames": {

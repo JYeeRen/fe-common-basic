@@ -8,10 +8,10 @@ export class ClientGridStore<T> {
   pageSize: number = 50;
   total: number = 0;
   rowData: T[] = [];
-  private readonly getRows: getRowsFunc<T>;
+  private readonly getRows?: getRowsFunc<T> = undefined;
   private queryParams: AnyObject = {};
 
-  constructor(getRows: getRowsFunc<T>) {
+  constructor(getRows?: getRowsFunc<T>) {
     this.getRows = getRows;
     makeAutoObservable(this);
 
@@ -24,6 +24,9 @@ export class ClientGridStore<T> {
   }
 
   async loadData() {
+    if (!this.getRows) {
+      return;
+    }
     const { list, total } = await this.getRows({
         page: this.page,
         size: this.pageSize,

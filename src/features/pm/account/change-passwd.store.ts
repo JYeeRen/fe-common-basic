@@ -10,7 +10,6 @@ export class ChangePasswdStore {
 
   @loading()
   async changePasswd({ oldPassword, newPassword }: { oldPassword: string, newPassword: string }) {
-    console.log(oldPassword, newPassword)
     await net.post('/api/account/changePassword', { oldPassword, newPassword });
   }
 }

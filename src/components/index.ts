@@ -13,6 +13,10 @@ export { Container } from "./container/container";
 export { Block } from "./block/block";
 export { SubmitButton } from "./submit-button";
 
+export { Table } from './table';
+
+export { deleteConfirm } from './modal';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";
@@ -146,7 +150,7 @@ export { Steps } from "antd";
 export type { StepProps, StepsProps } from "antd";
 export { Switch } from "antd";
 export type { SwitchProps } from "antd";
-export { Table } from "antd";
+// export { Table } from "antd";
 export type {
   TableColumnGroupType,
   TableColumnProps,

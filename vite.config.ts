@@ -36,7 +36,13 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'data-grid': ['@components/data-grid'],
           'antd': ['antd'],
-          'ag-grid': ['ag-grid-react']
+          'ag-grid': ['ag-grid-react'],
+          '@dnd': [
+            '@dnd-kit/core',
+            '@dnd-kit/modifiers',
+            '@dnd-kit/sortable',
+            '@dnd-kit/utilities',
+          ]
         }
       }
     }

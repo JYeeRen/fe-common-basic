@@ -57,7 +57,6 @@ class Net {
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
     if (response.data.code !== 0) {
-      console.log(response.data.code);
       throw new ServerError(response.data);
     }
     if (response.data === null) {

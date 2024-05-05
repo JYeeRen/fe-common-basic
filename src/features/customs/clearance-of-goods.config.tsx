@@ -1,9 +1,9 @@
 import { net } from "@infra";
-import { CustomItem, QueryParams } from "./types";
+import { CustomItem, TemplateListQueryParams } from "./types";
 import { t } from "@locale";
 import { AgGridTypes } from "@components";
 
-export const getRows = async (params: QueryParams) => {
+export const getRows = async (params: TemplateListQueryParams) => {
   return net.post("/api/customsItem/findList", params);
 };
 

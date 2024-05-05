@@ -118,7 +118,6 @@ export class ErrorParser {
   }
 
   private isTokenError(error: ParseError): boolean {
-    console.log('>>>>>>>>>', error)
     if (
       error.code !== ServerErrCode.C99 &&
       error.message !== "token decode error" &&
