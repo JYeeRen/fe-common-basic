@@ -32,7 +32,7 @@ function RoleList() {
       okText: t('确认删除'),
       cancelText: t('取消'),
     });
-  }, [notification, store, t]);
+  }, [gridStore, notification, store, t]);
 
   const operations = useMemo(() => ({
     view: viewRole,

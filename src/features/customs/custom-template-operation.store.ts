@@ -30,6 +30,10 @@ export class CustomTemplateOperationStore {
     this.isColumnSelectModalOpen = true;
   }
 
+  handleColumnRemove(key: string) {
+    this.templateColumns = this.templateColumns.filter((col) => col.key !== key);
+  }
+
   @loading()
   async onLoad(id = 0) {
     this.id = id;

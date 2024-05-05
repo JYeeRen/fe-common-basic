@@ -124,6 +124,7 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
             dataSource={store.templateColumns}
             handleRecordFieldChange={store.handleRecordFieldChange.bind(store)}
             setDataSource={store.setTemplateColumns.bind(store)}
+            handleColumnRemove={store.handleColumnRemove.bind(store)}
           />
         </div>
         <Form.Item className="mt-3">

@@ -1,4 +1,10 @@
-import { Form, Table, TableColumnType, TableColumnsType } from "@components";
+import {
+  Button,
+  Form,
+  Table,
+  TableColumnType,
+  TableColumnsType,
+} from "@components";
 import type { DragEndEvent } from "@dnd-kit/core";
 import {
   DndContext,
@@ -73,6 +79,7 @@ interface DragableTableProps {
     record: CustomTemplateCol
   ) => void;
   setDataSource: (dataSource: CustomTemplateCol[]) => void;
+  handleColumnRemove?: (key: string) => void;
 }
 
 export function DragableTable(props: DragableTableProps) {
@@ -81,6 +88,7 @@ export function DragableTable(props: DragableTableProps) {
     dataSource,
     setDataSource,
     handleRecordFieldChange,
+    handleColumnRemove,
   } = props;
   const [t] = useTranslation();
 
@@ -157,35 +165,50 @@ export function DragableTable(props: DragableTableProps) {
             />
           ),
       },
-      {
-        width: 100,
-        key: "targetUnit",
-        dataIndex: "targetUnit",
-        title: t("单位换算"),
-      },
+      // {
+      //   width: 100,
+      //   key: "targetUnit",
+      //   dataIndex: "targetUnit",
+      //   title: t("单位换算"),
+      // },
     ],
-    [handleRecordFieldChange, t]
+    [handleRecordFieldChange, readonly, t]
   );
 
-  const columns = useMemo(
-    () =>
-      columnDefs.map((col) => {
-        if (!col.editable || readonly) {
-          return col;
-        }
-        return {
-          ...col,
-          onCell: (record: CustomTemplateCol) => ({
-            record,
-            editable: col.editable === "all" || col.editable === record.type,
-            cellkey: col.key,
-            value: record[col.key as keyof CustomTemplateCol],
-            onSave: handleRecordFieldChange,
-          }),
-        };
-      }),
-    [columnDefs, handleRecordFieldChange, readonly]
-  );
+  const columns = useMemo(() => {
+    const cols = columnDefs.map((col) => {
+      if (!col.editable || readonly) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: (record: CustomTemplateCol) => ({
+          record,
+          editable: col.editable === "all" || col.editable === record.type,
+          cellkey: col.key,
+          value: record[col.key as keyof CustomTemplateCol],
+          onSave: handleRecordFieldChange,
+        }),
+      };
+    });
+    if (!readonly) {
+      cols.push({
+        width: 80,
+        key: "operation",
+        title: t("操作"),
+        dataIndex: "key",
+        fixed: "right",
+        render: (key) => {
+          return (
+            <Button type="link" onClick={() => handleColumnRemove?.(key)}>
+              {t("删除列")}
+            </Button>
+          );
+        },
+      });
+    }
+    return cols;
+  }, [columnDefs, handleColumnRemove, handleRecordFieldChange, readonly, t]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -212,13 +235,13 @@ export function DragableTable(props: DragableTableProps) {
   if (dataSource.length === 0 || readonly) {
     return (
       <Table
-      bordered
-      rowKey="key"
-      columns={columns as TableColumnsType<CustomTemplateCol>}
-      dataSource={dataSource}
-      size="small"
-      scroll={{ x: "max-content", y: 300 }}
-      pagination={false}
+        bordered
+        rowKey="key"
+        columns={columns as TableColumnsType<CustomTemplateCol>}
+        dataSource={dataSource}
+        size="small"
+        scroll={{ x: "max-content", y: 300 }}
+        pagination={false}
       />
     );
   }

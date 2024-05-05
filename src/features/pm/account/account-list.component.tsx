@@ -63,7 +63,7 @@ function AccountList() {
         cancelText: t("取消"),
       });
     },
-    [notification, store, t]
+    [gridStore, notification, store, t]
   );
 
   const operations = useMemo(
