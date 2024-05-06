@@ -72,12 +72,14 @@ function TemplateListComponent() {
           size="small"
           scroll={{ y: 400 }}
           pagination={{
+            total: gridStore.total,
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
             pageSizeOptions: [10, 30, 50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
+            onChange: gridStore.onTableChange.bind(gridStore),
           }}
         />
       </Container>

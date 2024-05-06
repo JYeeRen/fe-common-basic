@@ -6,6 +6,7 @@ import {
   Container,
   Form,
   Input,
+  Modal,
   Radio,
   Row,
   Select,
@@ -53,12 +54,40 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
     store.resetTemplateColumns();
   };
 
+  const handleBack = () => {
+    const {
+      name,
+      type,
+      active,
+      mergeOrderNumber,
+    } = form.getFieldsValue();
+    if (store.isFieldChanged({
+      name,
+      type,
+      active,
+      mergeOrderNumber,
+    })) {
+      Modal.confirm({
+        title: t('操作确认'),
+        content: t('您所作的更改可能未保存，是否离开该页面。'),
+        okText: t('确认离开'),
+        cancelText: t('留在当前页面'),
+        onOk: () => {
+          navigate(-1);
+        },
+      });
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <Container
       className={styles.container}
       title={title}
       loading={store.loading}
       backable
+      onBack={handleBack}
     >
       <ColumnSelectModal
         open={store.isColumnSelectModalOpen}

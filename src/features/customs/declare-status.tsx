@@ -143,13 +143,15 @@ function DeclareStatus() {
       className={"ag-theme-quartz"}
       style={{ width: "100%", height: "100%" }}
     >
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-expect-error */}
       <AgGridReact
         rowData={rowData}
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         pagination={true}
         rowSelection="multiple"
-        onSelectionChanged={(event) => console.log("Row Selected!")}
+        onSelectionChanged={() => console.log("Row Selected!")}
         onCellValueChanged={(event) =>
           console.log(`New Cell Value: ${event.value}`)
         }

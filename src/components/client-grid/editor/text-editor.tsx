@@ -6,10 +6,11 @@ export interface MySimpleInterface extends ICellEditor {
   myCustomFunction(): { rowIndex: number; colId: string };
 }
 
-export const TextEditor = (
-  { value, onValueChange, eventKey, rowIndex, column }: CustomCellEditorProps,
-  ref
-) => {
+export const TextEditor = ({
+  value,
+  onValueChange,
+  eventKey,
+}: CustomCellEditorProps) => {
   const updateValue = (val: string) => {
     onValueChange(val === "" ? null : val);
   };

@@ -7,7 +7,7 @@ import {
 import optionsService from "@services/options.service";
 import { v4 as uuidv4 } from "uuid";
 import { loading, net } from "@infra";
-import { keyBy, uniqBy } from "lodash";
+import { isEqual, keyBy, uniqBy } from "lodash";
 import { Schema } from "@types";
 
 export class CustomTemplateOperationStore {
@@ -168,6 +168,33 @@ export class CustomTemplateOperationStore {
       this.customTemplate = template;
       this.templateColumns = this.formatTemplateColsFromServer(template.columns);
     });
+  }
+
+  isFieldChanged(formValues: CustomTemplateFormValues) {
+    if (!this.id) {
+      return false;
+    }
+    const {
+      name,
+      type,
+      active,
+      mergeOrderNumber
+    } = this.initialValues;
+    if (!isEqual(formValues, {
+      name,
+      type,
+      active,
+      mergeOrderNumber
+    })) {
+      return true;
+    }
+    
+    return !isEqual(this.customTemplate?.columns, this.columns);
+
+  }
+
+  get changeNotSave() {
+    return true;
   }
 
   get columns(): Schema.CustomTemplateCol[] {
