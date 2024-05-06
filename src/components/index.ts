@@ -17,6 +17,8 @@ export { Table } from './table';
 
 export { deleteConfirm } from './modal';
 
+export { FilterContainer } from './filter/filter.component';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";

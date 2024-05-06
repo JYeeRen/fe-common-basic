@@ -15,6 +15,7 @@ import styles from "./template-list.module.less";
 import { useCallback, useMemo } from "react";
 import { CustomTemplateListOperations } from "./types";
 import { PlusOutlined } from "@ant-design/icons";
+import { CustomTemplateListFilterComponent } from "./component/custom-template-list-filter.component";
 
 function TemplateListComponent() {
   const { store, t, navigate } = useStore(TemplateListStore)();
@@ -52,7 +53,7 @@ function TemplateListComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
-      <div style={{ width: "100px", height: "100px" }}></div>
+      <CustomTemplateListFilterComponent />
       <Container title={t("模板维护")}>
         <Row className="my-4">
           <Button
