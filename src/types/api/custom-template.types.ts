@@ -5,7 +5,7 @@ export interface CustomTemplateAPI {
   "/api/customsTemplate/findList": {
     params: ListParams & {
       templateId?: number;
-      templateName?: "string";
+      templateName?: string;
       templateType?: number;
       active?: number;
     };

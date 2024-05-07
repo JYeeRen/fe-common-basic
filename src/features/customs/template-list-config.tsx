@@ -11,6 +11,8 @@ import {
   EditOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
+import optionsService from "@services/options.service";
+import { find } from "lodash";
 
 export const getColumns = (
   operatons: CustomTemplateListOperations
@@ -24,7 +26,14 @@ export const getColumns = (
     },
     { key: "id", dataIndex: "id", title: t("模板编号") },
     { key: "name", dataIndex: "name", title: t("模板名称"), width: 180 },
-    { key: "type", dataIndex: "type", title: t("模板类型"), width: 180 },
+    {
+      key: "type",
+      dataIndex: "type",
+      title: t("模板类型"),
+      width: 180,
+      render: (value) =>
+        find(optionsService.get("customTemplateTypes"), { value })?.label,
+    },
     {
       key: "active",
       dataIndex: "active",

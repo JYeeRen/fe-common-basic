@@ -1,4 +1,5 @@
 import { loading, net } from "@infra";
+import optionsService from "@services/options.service";
 import { makeAutoObservable } from "mobx";
 
 export class TemplateListStore {
@@ -12,4 +13,13 @@ export class TemplateListStore {
   async deleteTemplate(id: number) {
     await net.post("/api/customsTemplate/delete", { id });
   }
+  
+  get templateTypeOptions() {
+    return optionsService.get('templateTypes');
+  }
+
+  get activeOptions() {
+    return optionsService.get('actives');
+  }
+
 }

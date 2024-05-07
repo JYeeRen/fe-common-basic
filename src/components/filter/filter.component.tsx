@@ -1,4 +1,4 @@
-import { Button, Form, Row, Space } from "antd";
+import { Button, Form, FormProps, Row, Space } from "antd";
 import { PropsWithChildren } from "react";
 import styles from "./filter.module.less";
 import clsx from "clsx";
@@ -10,15 +10,24 @@ interface FilterProps extends PropsWithChildren {
   onFinish?: (values?: any) => void;
 }
 
-export function FilterContainer(props: FilterProps) {
-  const { onFinish, children } = props;
+export function FilterContainer(props: FilterProps & FormProps) {
+  const { onFinish, children, ...formProps } = props;
+
+  const [form] = Form.useForm();
 
   return (
     <div className={styles.container}>
       <div className={styles.title}>{t("数据筛选")}</div>
       <div className={styles.divider} />
       <div className={clsx("mb-4", styles.filter)}>
-        <Form onFinish={onFinish} onReset={() => onFinish?.()}>
+        <Form
+          form={form}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 14 }}
+          onFinish={onFinish}
+          onReset={() => onFinish?.()}
+          {...formProps}
+        >
           <Row>
             <Form.Item>
               <Space>

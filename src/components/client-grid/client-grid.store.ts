@@ -1,8 +1,10 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { AnyObject } from "@types";
 import { getRowsFunc } from "./types";
+import { loading } from "@infra";
 
 export class ClientGridStore<T> {
+  loading = false;
 
   page: number = 1;
   pageSize: number = 50;
@@ -23,6 +25,7 @@ export class ClientGridStore<T> {
     this.page = 1;
   }
 
+  @loading()
   async loadData() {
     if (!this.getRows) {
       return;

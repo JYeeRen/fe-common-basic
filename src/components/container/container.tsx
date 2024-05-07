@@ -14,6 +14,7 @@ interface ContainerProps extends PropsWithChildren {
   loading?: boolean;
   backable?: boolean;
   onBack?: () => void;
+  wrapperClassName?: string;
 }
 
 export function Container(props: ContainerProps) {
@@ -25,6 +26,7 @@ export function Container(props: ContainerProps) {
     backable,
     onBack,
     loading = false,
+    wrapperClassName
   } = props;
 
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ export function Container(props: ContainerProps) {
         <Row className={styles.operation}>{operation}</Row>
       </Block>
       <div className="flex flex-col flex-1 overflow-auto">
-        <Spin wrapperClassName={styles.loading} spinning={loading}>
+        <Spin wrapperClassName={clsx(styles.loading, wrapperClassName)} spinning={loading}>
           {children}
         </Spin>
       </div>
