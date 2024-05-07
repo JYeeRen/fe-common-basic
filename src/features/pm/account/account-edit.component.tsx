@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import AccountDetailComponent from "./account-detail.component";
 import { AccountDetailStore } from "./account-detail.store";
@@ -8,11 +7,8 @@ import { Modal } from "@components";
 import { useStore } from "@hooks";
 
 const AccountEdit = observer(() => {
-  const { store, t, navigate } = useStore(AccountDetailStore)();
   const { id } = useParams();
-  useEffect(() => {
-    store.onLoad(Number(id));
-  }, [id, store]);
+  const { store, t, navigate } = useStore(AccountDetailStore)(id);
 
   const onCommit = async (params: AccountParams) => {
     const { active: curState } = params;

@@ -12,7 +12,7 @@ export function loading(loadingKey: string = 'loading') {
     descriptor.value = async function (...args: unknown[]) {
       (this as any)[loadingKey] = true;
       try {
-        await originalMethod.apply(this, args);
+        return await originalMethod.apply(this, args);
       } finally {
         runInAction(() => {
           (this as any)[loadingKey] = false;

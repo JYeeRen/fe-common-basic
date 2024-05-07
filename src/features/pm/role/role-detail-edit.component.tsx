@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Modal } from "@components";
 import RoleDetailComponent from "./role-detail.component";
 import { RoleDetailStore } from "./role-detail.store";
 import { observer } from "mobx-react-lite";
 import { RoleParams } from "./types";
-import { useTranslation } from "@locale";
+import { useStore } from "@hooks";
 
 const RoleDetailEdit = observer(() => {
   const { id } = useParams();
-  const [t] = useTranslation();
-  const navigate = useNavigate();
 
-  const [store] = useState(new RoleDetailStore());
-
-  useEffect(() => {
-    store.onLoad(id != null ? Number(id) : undefined);
-  }, [id, store]);
+  const { store, t, navigate } = useStore(RoleDetailStore)(id);
 
   const onCommit = async (params: RoleParams) => {
     const { active: curState } = params;
