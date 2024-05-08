@@ -1,6 +1,7 @@
 import { net } from "@infra";
 import { makeAutoObservable } from "mobx";
 import { AccountItem, QueryParams } from "./types";
+import optionsService from "@services/options.service";
 
 
 export class AccountListStore {
@@ -31,5 +32,13 @@ export class AccountListStore {
 
   async resetPassword(id: number) {
     await net.post("/api/account/resetPassword", { id });
+  }
+
+  get roleOptions() {
+    return optionsService.get("roles");
+  }
+
+  get activeOptions() {
+    return optionsService.get("actives");
   }
 }

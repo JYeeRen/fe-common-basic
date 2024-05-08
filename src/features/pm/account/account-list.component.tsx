@@ -1,4 +1,16 @@
-import { Button, ClientGrid, Container, Modal, App } from "@components";
+import {
+  Button,
+  ClientGrid,
+  Container,
+  Modal,
+  App,
+  Table,
+  FilterContainer,
+  Col,
+  Form,
+  Input,
+  SearchSelect,
+} from "@components";
 import { observer } from "mobx-react-lite";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as accountListConfig from "./account-list-config";
@@ -6,7 +18,6 @@ import { useTranslation } from "@locale";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo, useState } from "react";
 import { AccountListStore } from "./account-list.store";
-import { Filter } from "./filter.component";
 import styles from "./account-list.module.less";
 
 function AccountList() {
@@ -16,7 +27,7 @@ function AccountList() {
   const navigate = useNavigate();
 
   const gridStore = ClientGrid.useGridStore(accountListConfig.getRows);
-  
+
   const resetPassword = useCallback(
     (id: number, account: string) => {
       Modal.confirm({
@@ -92,10 +103,50 @@ function AccountList() {
 
   return (
     <Container className={styles.container}>
-      <Filter onFinish={gridStore.setQueryParams.bind(gridStore)} />
+      <FilterContainer
+        onFinish={gridStore.setQueryParams.bind(gridStore)}
+        initialValues={{ active: 0 }}
+      >
+        <Col span={6}>
+          <Form.Item name="account" label={t("输入查询")}>
+            <Input placeholder={t("用户账号/名称")} />
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item name="roleId" label={t("账号角色")}>
+            <SearchSelect optionKey="roles" />
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item name="activeType" label={t("账号状态")}>
+            <SearchSelect placeholder={t('全部')} optionKey="actives" />
+          </Form.Item>
+        </Col>
+      </FilterContainer>
       <div className="w-full"></div>
       <Container title={t("账号列表")} operation={operation}>
-        <ClientGrid columns={columns} store={gridStore} />
+        {/* <ClientGrid columns={columns} store={gridStore} /> */}
+        <Table
+          bordered
+          loading={gridStore.loading}
+          // rowSelection={{ type: "checkbox" }}
+          rowKey="id"
+          dataSource={gridStore.rowData}
+          columns={columns}
+          size="small"
+          pagination={{
+            total: gridStore.total,
+            pageSize: gridStore.pageSize,
+            current: gridStore.page,
+            showTotal: (total) => t("共{{total}}条", { total }),
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            defaultPageSize: 50,
+            size: "default",
+            onChange: gridStore.onTableChange.bind(gridStore),
+          }}
+        />
       </Container>
     </Container>
   );

@@ -22,7 +22,7 @@ export interface OptionsAPI {
   };
   "/api/option/getRoleNames": {
     params?: never;
-    res: { options: Option[] };
+    res: { options: { id: number, val: string }[] };
   };
   "/api/option/getPermissions": {
     params?: never;

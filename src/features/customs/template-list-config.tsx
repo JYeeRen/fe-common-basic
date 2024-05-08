@@ -5,7 +5,7 @@ import {
   CustomTemplateListOperations,
   TemplateListQueryParams,
 } from "./types";
-import { Button, TableColumnsType } from "@components";
+import { OperationButtons, TableColumnsType } from "@components";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -45,35 +45,30 @@ export const getColumns = (
       key: "operation",
       title: t("操作"),
       render: (__value, data) => {
-        return [
-          {
-            key: "view",
-            icon: <EditOutlined />,
-            onClick: (data: CustomTemplate) => operatons.view?.(data.id),
-            label: t("查看"),
-          },
-          {
-            key: "edit",
-            icon: <RightCircleOutlined />,
-            onClick: (data: CustomTemplate) => operatons.edit?.(data.id),
-            label: t("编辑"),
-          },
-          {
-            key: "delete",
-            icon: <DeleteOutlined />,
-            onClick: (data: CustomTemplate) => operatons.delete?.(data.id),
-            label: t("删除"),
-          },
-        ].map(({ key, icon, onClick, label }) => (
-          <Button
-            key={key}
-            type="link"
-            icon={icon}
-            onClick={() => onClick(data)}
-          >
-            {label}
-          </Button>
-        ));
+        return (
+          <OperationButtons
+            items={[
+              {
+                key: "view",
+                icon: <EditOutlined />,
+                onClick: () => operatons.view?.(data.id),
+                label: t("查看"),
+              },
+              {
+                key: "edit",
+                icon: <RightCircleOutlined />,
+                onClick: () => operatons.edit?.(data.id),
+                label: t("编辑"),
+              },
+              {
+                key: "delete",
+                icon: <DeleteOutlined />,
+                onClick: () => operatons.delete?.(data.id),
+                label: t("删除"),
+              },
+            ]}
+          />
+        );
       },
     },
   ];

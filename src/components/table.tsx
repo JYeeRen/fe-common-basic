@@ -22,7 +22,7 @@ export const Table = observer((props: TableProps) => {
       className="w-full overflow-hidden"
       style={{ height: `${heights.container}px` }}
     >
-      <AntTable {...restProps} scroll={{ y: heights.table }} pagination={false} />
+      <AntTable {...restProps} scroll={{ y: heights.table, x: 'max-content' }} pagination={false} />
       <Block if={Boolean(pagination)}>
         <Pagination
           className="flex justify-end mt-4 mr-4 mb-8"

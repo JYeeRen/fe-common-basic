@@ -3,7 +3,7 @@ import {
   RedoOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
-import { AgGrid, AgGridTypes } from "@components";
+import { OperationButtons, TableColumnsType } from "@components";
 import { net } from "@infra";
 import { t } from "@locale";
 import { AccountItem, QueryParams } from "./types";
@@ -18,62 +18,65 @@ interface Operations {
 
 export const getGridColumns = (
   operatons: Operations
-): AgGridTypes.ColumnDefs<AccountItem> => {
+): TableColumnsType<AccountItem> => {
   return [
     {
-      field: "id",
-      headerName: t("ID"),
-      flex: 1,
+      key: "id",
+      dataIndex: "id",
+      title: t("ID"),
     },
     {
-      field: "account",
-      headerName: t("用户账号"),
-      flex: 1,
+      key: "account",
+      dataIndex: "account",
+      title: t("用户账号"),
     },
     {
-      field: "username",
-      headerName: t("用户名称"),
-      flex: 1,
+      key: "username",
+      dataIndex: "username",
+      title: t("用户名称"),
     },
     {
-      field: "roleName",
-      headerName: t("账号角色"),
-      flex: 1,
+      key: "roleName",
+      dataIndex: "roleName",
+      title: t("账号角色"),
     },
     {
-      field: "active",
-      headerName: t("账号状态"),
-      flex: 1,
-      cellDataType: false,
-      type: "state",
+      key: "active",
+      dataIndex: "active",
+      title: t("账号状态"),
+      render: (value) => (value ? t("启用") : t("停用")),
     },
     {
-      colId: "operation",
-      headerName: t("操作"),
-      flex: 2,
-      cellRenderer: AgGrid.renderer.operations(
-        [
-          {
-            key: "edit",
-            icon: <RightCircleOutlined />,
-            onClick: (data) => operatons.edit?.(data.id),
-            label: t("编辑"),
-          },
-          {
-            key: "delete",
-            icon: <DeleteOutlined />,
-            onClick: (data) => operatons.delete?.(data.id),
-            label: t("删除"),
-          },
-          {
-            key: "reset",
-            icon: <RedoOutlined />,
-            onClick: (data) => operatons.resetPassword?.(data.id, data.username),
-            label: t("重置初始密码"),
-          },
-        ],
-        (data) => data?.scope !== 1
-      ),
+      key: "operation",
+      title: t("操作"),
+      render: (__value, data) => {
+        return (
+          <OperationButtons
+            show={data?.scope !== 1}
+            items={[
+              {
+                key: "edit",
+                icon: <RightCircleOutlined />,
+                onClick: () => operatons.edit?.(data.id),
+                label: t("编辑"),
+              },
+              {
+                key: "delete",
+                icon: <DeleteOutlined />,
+                onClick: () => operatons.delete?.(data.id),
+                label: t("删除"),
+              },
+              {
+                key: "reset",
+                icon: <RedoOutlined />,
+                onClick: () =>
+                  operatons.resetPassword?.(data.id, data.username),
+                label: t("重置初始密码"),
+              },
+            ]}
+          />
+        );
+      },
     },
   ];
 };

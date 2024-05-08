@@ -40,12 +40,30 @@ class OptionService {
   data: Omit<Options, "templateColumns"> = defaultOptions;
 
   templateColumns: { key: string; cnName: string; enName: string }[] = [];
+  roles: Option[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
   async load() {
+    this.loadBase();
+    this.loadRoles();
+  }
+
+  async loadRoles() {
+    const options = await net.post("/api/option/getRoleNames");
+    runInAction(() => {
+      this.roles = options.options;
+    });
+    localStorage.setItem("options.roles", {
+      data: this.roles,
+      params: [],
+      time: Date.now(),
+    });
+  }
+
+  async loadBase() {
     const options = await net.post("/api/option/getBase");
     runInAction(() => {
       const { templateColumns, ...rest } = options;
@@ -72,11 +90,21 @@ class OptionService {
 
   init() {
     this.data = localStorage.getItem("options")?.data ?? defaultOptions;
+    this.templateColumns =
+      localStorage.getItem("options.templateColumns")?.data ?? [];
+    this.roles = localStorage.getItem("options.roles")?.data ?? [];
     this.load();
   }
 
-  get<K extends keyof Options>(key: K) {
-    const opts = this.data?.[key] || [];
+  get<K extends keyof Options>(key?: K | 'roles') {
+    if (!key) {
+      return [];
+    }
+    let opts = [];
+    opts = this.data?.[key as K] || [];
+    if (key as unknown === 'roles') {
+      opts = this.roles;
+    }
     return opts.map((item) => ({ value: item.id, label: item.val }));
   }
 }

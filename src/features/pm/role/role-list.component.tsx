@@ -71,7 +71,7 @@ function RoleList() {
       <Table
         bordered
         loading={gridStore.loading}
-        rowSelection={{ type: "checkbox" }}
+        // rowSelection={{ type: "checkbox" }}
         rowKey="id"
         dataSource={gridStore.rowData}
         columns={columns}

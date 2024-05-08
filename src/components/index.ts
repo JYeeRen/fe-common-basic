@@ -19,6 +19,10 @@ export { deleteConfirm } from './modal';
 
 export { FilterContainer } from './filter/filter.component';
 
+export { OperationButtons } from './operation-buttons';
+
+export { SearchSelect } from './search-select';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";
