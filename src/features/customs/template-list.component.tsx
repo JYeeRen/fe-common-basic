@@ -16,7 +16,6 @@ import { useCallback, useMemo } from "react";
 import { CustomTemplateListOperations } from "./types";
 import { PlusOutlined } from "@ant-design/icons";
 import { CustomTemplateListFilterComponent } from "./component/custom-template-list-filter.component";
-import { useHeight } from '@hooks';
 
 function TemplateListComponent() {
   const { store, t, navigate } = useStore(TemplateListStore)();
@@ -55,16 +54,6 @@ function TemplateListComponent() {
     []
   );
 
-  const height = useHeight('#table-container');
-
-  const heights = useMemo(() => {
-    const container = Math.max(300, height - 36);
-    const table = Math.max(200, height - 150);
-    return { container, table };
-  }, [height]);
-
-  console.log(heights)
-
   return (
     <Container className={styles.container} loading={store.loading}>
       <CustomTemplateListFilterComponent
@@ -82,11 +71,6 @@ function TemplateListComponent() {
             {t("新增模板")}
           </Button>
         </Row>
-        <div
-          id="table-container"
-          className="w-full overflow-hidden"
-          style={{ height: `${heights.container}px` }}
-        >
           <Table
             bordered
             loading={gridStore.loading}
@@ -95,7 +79,6 @@ function TemplateListComponent() {
             dataSource={gridStore.rowData}
             columns={columns}
             size="small"
-            scroll={{ y: heights.table }}
             pagination={{
               total: gridStore.total,
               showTotal: (total) => t("共{{total}}条", { total }),
@@ -107,7 +90,6 @@ function TemplateListComponent() {
               onChange: gridStore.onTableChange.bind(gridStore),
             }}
           />
-        </div>
       </Container>
     </Container>
   );
