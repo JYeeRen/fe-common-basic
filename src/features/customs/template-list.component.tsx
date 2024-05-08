@@ -71,25 +71,27 @@ function TemplateListComponent() {
             {t("新增模板")}
           </Button>
         </Row>
-          <Table
-            bordered
-            loading={gridStore.loading}
-            rowSelection={{ type: "checkbox" }}
-            rowKey="id"
-            dataSource={gridStore.rowData}
-            columns={columns}
-            size="small"
-            pagination={{
-              total: gridStore.total,
-              showTotal: (total) => t("共{{total}}条", { total }),
-              showQuickJumper: true,
-              showSizeChanger: true,
-              pageSizeOptions: [10, 30, 50, 100, 200, 500],
-              defaultPageSize: 50,
-              size: "default",
-              onChange: gridStore.onTableChange.bind(gridStore),
-            }}
-          />
+        <Table
+          bordered
+          loading={gridStore.loading}
+          rowSelection={{ type: "checkbox" }}
+          rowKey="id"
+          dataSource={gridStore.rowData}
+          columns={columns}
+          size="small"
+          pagination={{
+            total: gridStore.total,
+            pageSize: gridStore.pageSize,
+            current: gridStore.page,
+            showTotal: (total) => t("共{{total}}条", { total }),
+            showQuickJumper: true,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            defaultPageSize: 50,
+            size: "default",
+            onChange: gridStore.onTableChange.bind(gridStore),
+          }}
+        />
       </Container>
     </Container>
   );

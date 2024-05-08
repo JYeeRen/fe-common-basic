@@ -3,7 +3,7 @@ import {
   EditOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
-import { AgGrid, AgGridTypes } from "@components";
+import { Button, TableColumnsType } from "@components";
 import { net } from "@infra";
 import { t } from "@locale";
 import { Role } from "./types";
@@ -16,50 +16,59 @@ interface Operations {
   delete?: (id: number) => void;
 }
 
-export const getGridColumns = (
-  operatons: Operations
-): AgGridTypes.ColumnDefs<Role> => {
+export const getColumns = (operatons: Operations): TableColumnsType<Role> => {
   return [
     {
-      field: "name",
-      headerName: t("账号角色"),
-      pinned: "left",
+      key: "name",
+      dataIndex: "name",
+      title: t("账号角色"),
     },
     {
-      field: "linkedCount",
-      headerName: t("关联账号"),
-      pinned: "left",
-      valueFormatter: (params) => `${params.value}个`,
+      key: "linkedCount",
+      dataIndex: "linkedCount",
+      title: t("关联账号"),
+      render: (value) => `${value}个`,
     },
     {
-      field: "active",
-      headerName: t("角色状态"),
-      cellDataType: false,
-      type: "state",
+      key: "active",
+      dataIndex: "active",
+      title: t("角色状态"),
+      render: (value) => (value ? t("启用") : t("停用")),
     },
     {
-      colId: "operation",
-      headerName: t("操作"),
-      cellRenderer: AgGrid.renderer.operations([
-        {
-          key: "view",
-          icon: <EditOutlined />,
-          onClick: (data) => operatons.view?.(data.id),
-          label: t("查看"),
-        },
-        {
-          key: "edit",
-          icon: <RightCircleOutlined />,
-          onClick: (data) => operatons.edit?.(data.id),
-          label: t("编辑"),
-        },
-        {
-          key: "delete",
-          icon: <DeleteOutlined />,
-          onClick: (data) => operatons.delete?.(data.id),
-          label: t("删除"),
-        },
-      ]),
+      key: "operation",
+      title: t("操作"),
+      render: (__value, data) => {
+        return [
+          {
+            key: "view",
+            icon: <EditOutlined />,
+            onClick: (data: Role) => operatons.view?.(data.id),
+            label: t("查看"),
+          },
+          {
+            key: "edit",
+            icon: <RightCircleOutlined />,
+            onClick: (data: Role) => operatons.edit?.(data.id),
+            label: t("编辑"),
+          },
+          {
+            key: "delete",
+            icon: <DeleteOutlined />,
+            onClick: (data: Role) => operatons.delete?.(data.id),
+            label: t("删除"),
+          },
+        ].map(({ key, icon, onClick, label }) => (
+          <Button
+            key={key}
+            type="link"
+            icon={icon}
+            onClick={() => onClick(data)}
+          >
+            {label}
+          </Button>
+        ));
+      },
     },
   ];
 };
