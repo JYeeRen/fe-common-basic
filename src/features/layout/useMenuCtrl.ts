@@ -54,7 +54,7 @@ const navConfig = (): TopNavItem[] => [
     label: t("权限管理"),
     sidenavs: [
       { key: "/pm/accounts", label: t("账号管理") },
-      { key: "/pm/roles", label: t("权限管理") },
+      { key: "/pm/roles", label: t("角色管理") },
     ],
   },
 ];
