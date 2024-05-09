@@ -26,6 +26,7 @@ export interface Account {
 }
 
 export interface CustomItem {
+  itemId: number;
   mawbInfo: {
     masterWaybillNo: string;
     transportName: string;

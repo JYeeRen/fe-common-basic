@@ -13,6 +13,7 @@ import {
   useState,
 } from "react";
 import { AnyObject, ColSchema } from "./type";
+import { get } from "lodash";
 
 function getGridColumn(col: ColSchema) {
   return { ...col };
@@ -48,12 +49,16 @@ export function useDataGrid<R extends AnyObject>(
 
   const memoColumns = useMemo(() => schemas.map(getGridColumn), [schemas]);
 
+  console.log(memoColumns);
+
   const toCell = useCallback((rowData: R, col: number): GridCell => {
     const colSchema = schemas[col];
-    const val = rowData[colSchema.id]?.toString() ?? '';
+    // const val = rowData[colSchema.id]?.toString() ?? '';
+    const val = get(rowData, colSchema.dataIndex)?.toString() ?? '';
     return {
       kind: GridCellKind.Text,
-      data: rowData[colSchema.id],
+      // data: rowData[colSchema.id],
+      data: val,
       displayData: val,
       allowOverlay: true,
       readonly: true,

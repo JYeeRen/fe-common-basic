@@ -75,7 +75,7 @@ function TemplateListComponent() {
           bordered
           loading={gridStore.loading}
           rowSelection={{ type: "checkbox" }}
-          rowKey="id"
+          rowKey="itemId"
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"

@@ -1,152 +1,310 @@
 import { net } from "@infra";
 import { CustomItem, TemplateListQueryParams } from "./types";
 import { t } from "@locale";
-import { AgGridTypes } from "@components";
+import { Button, TableColumnsType } from "@components";
 
 export const getRows = async (params: TemplateListQueryParams) => {
   return net.post("/api/customsItem/findList", params);
 };
 
-export const getGridColumns = (): AgGridTypes.ColumnDefs<CustomItem> => {
+export const getGridColumns = (): TableColumnsType<CustomItem> => {
   return [
     {
-      field: "mawbInfo.masterWaybillNo",
-      headerName: t("主提运单号"),
+      key: "mawbInfo.masterWaybillNo",
+      dataIndex: ["mawbInfo", "masterWaybillNo"],
+      title: t("主提运单号"),
+      render: (value, record) => {
+        console.log(value, record.mawbInfo.masterWaybillNo);
+        return record.mawbInfo.masterWaybillNo;
+      },
     },
     {
-      field: "mawbInfo.transportName",
-      headerName: t("运⼒名称，空运航班号，⻋牌号"),
+      key: "transportName",
+      dataIndex: "transportName",
+      title: t("运输方式"),
     },
     {
-      field: "mawbInfo.departPortCode",
-      headerName: t("始发地港⼝代码"),
+      key: "mawbInfo.departPortCode",
+      dataIndex: ["mawbInfo", "departPortCode"],
+      title: t("起运港"),
     },
     {
-      field: "mawbInfo.arrivePortCode",
-      headerName: t("arrivePortCode"),
-    },
-    { field: "mawbInfo.etd", headerName: t("预计离开时间(ETD)") },
-    { field: "mawbInfo.eta", headerName: t("预计抵达时间(ETA)") },
-    { field: "mawbInfo.customerName", headerName: t("customerName") },
-    {
-      field: "packageInfo.providerOrderId",
-      headerName: t("物流订单号"),
+      key: "mawbInfo.arrivePortCode",
+      dataIndex: ["mawbInfo", "arrivePortCode"],
+      title: t("抵运港"),
     },
     {
-      field: "packageInfo.declarationBillId",
-      headerName: t("申报订单号"),
+      key: "mawbInfo.etd",
+      dataIndex: ["mawbInfo", "etd"],
+      title: t("预计离港日期"),
     },
     {
-      field: "packageInfo.trackingNo",
-      headerName: t("⾯单号"),
+      key: "mawbInfo.eta",
+      dataIndex: ["mawbInfo", "eta"],
+      title: t("预计抵港日期"),
     },
     {
-      field: "packageInfo.operateTime",
-      headerName: t("操作时间"),
-    },
-    { field: "packageInfo.remark", headerName: t("取消原因") },
-    {
-      field: "packageInfo.entityCode",
-      headerName: t("公司代码"),
-    },
-    { field: "packageInfo.orderNo", headerName: t("交易单号") },
-    { field: "packageInfo.bigBagNo", headerName: t("⼤包号") },
-    {
-      field: "packageInfo.containerNo",
-      headerName: t("海运/铁路的集装箱号"),
+      key: "mawbInfo.customerName",
+      dataIndex: ["mawbInfo", "customerName"],
+      title: t("客户名称"),
     },
     {
-      field: "packageInfo.buyerRegion",
-      headerName: t("包裹售卖国家"),
+      key: "packageInfo.providerOrderId",
+      dataIndex: ["packageInfo", "providerOrderId"],
+      title: t("物流订单号"),
     },
     {
-      field: "packageInfo.nextProviderName",
-      headerName: t("下⼀段服务商名称（交接⽤）"),
+      key: "packageInfo.declarationBillId",
+      dataIndex: ["packageInfo", "declarationBillId"],
+      title: t("申报订单号"),
     },
     {
-      field: "packageInfo.goodsValue",
-      headerName: t("包裹申报价格"),
+      key: "packageInfo.trackingNo",
+      dataIndex: ["packageInfo", "trackingNo"],
+      title: t("面单号"),
     },
     {
-      field: "packageInfo.shippingFee",
-      headerName: t("包裹运费"),
-    },
-    { field: "packageInfo.currency", headerName: t("币种") },
-    {
-      field: "packageInfo.realWeight",
-      headerName: t("⽑重"),
+      key: "packageInfo.operateTime",
+      dataIndex: ["packageInfo", "operateTime"],
+      title: t("操作时间"),
     },
     {
-      field: "packageInfo.weightUnit",
-      headerName: t("重量单位"),
-    },
-    { field: "packageInfo.status", headerName: t("状态") },
-    {
-      field: "packageInfo.cancelRemark",
-      headerName: t("取消原因"),
+      key: "packageInfo.remark",
+      dataIndex: ["packageInfo", "remark"],
+      title: t("用户发货备注"),
     },
     {
-      field: "packageItemInfo.itemId",
-      headerName: t("商品ID"),
-    },
-    { field: "packageItemInfo.skuId", headerName: t("商品sku标识id") },
-    {
-      field: "packageItemInfo.productName",
-      headerName: t("/商品英⽂品名"),
+      key: "packageInfo.entityCode",
+      dataIndex: ["packageInfo", "entityCode"],
+      title: t("公司代码"),
     },
     {
-      field: "packageItemInfo.productNameCn",
-      headerName: t("商品中文名称"),
+      key: "packageInfo.orderNo",
+      dataIndex: ["packageInfo", "orderNo"],
+      title: t("交易单号"),
     },
     {
-      field: "packageItemInfo.weight",
-      headerName: t("重量"),
+      key: "packageInfo.bigBagNo",
+      dataIndex: ["packageInfo", "bigBagNo"],
+      title: t("大包号"),
     },
     {
-      field: "packageItemInfo.exportHsCode",
-      headerName: t("出口HS编码"),
+      key: "packageInfo.containerNo",
+      dataIndex: ["packageInfo", "containerNo"],
+      title: t("集装箱号"),
     },
     {
-      field: "packageItemInfo.importHsCode",
-      headerName: t("进口HS编码"),
-    },
-    { field: "packageItemInfo.qty", headerName: t("数量") },
-    { field: "packageItemInfo.unit", headerName: t("数量单位") },
-    {
-      field: "packageItemInfo.unitPrice",
-      headerName: t("商品申报单价"),
+      key: "packageInfo.buyerRegion",
+      dataIndex: ["packageInfo", "buyerRegion"],
+      title: t("包裹售卖国家"),
     },
     {
-      field: "packageItemInfo.shippingFee",
-      headerName: t("商品运费"),
+      key: "packageInfo.nextProviderName",
+      dataIndex: ["packageInfo", "nextProviderName"],
+      title: t("下一段服务商名称"),
     },
     {
-      field: "packageItemInfo.codFee",
-      headerName: t("COD⾦额"),
+      key: "packageInfo.goodsValue",
+      dataIndex: ["packageInfo", "goodsValue"],
+      title: t("包裹申报价格"),
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.vatRate",
-      headerName: t("增值税率"),
+      key: "packageInfo.goodsValueCNY",
+      dataIndex: ["packageInfo", "goodsValueCNY"],
+      title: `${t("包裹申报价格")}(CNY)`,
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.vatFee",
-      headerName: t("增值税"),
+      key: "packageInfo.goodsValueUSD",
+      dataIndex: ["packageInfo", "goodsValue"],
+      title: `${t("包裹申报价格")}(USD)`,
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.originCountry",
-      headerName: t("原产国"),
+      key: "packageInfo.packageShippingFee",
+      dataIndex: ["packageInfo", "packageShippingFee"],
+      title: t("包裹运费"),
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.itemType",
-      headerName: t("类型"),
+      key: "packageInfo.packageShippingFeeCNY",
+      dataIndex: ["packageInfo", "packageShippingFeeCNY"],
+      title: `${t("包裹运费")}(CNY)`,
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.itemUrl",
-      headerName: t("商品链接"),
+      key: "packageInfo.packageShippingFeeUSD",
+      dataIndex: ["packageInfo", "packageShippingFee"],
+      title: `${t("包裹运费")}(USD)`,
+      // variants: ["CNY", "USD"],
     },
     {
-      field: "packageItemInfo.taxMark",
-      headerName: t("商品已税/未税"),
+      key: "packageInfo.currency",
+      dataIndex: ["packageInfo", "currency"],
+      title: t("币种"),
+    },
+    {
+      key: "packageInfo.realWeight",
+      dataIndex: ["packageInfo", "realWeight"],
+      title: t("毛重"),
+    },
+    {
+      key: "packageInfo.weightUnit",
+      dataIndex: ["packageInfo", "weightUnit"],
+      title: t("重量单位"),
+    },
+    {
+      key: "packageItemInfo.itemId",
+      dataIndex: ["packageItemInfo", "itemId"],
+      title: t("商品ID"),
+    },
+    {
+      key: "packageItemInfo.skuId",
+      dataIndex: ["packageItemInfo", "skuId"],
+      title: t("商品sku标识id"),
+    },
+    {
+      key: "packageItemInfo.productName",
+      dataIndex: ["packageItemInfo", "productName"],
+      title: t("商品英文品名"),
+    },
+    {
+      key: "packageItemInfo.productNameCn",
+      dataIndex: ["packageItemInfo", "productNameCn"],
+      title: t("商品中文名称"),
+    },
+    {
+      key: "packageItemInfo.weight",
+      dataIndex: ["packageItemInfo", "weight"],
+      title: t("item重量"),
+    },
+    {
+      key: "packageItemInfo.exportHsCode",
+      dataIndex: ["packageItemInfo", "exportHsCode"],
+      title: t("出口HS编码"),
+    },
+    {
+      key: "packageItemInfo.importHsCode",
+      dataIndex: ["packageItemInfo", "importHsCode"],
+      title: t("进口HS编码"),
+    },
+    {
+      key: "packageItemInfo.qty",
+      dataIndex: ["packageItemInfo", "qty"],
+      title: t("数量"),
+    },
+    {
+      key: "packageItemInfo.unit",
+      dataIndex: ["packageItemInfo", "unit"],
+      title: t("数量单位"),
+    },
+    {
+      key: "packageItemInfo.unitPrice",
+      dataIndex: ["packageItemInfo", "unitPrice"],
+      title: `${t("商品申报单价")}`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.unitPriceCNY",
+      dataIndex: ["packageItemInfo", "unitPriceCNY"],
+      title: `${t("商品申报单价")}(CNY)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.unitPriceUSD",
+      dataIndex: ["packageItemInfo", "unitPriceUSD"],
+      title: `${t("商品申报单价")}(USD)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.itemShippingFee",
+      dataIndex: ["packageItemInfo", "itemShippingFee"],
+      title: t("商品运费"),
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.itemShippingFeeCNY",
+      dataIndex: ["packageItemInfo", "itemShippingFeeCNY"],
+      title: `${t("商品运费")}(CNY)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.itemShippingFeeUSD",
+      dataIndex: ["packageItemInfo", "itemShippingFeeUSD"],
+      title: `${t("商品运费")}(USD)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.codFee",
+      dataIndex: ["packageItemInfo", "codFee"],
+      title: t("COD金额"),
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.codFeeCNY",
+      dataIndex: ["packageItemInfo", "codFeeCNY"],
+      title: `${t("COD金额")}(CNY)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.codFeeUSD",
+      dataIndex: ["packageItemInfo", "codFeeUSD"],
+      title: `${t("COD金额")}(USD)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.vatRate",
+      dataIndex: ["packageItemInfo", "vatRate"],
+      title: t("增值税率"),
+    },
+    {
+      key: "packageItemInfo.vatFee",
+      dataIndex: ["packageItemInfo", "vatFee"],
+      title: `${t("增值税")}`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.vatFeeCNY",
+      dataIndex: ["packageItemInfo", "vatFeeCNY"],
+      title: `${t("增值税")}(CNY)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.vatFeeUSD",
+      dataIndex: ["packageItemInfo", "vatFeeUSD"],
+      title: `${t("增值税")}(USD)`,
+      // variants: ["CNY", "USD"],
+    },
+    {
+      key: "packageItemInfo.originCountry",
+      dataIndex: ["packageItemInfo", "originCountry"],
+      title: t("原产国"),
+    },
+    {
+      key: "packageItemInfo.itemType",
+      dataIndex: ["packageItemInfo", "itemType"],
+      title: t("类型"),
+    },
+    {
+      key: "packageItemInfo.itemUrl",
+      dataIndex: ["packageItemInfo", "itemUrl"],
+      title: t("商品链接"),
+      render: (value) => (
+        <Button
+          type="link"
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          点击跳转
+        </Button>
+      ),
+    },
+    {
+      key: "packageItemInfo.taxMark",
+      dataIndex: ["packageItemInfo", "taxMark"],
+      title: t("商品已税/未税"),
     },
   ];
 };

@@ -1,4 +1,12 @@
 {
+  "导出所有商品信息": {
+    "zh": "导出所有商品信息",
+    "en": "导出所有商品信息"
+  },
+  "导出已筛选商品信息": {
+    "zh": "导出已筛选商品信息",
+    "en": "导出已筛选商品信息"
+  },
   "全部": {
     "zh": "全部",
     "en": "全部"
@@ -422,5 +430,193 @@
   "用户名称": {
     "zh": "用户名称",
     "en": "用户名称"
+  },
+  "主提运单号": {
+    "zh": "主提运单号",
+    "en": "Master Waybill No"
+  },
+  "运输方式": {
+    "zh": "运输方式",
+    "en": "Transport Name"
+  },
+  "起运港": {
+    "zh": "起运港",
+    "en": "Depart Port Code"
+  },
+  "抵运港": {
+    "zh": "抵运港",
+    "en": "Arrive Port Code"
+  },
+  "预计离港日期": {
+    "zh": "预计离港日期",
+    "en": "ETD"
+  },
+  "预计抵港日期": {
+    "zh": "预计抵港日期",
+    "en": "ETA"
+  },
+  "客户名称": {
+    "zh": "客户名称",
+    "en": "Customer Name"
+  },
+  "物流订单号": {
+    "zh": "物流订单号",
+    "en": "Provider Order Id"
+  },
+  "申报订单号": {
+    "zh": "申报订单号",
+    "en": "Declaration Bill Id"
+  },
+  "面单号": {
+    "zh": "面单号",
+    "en": "Tracking No"
+  },
+  "操作时间": {
+    "zh": "操作时间",
+    "en": "Operate Time"
+  },
+  "用户发货备注": {
+    "zh": "用户发货备注",
+    "en": "Remark"
+  },
+  "公司代码": {
+    "zh": "公司代码",
+    "en": "Entity Code"
+  },
+  "交易单号": {
+    "zh": "交易单号",
+    "en": "Order No"
+  },
+  "大包号": {
+    "zh": "大包号",
+    "en": "Big Bag No"
+  },
+  "集装箱号": {
+    "zh": "集装箱号",
+    "en": "Container No"
+  },
+  "包裹售卖国家": {
+    "zh": "包裹售卖国家",
+    "en": "Buyer Region"
+  },
+  "下一段服务商名称": {
+    "zh": "下一段服务商名称",
+    "en": "Next Provider Name"
+  },
+  "包裹申报价格": {
+    "zh": "包裹申报价格",
+    "en": "Goods Value",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "包裹运费": {
+    "zh": "包裹运费",
+    "en": "Package Shipping Fee",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "币种": {
+    "zh": "币种",
+    "en": "Currency"
+  },
+  "毛重": {
+    "zh": "毛重",
+    "en": "Real Weight"
+  },
+  "重量单位": {
+    "zh": "重量单位",
+    "en": "Weight Unit"
+  },
+  "商品ID": {
+    "zh": "商品ID",
+    "en": "Item Id"
+  },
+  "商品sku标识id": {
+    "zh": "商品sku标识id",
+    "en": "Sku Id"
+  },
+  "商品英文品名": {
+    "zh": "商品英文品名",
+    "en": "Product Name"
+  },
+  "商品中文名称": {
+    "zh": "商品中文名称",
+    "en": "Product Name Cn"
+  },
+  "item重量": {
+    "zh": "item重量",
+    "en": "Weight"
+  },
+  "出口HS编码": {
+    "zh": "出口HS编码",
+    "en": "Export Hs Code"
+  },
+  "进口HS编码": {
+    "zh": "进口HS编码",
+    "en": "Import Hs Code"
+  },
+  "数量": {
+    "zh": "数量",
+    "en": "Qty"
+  },
+  "数量单位": {
+    "zh": "数量单位",
+    "en": "Unit"
+  },
+  "商品申报单价": {
+    "zh": "商品申报单价",
+    "en": "Unit Price",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "商品运费": {
+    "zh": "商品运费",
+    "en": "Item Shipping Fee",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "COD金额": {
+    "zh": "COD金额",
+    "en": "Cod Fee",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "增值税率": {
+    "zh": "增值税率",
+    "en": "Vat Rate"
+  },
+  "增值税": {
+    "zh": "增值税",
+    "en": "Vat Fee",
+    "variants": [
+      "CNY",
+      "USD"
+    ]
+  },
+  "原产国": {
+    "zh": "原产国",
+    "en": "Origin Country"
+  },
+  "类型": {
+    "zh": "类型",
+    "en": "Item Type"
+  },
+  "商品链接": {
+    "zh": "商品链接",
+    "en": "Item Url"
+  },
+  "商品已税/未税": {
+    "zh": "商品已税/未税",
+    "en": "Tax Mark"
   }
 }

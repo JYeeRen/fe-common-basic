@@ -11,7 +11,6 @@ export function DataGridImpl<R extends AnyObject>(props: DataGridProps<R>) {
   const ref = useRef<DataEditorRef>(null);
   const dataRef = useRef<R[]>(dataSource);
   dataRef.current = dataSource;
-
   const {
     columns: gridColumns,
     getCellContent,
@@ -46,7 +45,8 @@ export function DataGridImpl<R extends AnyObject>(props: DataGridProps<R>) {
       height="100%"
       width="100%"
       rowMarkers="clickable-number"
-      rows={props.rows ?? rows ?? dataSource.length}
+      // rows={props.rows ?? rows ?? dataSource.length}
+      rows={dataSource.length}
       overscrollX={0}
       overscrollY={0}
       theme={theme}

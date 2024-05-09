@@ -5,8 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
 
 export const Table = observer((props: TableProps) => {
-
-  const { pagination, ...restProps } = props
+  const { pagination, scroll, ...restProps } = props;
 
   const height = useHeight("#table-container");
 
@@ -22,7 +21,11 @@ export const Table = observer((props: TableProps) => {
       className="w-full overflow-hidden"
       style={{ height: `${heights.container}px` }}
     >
-      <AntTable {...restProps} scroll={{ y: heights.table, x: 'max-content' }} pagination={false} />
+      <AntTable
+        {...restProps}
+        scroll={{ y: heights.table, x: "max-content", ...scroll }}
+        pagination={false}
+      />
       <Block if={Boolean(pagination)}>
         <Pagination
           className="flex justify-end mt-4 mr-4 mb-8"
@@ -31,4 +34,4 @@ export const Table = observer((props: TableProps) => {
       </Block>
     </div>
   );
-})
+});
