@@ -13,7 +13,6 @@ import {
   useState,
 } from "react";
 import { AnyObject, ColSchema } from "./type";
-import { get } from "lodash";
 
 function getGridColumn(col: ColSchema) {
   return { ...col };
@@ -53,8 +52,7 @@ export function useDataGrid<R extends AnyObject>(
 
   const toCell = useCallback((rowData: R, col: number): GridCell => {
     const colSchema = schemas[col];
-    // const val = rowData[colSchema.id]?.toString() ?? '';
-    const val = get(rowData, colSchema.dataIndex)?.toString() ?? '';
+    const val = rowData[colSchema.id]?.toString() ?? '';
     return {
       kind: GridCellKind.Text,
       // data: rowData[colSchema.id],
