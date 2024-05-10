@@ -20,13 +20,13 @@ export const SearchSelect = observer((props: SearchSelectProps) => {
 
   return (
     <Select
-      {...restProps}
-      options={selectOpts}
       showSearch
       allowClear
+      options={selectOpts}
       placeholder="全部"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       filterOption={filterOption as any}
+      {...restProps}
     />
   );
 });

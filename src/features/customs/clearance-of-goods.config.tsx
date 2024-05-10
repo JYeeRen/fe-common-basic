@@ -13,10 +13,6 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       key: "mawbInfo.masterWaybillNo",
       dataIndex: ["mawbInfo", "masterWaybillNo"],
       title: t("主提运单号"),
-      render: (value, record) => {
-        console.log(value, record.mawbInfo.masterWaybillNo);
-        return record.mawbInfo.masterWaybillNo;
-      },
     },
     {
       key: "transportName",

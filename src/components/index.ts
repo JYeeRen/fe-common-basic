@@ -18,6 +18,8 @@ export { Table } from './table';
 export { deleteConfirm } from './modal';
 
 export { FilterContainer } from './filter/filter.component';
+export { FilterTextArea } from './filter/filter-textarea.component';
+export { textareaMaxLengthRule } from './filter/textarea-max-length-rule';
 
 export { OperationButtons } from './operation-buttons';
 

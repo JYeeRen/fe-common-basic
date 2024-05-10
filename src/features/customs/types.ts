@@ -55,3 +55,10 @@ export interface TemplateColOption {
   cnName: string;
   enName: string;
 }
+
+export interface CustomITemsQueryParams {
+  masterWaybillNoList: string[];
+  bigBagNoList: string[];
+  otherType: number;
+  otherList: string[];
+}

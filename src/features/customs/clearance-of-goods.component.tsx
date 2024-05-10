@@ -3,16 +3,23 @@ import { useStore } from "@hooks";
 import {
   Button,
   ClientGrid,
+  Col,
   Container,
+  FilterContainer,
+  FilterTextArea,
+  Form,
   Row,
+  SearchSelect,
   Table,
+  textareaMaxLengthRule,
 } from "@components";
 import { ClearanceOfGoodsStore } from "./clearance-of-goods.store";
 import * as CustomItemConfig from "./clearance-of-goods.config";
 import styles from "./clerance-of-goods.module.less";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { useMemo } from "react";
-
+import { CustomITemsQueryParams } from "./types";
+import { compact } from "lodash";
 
 function ClearanceOfGoodsComponent() {
   const { t } = useStore(ClearanceOfGoodsStore)();
@@ -21,33 +28,70 @@ function ClearanceOfGoodsComponent() {
 
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
-  // const columns: TableColumnsType<CustomItem> = useMemo(() => {
-  //   const cols = CustomItemConfig.getGridColumns();
-  //   const widthMap = new Map();
-  //   gridStore.rowData.forEach((target) => {
-  //     for (let key in target) {
-  //       if (target.hasOwnProperty(key)) {
-  //         let keyWidth = getTextWidth(target[key]);
-  //         let curValue = widthMap.get(key);
-  //         // 字段有值就放入数组
-  //         widthMap.set(key, Math.max(curValue, keyWidth));
-  //       }
-  //     }
-  //   });
+  const handleFinish = (values: CustomITemsQueryParams) => {
+    const { masterWaybillNoList, bigBagNoList, otherType, otherList } = values;
+    gridStore.setQueryParams({
+      masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
+      bigBagNoList: bigBagNoList && compact(bigBagNoList),
+      otherList: otherList && compact(otherList),
+      otherType,
+    });
+  };
 
-  //   columns.map((item) => {
-  //     const textWidth = getTextWidth(item.title as string);
-  //     if (widthMap.get(item.dataIndex) < textWidth) {
-  //       widthMap.set(item.dataIndex, textWidth);
-  //     }
-  //     return (item.width = Math.ceil(widthMap.get(item.dataIndex)) + 35);
-  //   });
-  // }, []);
-
-  // console.log(columns, gridStore.rowData);
+  const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
     <Container className={styles.container}>
+      <FilterContainer
+        layout="vertical"
+        onFinish={handleFinish}
+        initialValues={{ otherType: 0 }}
+        labelCol={{ span: 12 }}
+        wrapperCol={{ span: 20 }}
+      >
+        <Col span={8}>
+          <Form.Item
+            name="masterWaybillNoList"
+            label={<span style={{ height: "30px" }}>{t("提单号")}</span>}
+            rules={numberRules}
+          >
+            <FilterTextArea
+              placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item
+            name="bigBagNoList"
+            label={<span style={{ height: "30px" }}>{t("袋号")}</span>}
+            rules={numberRules}
+          >
+            <FilterTextArea
+              style={{ width: "100%" }}
+              placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <div>
+            <div style={{ paddingBottom: "8px", width: "120px" }}>
+              <Form.Item noStyle name="otherType">
+                <SearchSelect
+                  filterOption={false}
+                  allowClear={false}
+                  style={{ width: "100%" }}
+                  optionKey="customsItemInfoOtherTypes"
+                />
+              </Form.Item>
+            </div>
+            <Form.Item name="otherList">
+              <FilterTextArea
+                placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+              />
+            </Form.Item>
+          </div>
+        </Col>
+      </FilterContainer>
       <Container title={t("商品详细信息")}>
         <Row className="my-4">
           <Button
@@ -65,10 +109,6 @@ function ClearanceOfGoodsComponent() {
             {t("导出已筛选商品信息")}
           </Button>
         </Row>
-        {/* <DataGrid
-          columns={columns}
-          dataSource={gridStore.rowData}
-        /> */}
         <Table
           widthFit
           bordered
@@ -79,7 +119,6 @@ function ClearanceOfGoodsComponent() {
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"
-          // scroll={{ x: 10000 }}
           pagination={{
             total: gridStore.total,
             pageSize: gridStore.pageSize,
