@@ -45,8 +45,7 @@ export function DataGridImpl<R extends AnyObject>(props: DataGridProps<R>) {
       height="100%"
       width="100%"
       rowMarkers="clickable-number"
-      // rows={props.rows ?? rows ?? dataSource.length}
-      rows={dataSource.length}
+      rows={props.rows ?? rows ?? dataSource.length}
       overscrollX={0}
       overscrollY={0}
       theme={theme}
