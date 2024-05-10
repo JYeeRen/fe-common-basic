@@ -24,7 +24,7 @@ class Net {
     });
 
     this.svc.interceptors.request.use(this.requestInterceptor);
-    // this.svc.interceptors.response.use(this.responseRedirectInterceptor);
+    this.svc.interceptors.response.use(this.responseRedirectInterceptor);
     this.svc.interceptors.response.use(this.responseInterceptor);
   }
 
@@ -88,6 +88,19 @@ class Net {
         return await axios.get(redirectUrl);
       }
     }
+    // const res = await axios.get(url, { responseType: 'blob', headers: {
+    //   'Access-Control-Allow-Origin': '*',
+    // } });
+
+    // const blob = res.data;
+    // console.log(typeof blob)
+    // if (!(blob instanceof Blob)) throw new Error('blob');
+
+    // const link = document.createElement('a');
+    // link.href = window.URL.createObjectURL(blob);
+    // link.download = 'customs_item_export_1715332628.xlsx';
+    // link.click();
+    // window.URL.revokeObjectURL(link.href);
     return response;
   }
 

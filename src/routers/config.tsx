@@ -3,12 +3,150 @@ import Layout from "@features/layout/layout";
 import { loginLoader } from "./loginLoader";
 import { authProvider } from "@services/auth.service";
 
+const template: RouteObject[] = [
+  {
+    path: "template",
+    lazy: async () => ({
+      Component: (await import("@features/customs/template-list.component"))
+        .default,
+    }),
+  },
+  {
+    path: "template/create",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/custom-template-create.component")
+      ).default,
+    }),
+  },
+  {
+    path: "template/:id/edit",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/custom-template-edit.component")
+      ).default,
+    }),
+  },
+  {
+    path: "template/:id",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/custom-template-detail.component")
+      ).default,
+    }),
+  },
+];
+
+const trajectory: RouteObject[] = [
+  {
+    path: "trajectory",
+    children: [
+      {
+        path: "maintenance",
+        lazy: async () => ({
+          Component: (await import("@features/trajectory/maintenance")).default,
+        }),
+      },
+    ],
+  },
+];
+
+const rm: RouteObject[] = [
+  {
+    
+    path: "rm/customer",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/RM/customer-info-list.component")
+      ).default,
+    }),
+  },
+];
+
+const roles: RouteObject[] = [
+  {
+    path: "/pm/roles",
+    children: [
+      {
+        path: "/pm/roles",
+        lazy: async () => ({
+          Component: (await import("@features/pm/role/role-list.component"))
+            .default,
+        }),
+      },
+      {
+        path: "/pm/roles/create",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/role/role-detail-create.component")
+          ).default,
+        }),
+      },
+      {
+        path: "/pm/roles/:id/edit",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/role/role-detail-edit.component")
+          ).default,
+        }),
+      },
+      {
+        path: "/pm/roles/:id",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/role/role-detail-view.component")
+          ).default,
+        }),
+      },
+    ],
+  },
+];
+
+const accounts: RouteObject[] = [
+  {
+    path: "/pm/accounts",
+    children: [
+      {
+        path: "/pm/accounts",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/account/account-list.component")
+          ).default,
+        }),
+      },
+      {
+        path: "/pm/accounts/create",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/account/account-create.component")
+          ).default,
+        }),
+      },
+      {
+        path: "/pm/accounts/:id",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/account/account-edit.component")
+          ).default,
+        }),
+      },
+      {
+        path: "/pm/accounts/change-passwd",
+        lazy: async () => ({
+          Component: (
+            await import("@features/pm/account/change-passwd.component")
+          ).default,
+        }),
+      },
+    ],
+  },
+];
+
 export const routesConfig: RouteObject[] = [
   {
     path: "declare-status",
     lazy: async () => ({
-      Component: (await import("@features/customs/declare-status"))
-        .default,
+      Component: (await import("@features/customs/declare-status")).default,
     }),
   },
   {
@@ -47,138 +185,14 @@ export const routesConfig: RouteObject[] = [
                 .default,
             }),
           },
-          {
-            path: "template",
-            lazy: async () => ({
-              Component: (
-                await import("@features/customs/template-list.component")
-              ).default,
-            }),
-          },
-          {
-            path: "template/create",
-            lazy: async () => ({
-              Component: (
-                await import(
-                  "@features/customs/custom-template-create.component"
-                )
-              ).default,
-            }),
-          },
-          {
-            path: "template/:id/edit",
-            lazy: async () => ({
-              Component: (
-                await import("@features/customs/custom-template-edit.component")
-              ).default,
-            }),
-          },
-          {
-            path: "template/:id",
-            lazy: async () => ({
-              Component: (
-                await import(
-                  "@features/customs/custom-template-detail.component"
-                )
-              ).default,
-            }),
-          },
-          {
-            path: "trajectory",
-            children: [
-              {
-                path: "maintenance",
-                lazy: async () => ({
-                  Component: (await import("@features/trajectory/maintenance"))
-                    .default,
-                }),
-              },
-            ],
-          },
+          ...template,
+          ...trajectory,
+          ...rm,
         ],
       },
       {
         path: "/pm",
-        children: [
-          {
-            path: "/pm/roles",
-            children: [
-              {
-                path: "/pm/roles",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/role/role-list.component")
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/roles/create",
-                lazy: async () => ({
-                  Component: (
-                    await import(
-                      "@features/pm/role/role-detail-create.component"
-                    )
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/roles/:id/edit",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/role/role-detail-edit.component")
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/roles/:id",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/role/role-detail-view.component")
-                  ).default,
-                }),
-              },
-            ],
-          },
-          {
-            path: "/pm/accounts",
-            children: [
-              {
-                path: "/pm/accounts",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/account/account-list.component")
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/accounts/create",
-                lazy: async () => ({
-                  Component: (
-                    await import(
-                      "@features/pm/account/account-create.component"
-                    )
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/accounts/:id",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/account/account-edit.component")
-                  ).default,
-                }),
-              },
-              {
-                path: "/pm/accounts/change-passwd",
-                lazy: async () => ({
-                  Component: (
-                    await import("@features/pm/account/change-passwd.component")
-                  ).default,
-                }),
-              },
-            ],
-          },
-        ],
+        children: [...roles, ...accounts],
       },
     ],
   },

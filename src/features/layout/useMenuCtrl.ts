@@ -47,6 +47,13 @@ const navConfig = (): TopNavItem[] => [
           { key: "/customs/trajectory/maintenance", label: t("轨迹维护") },
         ],
       },
+      {
+        key: "/customs/rm",
+        label: t("关务风控"),
+        children: [
+          { key: "/customs/rm/customer", label: t("客户信息") },
+        ],
+      }
     ],
   },
   {

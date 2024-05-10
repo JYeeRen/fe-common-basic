@@ -100,3 +100,12 @@ export interface CustomTemplate {
   mergeOrderNumber: boolean;
   columns: CustomTemplateCol[];
 }
+
+export interface CustomsRisk {
+  id: number;
+  customerName: string;
+  productName: string;
+  productNameCn: string;
+  exportHsCode: string;
+  importHsCode: string;
+}
