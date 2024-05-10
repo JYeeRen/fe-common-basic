@@ -4,7 +4,6 @@ import {
   Button,
   ClientGrid,
   Container,
-  DataGrid,
   Row,
   Table,
 } from "@components";
@@ -14,21 +13,13 @@ import styles from "./clerance-of-goods.module.less";
 import { CloudDownloadOutlined } from "@ant-design/icons";
 import { useMemo } from "react";
 
-// function getTextWidth(text: string, font="14px Microsoft YaHei") {
-//   const canvas = document.createElement("canvas");
-//   const context = canvas.getContext("2d"); 
-//   if (!context) return;
-//   context.font = font
-//   const textmetrics = context.measureText(text)
-//   return textmetrics.width;
-// }
 
 function ClearanceOfGoodsComponent() {
   const { t } = useStore(ClearanceOfGoodsStore)();
 
   const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows);
 
-  const columns = useMemo(() => CustomItemConfig.getGridColumns().map(col => ({ ...col, id: col.key })), []);
+  const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
   // const columns: TableColumnsType<CustomItem> = useMemo(() => {
   //   const cols = CustomItemConfig.getGridColumns();
@@ -74,19 +65,21 @@ function ClearanceOfGoodsComponent() {
             {t("导出已筛选商品信息")}
           </Button>
         </Row>
-        <DataGrid
+        {/* <DataGrid
           columns={columns}
           dataSource={gridStore.rowData}
-        />
-        {/* <Table
+        /> */}
+        <Table
+          widthFit
           bordered
           loading={gridStore.loading}
+          tableLayout="auto"
           // rowSelection={{ type: "checkbox" }}
           rowKey="itemId"
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"
-          scroll={{ x: 10000 }}
+          // scroll={{ x: 10000 }}
           pagination={{
             total: gridStore.total,
             pageSize: gridStore.pageSize,
@@ -99,7 +92,7 @@ function ClearanceOfGoodsComponent() {
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),
           }}
-        /> */}
+        />
       </Container>
     </Container>
   );

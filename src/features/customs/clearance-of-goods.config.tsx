@@ -1,7 +1,7 @@
 import { net } from "@infra";
 import { CustomItem, TemplateListQueryParams } from "./types";
 import { t } from "@locale";
-import { Button, TableColumnsType } from "@components";
+import { TableColumnsType } from "@components";
 
 export const getRows = async (params: TemplateListQueryParams) => {
   return net.post("/api/customsItem/findList", params);
@@ -290,15 +290,22 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       key: "packageItemInfo.itemUrl",
       dataIndex: ["packageItemInfo", "itemUrl"],
       title: t("商品链接"),
+      width: 100,
+      ellipsis: true,
       render: (value) => (
-        <Button
-          type="link"
+        <a
           href={value}
-          target="_blank"
-          rel="noopener noreferrer"
+          style={{
+            color: "blue",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "block",
+            width: "100px"
+          }}
         >
-          点击跳转
-        </Button>
+          {value}
+        </a>
       ),
     },
     {
