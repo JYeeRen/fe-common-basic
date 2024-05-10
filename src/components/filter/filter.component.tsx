@@ -44,7 +44,7 @@ export function FilterContainer(props: FilterProps & FormProps) {
               </Space>
             </Form.Item>
           </Row>
-          <Row>{children}</Row>
+          <Row align="middle">{children}</Row>
         </Form>
       </div>
     </div>

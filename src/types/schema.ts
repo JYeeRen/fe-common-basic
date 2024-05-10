@@ -109,3 +109,18 @@ export interface CustomsRisk {
   exportHsCode: string;
   importHsCode: string;
 }
+
+export interface CustomsStatus {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  transportName: string;
+  departPortCode: string;
+  arrivePortCode: string;
+  etd: string;
+  eta: string;
+  flightDate: string;
+  customsStatus: number;
+  customsRemark: string;
+  customerName: string;
+}

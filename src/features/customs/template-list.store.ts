@@ -15,7 +15,7 @@ export class TemplateListStore {
   }
   
   get templateTypeOptions() {
-    return optionsService.get('templateTypes');
+    return optionsService.get('customTemplateTypes');
   }
 
   get activeOptions() {

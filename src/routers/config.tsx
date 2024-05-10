@@ -42,6 +42,32 @@ const trajectory: RouteObject[] = [
     path: "trajectory",
     children: [
       {
+        path: "bill-of-lading",
+        lazy: async () => ({
+          Component: (
+            await import(
+              "@features/trajectory/bill-of-lading/bill-of-lading.component"
+            )
+          ).default,
+        }),
+      },
+      {
+        path: "packages",
+        lazy: async () => ({
+          Component: (
+            await import("@features/trajectory/packages/packages.component")
+          ).default,
+        }),
+      },
+      {
+        path: "track-trace",
+        lazy: async () => ({
+          Component: (
+            await import("@features/trajectory/track-trace.component")
+          ).default,
+        }),
+      },
+      {
         path: "maintenance",
         lazy: async () => ({
           Component: (await import("@features/trajectory/maintenance")).default,
@@ -53,7 +79,6 @@ const trajectory: RouteObject[] = [
 
 const rm: RouteObject[] = [
   {
-    
     path: "rm/customer",
     lazy: async () => ({
       Component: (
@@ -144,12 +169,6 @@ const accounts: RouteObject[] = [
 
 export const routesConfig: RouteObject[] = [
   {
-    path: "declare-status",
-    lazy: async () => ({
-      Component: (await import("@features/customs/declare-status")).default,
-    }),
-  },
-  {
     path: "/",
     // loader: protectedLoader, // 会导致无法直接访问子路由
     Component: Layout,
@@ -174,8 +193,11 @@ export const routesConfig: RouteObject[] = [
           {
             path: "declare-status",
             lazy: async () => ({
-              Component: (await import("@features/customs/declare-status"))
-                .default,
+              Component: (
+                await import(
+                  "@features/customs/declare-status/declare-status.component"
+                )
+              ).default,
             }),
           },
           {

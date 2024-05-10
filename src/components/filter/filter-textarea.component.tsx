@@ -43,13 +43,13 @@ export const FilterTextArea = (props: FilterTextAreaProps) => {
     <Input.TextArea
       value={(value || internalValue)?.join("\n")}
       onChange={handleChange}
+      style={style}
       {...restProps}
       count={{
         show: true,
         max: 50,
         strategy: (value: string) => (value ? value.split("\n").length : 0),
       }}
-      style={style}
     />
   );
 };

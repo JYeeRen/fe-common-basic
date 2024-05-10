@@ -1,9 +1,9 @@
 export interface Option {
   val: string;
-  id: number;
+  id: number | string;
 }
 
 export type Options = {
-  value: number;
+  value: number | string;
   label: string;
 }[];

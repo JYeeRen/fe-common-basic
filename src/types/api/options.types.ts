@@ -14,18 +14,19 @@ export interface OptionsAPI {
       timeZones: Option[];
       templateTypes: Option[];
       templateColumns: { key: string; cnName: string; enName: string }[];
-      unitTypes: Option[];
-      tikTokActionCodeList: Option[];
-      tikTokReasonCodeList: Option[];
-      tikTokWaybillStatusList: Option[];
+      unitTypes: { key: string; val: string }[];
+      tikTokActionCodeList: { code: string; name: string }[];
+      tikTokReasonCodeList: { code: string; name: string }[];
+      tikTokWaybillStatusList: { code: string; name: string }[];
+      customTemplateTypes: Option[];
     };
   };
   "/api/option/getRoleNames": {
     params?: never;
-    res: { options: { id: number, val: string }[] };
+    res: { options: { id: number; val: string }[] };
   };
   "/api/option/getPermissions": {
     params?: never;
     res: { permissions: Schema.Permission[] };
-  }
+  };
 }

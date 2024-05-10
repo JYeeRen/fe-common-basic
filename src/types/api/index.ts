@@ -4,6 +4,7 @@ import { RoleAPI } from "./role.trypes";
 import { CustomsItemAPI } from "./customs-item.types";
 import { CustomTemplateAPI } from "./custom-template.types";
 import { CustomsRiskAPI } from "./customs-risk.types";
+import { CustomsStatusAPI } from "./custom-status.type";
 
 export interface ApiError {
   code: number;
@@ -24,6 +25,7 @@ export interface Sources
     OptionsAPI,
     CustomsItemAPI,
     CustomTemplateAPI,
-    CustomsRiskAPI {}
+    CustomsRiskAPI,
+    CustomsStatusAPI {}
 
 export type URLs = keyof Sources;

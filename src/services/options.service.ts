@@ -13,10 +13,10 @@ export interface Options {
   timeZones: Option[];
   templateTypes: Option[];
   // templateColumns: { key: string; cnName: string; enName: string }[];
-  unitTypes: Option[];
-  tikTokActionCodeList: Option[];
-  tikTokReasonCodeList: Option[];
-  tikTokWaybillStatusList: Option[];
+  unitTypes: { key: string; val: string }[];
+  tikTokActionCodeList: { code: string; name: string }[];
+  tikTokReasonCodeList: { code: string; name: string }[];
+  tikTokWaybillStatusList: { code: string; name: string }[];
   customTemplateTypes: Option[];
 }
 
@@ -96,16 +96,33 @@ class OptionService {
     this.load();
   }
 
-  get<K extends keyof Options>(key?: K | 'roles') {
+  get<K extends keyof Options>(key?: K | "roles"): { value: string | number, label: string }[] {
     if (!key) {
-      return [];
+      return [] as unknown as { value: string | number, label: string }[];
     }
     let opts = [];
     opts = this.data?.[key as K] || [];
-    if (key as unknown === 'roles') {
+    if ((key as unknown) === "roles") {
       opts = this.roles;
     }
-    return opts.map((item) => ({ value: item.id, label: item.val }));
+    if (
+      [
+        "tikTokActionCodeList",
+        "tikTokReasonCodeList",
+        "tikTokWaybillStatusList",
+      ].includes(key)
+    ) {
+      return (opts as unknown as { code: string; name: string }[]).map(
+        (item) => ({
+          value: item.code,
+          label: item.name,
+        })
+      );
+    }
+    return (opts as { id: number; val: string }[]).map((item) => ({
+      value: item.id,
+      label: item.val,
+    }));
   }
 }
 

@@ -42,13 +42,13 @@ const RemoteSelect = (props: RemoteSelectProps) => {
   );
 
   const filterOption = useCallback(
-    (input: string, option?: { label: string; value: number }) =>
+    (input: string, option?: { label: string; value: number | string }) =>
       (option?.label ?? "").toLowerCase().includes(input.toLowerCase()),
     []
   );
 
   return (
-    <Select<number, { value: number; label: string }>
+    <Select<number, { value: number | string; label: string }>
       {...props}
       loading={loading}
       options={options}
