@@ -28,8 +28,8 @@ function ClearanceOfGoodsComponent() {
 
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
-  const handleFinish = (values: CustomITemsQueryParams) => {
-    const { masterWaybillNoList, bigBagNoList, otherType, otherList } = values;
+  const handleFinish = (values?: CustomITemsQueryParams) => {
+    const { masterWaybillNoList, bigBagNoList, otherType, otherList } = values || {};
     gridStore.setQueryParams({
       masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
       bigBagNoList: bigBagNoList && compact(bigBagNoList),
