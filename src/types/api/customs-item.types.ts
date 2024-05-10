@@ -11,8 +11,16 @@ export interface CustomsItemAPI {
     };
     res: ListRes<Schema.CustomItem>;
   };
+  "/api/customsItem/export": {
+    params: {
+      masterWaybillNoList?: string[];
+      bigBagNoList?: string[];
+      otherType?: number;
+      otherList?: string[];
+    };
+    res: unknown;
+  };
 }
-
 
 export interface TMasterAirwayBills {
   id: number;

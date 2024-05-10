@@ -57,8 +57,8 @@ export interface TemplateColOption {
 }
 
 export interface CustomITemsQueryParams {
-  masterWaybillNoList: string[];
-  bigBagNoList: string[];
-  otherType: number;
-  otherList: string[];
+  masterWaybillNoList?: string[];
+  bigBagNoList?: string[];
+  otherType?: number;
+  otherList?: string[];
 }

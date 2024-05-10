@@ -17,12 +17,12 @@ import { ClearanceOfGoodsStore } from "./clearance-of-goods.store";
 import * as CustomItemConfig from "./clearance-of-goods.config";
 import styles from "./clerance-of-goods.module.less";
 import { CloudDownloadOutlined } from "@ant-design/icons";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { CustomITemsQueryParams } from "./types";
 import { compact } from "lodash";
 
 function ClearanceOfGoodsComponent() {
-  const { t } = useStore(ClearanceOfGoodsStore)();
+  const { t, store } = useStore(ClearanceOfGoodsStore)();
 
   const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows);
 
@@ -40,8 +40,12 @@ function ClearanceOfGoodsComponent() {
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleExportQuery = useCallback(() => store.export(gridStore.params as any), [gridStore.params, store]);
+  const handleExportAll = useCallback(() => store.export(), [store]);
+  
   return (
-    <Container className={styles.container}>
+    <Container className={styles.container} loading={store.loading}>
       <FilterContainer
         layout="vertical"
         onFinish={handleFinish}
@@ -93,16 +97,16 @@ function ClearanceOfGoodsComponent() {
         </Col>
       </FilterContainer>
       <Container title={t("商品详细信息")}>
-        <Row className="my-4">
+        <Row className="my-4" justify="end">
           <Button
-            onClick={() => {}}
-            className="operation-btn"
+            onClick={handleExportAll}
+            className="operation-btn mr-4"
             icon={<CloudDownloadOutlined />}
           >
             {t("导出所有商品信息")}
           </Button>
           <Button
-            onClick={() => {}}
+            onClick={handleExportQuery}
             className="operation-btn"
             icon={<CloudDownloadOutlined />}
           >

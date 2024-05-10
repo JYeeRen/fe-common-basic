@@ -24,6 +24,10 @@ export class ClientGridStore<T> {
     this.queryParams = params ?? {};
     this.page = 1;
   }
+ 
+  get params() {
+    return this.queryParams;
+  }
 
   @loading()
   async loadData() {

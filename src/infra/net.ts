@@ -9,7 +9,10 @@ import localStorage from "@services/localStorage";
 import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
 
-type OptionalParams<URL extends URLs, D = Sources[URL]['params']> = D extends undefined ? [D?, AxiosRequestConfig?] : [D, AxiosRequestConfig?];
+type OptionalParams<
+  URL extends URLs,
+  D = Sources[URL]["params"]
+> = D extends undefined ? [D?, AxiosRequestConfig?] : [D, AxiosRequestConfig?];
 
 class Net {
   private readonly svc: Axios;
@@ -17,19 +20,36 @@ class Net {
   constructor() {
     this.svc = axios.create({
       baseURL: "http://101.42.42.11:8081/",
-      timeout: 1000,
+      // timeout: 1000,
     });
 
     this.svc.interceptors.request.use(this.requestInterceptor);
+    // this.svc.interceptors.response.use(this.responseRedirectInterceptor);
     this.svc.interceptors.response.use(this.responseInterceptor);
   }
 
-  async post<URL extends URLs, R = Sources[URL]['res']>(
+  async get<URL extends URLs, R = Sources[URL]["res"]>(
     url: URL,
     ...[body, config]: OptionalParams<URL>
   ): Promise<R> {
-    if (typeof url !== 'string') {
-      throw new Error('miss url');
+    if (typeof url !== "string") {
+      throw new Error("miss url");
+    }
+    const { data } = await this.request<ApiSuccess<R>>({
+      method: "GET",
+      url,
+      params: body,
+      ...config,
+    });
+    return data.data;
+  }
+
+  async post<URL extends URLs, R = Sources[URL]["res"]>(
+    url: URL,
+    ...[body, config]: OptionalParams<URL>
+  ): Promise<R> {
+    if (typeof url !== "string") {
+      throw new Error("miss url");
     }
     const { data } = await this.request<ApiSuccess<R>>({
       method: "POST",
@@ -51,8 +71,24 @@ class Net {
   ): Promise<InternalAxiosRequestConfig> {
     config.headers = config.headers || {};
     config.headers["X-Request-ID"] = uuidv4();
-    config.headers.Authorization = `Bearer ${localStorage.getItem("authToken")}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem(
+      "authToken"
+    )}`;
     return config;
+  }
+
+  async responseRedirectInterceptor(
+    response: AxiosResponse<ApiRes>
+  ): Promise<AxiosResponse> {
+    if (response.status === 301 || response.status === 302) {
+      // 重定向的 URL 在 'location' 头部中
+      const redirectUrl = response.headers.location;
+      if (redirectUrl) {
+        // 执行重定向请求
+        return await axios.get(redirectUrl);
+      }
+    }
+    return response;
   }
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
