@@ -123,4 +123,5 @@ export interface CustomsStatus {
   customsStatus: number;
   customsRemark: string;
   customerName: string;
+  warning: boolean;
 }

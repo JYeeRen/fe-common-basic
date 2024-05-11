@@ -10,7 +10,6 @@ export interface Options {
   packageStatuses: Option[];
   customsStatusNoTypes: Option[];
   customsStatusTypes: Option[];
-  timeZones: Option[];
   templateTypes: Option[];
   // templateColumns: { key: string; cnName: string; enName: string }[];
   unitTypes: { key: string; val: string }[];
@@ -18,6 +17,7 @@ export interface Options {
   tikTokReasonCodeList: { code: string; name: string }[];
   tikTokWaybillStatusList: { code: string; name: string }[];
   customTemplateTypes: Option[];
+  timeZones: { key: string; val: string }[];
 }
 
 const defaultOptions: Options = {
@@ -96,9 +96,11 @@ class OptionService {
     this.load();
   }
 
-  get<K extends keyof Options>(key?: K | "roles"): { value: string | number, label: string }[] {
+  get<K extends keyof Options>(
+    key?: K | "roles"
+  ): { value: string | number; label: string }[] {
     if (!key) {
-      return [] as unknown as { value: string | number, label: string }[];
+      return [] as unknown as { value: string | number; label: string }[];
     }
     let opts = [];
     opts = this.data?.[key as K] || [];
@@ -116,6 +118,14 @@ class OptionService {
         (item) => ({
           value: item.code,
           label: item.name,
+        })
+      );
+    }
+    if (["timeZones"].includes(key)) {
+      return (opts as unknown as { key: string; val: string }[]).map(
+        (item) => ({
+          value: item.key,
+          label: item.val,
         })
       );
     }

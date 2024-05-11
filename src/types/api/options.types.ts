@@ -11,7 +11,7 @@ export interface OptionsAPI {
       packageStatuses: Option[];
       customsStatusNoTypes: Option[];
       customsStatusTypes: Option[];
-      timeZones: Option[];
+      timeZones: { key: string; val: string }[];
       templateTypes: Option[];
       templateColumns: { key: string; cnName: string; enName: string }[];
       unitTypes: { key: string; val: string }[];

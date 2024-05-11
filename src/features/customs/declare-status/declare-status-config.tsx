@@ -2,10 +2,11 @@ import { net } from "@infra";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
 import { CustomsStatus, CustomsStatusQueryParams } from "./type";
-import optionsService from "@services/options.service";
 import { find } from "lodash";
+import { Options } from "@types";
 
-export const getColumns = (): TableColumnsType<CustomsStatus> => {
+export const getColumns = (params: { customsStatusTypes: Options }): TableColumnsType<CustomsStatus> => {
+  const { customsStatusTypes } = params;
   return [
     {
       key: "no",
@@ -23,7 +24,7 @@ export const getColumns = (): TableColumnsType<CustomsStatus> => {
       dataIndex: "customsStatus",
       title: t("关务状态"),
       render: (value) => {
-        return find(optionsService.get("customsStatusTypes"), { value })?.label;
+        return find(customsStatusTypes, { value })?.label;
       },
     },
     {

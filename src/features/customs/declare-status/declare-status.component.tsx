@@ -7,8 +7,8 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Modal,
   Radio,
-  RadioChangeEvent,
   RadioGroupProps,
   Row,
   SearchSelect,
@@ -21,10 +21,11 @@ import styles from "./declare-status.module.less";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./declare-status.store";
-import { CustomsStatusFormValues } from "./type";
-import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
+import { CustomsStatus, CustomsStatusFormValues } from "./type";
+import { CloudUploadOutlined, ExclamationCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import optionsService from "@services/options.service";
 import { useTranslation } from "@locale";
+import { compact } from "lodash";
 
 function QuickDatePicker(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,31 +53,60 @@ function QuickDatePicker(
 
   return (
     <Radio.Group {...restProps} value={_value}>
-      <Radio.Button onClick={() => handleRadioClick('yeaterday')} value="yeaterday">{t("昨天")}</Radio.Button>
-      <Radio.Button onClick={() => handleRadioClick('today')} value="today">{t("当天")}</Radio.Button>
-      <Radio.Button onClick={() => handleRadioClick('threeday')} value="threeday">{t("3天内")}</Radio.Button>
+      <Radio.Button
+        onClick={() => handleRadioClick("yeaterday")}
+        value="yeaterday"
+      >
+        {t("昨天")}
+      </Radio.Button>
+      <Radio.Button onClick={() => handleRadioClick("today")} value="today">
+        {t("当天")}
+      </Radio.Button>
+      <Radio.Button
+        onClick={() => handleRadioClick("threeday")}
+        value="threeday"
+      >
+        {t("3天内")}
+      </Radio.Button>
     </Radio.Group>
   );
 }
 
 function DeclareStatusComponent() {
-  const { store, t } = useStore(BillOfLadingStore)();
-  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows);
+  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, false);
+  const { store, t } = useStore(BillOfLadingStore, gridStore)(gridStore);
+
+  useEffect(() => {
+    store.gridStore.loadData();
+  }, [store]);
+
+  useEffect(() => {
+    if (store.warning) {
+      Modal.warning({
+        title: '警告！',
+        content: '有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！',
+        okText: '去查看',
+        icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+        okButtonProps: { danger: true },
+        onOk: () => store.setWarning(false)
+      });
+    }
+  }, [store.warning]);
 
   const columns = useMemo(() => {
-    const colDefs = declareStatusConfig.getColumns();
+    const colDefs = declareStatusConfig.getColumns({ customsStatusTypes: optionsService.get("customsStatusTypes") });
     return colDefs.filter((col) => {
       const noType = gridStore.params.noType ?? 0;
       return col.key !== "bigBagNo" || noType !== 0;
     });
-  }, [gridStore.params.noType]);
+  }, [gridStore.params.noType, optionsService.data.customsStatusTypes]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, customsStatusType } = values;
     console.log(values);
     gridStore.setQueryParams({
-      noList: noList || undefined,
+      noList: compact(noList),
       noType: noType || undefined,
       customsStatusType: customsStatusType || undefined,
     });
@@ -95,10 +125,15 @@ function DeclareStatusComponent() {
     [optionsService.data.customTemplateTypes]
   );
 
+  const tableClassName = useCallback(
+    (record: CustomsStatus) => record.warning ? styles.warining : '',
+    []
+  );
+
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
-        <Col span={10}>
+        <Col span={7}>
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
               <Radio.Group>
@@ -110,14 +145,14 @@ function DeclareStatusComponent() {
               </Radio.Group>
             </Form.Item>
           </div>
-          <Form.Item name="productName">
+          <Form.Item name="noList" wrapperCol={{ span: 22 }}>
             <FilterTextArea
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
             />
           </Form.Item>
         </Col>
-        <Col span={14}>
+        <Col span={16}>
           <Row justify="start">
             <Col span={24}>
               <Form.Item
@@ -136,29 +171,34 @@ function DeclareStatusComponent() {
             </Col>
           </Row>
           <Row>
-            <Col span={14}>
+            <Col span={15}>
               <Form.Item
                 label={t("航班时间")}
                 labelAlign="left"
                 labelCol={{ span: 4 }}
-                wrapperCol={{ span: 20 }}
+                wrapperCol={{ span: 18 }}
               >
                 <Space.Compact>
                   <Form.Item name="flightDateTZ" noStyle>
                     <SearchSelect
                       optionKey="timeZones"
                       placeholder={t("请选择时区")}
-                      style={{ width: "180px" }}
+                      style={{ width: "40%" }}
                     />
                   </Form.Item>
                   <Form.Item name="flightDate" noStyle>
-                    <DatePicker.RangePicker />
+                    <DatePicker.RangePicker style={{ width: "60%" }} />
                   </Form.Item>
                 </Space.Compact>
               </Form.Item>
             </Col>
-            <Col span={10}>
-              <Form.Item label={t("关务状态")} name="customsStatusType">
+            <Col span={9}>
+              <Form.Item
+                label={t("关务状态")}
+                name="customsStatusType"
+                labelCol={{ span: 10 }}
+                wrapperCol={{ span: 12 }}
+              >
                 <SearchSelect optionKey="customsStatusTypes" />
               </Form.Item>
             </Col>
@@ -183,6 +223,7 @@ function DeclareStatusComponent() {
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"
+          rowClassName={tableClassName}
           pagination={{
             total: gridStore.total,
             pageSize: gridStore.pageSize,

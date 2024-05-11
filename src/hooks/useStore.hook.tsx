@@ -12,10 +12,10 @@ interface ContentResult<T extends Newable> {
   t: TFunction;
 }
 
-export function useStore<T extends Newable>(Store: T) {
+export function useStore<T extends Newable>(Store: T, ...args: any[]) {
   const navigate = useNavigate();
   const [t] = useTranslation();
-  const [store] = useState(new Store({ navigate }));
+  const [store] = useState(new Store({ navigate }, ...args));
 
   function useOnload(...args: unknown[]): ContentResult<T> {
     useEffect(() => {

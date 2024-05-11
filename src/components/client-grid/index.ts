@@ -6,10 +6,12 @@ import { TextEditor } from './editor/text-editor';
 
 export * as ClientGridTypes from "./types";
 
-function useGridStore<T>(getRows?: getRowsFunc<T>) {
+function useGridStore<T>(getRows?: getRowsFunc<T>, autoLoad = true) {
   const gridStore = useMemo(() => new ClientGrid.GridStore(getRows), []);
   useEffect(() => {
-    gridStore.loadData?.();
+    if (autoLoad) {
+      gridStore.loadData?.();
+    }
   }, []);
   return gridStore;
 }
@@ -24,5 +26,7 @@ const ClientGrid = ClientGridImpl as ClientGridType;
 ClientGrid.GridStore = ClientGridStore;
 ClientGrid.useGridStore = useGridStore;
 ClientGrid.TextEditor = TextEditor;
+
+export { ClientGridStore } from "./client-grid.store";
 
 export default ClientGrid;

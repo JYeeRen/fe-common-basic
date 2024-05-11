@@ -5,7 +5,7 @@ export type { GridColumn, DataEditorRef } from "./data-grid";
 export { default as AgGrid } from "./ag-grid";
 export type { AgGridTypes } from "./ag-grid";
 
-export { default as ClientGrid } from './client-grid';
+export { default as ClientGrid, ClientGridStore } from './client-grid';
 export type { ClientGridTypes } from './client-grid';
 
 
