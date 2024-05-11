@@ -27,8 +27,8 @@ export const getColumns = (): TableColumnsType<CustomsStatus> => {
       },
     },
     {
-      key: "masterWaybillNo1",
-      dataIndex: "masterWaybillNo1",
+      key: "TransportName",
+      dataIndex: "TransportName",
       title: t("航班号"),
     },
     { key: "flightDate", dataIndex: "flightDate", title: t("航班日期") },
@@ -45,11 +45,6 @@ export const getColumns = (): TableColumnsType<CustomsStatus> => {
       title: t("落地港口"),
     },
     { key: "customerName", dataIndex: "customerName", title: t("客户名称") },
-    {
-      key: "masterWaybillNo1",
-      dataIndex: "masterWaybillNo1",
-      title: t("最新轨迹名称"),
-    },
     {
       key: "customsRemark",
       dataIndex: "customsRemark",

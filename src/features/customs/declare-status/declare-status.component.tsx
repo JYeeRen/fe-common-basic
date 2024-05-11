@@ -2,7 +2,6 @@ import {
   Button,
   ClientGrid,
   Col,
-  // Col,
   Container,
   DatePicker,
   FilterContainer,
@@ -13,10 +12,6 @@ import {
   SearchSelect,
   Space,
   Table,
-  // Form,
-  // Input,
-  // SearchSelect,
-  // Table,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declare-status-config";
@@ -31,11 +26,19 @@ import optionsService from "@services/options.service";
 function DeclareStatusComponent() {
   const { store, t } = useStore(BillOfLadingStore)();
   const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows);
-  const columns = useMemo(() => declareStatusConfig.getColumns(), []);
+
+  const columns = useMemo(() => {
+    const colDefs = declareStatusConfig.getColumns();
+    return colDefs.filter((col) => {
+      const noType = gridStore.params.noType ?? 0;
+      return col.key !== "bigBagNo" || noType !== 0;
+    });
+  }, [gridStore.params.noType]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, customsStatusType } = values;
+    console.log(values);
     gridStore.setQueryParams({
       noList: noList || undefined,
       noType: noType || undefined,
@@ -43,10 +46,13 @@ function DeclareStatusComponent() {
     });
   }, []);
 
-  const initialValues: CustomsStatusFormValues = useMemo(() => ({
-    noType: 0,
-    days: "today",
-  }), []);
+  const initialValues: CustomsStatusFormValues = useMemo(
+    () => ({
+      noType: 0,
+      days: "today",
+    }),
+    []
+  );
 
   const noTypeOptions = useMemo(
     () => optionsService.get("customsStatusNoTypes"),

@@ -11,7 +11,7 @@ export class ClientGridStore<T> {
   total: number = 0;
   rowData: T[] = [];
   private readonly getRows?: getRowsFunc<T> = undefined;
-  private queryParams: AnyObject = {};
+  queryParams: AnyObject = {};
 
   constructor(getRows?: getRowsFunc<T>) {
     this.getRows = getRows;
@@ -21,10 +21,10 @@ export class ClientGridStore<T> {
   }
 
   setQueryParams(params?: AnyObject) {
-    this.queryParams = params ?? {};
+    this.queryParams = { ...params };
     this.page = 1;
   }
- 
+
   get params() {
     return this.queryParams;
   }
@@ -35,10 +35,10 @@ export class ClientGridStore<T> {
       return;
     }
     const { list, total } = await this.getRows({
-        page: this.page,
-        size: this.pageSize,
-        ...this.queryParams
-      });
+      page: this.page,
+      size: this.pageSize,
+      ...this.queryParams,
+    });
     runInAction(() => {
       this.total = total;
       this.rowData = list || [];
@@ -50,5 +50,4 @@ export class ClientGridStore<T> {
     this.pageSize = pageSize;
     this.loadData();
   }
-
 }
