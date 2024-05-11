@@ -11,9 +11,9 @@ interface FilterProps extends PropsWithChildren {
 }
 
 export function FilterContainer(props: FilterProps & FormProps) {
-  const { onFinish, children, ...formProps } = props;
+  const { onFinish, children, form, ...formProps } = props;
 
-  const [form] = Form.useForm();
+  const [internalForm] = Form.useForm(form);
 
   return (
     <div className={styles.container}>
@@ -21,7 +21,7 @@ export function FilterContainer(props: FilterProps & FormProps) {
       <div className={styles.divider} />
       <div className={clsx("mb-4", styles.filter)}>
         <Form
-          form={form}
+          form={internalForm}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 14 }}
           onFinish={onFinish}

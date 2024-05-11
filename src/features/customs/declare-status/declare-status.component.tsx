@@ -8,6 +8,8 @@ import {
   FilterTextArea,
   Form,
   Radio,
+  RadioChangeEvent,
+  RadioGroupProps,
   Row,
   SearchSelect,
   Space,
@@ -16,12 +18,46 @@ import {
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declare-status-config";
 import styles from "./declare-status.module.less";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./declare-status.store";
 import { CustomsStatusFormValues } from "./type";
 import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
 import optionsService from "@services/options.service";
+import { useTranslation } from "@locale";
+
+function QuickDatePicker(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  props: RadioGroupProps & { onChange?: (value: any) => void }
+) {
+  const { value, onChange, ...restProps } = props;
+
+  const [_value, setValue] = useState(value);
+
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
+
+  const handleRadioClick = (val: unknown) => {
+    if (value === val) {
+      setValue(undefined);
+      onChange?.(undefined);
+    } else {
+      setValue(val);
+      onChange?.(val);
+    }
+  };
+
+  const [t] = useTranslation();
+
+  return (
+    <Radio.Group {...restProps} value={_value}>
+      <Radio.Button onClick={() => handleRadioClick('yeaterday')} value="yeaterday">{t("昨天")}</Radio.Button>
+      <Radio.Button onClick={() => handleRadioClick('today')} value="today">{t("当天")}</Radio.Button>
+      <Radio.Button onClick={() => handleRadioClick('threeday')} value="threeday">{t("3天内")}</Radio.Button>
+    </Radio.Group>
+  );
+}
 
 function DeclareStatusComponent() {
   const { store, t } = useStore(BillOfLadingStore)();
@@ -90,12 +126,8 @@ function DeclareStatusComponent() {
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 20 }}
               >
-                <Form.Item name="days" noStyle>
-                  <Radio.Group>
-                    <Radio.Button value="yeaterday">{t("昨天")}</Radio.Button>
-                    <Radio.Button value="today">{t("当天")}</Radio.Button>
-                    <Radio.Button value="threeday">{t("3天内")}</Radio.Button>
-                  </Radio.Group>
+                <Form.Item name="quickDate" noStyle>
+                  <QuickDatePicker optionType="button" />
                 </Form.Item>
                 <Form.Item name="dateRange" noStyle>
                   <DatePicker.RangePicker />
