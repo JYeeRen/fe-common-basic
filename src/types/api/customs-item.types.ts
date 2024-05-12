@@ -18,7 +18,10 @@ export interface CustomsItemAPI {
       otherType?: number;
       otherList?: string[];
     };
-    res: unknown;
+    res: {
+      fileName: string;
+      url: string;
+    };
   };
 }
 

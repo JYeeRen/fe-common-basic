@@ -60,6 +60,43 @@ class Net {
     return data.data;
   }
 
+  async download<URL extends URLs, R = Sources[URL]["res"]>(
+    url: URL,
+    ...[body, config]: OptionalParams<URL>
+  ): Promise<void> {
+    if (typeof url !== "string") {
+      throw new Error("miss url");
+    }
+    const { data } = await this.request<ApiSuccess<R>>({
+      method: "POST",
+      url,
+      data: body,
+      ...config,
+    });
+    const { fileName, url: downloadUrl } = data.data as {
+      fileName: string;
+      url: string;
+    };
+
+    if (!fileName) throw new Error('导出失败');
+    if (!downloadUrl) throw new Error('导出失败');
+
+    const res = await axios.get(downloadUrl, {
+      responseType: "blob",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+    const blob = res.data;
+    if (!(blob instanceof Blob)) throw new Error("blob");
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+
   private async request<T>(
     config: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {

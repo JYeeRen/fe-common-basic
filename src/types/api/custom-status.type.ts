@@ -20,4 +20,36 @@ export interface CustomsStatusAPI {
     };
     res: ListRes<Schema.CustomsStatus>;
   };
+
+  "/api/customsStatus/editRemark": {
+    params: {
+      id: number;
+      remark: string;
+    };
+    res: never;
+  };
+  "/api/customsStatus/createDocument": {
+    params: {
+      ids: number[];
+    };
+    res: never;
+  };
+  "/api/customsStatus/export": {
+    params?: {
+      noList?: string[];
+      noType?: number;
+      uploadDate?: {
+        zone: string;
+        start: string;
+        end: string;
+      };
+      flightDate?: {
+        zone: string;
+        start: string;
+        end: string;
+      };
+      customsStatusType?: string;
+    };
+    res: { filename: string; url: string };
+  };
 }

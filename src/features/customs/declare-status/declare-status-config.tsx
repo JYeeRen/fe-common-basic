@@ -5,8 +5,14 @@ import { CustomsStatus, CustomsStatusQueryParams } from "./type";
 import { find } from "lodash";
 import { Options } from "@types";
 
-export const getColumns = (params: { customsStatusTypes: Options }): TableColumnsType<CustomsStatus> => {
-  const { customsStatusTypes } = params;
+export const getColumns = (params: {
+  customsStatusTypes: Options;
+  onRemarkSave: (params: {
+    id: number;
+    remark: string;
+  }) => void;
+}): TableColumnsType<CustomsStatus> => {
+  const { customsStatusTypes, onRemarkSave } = params;
   return [
     {
       key: "no",
@@ -28,8 +34,8 @@ export const getColumns = (params: { customsStatusTypes: Options }): TableColumn
       },
     },
     {
-      key: "TransportName",
-      dataIndex: "TransportName",
+      key: "transportName",
+      dataIndex: "transportName",
       title: t("航班号"),
     },
     { key: "flightDate", dataIndex: "flightDate", title: t("航班日期") },
@@ -51,7 +57,13 @@ export const getColumns = (params: { customsStatusTypes: Options }): TableColumn
       dataIndex: "customsRemark",
       title: t("备注"),
       width: 300,
-    },
+      onCell: (record: CustomsStatus) => ({
+        editable: true,
+        value: record.customsRemark ?? "",
+        onSave: (value: string) => onRemarkSave({ id: record.id, remark: value }),
+      }),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any,
   ];
 };
 

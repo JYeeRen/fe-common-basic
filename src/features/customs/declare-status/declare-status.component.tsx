@@ -14,6 +14,7 @@ import {
   SearchSelect,
   Space,
   Table,
+  EditableCell,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declare-status-config";
@@ -22,10 +23,15 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./declare-status.store";
 import { CustomsStatus, CustomsStatusFormValues } from "./type";
-import { CloudUploadOutlined, ExclamationCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  CloudUploadOutlined,
+  ExclamationCircleOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import optionsService from "@services/options.service";
 import { useTranslation } from "@locale";
 import { compact } from "lodash";
+import dayjs from "dayjs";
 
 function QuickDatePicker(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -74,7 +80,10 @@ function QuickDatePicker(
 
 function DeclareStatusComponent() {
   const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, false);
-  const { store, t } = useStore(BillOfLadingStore, gridStore)(gridStore);
+  const { store, t, navigate } = useStore(
+    BillOfLadingStore,
+    gridStore
+  )(gridStore);
 
   useEffect(() => {
     store.gridStore.loadData();
@@ -83,18 +92,22 @@ function DeclareStatusComponent() {
   useEffect(() => {
     if (store.warning) {
       Modal.warning({
-        title: '警告！',
-        content: '有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！',
-        okText: '去查看',
-        icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+        title: "警告！",
+        content:
+          "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！",
+        okText: "去查看",
+        icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
-        onOk: () => store.setWarning(false)
+        onOk: () => store.setWarning(false),
       });
     }
   }, [store.warning]);
 
   const columns = useMemo(() => {
-    const colDefs = declareStatusConfig.getColumns({ customsStatusTypes: optionsService.get("customsStatusTypes") });
+    const colDefs = declareStatusConfig.getColumns({
+      customsStatusTypes: optionsService.get("customsStatusTypes"),
+      onRemarkSave: store.editRemark.bind(store),
+    });
     return colDefs.filter((col) => {
       const noType = gridStore.params.noType ?? 0;
       return col.key !== "bigBagNo" || noType !== 0;
@@ -103,13 +116,49 @@ function DeclareStatusComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, customsStatusType } = values;
+    const {
+      dateRange,
+      noList,
+      noType,
+      customsStatusType,
+      flightDate,
+      flightDateTZ,
+      quickDate,
+    } = values;
     console.log(values);
-    gridStore.setQueryParams({
+    const params = {
       noList: compact(noList),
-      noType: noType || undefined,
-      customsStatusType: customsStatusType || undefined,
-    });
+      noType,
+      uploadDate: {
+        start: dateRange?.[0].format(),
+        end: dateRange?.[1].format(),
+      },
+      flightDate: {
+        zone: flightDateTZ,
+        start: flightDate?.[0].format(),
+        end: flightDate?.[1].format(),
+      },
+      customsStatusType,
+    };
+    if (quickDate === "today") {
+      params.uploadDate.start = dayjs().startOf("day").format();
+      params.uploadDate.end = dayjs().endOf("day").format();
+    }
+    if (quickDate === "yeaterday") {
+      params.uploadDate.start = dayjs()
+        .subtract(1, "day")
+        .startOf("day")
+        .format();
+      params.uploadDate.end = dayjs().subtract(1, "day").endOf("day").format();
+    }
+    if (quickDate === "threeday") {
+      params.uploadDate.start = dayjs()
+        .subtract(3, "day")
+        .startOf("day")
+        .format();
+      params.uploadDate.end = dayjs().endOf("day").format();
+    }
+    gridStore.setQueryParams(params);
   }, []);
 
   const initialValues: CustomsStatusFormValues = useMemo(
@@ -126,13 +175,38 @@ function DeclareStatusComponent() {
   );
 
   const tableClassName = useCallback(
-    (record: CustomsStatus) => record.warning ? styles.warining : '',
+    (record: CustomsStatus) => (record.warning ? styles.warining : ""),
     []
   );
 
+  const handleCreateDocument = useCallback(async () => {
+    await store.createDocument();
+    Modal.confirm({
+      title: t("操作确认"),
+      content: t("已发起关务任务，是否现在去制作清关单证？"),
+      okText: t("制作清关单证"),
+      cancelText: t("留在当前页面"),
+      onOk: () => navigate("/customs/declaration"),
+      onCancel: () => store.gridStore.loadData(),
+    });
+  }, []);
+
+  const [form] = Form.useForm();
+
+  const handleQuickDateChange = () => {
+    form.setFieldValue("dateRange", undefined);
+  };
+  const handleDatePickerChange = () => {
+    form.setFieldValue("quickDate", undefined);
+  };
+
   return (
     <Container className={styles.container} loading={store.loading}>
-      <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
+      <FilterContainer
+        onFinish={handleFinish}
+        initialValues={initialValues}
+        form={form}
+      >
         <Col span={7}>
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
@@ -162,10 +236,13 @@ function DeclareStatusComponent() {
                 wrapperCol={{ span: 20 }}
               >
                 <Form.Item name="quickDate" noStyle>
-                  <QuickDatePicker optionType="button" />
+                  <QuickDatePicker
+                    optionType="button"
+                    onChange={handleQuickDateChange}
+                  />
                 </Form.Item>
                 <Form.Item name="dateRange" noStyle>
-                  <DatePicker.RangePicker />
+                  <DatePicker.RangePicker onChange={handleDatePickerChange} />
                 </Form.Item>
               </Form.Item>
             </Col>
@@ -207,18 +284,43 @@ function DeclareStatusComponent() {
       </FilterContainer>
       <Container title={t("提单列表")} wrapperClassName={styles.wrapper}>
         <Row justify="space-between" style={{ padding: "0 10px" }}>
-          <Button className="operation-btn mb-4" icon={<UploadOutlined />}>
+          <Button
+            className="operation-btn mb-4"
+            icon={<UploadOutlined />}
+            disabled={store.initiateDisabled}
+            onClick={handleCreateDocument}
+          >
             {t("发起关务任务")}
           </Button>
-          <Button className="operation-btn" icon={<CloudUploadOutlined />}>
+          <Button
+            onClick={store.export.bind(store)}
+            className="operation-btn"
+            icon={<CloudUploadOutlined />}
+          >
             {t("导出已筛选商品信息")}
           </Button>
         </Row>
         <Table
+          components={{ body: { cell: EditableCell } }}
           widthFit
           bordered
           loading={gridStore.loading}
-          rowSelection={{ type: "checkbox" }}
+          rowSelection={{
+            hideSelectAll: true,
+            type: "checkbox",
+            onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
+            selectedRowKeys: store.selectedRowKeys,
+            getCheckboxProps: (record) => {
+              let disabled = false;
+              if (!record.masterWaybillNo && record.bigBagNo) {
+                disabled = true;
+              }
+              if (record.customsStatus !== 1) {
+                disabled = true;
+              }
+              return { disabled };
+            },
+          }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}

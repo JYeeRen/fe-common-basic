@@ -25,6 +25,8 @@ export { OperationButtons } from './operation-buttons';
 
 export { SearchSelect } from './search-select';
 
+export { EditableCell } from './editable-cell.component';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";
