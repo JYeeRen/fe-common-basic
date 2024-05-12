@@ -9,3 +9,8 @@ export interface ListParams {
   page: number;
   size: number;
 }
+
+export interface File {
+  filename: string;
+  url: string;
+}

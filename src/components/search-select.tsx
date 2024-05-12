@@ -10,7 +10,9 @@ interface SearchSelectProps extends SelectProps {
 export const SearchSelect = observer((props: SearchSelectProps) => {
   const { options, optionKey, ...restProps } = props;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const selectOpts = options || optionsService.get(optionKey);
+
   const filterOption = useCallback(
     (input: string, option?: { label: string; value: number }) =>
       (option?.label ?? "").toLowerCase().includes(input.toLowerCase()),

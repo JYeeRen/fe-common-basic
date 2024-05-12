@@ -1,11 +1,15 @@
-import { Button, Form, FormInstance } from "antd";
+import { Button, ButtonProps, Form, FormInstance } from "antd";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 
-interface SubmitButtonProps {
+interface SubmitButtonProps extends Omit<ButtonProps, "form"> {
   form: FormInstance;
 }
 
-export const SubmitButton: FC<PropsWithChildren<SubmitButtonProps>> = ({ form, children }) => {
+export const SubmitButton: FC<PropsWithChildren<SubmitButtonProps>> = ({
+  form,
+  children,
+  ...restProps
+}) => {
   const [submittable, setSubmittable] = useState<boolean>(false);
 
   // Watch all values
@@ -19,7 +23,12 @@ export const SubmitButton: FC<PropsWithChildren<SubmitButtonProps>> = ({ form, c
   }, [form, values]);
 
   return (
-    <Button type="primary" htmlType="submit" disabled={!submittable}>
+    <Button
+      type="primary"
+      htmlType="submit"
+      disabled={!submittable}
+      {...restProps}
+    >
       {children}
     </Button>
   );

@@ -41,6 +41,8 @@ class OptionService {
 
   templateColumns: { key: string; cnName: string; enName: string }[] = [];
   roles: Option[] = [];
+  customsTemplates: Option[] = [];
+  prealertTemplates: Option[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -49,6 +51,8 @@ class OptionService {
   async load() {
     this.loadBase();
     this.loadRoles();
+    this.loadCustomsTemplates();
+    this.loadPrealertTemplates();
   }
 
   async loadRoles() {
@@ -88,11 +92,37 @@ class OptionService {
     });
   }
 
+  async loadCustomsTemplates() {
+    const { templates } = await net.post("/api/option/getCustomsTemplates");
+    runInAction(() => {
+      this.customsTemplates = templates;
+    });
+    localStorage.setItem("options.customsTemplates", {
+      data: templates,
+      params: [],
+      time: Date.now(),
+    });
+  }
+
+  async loadPrealertTemplates() {
+    const { templates } = await net.post("/api/option/getPrealertTemplates");
+    runInAction(() => {
+      this.prealertTemplates = templates;
+    });
+    localStorage.setItem("options.prealertTemplates", {
+      data: templates,
+      params: [],
+      time: Date.now(),
+    });
+  }
+
   init() {
     this.data = localStorage.getItem("options")?.data ?? defaultOptions;
     this.templateColumns =
       localStorage.getItem("options.templateColumns")?.data ?? [];
     this.roles = localStorage.getItem("options.roles")?.data ?? [];
+    this.customsTemplates = localStorage.getItem("options.customsTemplates")?.data ?? [];
+    this.prealertTemplates = localStorage.getItem("options.prealertTemplates")?.data ?? [];
     this.load();
   }
 
@@ -133,6 +163,15 @@ class OptionService {
       value: item.id,
       label: item.val,
     }));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  format(opts: any[]) {
+    return opts.map(item => {
+      const { id, val } = item;
+      return { label: val, value: id };
+    });
+
   }
 }
 

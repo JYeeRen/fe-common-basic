@@ -124,4 +124,12 @@ export interface CustomsStatus {
   customsRemark: string;
   customerName: string;
   warning: boolean;
+  ata: string;
+  atd: string;
+}
+
+export interface CustomsDocument extends CustomsStatus {
+  customsFile: boolean;
+  prealertFile: boolean;
+  copyImgFile: boolean;
 }

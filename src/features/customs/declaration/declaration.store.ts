@@ -1,0 +1,169 @@
+import { ClientGridStore } from "@components";
+import { makeAutoObservable, reaction } from "mobx";
+import { CustomsDocument } from "./type";
+import { some } from "lodash";
+import { loading, net } from "@infra";
+import dayjs from "dayjs";
+
+export class DeclrationStore {
+  loading = false;
+  warning = false;
+
+  gridStore: ClientGridStore<CustomsDocument>;
+
+  selectedRowKeys: number[] = [];
+
+  viewing: CustomsDocument | null = null;
+  editing: CustomsDocument | null = null;
+
+  creatingCustomDocs = false;
+  creatingPrealertDocs = false;
+
+  constructor(_options: unknown, gridStore: ClientGridStore<CustomsDocument>) {
+    makeAutoObservable(this);
+    this.gridStore = gridStore;
+
+    reaction(
+      () => this.gridStore.rowData,
+      () => {
+        this.checkWarning();
+        this.setSelectedRowKeys([]);
+      }
+    );
+  }
+
+  get initiateDisabled() {
+    return this.selectedRowKeys.length === 0;
+  }
+
+  get selectedRows() {
+    return this.gridStore.rowData.filter(r => this.selectedRowKeys.includes(r.id));
+  }
+
+  get hasTakeOf() {
+    for (const record of this.selectedRows) {
+      const takeOfAt = record.atd || record.etd;
+      if (!takeOfAt) continue;
+      if (dayjs(takeOfAt).isBefore(dayjs())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  setCreatingCustomDocs(creatingCustomDocs: boolean) {
+    this.creatingCustomDocs = creatingCustomDocs;
+  }
+
+  setCreatingPrealertDocs(creatingPrealertDocs: boolean) {
+    this.creatingPrealertDocs = creatingPrealertDocs;
+  }
+
+  checkWarning() {
+    const warning = some(this.gridStore.rowData, { warning: true });
+    this.setWarning(warning);
+  }
+
+  setWarning(warning: boolean) {
+    this.warning = warning;
+  }
+
+  setSelectedRowKeys(keys: number[]) {
+    this.selectedRowKeys = keys;
+  }
+
+  setViewing(record: CustomsDocument | null) {
+    this.viewing = record;
+  }
+
+  setEditing(record: CustomsDocument | null) {
+    this.editing = record;
+  }
+
+  @loading()
+  async editRemark(params: { id: number; remark: string }) {
+    await net.post("/api/customsStatus/editRemark", params);
+    await this.gridStore.loadData();
+  }
+
+  @loading()
+  async downloadSelectedCopyFile() {
+    await net.download("/api/customsDocument/downloadCopyFile", { ids: this.selectedRowKeys });
+  }
+
+  @loading()
+  async createDocument() {
+    await net.post("/api/customsStatus/createDocument", {
+      ids: this.selectedRowKeys,
+    });
+    await this.gridStore.loadData();
+  }
+
+  @loading()
+  async view(id: number) {
+    console.log("view", id);
+  }
+
+  @loading()
+  async edit(id: number) {
+    console.log("edit", id);
+  }
+
+  @loading()
+  async cancel(id: number) {
+    await net.post("/api/customsDocument/cancelCreate", { ids: [id] });
+    this.gridStore.loadData();
+  }
+
+  @loading()
+  async downloadCopyFile(id?: number) {
+    if (!id) return;
+    await net.download("/api/customsDocument/downloadCopyFile", { ids: [id] });
+  }
+
+  @loading()
+  async downloadSelectedCustomsFile() {
+    await net.download("/api/customsDocument/downloadCustomsFile", {
+      ids: this.selectedRowKeys,
+    });
+  }
+
+  @loading()
+  async downloadSelectedPrealertFile() {
+    await net.download("/api/customsDocument/downloadPrealert", {
+      ids: this.selectedRowKeys,
+    });
+  }
+
+  @loading()
+  async downloadCustomsFile(id?: number) {
+    if (!id) return;
+    await net.download("/api/customsDocument/downloadCustomsFile", {
+      ids: [id],
+    });
+  }
+
+  @loading()
+  async downloadPrealert(id?: number) {
+    if (!id) return;
+    await net.download("/api/customsDocument/downloadPrealert", { ids: [id] });
+  }
+
+  @loading()
+  async createCustomFile(templateId: number) {
+    const { failed } = await net.post('/api/customsDocument/createCustomsFile', {
+      ids: this.selectedRowKeys,
+      templateId
+    })
+    console.log(failed);
+  }
+
+  @loading()
+  async createPrealert(templateId: number) {
+    const { failed } = await net.post('/api/customsDocument/createPrealert', {
+      ids: this.selectedRowKeys,
+      templateId
+    })
+    console.log(failed);
+  }
+}

@@ -1,0 +1,76 @@
+import * as Schema from "../schema";
+import { File, ListParams, ListRes } from "./common.types";
+
+export interface CustomsDocumentAPI {
+  "/api/customsDocument/findList": {
+    params: ListParams & {
+      noList?: string[];
+      noType?: number;
+    };
+    res: ListRes<Schema.CustomsDocument>;
+  };
+
+  "/api/customsDocument/editRemark": {
+    params: {
+      id: number;
+      remark: string;
+    };
+    res: never;
+  };
+  "/api/customsDocument/createDocument": {
+    params: {
+      ids: number[];
+    };
+    res: never;
+  };
+  "/api/customsDocument/cancelCreate": {
+    params: {
+      ids: number[];
+    };
+    res: {
+      failed: { number: string; reason: string }[];
+    };
+  };
+  "/api/customsDocument/export": {
+    params?: {
+      noList?: string[];
+      noType?: number;
+      uploadDate?: {
+        zone: string;
+        start: string;
+        end: string;
+      };
+      flightDate?: {
+        zone: string;
+        start: string;
+        end: string;
+      };
+      customsDocumentType?: string;
+    };
+    res: { filename: string; url: string };
+  };
+  "/api/customsDocument/downloadCopyFile": {
+    params: { ids: number[] };
+    res: File;
+  };
+  "/api/customsDocument/downloadCustomsFile": {
+    params: { ids: number[] };
+    res: File;
+  };
+  "/api/customsDocument/downloadPrealert": {
+    params: { ids: number[] };
+    res: File;
+  };
+  "/api/customsDocument/createCustomsFile": {
+    params: { ids: number[]; templateId: number };
+    res: {
+      failed: { name: string; reason: string }[];
+    };
+  };
+  "/api/customsDocument/createPrealert": {
+    params: { ids: number[]; templateId: number };
+    res: {
+      failed: { name: string; reason: string }[];
+    };
+  };
+}

@@ -29,4 +29,12 @@ export interface OptionsAPI {
     params?: never;
     res: { permissions: Schema.Permission[] };
   };
+  "/api/option/getCustomsTemplates": {
+    params?: never;
+    res: { templates: { id: number; val: string }[] };
+  };
+  "/api/option/getPrealertTemplates": {
+    params?: never;
+    res: { templates: { id: number; val: string }[] };
+  };
 }

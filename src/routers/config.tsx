@@ -203,8 +203,11 @@ export const routesConfig: RouteObject[] = [
           {
             path: "declaration",
             lazy: async () => ({
-              Component: (await import("@features/customs/declaration"))
-                .default,
+              Component: (
+                await import(
+                  "@features/customs/declaration/declaration.component"
+                )
+              ).default,
             }),
           },
           ...template,

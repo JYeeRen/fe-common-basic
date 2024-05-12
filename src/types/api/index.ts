@@ -5,6 +5,7 @@ import { CustomsItemAPI } from "./customs-item.types";
 import { CustomTemplateAPI } from "./custom-template.types";
 import { CustomsRiskAPI } from "./customs-risk.types";
 import { CustomsStatusAPI } from "./custom-status.type";
+import { CustomsDocumentAPI } from "./custom-document.types";
 
 export interface ApiError {
   code: number;
@@ -26,6 +27,7 @@ export interface Sources
     CustomsItemAPI,
     CustomTemplateAPI,
     CustomsRiskAPI,
-    CustomsStatusAPI {}
+    CustomsStatusAPI,
+    CustomsDocumentAPI {}
 
 export type URLs = keyof Sources;

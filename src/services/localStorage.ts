@@ -14,6 +14,8 @@ interface LocalValues {
   user?: User;
   "options.roles"?: CachedData;
   "options.base"?: CachedData;
+  "options.customsTemplates"?: CachedData;
+  "options.prealertTemplates"?: CachedData;
   "options.templateColumns"?: CachedData<{ key: string; cnName: string; enName: string }[]>;
   options?: CachedData<Omit<Options, 'templateColumns'>>;
 }

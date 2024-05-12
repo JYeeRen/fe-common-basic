@@ -19,7 +19,7 @@ export class BillOfLadingStore {
     reaction(
       () => this.gridStore.rowData,
       () => {
-        this.checkWarning.bind(this);
+        this.checkWarning();
         this.setSelectedRowKeys([]);
       }
     );
