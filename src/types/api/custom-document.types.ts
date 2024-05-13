@@ -63,14 +63,30 @@ export interface CustomsDocumentAPI {
   };
   "/api/customsDocument/createCustomsFile": {
     params: { ids: number[]; templateId: number };
-    res: {
-      failed: { name: string; reason: string }[];
-    };
+    res: { failed: { number: string; reason: string }[] };
   };
   "/api/customsDocument/createPrealert": {
     params: { ids: number[]; templateId: number };
-    res: {
-      failed: { name: string; reason: string }[];
-    };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/uploadCustomsFile": {
+    // params: { id: number; file: unknown };
+    params: FormData;
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/uploadCustomsFiles": {
+    // params: { files: unknown[] };
+    params: FormData;
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/uploadPrealert": {
+    // params: { id: number; file: unknown };
+    params: FormData;
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/uploadPrealerts": {
+    // params: { files: unknown[] };
+    params: FormData;
+    res: { failed: { number: string; reason: string }[] };
   };
 }

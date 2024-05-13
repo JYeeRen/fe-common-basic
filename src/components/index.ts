@@ -27,6 +27,8 @@ export { SearchSelect } from './search-select';
 
 export { EditableCell } from './editable-cell.component';
 
+export { FileUpload } from './file-upload/file-upload.component';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";

@@ -1,24 +1,61 @@
-import { Block, Button, Col, Modal, Row, Upload } from "@components";
+import { Block, Button, Col, FileUpload, Form, Modal, Row } from "@components";
 import { useTranslation } from "@locale";
 import { DeclrationStore } from "../declaration.store";
 import { observer } from "mobx-react-lite";
-import { UploadOutlined } from "@ant-design/icons";
-import styles from "./createDocumentModal.module.less";
 
-export const EditDocumentModal = observer(
-  (props: { store: DeclrationStore }) => {
-    const { store } = props;
-    const [t] = useTranslation();
+interface EditDocumentModalProps {
+  store: DeclrationStore;
+}
 
-    return (
-      <Modal
-        open={Boolean(store.editing)}
-        footer={null}
-        title={t("编辑相关文件")}
-        onCancel={store.setViewing.bind(store, null)}
-        width={600}
-        destroyOnClose
-      >
+export const EditDocumentModal = observer((props: EditDocumentModalProps) => {
+  const { store } = props;
+  const [t] = useTranslation();
+  const [form] = Form.useForm();
+  const onCancel = () => {
+    store.setEditing(null);
+  };
+  const onOk = async () => {
+    const { customsFiles = [], prealertFiles = [] } = form.getFieldsValue();
+    if ([...customsFiles, ...prealertFiles].length === 0) {
+      onCancel();
+      return;
+    }
+
+
+    const failds = [];
+
+    if (customsFiles && customsFiles.length > 0) {
+      const customsFilesData = new FormData();
+      customsFilesData.append("file", customsFiles[0].originFileObj);
+      customsFilesData.append("id", `${store.editing?.id || 0}`);
+      const customsFailed = await store.uploadCustomsFile(customsFilesData);
+      customsFailed?.length && failds.push(...customsFailed);
+    }
+
+    if (prealertFiles && prealertFiles.length > 0) {
+      const prealertFilesData = new FormData();
+      prealertFilesData.append("file", prealertFiles[0].originFileObj);
+      prealertFilesData.append("id", `${store.editing?.id || 0}`);
+      const prealertField = await store.uploadPrealert(prealertFilesData);
+      prealertField?.length && failds.push(...prealertField);
+    }
+
+    store.setEditing(null);
+    store.gridStore.loadData();
+  };
+
+  return (
+    <Modal
+      open={Boolean(store.editing)}
+      footer={null}
+      title={t("编辑相关文件")}
+      onCancel={onCancel}
+      width={700}
+      destroyOnClose
+      maskClosable={false}
+      afterClose={() => form.resetFields()}
+    >
+      <Form form={form}>
         <Row className="my-8">
           <p>
             {t(
@@ -38,7 +75,7 @@ export const EditDocumentModal = observer(
             <p>{t("上传新文件后，将覆盖之前的文件，请谨慎操作！")}</p>
           </div>
         </Row>
-        <Row className="my-5 mb-10" align="middle">
+        <Row className="my-5 mb-10" align="top">
           <Col span={12}>
             <Row justify="center" className="mb-4">
               <Button
@@ -48,21 +85,20 @@ export const EditDocumentModal = observer(
                   store.editing?.id
                 )}
                 loading={store.loading}
+                disabled={!store.editing?.customsFile}
               >
                 {t("下载清关文件")}
               </Button>
             </Row>
-            <Row justify="center">
+            <Row justify="start">
               <Block if={!store.hasTakeOf}>
-                <span>{t("修改清关文件：")}</span>
-                <Upload name="file" action="" accept=".xlsx,.xls,.rar,.zip">
-                  <Button icon={<UploadOutlined />} loading={store.loading}>
-                    {t("上传附件")}
-                  </Button>
-                </Upload>
-                <span className={styles.tip}>
-                  {t("附件支持的格式：'xlsx'，'xls'，'zip'，'rar'")}
-                </span>
+                <Form.Item noStyle name="customsFiles">
+                  <FileUpload
+                    maxCount={1}
+                    loading={store.loading}
+                    title={t("修改清关文件：")}
+                  />
+                </Form.Item>
               </Block>
             </Row>
           </Col>
@@ -72,34 +108,33 @@ export const EditDocumentModal = observer(
                 type="primary"
                 onClick={store.downloadPrealert.bind(store, store.editing?.id)}
                 loading={store.loading}
+                disabled={!store.editing?.prealertFile}
               >
                 {t("下载预报文件")}
               </Button>
             </Row>
-            <Row justify="center">
+            <Row justify="start">
               <Block if={!store.hasTakeOf}>
-                <span>{t("修改预报文件：")}</span>
-                <Upload name="file" action="" accept=".xlsx,.xls,.rar,.zip">
-                  <Button icon={<UploadOutlined />} loading={store.loading}>
-                    {t("上传附件")}
-                  </Button>
-                </Upload>
-                <span className={styles.tip}>
-                  {t("附件支持的格式：'xlsx'，'xls'，'zip'，'rar'")}
-                </span>
+                <Form.Item noStyle name="prealertFiles">
+                  <FileUpload
+                    maxCount={1}
+                    loading={store.loading}
+                    title={t("修改预报文件：")}
+                  />
+                </Form.Item>
               </Block>
             </Row>
           </Col>
         </Row>
         <Row justify="end" className="my-4">
-          <Button className="mr-4" onClick={store.setEditing.bind(store, null)}>
+          <Button className="mr-4" onClick={onCancel}>
             {t("取消")}
           </Button>
-          <Button type="primary" onClick={() => {}} loading={store.loading}>
+          <Button type="primary" onClick={onOk} loading={store.loading}>
             {t("确认无误，提交文件")}
           </Button>
         </Row>
-      </Modal>
-    );
-  }
-);
+      </Form>
+    </Modal>
+  );
+});

@@ -60,6 +60,25 @@ class Net {
     return data.data;
   }
 
+  async upload<URL extends URLs, R = Sources[URL]["res"]>(
+    url: URL,
+    ...[body, config]: OptionalParams<URL>
+  ): Promise<R> {
+    if (typeof url !== "string") {
+      throw new Error("miss url");
+    }
+    const { data } = await this.request<ApiSuccess<R>>({
+      method: "POST",
+      url,
+      data: body,
+      ...config,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return data.data;
+  }
+
   async download<URL extends URLs, R = Sources[URL]["res"]>(
     url: URL,
     ...[body, config]: OptionalParams<URL>

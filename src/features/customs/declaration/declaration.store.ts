@@ -30,6 +30,15 @@ export class DeclrationStore {
         this.setSelectedRowKeys([]);
       }
     );
+
+    // reaction(
+    //   () => this.creatingCustomDocs,
+    //   () => this.creatingCustomDocs && this.gridStore.loadData()
+    // )
+    // reaction(
+    //   () => this.creatingPrealertDocs,
+    //   () => this.creatingPrealertDocs && this.gridStore.loadData()
+    // )
   }
 
   get initiateDisabled() {
@@ -112,7 +121,7 @@ export class DeclrationStore {
   @loading()
   async cancel(id: number) {
     await net.post("/api/customsDocument/cancelCreate", { ids: [id] });
-    this.gridStore.loadData();
+    await this.gridStore.loadData();
   }
 
   @loading()
@@ -155,7 +164,7 @@ export class DeclrationStore {
       ids: this.selectedRowKeys,
       templateId
     })
-    console.log(failed);
+    return failed;
   }
 
   @loading()
@@ -164,6 +173,31 @@ export class DeclrationStore {
       ids: this.selectedRowKeys,
       templateId
     })
-    console.log(failed);
+    return failed;
   }
+
+  @loading()
+  async uploadCustomsFile(data: FormData) {
+    const { failed } = await net.upload("/api/customsDocument/uploadCustomsFile", data);
+    return failed;
+  }
+
+  @loading()
+  async uploadPrealert(data: FormData) {
+    const { failed } = await net.upload("/api/customsDocument/uploadPrealert", data);
+    return failed;
+  }
+
+  @loading()
+  async uploadCustomsFiles(formData: FormData) {
+    const { failed } = await net.upload("/api/customsDocument/uploadCustomsFiles", formData);
+    return failed;
+  }
+
+  @loading()
+  async uploadPrealerts(formData: FormData) {
+    const { failed } = await net.upload("/api/customsDocument/uploadPrealerts", formData);
+    return failed;
+  }
+
 }

@@ -2,19 +2,17 @@ import {
   Block,
   Button,
   Col,
+  FileUpload,
   Form,
   Modal,
   Row,
   SearchSelect,
   SubmitButton,
-  Upload,
 } from "@components";
 import { useTranslation } from "@locale";
 import { observer } from "mobx-react-lite";
 import type { DeclrationStore } from "../declaration.store";
 import optionsService from "@services/options.service";
-import styles from "./createDocumentModal.module.less";
-import { UploadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 interface CreatePrealertModalProps {
@@ -67,61 +65,108 @@ const SelectTemplate = observer((props: SelectTemplateProps) => {
   );
 });
 
-const CheckDocument = observer((props: CreatePrealertModalProps) => {
-  const { onCancel, onOk, store } = props;
+interface CheckDocumentProps {
+  store: DeclrationStore;
+  onCancel?: () => void;
+}
+
+const CheckDocument = observer((props: CheckDocumentProps) => {
+  const { onCancel, store } = props;
 
   const [t] = useTranslation();
+  const [form] = Form.useForm();
+
+  const handleOk = async () => {
+    const { prealertFiles = [] } = form.getFieldsValue();
+    if (!prealertFiles.length) {
+      onCancel?.();
+    }
+    const formData = new FormData();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (prealertFiles as any[]).forEach(file => {
+      formData.append("files[]", file.originFileObj);
+    });
+    const failed = await store.uploadPrealerts(formData);
+
+    store.setCreatingPrealertDocs(false);
+    
+    if (!failed.length) {
+      return store.gridStore.loadData();
+    }
+    
+    Modal.confirm({
+      title: t('操作确认'),
+      content: (
+        <div>
+          <p>{t('全部上传文件：{{no}}个', { no: prealertFiles.length })}</p>
+          <p>{t('完成上传文件：{{no}}个', { no: prealertFiles.length })}</p>
+          <p>{t('未完成的文件对应提单号如下：')}</p>
+          {failed.map(({ number }, index) => <p key={`${number}-${index}`}>{number}</p>)}
+        </div>
+      ),
+      okText: t('确认'),
+      cancelText: t('复制未完成单号'),
+      onCancel: async () => {
+        await navigator.clipboard.writeText(failed.map(i => i.number).join('\n'));
+        store.gridStore.loadData();
+      },
+      onOk: () => store.gridStore.loadData()
+    });
+  };
+
 
   return (
     <>
-      <div className="mt-10">
-        <Row justify="center" className="my-5">
-          {t(
-            "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
-          )}
-        </Row>
-        <Row justify="center" className="my-5">
-          <div style={{ display: "inline-block", color: "orange" }}>
-            {t("注意：")}
-          </div>
-          <div style={{ display: "inline-block" }}>
-            <p>{t("修改文件时，请不要增删文件的行列数，不要修改字段名称。")}</p>
-            <p>{t("上传新文件后，将覆盖之前的文件，请谨慎操作！")}</p>
-          </div>
-        </Row>
-        <Row className="my-5 mb-10" align="middle">
-          <Col span={12}>
-            <Button
-              type="primary"
-              onClick={store.downloadSelectedPrealertFile.bind(store)}
-              loading={store.loading}
-            >
-              {t("下载预报文件")}
-            </Button>
-          </Col>
-          <Col span={12} className="justify-center">
-            <Block if={!store.hasTakeOf}>
-            <span>{t("修改清关文件：")}</span>
-            <Upload name="file" action="" accept=".xlsx,.xls,.rar,.zip">
-              <Button icon={<UploadOutlined />} loading={store.loading}>
-                {t("上传附件")}
+      <Form form={form}>
+        <div className="mt-10">
+          <Row justify="center" className="my-5">
+            {t(
+              "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
+            )}
+          </Row>
+          <Row justify="center" className="my-5">
+            <div style={{ display: "inline-block", color: "orange" }}>
+              {t("注意：")}
+            </div>
+            <div style={{ display: "inline-block" }}>
+              <p>
+                {t("修改文件时，请不要增删文件的行列数，不要修改字段名称。")}
+              </p>
+              <p>{t("上传新文件后，将覆盖之前的文件，请谨慎操作！")}</p>
+            </div>
+          </Row>
+          <Row className="my-5 mb-10" align="middle">
+            <Col span={12} className="flex justify-center">
+              <Button
+                type="primary"
+                onClick={store.downloadSelectedPrealertFile.bind(store)}
+                loading={store.loading}
+              >
+                {t("下载预报文件")}
               </Button>
-            </Upload>
-            <span className={styles.tip}>
-              {t("附件支持的格式：'xlsx'，'xls'，'zip'，'rar'")}
-            </span>
-            </Block>
-          </Col>
+            </Col>
+            <Col span={12} className="justify-center">
+              <Block if={!store.hasTakeOf}>
+                <Form.Item noStyle name="prealertFiles">
+                  <FileUpload
+                    title={t("修改清关文件：")}
+                    loading={store.loading}
+                    multiple
+                  />
+                </Form.Item>
+              </Block>
+            </Col>
+          </Row>
+        </div>
+        <Row justify="end" className="my-4">
+          <Button className="mr-4" onClick={onCancel}>
+            {t("取消")}
+          </Button>
+          <Button type="primary" onClick={handleOk} loading={store.loading}>
+            {t("确认无误，提交文件")}
+          </Button>
         </Row>
-      </div>
-      <Row justify="end" className="my-4">
-        <Button className="mr-4" onClick={onCancel}>
-          {t("取消")}
-        </Button>
-        <Button type="primary" onClick={onOk} loading={store.loading}>
-          {t("确认无误，提交文件")}
-        </Button>
-      </Row>
+      </Form>
     </>
   );
 });
@@ -150,6 +195,7 @@ export const CreatePrealerttModal = observer(
         maskClosable={false}
         width={600}
         destroyOnClose
+        afterClose={() => setSetp(1)}
       >
         <Block if={step === 1}>
           <SelectTemplate
@@ -162,7 +208,6 @@ export const CreatePrealerttModal = observer(
           <CheckDocument
             store={store}
             onCancel={onCancel}
-            onOk={() => console.log("!!!!CheckDocument")}
           />
         </Block>
       </Modal>

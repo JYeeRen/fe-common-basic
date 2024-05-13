@@ -85,10 +85,13 @@ export const getColumns = (params: {
             label: t("取消制作"),
           },
         ];
+
         if (data.atd || data.etd) {
           if (dayjs(data.atd || data.etd).isBefore(dayjs())) {
             operations.splice(1, 1);
           }
+        } else if (!data.customsFile && !data.prealertFile) {
+          operations.splice(1, 1);
         }
         
         return (
