@@ -25,7 +25,7 @@ export function FilterContainer(props: FilterProps & FormProps) {
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 14 }}
           onFinish={onFinish}
-          onReset={() => onFinish?.()}
+          onReset={() => onFinish?.(formProps.initialValues)}
           {...formProps}
         >
           <Row>

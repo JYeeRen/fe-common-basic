@@ -1,80 +1,76 @@
 import {
-  ClientGrid,
+  ClientGridStore,
   Col,
   Container,
   FilterContainer,
   FilterTextArea,
   Form,
-  Radio,
   SearchSelect,
   Table,
   textareaMaxLengthRule,
 } from "@components";
 import { observer } from "mobx-react-lite";
-import * as listConfig from "./track-trace-config";
-import styles from "./track-trace.module.less";
+import * as listConfig from "./track-log-mawb-config";
+import styles from "./track-info.module.less";
 import { useCallback, useMemo } from "react";
-import { useStore } from "@hooks";
-import { TrackTraceStore } from "./track-trace.store";
-import { CustomsTrackStatusFormValues } from "./type";
-import optionsService from "@services/options.service";
+import { MawbCustomsTrackLog, MawbFormValues } from "./type";
 import { compact } from "lodash";
+import { TrackLogStore } from "./track-log.store";
+import { useTranslation } from "@locale";
+import clsx from "clsx";
 
-function TrackTraceComponent() {
-  const { store, t } = useStore(TrackTraceStore)();
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, false);
+interface MawbProps {
+  store: TrackLogStore;
+  gridStore: ClientGridStore<MawbCustomsTrackLog>;
+}
+
+function TrackLogMawbComponent(props: MawbProps) {
+  const { store, gridStore } = props;
+
+  const [t] = useTranslation();
   const columns = useMemo(() => listConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, statusType } = values;
+    const { masterWaybillNoList, waybillStatusCode } = values;
     gridStore.setQueryParams({
-      noList: compact(noList),
-      noType: noType || undefined,
-      statusType: statusType || undefined,
+      noList: compact(masterWaybillNoList),
+      waybillStatusCode: waybillStatusCode || undefined,
     });
   }, []);
 
-  const initialValues: CustomsTrackStatusFormValues = useMemo(
-    () => ({ statusType: 0, noType: 0 }),
+  const initialValues: MawbFormValues = useMemo(
+    () => ({ masterWaybillNoList: [], waybillStatusCode: 'customs_submitted' }),
     []
   );
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
-    <Container className={styles.container} loading={store.loading}>
+    <Container className={clsx(styles.container, styles.subcontainer)} loading={store.loading}>
       <FilterContainer
         onFinish={handleFinish}
         layout="vertical"
         initialValues={initialValues}
       >
-        <Col span={8}>
-          <div style={{ paddingBottom: "8px" }}>
-            <Form.Item noStyle name="noType">
-              <Radio.Group>
-                {optionsService.customsTrackStatusNoTypes.map((opt) => (
-                  <Radio key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </Form.Item>
-          </div>
-          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+        <Col span={12}>
+          <Form.Item
+            name="masterWaybillNoList"
+            label={<span style={{ height: "30px" }}>{t("提单号")}</span>}
+            rules={numberRules}
+          >
             <FilterTextArea
-              style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
             />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="statusType" label={t("轨迹名称")}>
-            <SearchSelect optionKey="customsTrackStatusTypes" />
+          <Form.Item name="waybillStatusCode" label={t("轨迹名称")}>
+            <SearchSelect optionKey="waybillTrackStatusList" />
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper}>
+      <Container title={t("轨迹信息")} wrapperClassName={styles.wrapper}>
         <Table
           widthFit
           bordered
@@ -102,6 +98,6 @@ function TrackTraceComponent() {
   );
 }
 
-const Template = observer(TrackTraceComponent);
+const MawbTrackLog = observer(TrackLogMawbComponent);
 
-export default Template;
+export default MawbTrackLog;

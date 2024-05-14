@@ -1,5 +1,5 @@
 import {
-  ClientGrid,
+  ClientGridStore,
   Col,
   Container,
   FilterContainer,
@@ -11,39 +11,45 @@ import {
   textareaMaxLengthRule,
 } from "@components";
 import { observer } from "mobx-react-lite";
-import * as listConfig from "./track-trace-config";
-import styles from "./track-trace.module.less";
+import * as listConfig from "./track-log-package-config";
+import styles from "./track-info.module.less";
 import { useCallback, useMemo } from "react";
-import { useStore } from "@hooks";
-import { TrackTraceStore } from "./track-trace.store";
-import { CustomsTrackStatusFormValues } from "./type";
+import { PackageFormValues, PackagCustomsTrackLoge } from "./type";
 import optionsService from "@services/options.service";
 import { compact } from "lodash";
+import { TrackLogStore } from "./track-log.store";
+import { useTranslation } from "@locale";
+import clsx from "clsx";
 
-function TrackTraceComponent() {
-  const { store, t } = useStore(TrackTraceStore)();
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, false);
+interface PackageProps {
+  store: TrackLogStore;
+  gridStore: ClientGridStore<PackagCustomsTrackLoge>;
+}
+
+function TrackLogPackageComponent(props: PackageProps) {
+  const { store, gridStore } = props;
+  const [t] = useTranslation();
   const columns = useMemo(() => listConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, statusType } = values;
     gridStore.setQueryParams({
-      noList: compact(noList),
+      noList: noType != null && compact(noList),
       noType: noType || undefined,
       statusType: statusType || undefined,
     });
   }, []);
 
-  const initialValues: CustomsTrackStatusFormValues = useMemo(
-    () => ({ statusType: 0, noType: 0 }),
+  const initialValues: PackageFormValues = useMemo(
+    () => ({ actionCode: 'cb_imcustoms_start' }),
     []
   );
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
-    <Container className={styles.container} loading={store.loading}>
+    <Container className={clsx(styles.container, styles.subcontainer)} loading={store.loading}>
       <FilterContainer
         onFinish={handleFinish}
         layout="vertical"
@@ -53,7 +59,7 @@ function TrackTraceComponent() {
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
               <Radio.Group>
-                {optionsService.customsTrackStatusNoTypes.map((opt) => (
+                {optionsService.customsTrackPackageNoTypes.map((opt) => (
                   <Radio key={opt.value} value={opt.value}>
                     {opt.label}
                   </Radio>
@@ -69,8 +75,8 @@ function TrackTraceComponent() {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="statusType" label={t("轨迹名称")}>
-            <SearchSelect optionKey="customsTrackStatusTypes" />
+          <Form.Item name="actionCode" label={t("轨迹名称")}>
+            <SearchSelect optionKey="actionCodeList" />
           </Form.Item>
         </Col>
       </FilterContainer>
@@ -79,7 +85,6 @@ function TrackTraceComponent() {
           widthFit
           bordered
           loading={gridStore.loading}
-          // rowSelection={{ type: "checkbox" }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}
@@ -102,6 +107,6 @@ function TrackTraceComponent() {
   );
 }
 
-const Template = observer(TrackTraceComponent);
+const PacakgeTrackLog = observer(TrackLogPackageComponent);
 
-export default Template;
+export default PacakgeTrackLog;

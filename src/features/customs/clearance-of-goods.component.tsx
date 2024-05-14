@@ -87,7 +87,7 @@ function ClearanceOfGoodsComponent() {
                 />
               </Form.Item>
             </div>
-            <Form.Item name="otherList">
+            <Form.Item name="otherList" rules={numberRules}>
               <FilterTextArea
                 placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
               />

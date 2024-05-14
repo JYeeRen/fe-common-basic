@@ -163,3 +163,26 @@ export interface CustomsTrackStatus {
   departPortCode: string;
   arrivePortCode: string;
 }
+
+export interface PackagCustomsTrackLog {
+  id: number;
+  bigBagNo: string;
+  providerOrderId: string;
+  declarationBillId: string;
+  trackingNo: string;
+  actionCode: string;
+  operateTime: string;
+  operateTimeCn: string;
+  createdTimeCn: string;
+  userName: string;
+}
+
+export interface MawbCustomsTrackLog {
+  id: number;
+  masterWaybillNo: string;
+  waybillStatusCode: string;
+  operateTime: string;
+  operateTimeCn: string;
+  createdTimeCn: string;
+  userName: string;
+}

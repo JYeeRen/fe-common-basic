@@ -41,21 +41,29 @@ const trajectory: RouteObject[] = [
   {
     path: "trajectory",
     children: [
+      // {
+      //   path: "bill-of-lading",
+      //   lazy: async () => ({
+      //     Component: (
+      //       await import(
+      //         "@features/trajectory/bill-of-lading/bill-of-lading.component"
+      //       )
+      //     ).default,
+      //   }),
+      // },
+      // {
+      //   path: "packages",
+      //   lazy: async () => ({
+      //     Component: (
+      //       await import("@features/trajectory/packages/packages.component")
+      //     ).default,
+      //   }),
+      // },
       {
-        path: "bill-of-lading",
+        path: "track-info",
         lazy: async () => ({
           Component: (
-            await import(
-              "@features/trajectory/bill-of-lading/bill-of-lading.component"
-            )
-          ).default,
-        }),
-      },
-      {
-        path: "packages",
-        lazy: async () => ({
-          Component: (
-            await import("@features/trajectory/packages/packages.component")
+            await import("@features/trajectory/track-log/track-log.component")
           ).default,
         }),
       },
@@ -67,12 +75,12 @@ const trajectory: RouteObject[] = [
           ).default,
         }),
       },
-      {
-        path: "maintenance",
-        lazy: async () => ({
-          Component: (await import("@features/trajectory/maintenance")).default,
-        }),
-      },
+      // {
+      //   path: "maintenance",
+      //   lazy: async () => ({
+      //     Component: (await import("@features/trajectory/maintenance")).default,
+      //   }),
+      // },
     ],
   },
 ];

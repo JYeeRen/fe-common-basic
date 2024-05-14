@@ -14,18 +14,18 @@ export const getColumns = (): TableColumnsType<CustomsTrackStatus> => {
     },
     { key: "bigBagNo", dataIndex: "bigBagNo", title: t("袋号") },
     {
-      key: "masterWaybillNo1",
-      dataIndex: "masterWaybillNo1",
+      key: "trackingNo",
+      dataIndex: "trackingNo",
       title: t("尾程单号"),
     },
     {
-      key: "masterWaybillNo1",
-      dataIndex: "masterWaybillNo1",
+      key: "providerOrderId",
+      dataIndex: "providerOrderId",
       title: t("运单号"),
     },
     {
-      key: "masterWaybillNo1",
-      dataIndex: "masterWaybillNo1",
+      key: "declarationBillId",
+      dataIndex: "declarationBillId",
       title: t("订单号"),
     },
     {

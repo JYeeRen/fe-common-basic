@@ -11,6 +11,7 @@ import {
   Row,
   Table,
   EditableCell,
+  textareaMaxLengthRule,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declaration-config";
@@ -123,6 +124,8 @@ function DeclareStatusComponent() {
       });
     };
 
+    const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
+
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
@@ -138,7 +141,7 @@ function DeclareStatusComponent() {
               </Radio.Group>
             </Form.Item>
           </div>
-          <Form.Item name="noList" wrapperCol={{ span: 22 }}>
+          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
             <FilterTextArea
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}

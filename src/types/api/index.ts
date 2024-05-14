@@ -8,6 +8,7 @@ import { CustomsStatusAPI } from "./custom-status.type";
 import { CustomsDocumentAPI } from "./custom-document.types";
 import { CustomsTrackAPI } from "./customs-track.types";
 import { CustomsTrackStatusAPI } from "./customs-track-status.types";
+import { CustomsTrackLogAPI } from "./customs-track-log.types";
 
 export type { BackendOptions } from './options.types';
 
@@ -34,7 +35,8 @@ export interface Sources
     CustomsStatusAPI,
     CustomsDocumentAPI,
     CustomsTrackAPI,
-    CustomsTrackStatusAPI
+    CustomsTrackStatusAPI,
+    CustomsTrackLogAPI
 {}
 
 export type URLs = keyof Sources;
