@@ -7,6 +7,8 @@ import { CustomsRiskAPI } from "./customs-risk.types";
 import { CustomsStatusAPI } from "./custom-status.type";
 import { CustomsDocumentAPI } from "./custom-document.types";
 
+export type { BackendOptions } from './options.types';
+
 export interface ApiError {
   code: number;
   data: unknown;

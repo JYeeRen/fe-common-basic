@@ -1,23 +1,15 @@
 import store from "store2";
 import { User } from "./types";
-import { Option } from "@types";
-import { Options } from "./options.service";
-
-interface CachedData<T = Option[]> {
-  data: T;
-  params: [];
-  time: number;
-}
+import { Sources } from "@types";
 
 interface LocalValues {
   authToken?: string;
   user?: User;
-  "options.roles"?: CachedData;
-  "options.base"?: CachedData;
-  "options.customsTemplates"?: CachedData;
-  "options.prealertTemplates"?: CachedData;
-  "options.templateColumns"?: CachedData<{ key: string; cnName: string; enName: string }[]>;
-  options?: CachedData<Omit<Options, 'templateColumns'>>;
+  "options.base"?: Sources["/api/option/getBase"]["res"];
+  "options.roles"?: Sources["/api/option/getBase"]["res"];
+  "options.customsTemplates"?: Sources["/api/option/getCustomsTemplates"]["res"];
+  "options.prealertTemplates"?: Sources["/api/option/getPrealertTemplates"]["res"];
+  "options.permissions"?: Sources["/api/option/getPermissions"]["res"];
 }
 
 class LocalStorage {

@@ -4,61 +4,10 @@ import {
   Form,
   Input,
   Row,
-  Select,
-  SelectProps,
+  SearchSelect,
 } from "@components";
-import { net } from "@infra";
-import localStorage from "@services/localStorage";
-import { useRequest } from "ahooks";
-import { useCallback, useMemo } from "react";
 import { t } from "@locale";
 
-const fetchOptions = () => ({
-  base: async () => (await net.post("/api/option/getBase")).actives,
-  roles: async () => (await net.post("/api/option/getRoleNames")).options,
-});
-
-interface RemoteSelectProps extends SelectProps {
-  type: "roles" | "base";
-}
-
-const RemoteSelect = (props: RemoteSelectProps) => {
-  const { type } = props;
-  const cacheKey = useMemo<"options.roles" | "options.base">(
-    () => `options.${type}`,
-    [type]
-  );
-  const request = useMemo(() => fetchOptions()[type], [type]);
-
-  const { data, loading } = useRequest(request, {
-    cacheKey,
-    setCache: (data) => localStorage.setItem(cacheKey, data),
-    getCache: () => localStorage.getItem(cacheKey),
-  });
-
-  const options = useMemo(
-    () => data?.map((item) => ({ value: item.id, label: item.val })) ?? [],
-    [data]
-  );
-
-  const filterOption = useCallback(
-    (input: string, option?: { label: string; value: number | string }) =>
-      (option?.label ?? "").toLowerCase().includes(input.toLowerCase()),
-    []
-  );
-
-  return (
-    <Select<number, { value: number | string; label: string }>
-      {...props}
-      loading={loading}
-      options={options}
-      showSearch
-      allowClear
-      placeholder="全部"
-      filterOption={filterOption}
-    />
-  );
-};
 
 interface FilterProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,12 +27,12 @@ export function Filter(props: FilterProps) {
         </Col>
         <Col span={8}>
           <Form.Item name="roleId" label={t("账号角色")}>
-            <RemoteSelect type="roles" />
+            <SearchSelect optionKey="roles" />
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item name="activeType" label={t("账号状态")}>
-            <RemoteSelect type="base" />
+            <SearchSelect optionKey="actives" />
           </Form.Item>
         </Col>
       </Row>

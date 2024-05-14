@@ -35,10 +35,10 @@ export class AccountListStore {
   }
 
   get roleOptions() {
-    return optionsService.get("roles");
+    return optionsService.roles;
   }
 
   get activeOptions() {
-    return optionsService.get("actives");
+    return optionsService.actives;
   }
 }

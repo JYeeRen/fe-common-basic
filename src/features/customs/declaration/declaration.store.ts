@@ -109,16 +109,6 @@ export class DeclrationStore {
   }
 
   @loading()
-  async view(id: number) {
-    console.log("view", id);
-  }
-
-  @loading()
-  async edit(id: number) {
-    console.log("edit", id);
-  }
-
-  @loading()
   async cancel(id: number) {
     await net.post("/api/customsDocument/cancelCreate", { ids: [id] });
     await this.gridStore.loadData();

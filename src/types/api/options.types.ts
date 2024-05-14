@@ -1,25 +1,33 @@
 import { Schema } from "@types";
 import { Option } from "../common";
 
+export interface BackendOptions {
+  actives: Option[];
+  customsItemInfoOtherTypes: Option[];
+  mawbStatuses: Option[];
+  packageStatuses: Option[];
+  customsStatusNoTypes: Option[];
+  customsStatusTypes: Option[];
+  timeZones: { key: string; val: string }[];
+  templateTypes: Option[];
+  templateColumns: { key: string; cnName: string; enName: string }[];
+  unitTypes: { key: string; val: string }[];
+  actionCodeList: { code: string, name: string }[];
+  reasonCodeList: { code: string, name: string }[];
+  waybillTrackStatusList: { code: string, name: string }[];
+  customsTrackPackageNoTypes: Option[];
+  customsTrackStatusNoTypes: Option[];
+  customsTrackStatusTypes: Option[];
+  // tikTokActionCodeList: { code: string; name: string }[];
+  // tikTokReasonCodeList: { code: string; name: string }[];
+  // tikTokWaybillStatusList: { code: string; name: string }[];
+  // customTemplateTypes: Option[];
+}
+
 export interface OptionsAPI {
   "/api/option/getBase": {
     params?: never;
-    res: {
-      actives: Option[];
-      customsItemInfoOtherTypes: Option[];
-      mawbStatuses: Option[];
-      packageStatuses: Option[];
-      customsStatusNoTypes: Option[];
-      customsStatusTypes: Option[];
-      timeZones: { key: string; val: string }[];
-      templateTypes: Option[];
-      templateColumns: { key: string; cnName: string; enName: string }[];
-      unitTypes: { key: string; val: string }[];
-      tikTokActionCodeList: { code: string; name: string }[];
-      tikTokReasonCodeList: { code: string; name: string }[];
-      tikTokWaybillStatusList: { code: string; name: string }[];
-      customTemplateTypes: Option[];
-    };
+    res: BackendOptions;
   };
   "/api/option/getRoleNames": {
     params?: never;

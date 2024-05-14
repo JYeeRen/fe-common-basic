@@ -1,17 +1,18 @@
-import optionsService, { Options } from "@services/options.service";
+import optionsService, { OptionKey } from "@services/options.service";
 import { Select, SelectProps } from "antd";
 import { observer } from "mobx-react-lite";
 import { useCallback } from "react";
 
-interface SearchSelectProps extends SelectProps {
-  optionKey?: keyof Options | "roles";
+interface SearchSelectProps<K extends OptionKey> extends SelectProps {
+  optionKey?: K;
 }
 
-export const SearchSelect = observer((props: SearchSelectProps) => {
+export const SearchSelect = observer(function <K extends OptionKey>(
+  props: SearchSelectProps<K>
+) {
   const { options, optionKey, ...restProps } = props;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const selectOpts = options || optionsService.get(optionKey);
+  const selectOpts = options || (optionKey ? optionsService[optionKey] : []);
 
   const filterOption = useCallback(
     (input: string, option?: { label: string; value: number }) =>

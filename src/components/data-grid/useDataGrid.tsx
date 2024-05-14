@@ -48,8 +48,6 @@ export function useDataGrid<R extends AnyObject>(
 
   const memoColumns = useMemo(() => schemas.map(getGridColumn), [schemas]);
 
-  console.log(memoColumns);
-
   const toCell = useCallback((rowData: R, col: number): GridCell => {
     const colSchema = schemas[col];
     const val = rowData[colSchema.id]?.toString() ?? '';

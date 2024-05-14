@@ -12,7 +12,6 @@ import {
 import { useTranslation } from "@locale";
 import { observer } from "mobx-react-lite";
 import type { DeclrationStore } from "../declaration.store";
-import optionsService from "@services/options.service";
 import { useState } from "react";
 
 interface CreatePrealertModalProps {
@@ -43,7 +42,7 @@ const SelectTemplate = observer((props: SelectTemplateProps) => {
             rules={[{ required: true }]}
           >
             <SearchSelect
-              options={optionsService.format(optionsService.prealertTemplates)}
+              optionKey="prealertTemplates"
               placeholder={t("请选择模板")}
             />
           </Form.Item>
@@ -196,6 +195,7 @@ export const CreatePrealerttModal = observer(
         width={600}
         destroyOnClose
         afterClose={() => setSetp(1)}
+        onCancel={onCancel}
       >
         <Block if={step === 1}>
           <SelectTemplate

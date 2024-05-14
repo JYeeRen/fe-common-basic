@@ -1,177 +1,230 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { net } from "@infra";
 import { Option } from "../types/common";
-import localStorage from "./localStorage";
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
+import { BackendOptions, Schema } from "@types";
+import { get } from "lodash";
 
-export interface Options {
-  actives: Option[];
-  customsItemInfoOtherTypes: Option[];
-  mawbStatuses: Option[];
-  packageStatuses: Option[];
-  customsStatusNoTypes: Option[];
-  customsStatusTypes: Option[];
-  templateTypes: Option[];
-  // templateColumns: { key: string; cnName: string; enName: string }[];
-  unitTypes: { key: string; val: string }[];
-  tikTokActionCodeList: { code: string; name: string }[];
-  tikTokReasonCodeList: { code: string; name: string }[];
-  tikTokWaybillStatusList: { code: string; name: string }[];
-  customTemplateTypes: Option[];
-  timeZones: { key: string; val: string }[];
-}
+export type InnerOptions = { value: string | number; label: string }[];
 
-const defaultOptions: Options = {
-  actives: [],
-  customsItemInfoOtherTypes: [],
-  mawbStatuses: [],
-  packageStatuses: [],
-  customsStatusNoTypes: [],
-  customsStatusTypes: [],
-  timeZones: [],
-  templateTypes: [],
-  // templateColumns: [],
-  unitTypes: [],
-  tikTokActionCodeList: [],
-  tikTokReasonCodeList: [],
-  tikTokWaybillStatusList: [],
-  customTemplateTypes: [],
-};
+export type OptionKey =
+  | "actives"
+  | "customsItemInfoOtherTypes"
+  | "mawbStatuses"
+  | "packageStatuses"
+  | "customsStatusNoTypes"
+  | "customsStatusTypes"
+  | "timeZones"
+  | "templateTypes"
+  | "templateColumns"
+  | "unitTypes"
+  | "actionCodeList"
+  | "reasonCodeList"
+  | "waybillTrackStatusList"
+  | "customsTrackPackageNoTypes"
+  | "customsTrackStatusNoTypes"
+  | "customsTrackStatusTypes"
+  | "roles"
+  | "customsTemplates"
+  | "prealertTemplates"
+  | "permissions";
+
 class OptionService {
-  data: Omit<Options, "templateColumns"> = defaultOptions;
+  actives: InnerOptions = [];
+  customsItemInfoOtherTypes: InnerOptions = [];
+  mawbStatuses: InnerOptions = [];
+  packageStatuses: InnerOptions = [];
+  customsStatusNoTypes: InnerOptions = [];
+  customsStatusTypes: InnerOptions = [];
+  timeZones: InnerOptions = [];
+  templateTypes: InnerOptions = [];
+  templateColumns: BackendOptions["templateColumns"] = [];
+  unitTypes: InnerOptions = [];
+  actionCodeList: InnerOptions = [];
+  reasonCodeList: InnerOptions = [];
+  waybillTrackStatusList: InnerOptions = [];
+  customsTrackPackageNoTypes: InnerOptions = [];
+  customsTrackStatusNoTypes: InnerOptions = [];
+  customsTrackStatusTypes: InnerOptions = [];
+  roles: InnerOptions = [];
+  customsTemplates: InnerOptions = [];
+  prealertTemplates: InnerOptions = [];
+  permissions: Schema.Permission[] = [];
 
-  templateColumns: { key: string; cnName: string; enName: string }[] = [];
-  roles: Option[] = [];
-  customsTemplates: Option[] = [];
-  prealertTemplates: Option[] = [];
+  customTemplateTypes = [
+    { value: 1, label: "清关文件模板" },
+    { value: 2, label: "预报文件模板" },
+  ]
+
+  optionConfig = {
+    actives: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsItemInfoOtherTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    mawbStatuses: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    packageStatuses: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsStatusNoTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    timeZones: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.key_val_formater,
+    },
+    templateTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    templateColumns: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      // formater: (opts: BackendOptions["templateColumns"]) =>
+      //   opts.map((item) => ({ label: item.cnName, value: item.key })),
+      formater: (opts: BackendOptions["templateColumns"]) => opts,
+    },
+    unitTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.key_val_formater,
+    },
+    actionCodeList: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
+    },
+    reasonCodeList: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
+    },
+    waybillTrackStatusList: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
+    },
+    customsTrackPackageNoTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsTrackStatusNoTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsTrackStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    roles: {
+      url: "/api/option/getRoleNames",
+      dataGetter: "options",
+      optsfrom: "roles",
+      formater: this.id_val_formatter,
+    },
+    customsTemplates: {
+      url: "/api/option/getCustomsTemplates",
+      dataGetter: "templates",
+      optsfrom: "customsTemplates",
+      formater: this.id_val_formatter,
+    },
+    prealertTemplates: {
+      url: "/api/option/getPrealertTemplates",
+      dataGetter: "templates",
+      optsfrom: "prealertTemplates",
+      formater: this.id_val_formatter,
+    },
+    permissions: {
+      url: "/api/option/getPermissions",
+      dataGetter: "permissions",
+      optsfrom: "permissions",
+      formater: (opts: Schema.Permission[]) => opts,
+    },
+  } as const;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async load() {
-    this.loadBase();
-    this.loadRoles();
-    this.loadCustomsTemplates();
-    this.loadPrealertTemplates();
+  async laodData() {
+    const base = await net.post("/api/option/getBase");
+    const roles = await net.post("/api/option/getRoleNames");
+    const customsTemplates = await net.post("/api/option/getCustomsTemplates");
+    const prealertTemplates = await net.post("/api/option/getPrealertTemplates");
+    const permissions = await net.post("/api/option/getPermissions");
+    return {
+      base,
+      roles,
+      customsTemplates,
+      prealertTemplates,
+      permissions,
+    };
   }
 
-  async loadRoles() {
-    const options = await net.post("/api/option/getRoleNames");
-    runInAction(() => {
-      this.roles = options.options;
-    });
-    localStorage.setItem("options.roles", {
-      data: this.roles,
-      params: [],
-      time: Date.now(),
-    });
+  async init() {
+    // const base = localStorage.getItem("options.base") || {};
+    // const roles = localStorage.getItem("options.roles") || {};
+    // const customsTemplates =
+    //   localStorage.getItem("options.customsTemplates") || {};
+    // const prealertTemplates =
+    //   localStorage.getItem("options.prealertTemplates") || {};
+    // const permissions = localStorage.getItem("options.permissions") || {};
+
+    const data = await this.laodData();
+    await Promise.all(
+      Object.keys(this.optionConfig).map((k) =>
+        this.refresh(k as keyof OptionService["optionConfig"], data)
+      )
+    );
   }
 
-  async loadBase() {
-    const options = await net.post("/api/option/getBase");
-    runInAction(() => {
-      const { templateColumns, ...rest } = options;
-      this.templateColumns = templateColumns;
-      this.data = {
-        ...rest,
-        customTemplateTypes: [
-          { id: 0, val: "清关文件模板" },
-          { id: 1, val: "预报文件模板" },
-        ],
-      };
-    });
-    localStorage.setItem("options.templateColumns", {
-      data: this.templateColumns,
-      params: [],
-      time: Date.now(),
-    });
-    localStorage.setItem("options", {
-      data: this.data,
-      params: [],
-      time: Date.now(),
-    });
+  async refresh<K extends keyof OptionService["optionConfig"]>(
+    key: K,
+    prefetchedData?: any
+  ) {
+    const config = this.optionConfig[key];
+    const { url, formater, optsfrom } = config;
+    const data = (prefetchedData?.[optsfrom] as any) || (await net.post(url));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const opts = get(data, config.dataGetter ?? key);
+    const options = formater(opts);
+    (this as OptionService)[key] = options as OptionService[K];
   }
 
-  async loadCustomsTemplates() {
-    const { templates } = await net.post("/api/option/getCustomsTemplates");
-    runInAction(() => {
-      this.customsTemplates = templates;
-    });
-    localStorage.setItem("options.customsTemplates", {
-      data: templates,
-      params: [],
-      time: Date.now(),
-    });
+  id_val_formatter(data: Option[]): InnerOptions {
+    return data?.map((item) => ({ label: item.val, value: item.id })) ?? [];
   }
 
-  async loadPrealertTemplates() {
-    const { templates } = await net.post("/api/option/getPrealertTemplates");
-    runInAction(() => {
-      this.prealertTemplates = templates;
-    });
-    localStorage.setItem("options.prealertTemplates", {
-      data: templates,
-      params: [],
-      time: Date.now(),
-    });
+  key_val_formater(data: { key: string; val: string }[]): InnerOptions {
+    return data?.map((item) => ({ label: item.val, value: item.key })) ?? [];
   }
 
-  init() {
-    this.data = localStorage.getItem("options")?.data ?? defaultOptions;
-    this.templateColumns =
-      localStorage.getItem("options.templateColumns")?.data ?? [];
-    this.roles = localStorage.getItem("options.roles")?.data ?? [];
-    this.customsTemplates = localStorage.getItem("options.customsTemplates")?.data ?? [];
-    this.prealertTemplates = localStorage.getItem("options.prealertTemplates")?.data ?? [];
-    this.load();
-  }
-
-  get<K extends keyof Options>(
-    key?: K | "roles"
-  ): { value: string | number; label: string }[] {
-    if (!key) {
-      return [] as unknown as { value: string | number; label: string }[];
-    }
-    let opts = [];
-    opts = this.data?.[key as K] || [];
-    if ((key as unknown) === "roles") {
-      opts = this.roles;
-    }
-    if (
-      [
-        "tikTokActionCodeList",
-        "tikTokReasonCodeList",
-        "tikTokWaybillStatusList",
-      ].includes(key)
-    ) {
-      return (opts as unknown as { code: string; name: string }[]).map(
-        (item) => ({
-          value: item.code,
-          label: item.name,
-        })
-      );
-    }
-    if (["timeZones"].includes(key)) {
-      return (opts as unknown as { key: string; val: string }[]).map(
-        (item) => ({
-          value: item.key,
-          label: item.val,
-        })
-      );
-    }
-    return (opts as { id: number; val: string }[]).map((item) => ({
-      value: item.id,
-      label: item.val,
-    }));
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  format(opts: any[]) {
-    return opts.map(item => {
-      const { id, val } = item;
-      return { label: val, value: id };
-    });
-
+  code_name_formater(data: { code: string; name: string }[]): InnerOptions {
+    return data?.map((item) => ({ label: item.name, value: item.code })) ?? [];
   }
 }
 

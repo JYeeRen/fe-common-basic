@@ -114,7 +114,7 @@ export class CustomTemplateOperationStore {
   }
 
   get templateTypes() {
-    return optionsService.get("customTemplateTypes");
+    return optionsService.customTemplateTypes;
   }
 
   get templateColumnOptions() {
@@ -128,7 +128,7 @@ export class CustomTemplateOperationStore {
       active: true,
       mergeOrderNumber: false,
       columns: [],
-      ...(this.customTemplate ?? {}),
+      ...this.customTemplate,
     };
   }
 

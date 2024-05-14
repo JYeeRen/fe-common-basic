@@ -105,14 +105,14 @@ function DeclareStatusComponent() {
 
   const columns = useMemo(() => {
     const colDefs = declareStatusConfig.getColumns({
-      customsStatusTypes: optionsService.get("customsStatusTypes"),
+      customsStatusTypes: optionsService.customsStatusTypes,
       onRemarkSave: store.editRemark.bind(store),
     });
     return colDefs.filter((col) => {
       const noType = gridStore.params.noType ?? 0;
       return col.key !== "bigBagNo" || noType !== 0;
     });
-  }, [gridStore.params.noType, optionsService.data.customsStatusTypes]);
+  }, [gridStore.params.noType, optionsService.customsStatusTypes]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
@@ -125,7 +125,6 @@ function DeclareStatusComponent() {
       flightDateTZ,
       quickDate,
     } = values;
-    console.log(values);
     const params = {
       noList: compact(noList),
       noType,
@@ -169,11 +168,6 @@ function DeclareStatusComponent() {
     []
   );
 
-  const noTypeOptions = useMemo(
-    () => optionsService.get("customsStatusNoTypes"),
-    [optionsService.data.customTemplateTypes]
-  );
-
   const tableClassName = useCallback(
     (record: CustomsStatus) => (record.warning ? styles.warining : ""),
     []
@@ -211,7 +205,7 @@ function DeclareStatusComponent() {
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
               <Radio.Group>
-                {noTypeOptions.map((opt) => (
+                {optionsService.customsStatusNoTypes.map((opt) => (
                   <Radio key={opt.value} value={opt.value}>
                     {opt.label}
                   </Radio>

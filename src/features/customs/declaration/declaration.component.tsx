@@ -39,6 +39,11 @@ function DeclareStatusComponent() {
   )(gridStore);
 
   useEffect(() => {
+    optionsService.refresh('customsTemplates');
+    optionsService.refresh('prealertTemplates');
+  }, []);
+
+  useEffect(() => {
     store.gridStore.loadData();
   }, [store]);
 
@@ -71,7 +76,7 @@ function DeclareStatusComponent() {
 
   const columns = useMemo(() => {
     const colDefs = declareStatusConfig.getColumns({
-      customsStatusTypes: optionsService.get("customsStatusTypes"),
+      customsStatusTypes: optionsService.customsStatusTypes,
       operation: {
         view: store.setViewing.bind(store),
         edit: store.setEditing.bind(store),
@@ -79,7 +84,7 @@ function DeclareStatusComponent() {
       },
     });
     return colDefs;
-  }, [optionsService.data.customsStatusTypes]);
+  }, [optionsService.customsStatusTypes]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
@@ -93,11 +98,6 @@ function DeclareStatusComponent() {
       days: "today",
     }),
     []
-  );
-
-  const noTypeOptions = useMemo(
-    () => optionsService.get("customsStatusNoTypes"),
-    [optionsService.data.customTemplateTypes]
   );
 
   const tableClassName = useCallback(
@@ -130,7 +130,7 @@ function DeclareStatusComponent() {
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
               <Radio.Group>
-                {noTypeOptions.map((opt) => (
+                {optionsService.customsStatusNoTypes.map((opt) => (
                   <Radio key={opt.value} value={opt.value}>
                     {opt.label}
                   </Radio>

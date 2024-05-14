@@ -15,7 +15,7 @@ interface FilterProps {
 }
 
 export const CustomTemplateListFilterComponent = (props: FilterProps) => {
-  const { templateTypeOptions, activeOptions, onFinish } = props;
+  const { onFinish } = props;
   const [t] = useTranslation();
 
   const initialValues = useMemo(() => ({
@@ -37,12 +37,12 @@ export const CustomTemplateListFilterComponent = (props: FilterProps) => {
         </Col>
         <Col span={6}>
           <Form.Item name="templateType" label={t("模板类型")}>
-            <SearchSelect options={templateTypeOptions} />
+            <SearchSelect optionKey="templateTypes" />
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item name="active" label={t("模板状态")}>
-            <SearchSelect options={activeOptions} />
+            <SearchSelect optionKey="actives" />
           </Form.Item>
         </Col>
     </FilterContainer>

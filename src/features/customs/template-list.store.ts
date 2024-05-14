@@ -15,11 +15,11 @@ export class TemplateListStore {
   }
   
   get templateTypeOptions() {
-    return optionsService.get('customTemplateTypes');
+    return optionsService.customTemplateTypes;
   }
 
   get activeOptions() {
-    return optionsService.get('actives');
+    return optionsService.actives;
   }
 
 }

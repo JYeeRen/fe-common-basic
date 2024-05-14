@@ -50,7 +50,7 @@ function TrackTraceComponent() {
         </Col>
         <Col span={12}>
           <Form.Item name="customsStatusType" label={t("轨迹名称")}>
-            <SearchSelect optionKey="tikTokActionCodeList" />
+            <SearchSelect optionKey="customsTrackStatusTypes" />
           </Form.Item>
         </Col>
       </FilterContainer>

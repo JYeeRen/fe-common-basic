@@ -32,7 +32,7 @@ export const getColumns = (
       title: t("模板类型"),
       width: 180,
       render: (value) =>
-        find(optionsService.get("customTemplateTypes"), { value })?.label,
+        find(optionsService.customTemplateTypes, { value })?.label,
     },
     {
       key: "active",
