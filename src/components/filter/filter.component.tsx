@@ -28,8 +28,8 @@ export function FilterContainer(props: FilterProps & FormProps) {
           onReset={() => onFinish?.(formProps.initialValues)}
           {...formProps}
         >
-          <Row>
-            <Form.Item>
+          <Row className="mb-4">
+            <Form.Item noStyle>
               <Space>
                 <Button
                   type="primary"
