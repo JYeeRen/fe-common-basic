@@ -63,7 +63,7 @@ const trajectory: RouteObject[] = [
         path: "track-trace",
         lazy: async () => ({
           Component: (
-            await import("@features/trajectory/track-trace.component")
+            await import("@features/trajectory/track-trace/track-trace.component")
           ).default,
         }),
       },
