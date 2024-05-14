@@ -1,10 +1,12 @@
 import { Schema, Sources } from "@types";
 
-export type CustomsStatus = Schema.CustomsStatus;
+export type CustomsTrackStatus = Schema.CustomsTrackStatus;
 
-export type CustomsStatusQueryParams =
-  Sources["/api/customsStatus/findList"]["params"];
+export type CustomsTrackStatusQueryParams =
+  Sources["/api/customsTrackStatus/findList"]["params"];
 
-export interface CustomsStatusFormValues {
-  customsStatusType: string;
+export interface CustomsTrackStatusFormValues {
+  noList?: string;
+  noType?: number;
+  statusType?: number;
 }

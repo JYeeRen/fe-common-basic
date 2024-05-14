@@ -3,36 +3,39 @@ import {
   Col,
   Container,
   FilterContainer,
+  FilterTextArea,
   Form,
-  Input,
+  Radio,
   SearchSelect,
   Table,
 } from "@components";
 import { observer } from "mobx-react-lite";
-import * as CustomerListConfig from "./track-trace-config";
+import * as listConfig from "./track-trace-config";
 import styles from "./track-trace.module.less";
 import { useCallback, useMemo } from "react";
 import { useStore } from "@hooks";
 import { TrackTraceStore } from "./track-trace.store";
-import { CustomsStatusFormValues } from "./type";
+import { CustomsTrackStatusFormValues } from "./type";
+import optionsService from "@services/options.service";
+import { compact } from "lodash";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(TrackTraceStore)();
-  const gridStore = ClientGrid.useGridStore(CustomerListConfig.getRows);
-  const columns = useMemo(() => CustomerListConfig.getColumns(), []);
+  const gridStore = ClientGrid.useGridStore(listConfig.getRows, false);
+  const columns = useMemo(() => listConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, customsStatusType } = values;
+    const { noList, noType, statusType } = values;
     gridStore.setQueryParams({
-      noList: noList || undefined,
+      noList: compact(noList),
       noType: noType || undefined,
-      customsStatusType: customsStatusType || undefined,
+      statusType: statusType || undefined,
     });
   }, []);
 
-  const initialValues: CustomsStatusFormValues = useMemo(
-    () => ({ customsStatusType: "cb_imcustoms_start" }),
+  const initialValues: CustomsTrackStatusFormValues = useMemo(
+    () => ({ statusType: 1, noType: 0 }),
     []
   );
 
@@ -43,13 +46,27 @@ function TrackTraceComponent() {
         layout="vertical"
         initialValues={initialValues}
       >
-        <Col span={12}>
-          <Form.Item name="productName" label={t("英文品名")}>
-            <Input />
+        <Col span={8}>
+          <div style={{ paddingBottom: "8px" }}>
+            <Form.Item noStyle name="noType">
+              <Radio.Group>
+                {optionsService.customsTrackStatusNoTypes.map((opt) => (
+                  <Radio key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          </div>
+          <Form.Item name="noList" wrapperCol={{ span: 22 }}>
+            <FilterTextArea
+              style={{ width: "100%", height: 75, resize: "none" }}
+              placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="customsStatusType" label={t("轨迹名称")}>
+          <Form.Item name="statusType" label={t("轨迹名称")}>
             <SearchSelect optionKey="customsTrackStatusTypes" />
           </Form.Item>
         </Col>

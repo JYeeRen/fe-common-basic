@@ -133,3 +133,33 @@ export interface CustomsDocument extends CustomsStatus {
   prealertFile: boolean;
   copyImgFile: boolean;
 }
+
+export interface CustomsTrack {
+  id: number;
+  bigBagNo: string;
+  providerOrderId: string;
+  declarationBillId: string;
+  trackingNo: string;
+  actionCode: string;
+  operateTime: string;
+  createdTime: string;
+  userName: string;
+}
+
+export interface CustomsTrackStatus {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  providerOrderId: string;
+  trackingNo: string;
+  declarationBillId: string;
+  status: number;
+  pickedUpTime: string;
+  deliveredTime: string;
+  transportName: string;
+  flightDate: string;
+  atd: string;
+  ata: string;
+  departPortCode: string;
+  arrivePortCode: string;
+}

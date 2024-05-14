@@ -6,6 +6,8 @@ import { CustomTemplateAPI } from "./custom-template.types";
 import { CustomsRiskAPI } from "./customs-risk.types";
 import { CustomsStatusAPI } from "./custom-status.type";
 import { CustomsDocumentAPI } from "./custom-document.types";
+import { CustomsTrackAPI } from "./customs-track.types";
+import { CustomsTrackStatusAPI } from "./customs-track-status.types";
 
 export type { BackendOptions } from './options.types';
 
@@ -30,6 +32,9 @@ export interface Sources
     CustomTemplateAPI,
     CustomsRiskAPI,
     CustomsStatusAPI,
-    CustomsDocumentAPI {}
+    CustomsDocumentAPI,
+    CustomsTrackAPI,
+    CustomsTrackStatusAPI
+{}
 
 export type URLs = keyof Sources;
