@@ -1,29 +1,53 @@
 import { net } from "@infra";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
-import { CustomsStatus, CustomsStatusQueryParams } from "./type";
+import { CustomsTrack, QueryParams } from "./type";
+import optionsService from "@services/options.service";
+import { find } from "lodash";
 
-export const getColumns = (
-): TableColumnsType<CustomsStatus> => {
+export const getColumns = (): TableColumnsType<CustomsTrack> => {
   return [
-    { key: "masterWaybillNo", dataIndex: "masterWaybillNo", title: t("提单号") },
-    { key: "bigBagNo", dataIndex: "bigBagNo", title: t("袋号") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("运单号") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("尾程单号") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("订单号") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("最新轨迹名称") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("上网时间") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("袋号") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("签收时间") },
-    { key: "masterWaybillNo1", dataIndex: "masterWaybillNo1", title: t("航班号") },
-    { key: "flightDate", dataIndex: "flightDate", title: t("航班日期") },
-    { key: "etd", dataIndex: "etd", title: t("ATD") },
-    { key: "eta", dataIndex: "eta", title: t("ATA") },
-    { key: "departPortCode", dataIndex: "departPortCode", title: t("起飞港口") },
-    { key: "arrivePortCode", dataIndex: "arrivePortCode", title: t("落地港口") },
+    {
+      key: "bigBagNo",
+      dataIndex: "bigBagNo",
+      title: t("袋号"),
+    },
+    {
+      key: "providerOrderId",
+      dataIndex: "providerOrderId",
+      title: t("运单号"),
+    },
+    {
+      key: "trackingNo",
+      dataIndex: "trackingNo",
+      title: t("尾程单号"),
+    },
+    {
+      key: "declarationBillId",
+      dataIndex: "declarationBillId",
+      title: t("订单号"),
+    },
+    {
+      key: "actionCode",
+      dataIndex: "actionCode",
+      title: t("轨迹名称"),
+      render: (value) =>
+        find(optionsService.actionCodeList, { value })?.label,
+    },
+    {
+      key: "operateTime",
+      dataIndex: "operateTime",
+      title: t("轨迹时间"),
+    },
+    {
+      key: "createdTime",
+      dataIndex: "createdTime",
+      title: t("录入时间"),
+    },
+    { key: "userName", dataIndex: "userName", title: t("录入人员") },
   ];
 };
 
-export const getRows = async (params: CustomsStatusQueryParams) => {
-  return await net.post("/api/customsStatus/findList", params);
+export const getRows = async (params: QueryParams) => {
+  return await net.post("/api/customsTrack/findPackageList", params);
 };

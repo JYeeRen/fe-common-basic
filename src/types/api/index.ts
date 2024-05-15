@@ -10,7 +10,7 @@ import { CustomsTrackAPI } from "./customs-track.types";
 import { CustomsTrackStatusAPI } from "./customs-track-status.types";
 import { CustomsTrackLogAPI } from "./customs-track-log.types";
 
-export type { BackendOptions } from './options.types';
+export type { BackendOptions, TZ } from './options.types';
 
 export interface ApiError {
   code: number;

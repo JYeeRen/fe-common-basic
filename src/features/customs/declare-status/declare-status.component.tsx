@@ -80,7 +80,7 @@ function QuickDatePicker(
 }
 
 function DeclareStatusComponent() {
-  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, false);
+  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, { autoLoad: false });
   const { store, t, navigate } = useStore(
     BillOfLadingStore,
     gridStore

@@ -1,10 +1,27 @@
 import { Schema, Sources } from "@types";
 
-export type CustomsStatus = Schema.CustomsStatus;
+export type CustomsTrack = Schema.PackageCustomsTrack;
 
-export type CustomsStatusQueryParams =
-  Sources["/api/customsStatus/findList"]["params"];
+export type QueryParams = Sources["/api/customsTrack/findPackageList"]["params"];
 
-export interface CustomsStatusFormValues {
-  customsStatusType: string;
+export interface FormValues {
+  noList?: string[];
+  noType?: number;
+  actionCode?: string;
 }
+
+export type Package = Pick<
+Schema.PackageCustomsTrack,
+| "id"
+| "bigBagNo"
+| "providerOrderId"
+| "declarationBillId"
+| "trackingNo"
+>
+
+export type AddPacakageTrackFormValues = {
+  ids: number[];
+  operateTime: string;
+  timeZone: string;
+  actionCode: string;
+};

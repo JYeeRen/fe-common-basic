@@ -6,7 +6,7 @@ interface LocalValues {
   authToken?: string;
   user?: User;
   "options.base"?: Sources["/api/option/getBase"]["res"];
-  "options.roles"?: Sources["/api/option/getBase"]["res"];
+  "options.roles"?: Sources["/api/option/getRoleNames"]["res"];
   "options.customsTemplates"?: Sources["/api/option/getCustomsTemplates"]["res"];
   "options.prealertTemplates"?: Sources["/api/option/getPrealertTemplates"]["res"];
   "options.permissions"?: Sources["/api/option/getPermissions"]["res"];

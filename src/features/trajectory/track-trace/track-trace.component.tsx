@@ -22,7 +22,7 @@ import { compact } from "lodash";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(TrackTraceStore)();
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, false);
+  const gridStore = ClientGrid.useGridStore(listConfig.getRows, { autoLoad: false });
   const columns = useMemo(() => listConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

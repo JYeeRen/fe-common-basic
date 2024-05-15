@@ -6,9 +6,19 @@ import { TextEditor } from './editor/text-editor';
 
 export * as ClientGridTypes from "./types";
 
-function useGridStore<T>(getRows?: getRowsFunc<T>, autoLoad = true) {
+interface UseGridStoreOptions {
+  autoLoad?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialValues?: any;
+}
+
+function useGridStore<T>(getRows?: getRowsFunc<T>, options?: UseGridStoreOptions) {
+  const { autoLoad = true, initialValues } = options || {};
   const gridStore = useMemo(() => new ClientGrid.GridStore(getRows), []);
   useEffect(() => {
+    if (initialValues) {
+      gridStore.setQueryParams(initialValues);
+    }
     if (autoLoad) {
       gridStore.loadData?.();
     }

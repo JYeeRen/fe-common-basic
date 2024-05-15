@@ -33,7 +33,7 @@ import { EditDocumentModal } from "./components/editDocumentModal.component";
 import { CreatePrealerttModal } from "./components/creatPrealertModal.component";
 
 function DeclareStatusComponent() {
-  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, false);
+  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, { autoLoad: false });
   const { store, t } = useStore(
     DeclrationStore,
     gridStore

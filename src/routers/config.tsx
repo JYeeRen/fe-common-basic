@@ -51,14 +51,14 @@ const trajectory: RouteObject[] = [
       //     ).default,
       //   }),
       // },
-      // {
-      //   path: "packages",
-      //   lazy: async () => ({
-      //     Component: (
-      //       await import("@features/trajectory/packages/packages.component")
-      //     ).default,
-      //   }),
-      // },
+      {
+        path: "packages",
+        lazy: async () => ({
+          Component: (
+            await import("@features/trajectory/packages/packages.component")
+          ).default,
+        }),
+      },
       {
         path: "track-info",
         lazy: async () => ({

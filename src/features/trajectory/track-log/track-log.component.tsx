@@ -12,8 +12,8 @@ import PacakgeTrackLog from "./track-log-package.component";
 
 function TrackInfoComponent() {
   const { store, t } = useStore(TrackLogStore)();
-  const mawbGridStore = ClientGrid.useGridStore(mawbListConfig.getRows, false);
-  const pacakgeGridStore = ClientGrid.useGridStore(pacakgeListConfig.getRows, false);
+  const mawbGridStore = ClientGrid.useGridStore(mawbListConfig.getRows, { autoLoad: false });
+  const pacakgeGridStore = ClientGrid.useGridStore(pacakgeListConfig.getRows, { autoLoad: false });
 
   const items: TabsProps["items"] = useMemo(() => [
     {

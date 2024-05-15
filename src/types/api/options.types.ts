@@ -1,6 +1,15 @@
 import { Schema } from "@types";
 import { Option } from "../common";
 
+export interface TZ {
+  abbr: string;
+  isDst: boolean;
+  offset: number;
+  text: string;
+  utc: string[];
+  value: string;
+}
+
 export interface BackendOptions {
   actives: Option[];
   customsItemInfoOtherTypes: Option[];
@@ -8,7 +17,7 @@ export interface BackendOptions {
   packageStatuses: Option[];
   customsStatusNoTypes: Option[];
   customsStatusTypes: Option[];
-  timeZones: { key: string; val: string }[];
+  timeZones: TZ[];
   templateTypes: Option[];
   templateColumns: { key: string; cnName: string; enName: string }[];
   unitTypes: { key: string; val: string }[];

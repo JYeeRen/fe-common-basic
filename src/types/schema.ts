@@ -134,18 +134,6 @@ export interface CustomsDocument extends CustomsStatus {
   copyImgFile: boolean;
 }
 
-export interface CustomsTrack {
-  id: number;
-  bigBagNo: string;
-  providerOrderId: string;
-  declarationBillId: string;
-  trackingNo: string;
-  actionCode: string;
-  operateTime: string;
-  createdTime: string;
-  userName: string;
-}
-
 export interface CustomsTrackStatus {
   id: number;
   masterWaybillNo: string;
@@ -184,5 +172,37 @@ export interface MawbCustomsTrackLog {
   operateTime: string;
   operateTimeCn: string;
   createdTimeCn: string;
+  userName: string;
+}
+
+export interface PackageCustomsTrack {
+  id: number;
+  bigBagNo: string;
+  providerOrderId: string;
+  declarationBillId: string;
+  trackingNo: string;
+  actionCode: string;
+  operateTime: string;
+  createdTime: string;
+  userName: string;
+}
+
+export interface MawbCustomsTrack {
+  id: number;
+  masterWaybillNo: string;
+  transportName: string;
+  flightDate: string;
+  etd: string;
+  eta: string;
+  atd: string;
+  ata: string;
+  departPortCode: string;
+  arrivePortCode: string;
+  pickedUpTime: string;
+  customsSubmittedTime: string;
+  customsAcceptedTime: string;
+  customsInspection: string;
+  customsReleaseTime: string;
+  handedOverTime: string;
   userName: string;
 }

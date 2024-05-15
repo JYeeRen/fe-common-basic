@@ -4,6 +4,8 @@ import { Option } from "../types/common";
 import { makeAutoObservable } from "mobx";
 import { BackendOptions, Schema } from "@types";
 import { get } from "lodash";
+import localStorage from "./localStorage";
+import { TZ } from "../types/api/options.types";
 
 export type InnerOptions = { value: string | number; label: string }[];
 
@@ -36,7 +38,7 @@ class OptionService {
   packageStatuses: InnerOptions = [];
   customsStatusNoTypes: InnerOptions = [];
   customsStatusTypes: InnerOptions = [];
-  timeZones: InnerOptions = [];
+  timeZones: (TZ & { label: string, originValue: string })[] = [];
   templateTypes: InnerOptions = [];
   templateColumns: BackendOptions["templateColumns"] = [];
   unitTypes: InnerOptions = [];
@@ -90,7 +92,12 @@ class OptionService {
     timeZones: {
       url: "/api/option/getBase",
       optsfrom: "base",
-      formater: this.key_val_formater,
+      formater: (opts: TZ[]) => opts.map(zone => ({
+        ...zone,
+        // value: `${zone.value}_${zone.offset}`,
+        // originValue: zone.value,
+        label: zone.text,
+      }))
     },
     templateTypes: {
       url: "/api/option/getBase",
@@ -175,6 +182,11 @@ class OptionService {
     const customsTemplates = await net.post("/api/option/getCustomsTemplates");
     const prealertTemplates = await net.post("/api/option/getPrealertTemplates");
     const permissions = await net.post("/api/option/getPermissions");
+    localStorage.setItem('options.base', base);
+    localStorage.setItem('options.roles', roles);
+    localStorage.setItem('options.customsTemplates', customsTemplates);
+    localStorage.setItem('options.prealertTemplates', prealertTemplates);
+    localStorage.setItem('options.permissions', permissions);
     return {
       base,
       roles,

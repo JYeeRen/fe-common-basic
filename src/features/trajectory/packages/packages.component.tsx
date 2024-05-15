@@ -1,40 +1,50 @@
 import {
   ClientGrid,
+  Col,
   // Col,
   Container,
   FilterContainer,
+  FilterTextArea,
+  Form,
+  Radio,
+  SearchSelect,
+  textareaMaxLengthRule,
   // Form,
   // Input,
   // SearchSelect,
-  // Table,
+  Table,
+  Row,
+  Button,
 } from "@components";
 import { observer } from "mobx-react-lite";
-import * as BillOfLadingConfig from "./packages-config";
+import * as ListConfig from "./packages-config";
 import styles from "./packages.module.less";
 import { useCallback, useMemo } from "react";
 import { useStore } from "@hooks";
-import { BillOfLadingStore } from "./packages.store";
-import { CustomsStatusFormValues } from "./type";
+import { PacageCustomsTrackStore } from "./packages.store";
+import { FormValues } from "./type";
+import optionsService from "@services/options.service";
+import { compact } from "lodash";
+import { PlusOutlined } from "@ant-design/icons";
+import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
-  const { store, t } = useStore(BillOfLadingStore)();
-  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows);
-  // const columns = useMemo(() => BillOfLadingConfig.getColumns(), []);
+  const { store, t } = useStore(PacageCustomsTrackStore)();
+  const initialValues: FormValues = useMemo(() => ({ actionCode: "cb_imcustoms_start" }), []);
+  const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
+  const columns = useMemo(() => ListConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, customsStatusType } = values;
+    const { noList, noType, actionCode } = values;
     gridStore.setQueryParams({
-      noList: noList || undefined,
+      noList: compact(noList),
       noType: noType || undefined,
-      customsStatusType: customsStatusType || undefined,
+      actionCode: actionCode || undefined,
     });
   }, []);
 
-  const initialValues: CustomsStatusFormValues = useMemo(
-    () => ({ customsStatusType: "cb_imcustoms_start" }),
-    []
-  );
+  const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
     <Container className={styles.container} loading={store.loading}>
@@ -43,19 +53,42 @@ function TrackTraceComponent() {
         layout="vertical"
         initialValues={initialValues}
       >
-        {/* <Col span={12}>
-          <Form.Item name="productName" label={t("英文品名")}>
-            <Input />
+        <Col span={8}>
+          <div style={{ paddingBottom: "8px" }}>
+            <Form.Item noStyle name="noType">
+              <Radio.Group>
+                {optionsService.customsTrackPackageNoTypes.map((opt) => (
+                  <Radio key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          </div>
+          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+            <FilterTextArea
+              style={{ width: "100%", height: 75, resize: "none" }}
+              placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="customsStatusType" label={t("轨迹名称")}>
-            <SearchSelect optionKey="tikTokActionCodeList" />
+          <Form.Item name="actionCode" label={t("轨迹名称")}>
+            <SearchSelect optionKey="actionCodeList" />
           </Form.Item>
-        </Col> */}
+        </Col>
       </FilterContainer>
       <Container title={t("异常轨迹信息")} wrapperClassName={styles.wrapper}>
-        {/* <Table
+      <Row justify="start" style={{ padding: "0 10px" }}>
+          <Button
+            className="operation-btn mr-4 mb-4"
+            icon={<PlusOutlined />}
+            onClick={store.toogleModalVisible.bind(store)}
+          >
+            {t("包裹信息录入")}
+          </Button>
+        </Row>
+        <Table
           widthFit
           bordered
           loading={gridStore.loading}
@@ -76,8 +109,9 @@ function TrackTraceComponent() {
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),
           }}
-        /> */}
+        />
       </Container>
+      <CreateModal store={store} />
     </Container>
   );
 }
