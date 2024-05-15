@@ -2,11 +2,9 @@ import { Schema } from "@types";
 import { Option } from "../common";
 
 export interface TZ {
-  abbr: string;
-  isDst: boolean;
+  offsetMMHH: boolean;
   offset: number;
   text: string;
-  utc: string[];
   value: string;
 }
 

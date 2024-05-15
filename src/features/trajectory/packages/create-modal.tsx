@@ -20,12 +20,12 @@ import { observer } from "mobx-react-lite";
 import { PacageCustomsTrackStore } from "./packages.store";
 import { useTranslation } from "@locale";
 import optionsService from "@services/options.service";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import * as listConfig from "./create-modal-config";
 import { compact, find } from "lodash";
-import { SearchOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
-import { dayjs } from "@infra";
+import dayjs, { Dayjs } from "dayjs";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -41,21 +41,40 @@ const Field = observer((props: FieldProps) => {
     []
   );
 
+  const confirm = useCallback(() => {});
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = async () => {
     const { actionCode, timeZone, operateTime } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
-    console.log(tzItem);
-    console.log('>>>>', tzItem?.utc[0], operateTime.format('YYYY-MM-DD HH:mm'));
-    const operateTimeWithTZ = dayjs.tz(operateTime.format('YYYY-MM-DD HH:mm'), tzItem?.utc[0]);
+    const operateTimeWithTZ: Dayjs = operateTime.add(tzItem?.offset, "second");
+
     store.updateCreateParams({
-      timeZone: tzItem?.value ?? '',
+      timeZone: tzItem?.value ?? "",
       operateTime: operateTimeWithTZ.format(),
-      actionCode
+      actionCode,
     });
+
+    if (operateTimeWithTZ.isAfter(dayjs().add(24, "hour"))) {
+      Modal.confirm({
+        title: t("警告！"),
+        content: t(
+          "当前录入的轨迹发生事件已超过当前时间24小时以上，是否确认上传轨迹？"
+        ),
+        okText: t("确认上传"),
+        cancelText: t("放弃录入"),
+        icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
+        okButtonProps: { danger: true },
+        onOk:
+      });
+    }
+    return;
     console.log(JSON.stringify(store.createParams));
     const fileds = await store.addPackageTrack(store.createParams);
-    // store.toogleModalVisible();
+    if (fileds.length === 0) {
+      store.toogleModalVisible();
+      return;
+    }
   };
 
   return (
@@ -67,7 +86,11 @@ const Field = observer((props: FieldProps) => {
         wrapperCol={{ span: 18 }}
         onFinish={handleFinish}
       >
-        <Form.Item label={t("轨迹名称")} name="actionCode" rules={[{ required: true }]}>
+        <Form.Item
+          label={t("轨迹名称")}
+          name="actionCode"
+          rules={[{ required: true }]}
+        >
           <SearchSelect
             optionKey="actionCodeList"
             allowClear={false}
@@ -98,7 +121,11 @@ const Field = observer((props: FieldProps) => {
         <Button className="mr-4" onClick={store.toogleModalVisible.bind(store)}>
           {t("取消")}
         </Button>
-        <SubmitButton form={form} loading={store.loading} onClick={handleFinish}>
+        <SubmitButton
+          form={form}
+          loading={store.loading}
+          onClick={handleFinish}
+        >
           {t("下一步")}
         </SubmitButton>
       </Row>
@@ -236,7 +263,6 @@ export const CreateModal = observer((props: CreateModalProps) => {
     }
   };
 
-
   return (
     <Modal
       {...modalProps}
@@ -248,7 +274,7 @@ export const CreateModal = observer((props: CreateModalProps) => {
       width={760}
       footer={null}
       afterClose={() => {
-        setStep(1)
+        setStep(1);
       }}
     >
       <Block if={step === 1}>
