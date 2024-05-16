@@ -1,26 +1,35 @@
 import { Block } from "@components";
 import { useHeight } from "@hooks";
-import { TableProps, Table as AntTable, Pagination, TableColumnType, TableColumnsType } from "antd";
+import {
+  TableProps,
+  Table as AntTable,
+  Pagination,
+  TableColumnType,
+  TableColumnsType,
+} from "antd";
 import { get } from "lodash";
 import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
 
 function getTextWidth(text: string) {
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d"); 
+  const context = canvas.getContext("2d");
   if (!context) return;
-  context.font = '16px Arial';
-  const textmetrics = context.measureText(text)
+  context.font = "16px Arial";
+  const textmetrics = context.measureText(text);
   return textmetrics.width;
 }
 
-function useColumnAutoWidth<T>(columns: TableColumnType<T>[], dataSource: T[], enable = false) {
-  
+function useColumnAutoWidth<T>(
+  columns: TableColumnType<T>[],
+  dataSource: T[],
+  enable = false
+) {
   const colWithWidth = useMemo(() => {
     if (!enable) {
       return columns;
     }
-    const cols: TableColumnsType = columns.map(col => {
+    const cols: TableColumnsType = columns.map((col) => {
       const { dataIndex, title, width: predefWidth } = col;
       if (predefWidth) {
         return col;
@@ -30,12 +39,14 @@ function useColumnAutoWidth<T>(columns: TableColumnType<T>[], dataSource: T[], e
 
       const maxValue = dataSource.reduce((acc, row) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const value = get(row, dataIndex as any) ?? '';
+        const value = get(row, dataIndex as any) ?? "";
         acc = acc.length > value.length ? acc : value;
         return acc;
-      }, '');
-  
-      const width = Math.ceil(Math.max(titleWidth ?? 100, getTextWidth(maxValue) ?? 0)) + 20;
+      }, "");
+
+      const width =
+        Math.ceil(Math.max(titleWidth ?? 100, getTextWidth(maxValue) ?? 0)) +
+        20;
       return { ...col, width };
     });
     return cols;
@@ -44,24 +55,41 @@ function useColumnAutoWidth<T>(columns: TableColumnType<T>[], dataSource: T[], e
   return colWithWidth;
 }
 
-export const Table = observer((props: TableProps & { widthFit?: boolean }) => {
-  const { pagination, scroll, columns: columnsDefs, dataSource, widthFit, ...restProps } = props;
+interface ExternalTableProps {
+  widthFit?: boolean;
+  autoHeight?: boolean;
+}
 
-  const columns = useColumnAutoWidth(columnsDefs ?? [], dataSource as unknown[], widthFit ?? false);
+export const Table = observer((props: TableProps & ExternalTableProps) => {
+  const {
+    pagination,
+    scroll,
+    columns: columnsDefs,
+    dataSource,
+    widthFit,
+    autoHeight = true,
+    ...restProps
+  } = props;
 
-  const height = useHeight("#table-container");
+  const columns = useColumnAutoWidth(
+    columnsDefs ?? [],
+    dataSource as unknown[],
+    widthFit ?? false
+  );
+
+  const adaptiveHeight = scroll?.y ? Number(scroll?.y) : useHeight("#table-container");
 
   const heights = useMemo(() => {
-    const container = Math.max(300, height - 36);
-    const table = Math.max(200, height - 150);
+    const container = Math.max(300, adaptiveHeight - 36);
+    const table = Math.max(200, adaptiveHeight - 150);
     return { container, table };
-  }, [height]);
+  }, [adaptiveHeight]);
 
   return (
     <div
       id="table-container"
       className="w-full overflow-hidden"
-      style={{ height: `${heights.container}px` }}
+      style={autoHeight ? { height: `${heights.container}px` } : undefined}
     >
       <AntTable
         {...restProps}

@@ -225,6 +225,7 @@ const Query = observer((props: QueryProps) => {
         </Row>
       </Form>
       <Table
+        autoHeight={false}
         widthFit
         bordered
         loading={gridStore.loading}
@@ -238,6 +239,7 @@ const Query = observer((props: QueryProps) => {
         dataSource={gridStore.rowData}
         columns={columns}
         size="small"
+        scroll={{ y: 300 }}
         pagination={
           gridStore.total > 0 && {
             total: gridStore.total,
