@@ -41,16 +41,16 @@ const trajectory: RouteObject[] = [
   {
     path: "trajectory",
     children: [
-      // {
-      //   path: "bill-of-lading",
-      //   lazy: async () => ({
-      //     Component: (
-      //       await import(
-      //         "@features/trajectory/bill-of-lading/bill-of-lading.component"
-      //       )
-      //     ).default,
-      //   }),
-      // },
+      {
+        path: "bill-of-lading",
+        lazy: async () => ({
+          Component: (
+            await import(
+              "@features/trajectory/bill-of-lading/bill-of-lading.component"
+            )
+          ).default,
+        }),
+      },
       {
         path: "packages",
         lazy: async () => ({

@@ -1,5 +1,4 @@
 import {
-  ClientGridStore,
   Col,
   Container,
   FilterContainer,
@@ -8,27 +7,36 @@ import {
   SearchSelect,
   Table,
   textareaMaxLengthRule,
+  ClientGrid,
 } from "@components";
+import * as mawbListConfig from './track-log-mawb-config';
 import { observer } from "mobx-react-lite";
 import * as listConfig from "./track-log-mawb-config";
 import styles from "./track-info.module.less";
 import { useCallback, useMemo } from "react";
-import { MawbCustomsTrackLog, MawbFormValues } from "./type";
+import { MawbFormValues } from "./type";
 import { compact } from "lodash";
 import { TrackLogStore } from "./track-log.store";
 import { useTranslation } from "@locale";
 import clsx from "clsx";
+import optionsService from "@services/options.service";
 
 interface MawbProps {
   store: TrackLogStore;
-  gridStore: ClientGridStore<MawbCustomsTrackLog>;
 }
 
 function TrackLogMawbComponent(props: MawbProps) {
-  const { store, gridStore } = props;
+  const { store } = props;
 
   const [t] = useTranslation();
-  const columns = useMemo(() => listConfig.getColumns(), []);
+
+  const initialValues: MawbFormValues = useMemo(
+    () => ({ masterWaybillNoList: [], waybillStatusCode: 'all' }),
+    []
+  );
+
+  const gridStore = ClientGrid.useGridStore(mawbListConfig.getRows, { initialValues });
+  const columns = useMemo(() => listConfig.getColumns(), [optionsService.waybillTrackStatusList]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
@@ -38,11 +46,6 @@ function TrackLogMawbComponent(props: MawbProps) {
       waybillStatusCode: waybillStatusCode || undefined,
     });
   }, []);
-
-  const initialValues: MawbFormValues = useMemo(
-    () => ({ masterWaybillNoList: [], waybillStatusCode: 'customs_submitted' }),
-    []
-  );
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 

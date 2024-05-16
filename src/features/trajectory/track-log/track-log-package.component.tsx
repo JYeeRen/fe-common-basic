@@ -1,5 +1,5 @@
 import {
-  ClientGridStore,
+  ClientGrid,
   Col,
   Container,
   FilterContainer,
@@ -14,7 +14,7 @@ import { observer } from "mobx-react-lite";
 import * as listConfig from "./track-log-package-config";
 import styles from "./track-info.module.less";
 import { useCallback, useMemo } from "react";
-import { PackageFormValues, PackagCustomsTrackLoge } from "./type";
+import { PackageFormValues } from "./type";
 import optionsService from "@services/options.service";
 import { compact } from "lodash";
 import { TrackLogStore } from "./track-log.store";
@@ -23,33 +23,43 @@ import clsx from "clsx";
 
 interface PackageProps {
   store: TrackLogStore;
-  gridStore: ClientGridStore<PackagCustomsTrackLoge>;
 }
 
 function TrackLogPackageComponent(props: PackageProps) {
-  const { store, gridStore } = props;
+  const { store } = props;
   const [t] = useTranslation();
-  const columns = useMemo(() => listConfig.getColumns(), []);
+
+  const columns = useMemo(
+    () => listConfig.getColumns(),
+    [optionsService.waybillTrackStatusList]
+  );
+
+  const initialValues: PackageFormValues = useMemo(
+    () => ({ actionCode: "all" }),
+    []
+  );
+
+  const gridStore = ClientGrid.useGridStore(listConfig.getRows, {
+    initialValues,
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, statusType } = values;
+    const { noList, noType, actionCode } = values;
     gridStore.setQueryParams({
-      noList: noType != null && compact(noList),
+      noList: compact(noList) ? compact(noList) : undefined,
       noType: noType || undefined,
-      statusType: statusType || undefined,
+      actionCode: actionCode || undefined,
     });
   }, []);
-
-  const initialValues: PackageFormValues = useMemo(
-    () => ({ actionCode: 'cb_imcustoms_start' }),
-    []
-  );
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
-    <Container className={clsx(styles.container, styles.subcontainer)} loading={store.loading}>
+    <Container
+      className={clsx(styles.container, styles.subcontainer)}
+      loading={store.loading}
+    >
       <FilterContainer
         onFinish={handleFinish}
         layout="vertical"
@@ -67,7 +77,11 @@ function TrackLogPackageComponent(props: PackageProps) {
               </Radio.Group>
             </Form.Item>
           </div>
-          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+          <Form.Item
+            name="noList"
+            wrapperCol={{ span: 22 }}
+            rules={numberRules}
+          >
             <FilterTextArea
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}

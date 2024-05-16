@@ -25,7 +25,7 @@ import * as listConfig from "./create-modal-config";
 import { compact, find } from "lodash";
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
-import dayjs, { Dayjs } from "dayjs";
+import { dayjs } from "@infra";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -62,7 +62,19 @@ const Field = observer((props: FieldProps) => {
   const handleFinish = async () => {
     const { actionCode, timeZone, operateTime } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
-    const operateTimeWithTZ: Dayjs = operateTime.add(tzItem?.offset, "second");
+
+    const operateTimeWithTZ = operateTime.tz('utc').add(tzItem?.offset, "second");
+    // console.log(dayjs(operateTime).format('YYYY-MM-DD HH:mm'), operateTimeWithTZ.format());
+    const max = dayjs().tz('utc');
+    console.log(
+      operateTimeWithTZ.format(), 
+      max.format(),
+      operateTimeWithTZ.unix(),
+      max.unix(), (operateTimeWithTZ.tz('utc').unix() - max.tz('utc').unix())
+      );
+
+    console.log(max.tz('utc').diff(operateTimeWithTZ.tz('utc'), 'h'))
+    return;
 
     if (operateTimeWithTZ.isAfter(dayjs().add(24, "hour")) && !await confirm()) {
       return;
@@ -74,7 +86,6 @@ const Field = observer((props: FieldProps) => {
       actionCode,
     });
 
-    console.log(JSON.stringify(store.createParams));
     const failed = await store.addPackageTrack(store.createParams);
     if (failed.length === 0) {
       store.toogleModalVisible();

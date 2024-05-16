@@ -1,7 +1,6 @@
 import {
   ClientGrid,
   Col,
-  // Col,
   Container,
   FilterContainer,
   FilterTextArea,
@@ -9,9 +8,6 @@ import {
   Radio,
   SearchSelect,
   textareaMaxLengthRule,
-  // Form,
-  // Input,
-  // SearchSelect,
   Table,
   Row,
   Button,
@@ -30,7 +26,7 @@ import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(PacageCustomsTrackStore)();
-  const initialValues: FormValues = useMemo(() => ({ actionCode: "cb_imcustoms_start" }), []);
+  const initialValues: FormValues = useMemo(() => ({ actionCode: "all" }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
   const columns = useMemo(() => ListConfig.getColumns(), []);
 
