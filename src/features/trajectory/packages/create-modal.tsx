@@ -41,21 +41,8 @@ const Field = observer((props: FieldProps) => {
     []
   );
 
-  const confirm = useCallback(() => {});
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFinish = async () => {
-    const { actionCode, timeZone, operateTime } = form.getFieldsValue();
-    const tzItem = find(optionsService.timeZones, { value: timeZone });
-    const operateTimeWithTZ: Dayjs = operateTime.add(tzItem?.offset, "second");
-
-    store.updateCreateParams({
-      timeZone: tzItem?.value ?? "",
-      operateTime: operateTimeWithTZ.format(),
-      actionCode,
-    });
-
-    if (operateTimeWithTZ.isAfter(dayjs().add(24, "hour"))) {
+  const confirm = useCallback(async (): Promise<boolean> => {
+    return await new Promise((resolve) => {
       Modal.confirm({
         title: t("警告！"),
         content: t(
@@ -65,16 +52,52 @@ const Field = observer((props: FieldProps) => {
         cancelText: t("放弃录入"),
         icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
-        onOk:
+        onOk: () => resolve(true),
+        onCancel: () => resolve(false)
       });
+    });
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleFinish = async () => {
+    const { actionCode, timeZone, operateTime } = form.getFieldsValue();
+    const tzItem = find(optionsService.timeZones, { value: timeZone });
+    const operateTimeWithTZ: Dayjs = operateTime.add(tzItem?.offset, "second");
+
+    if (operateTimeWithTZ.isAfter(dayjs().add(24, "hour")) && !await confirm()) {
+      return;
     }
-    return;
+
+    store.updateCreateParams({
+      timeZone: tzItem?.value ?? "",
+      operateTime: operateTimeWithTZ.format(),
+      actionCode,
+    });
+
     console.log(JSON.stringify(store.createParams));
-    const fileds = await store.addPackageTrack(store.createParams);
-    if (fileds.length === 0) {
+    const failed = await store.addPackageTrack(store.createParams);
+    if (failed.length === 0) {
       store.toogleModalVisible();
       return;
     }
+
+    Modal.confirm({
+      title: t("操作确认"),
+      content: (
+        <div>
+          <ul>
+            {failed.map((field, idx) => (
+              <li key={`${idx}-${field.number}`}>{field.reason}</li>
+            ))}
+          </ul>
+        </div>
+      ),
+      okText: t('确认'),
+      cancelText: t('复制未完成单号'),
+      onCancel: async () => {
+        await navigator.clipboard.writeText(failed.map(i => i.number).join('\n'));
+      }
+    });
   };
 
   return (

@@ -9,6 +9,8 @@ import localStorage from "@services/localStorage";
 import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
 
+const baseURL = import.meta.env.VITE_BACKEND_HOST;
+
 type OptionalParams<
   URL extends URLs,
   D = Sources[URL]["params"]
@@ -19,7 +21,7 @@ class Net {
 
   constructor() {
     this.svc = axios.create({
-      baseURL: "http://101.42.42.11:8081/",
+      baseURL,
       // timeout: 1000,
     });
 
