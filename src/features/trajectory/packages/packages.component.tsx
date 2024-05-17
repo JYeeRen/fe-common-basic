@@ -25,16 +25,16 @@ import { PlusOutlined } from "@ant-design/icons";
 import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
-  const { store, t } = useStore(PacageCustomsTrackStore)();
-  const initialValues: FormValues = useMemo(() => ({ actionCode: "all" }), []);
+  const initialValues: FormValues = useMemo(() => ({ noType: 0, actionCode: "all" }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
+  const { store, t } = useStore(PacageCustomsTrackStore, gridStore)();
   const columns = useMemo(() => ListConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, actionCode } = values;
     gridStore.setQueryParams({
-      noList: compact(noList),
+      noList: compact(noList).length ? compact(noList) : undefined,
       noType: noType || undefined,
       actionCode: actionCode || undefined,
     });

@@ -25,7 +25,7 @@ import * as listConfig from "./create-modal-config";
 import { compact, find } from "lodash";
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
-import { dayjs } from "@infra";
+import { dayjs, debug } from "@infra";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -62,33 +62,39 @@ const Field = observer((props: FieldProps) => {
   const handleFinish = async () => {
     const { actionCode, timeZone, operateTime } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
+    const selectedDate = operateTime;
+    debug.features('选择的日期', selectedDate.format('YYYY-MM-DDTHH:mm:ssZ'))
 
-    const operateTimeWithTZ = operateTime.tz('utc').add(tzItem?.offset, "second");
-    // console.log(dayjs(operateTime).format('YYYY-MM-DD HH:mm'), operateTimeWithTZ.format());
-    const max = dayjs().tz('utc');
-    console.log(
-      operateTimeWithTZ.format(), 
-      max.format(),
-      operateTimeWithTZ.unix(),
-      max.unix(), (operateTimeWithTZ.tz('utc').unix() - max.tz('utc').unix())
-      );
+    const targetZoneDate = dayjs()
+      .utcOffset((tzItem?.offset ?? 0) / 60)
+      .year(operateTime.year())
+      .month(operateTime.month())
+      .date(operateTime.date())
+      .hour(operateTime.hour())
+      .minute(operateTime.minute())
+      .second(operateTime.second());
 
-    console.log(max.tz('utc').diff(operateTimeWithTZ.tz('utc'), 'h'))
-    return;
+    debug.features('增加时区信息后的时间', targetZoneDate.format('YYYY-MM-DDTHH:mm:ssZ'))
+    debug.features('对应的东八区时间', targetZoneDate.utcOffset(480).format('YYYY-MM-DDTHH:mm:ssZ'))
 
-    if (operateTimeWithTZ.isAfter(dayjs().add(24, "hour")) && !await confirm()) {
+    // 全都转成 +8:00 再计算
+    const diffmins = targetZoneDate.utcOffset(480).diff(dayjs().utcOffset(480), 'm');
+    debug.features('时间差', diffmins, '分钟')
+
+    if (diffmins > 24 * 60 && !await confirm()) {
       return;
     }
 
     store.updateCreateParams({
       timeZone: tzItem?.value ?? "",
-      operateTime: operateTimeWithTZ.format(),
+      operateTime: targetZoneDate.format('YYYY-MM-DDTHH:mm:ssZ'),
       actionCode,
     });
 
     const failed = await store.addPackageTrack(store.createParams);
     if (failed.length === 0) {
       store.toogleModalVisible();
+      store.gridStore.loadData();
       return;
     }
 

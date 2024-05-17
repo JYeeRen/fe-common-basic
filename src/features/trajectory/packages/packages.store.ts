@@ -1,11 +1,13 @@
 import { loading, net } from "@infra";
 import { makeAutoObservable } from "mobx";
-import { AddPacakageTrackFormValues } from "./type";
+import { AddPacakageTrackFormValues, CustomsTrack } from "./type";
+import { ClientGridStore } from "@components";
 
 export class PacageCustomsTrackStore {
   loading = false;
 
   createModalVisible = false;
+  gridStore: ClientGridStore<CustomsTrack>;
 
   createParams: AddPacakageTrackFormValues = {
     ids: [],
@@ -14,7 +16,8 @@ export class PacageCustomsTrackStore {
     actionCode: '',
   };
 
-  constructor() {
+  constructor(_: unknown, gridStore: ClientGridStore<CustomsTrack>) {
+    this.gridStore = gridStore;
     makeAutoObservable(this);
   }
 
