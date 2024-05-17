@@ -7,7 +7,7 @@ import { authProvider } from '@services/auth.service';
 
 export function UserInfo() {
   const navigate = useNavigate();
-  const userName =  useMemo(() => localStorage.getItem('user')?.name ?? '', []);
+  const userName =  useMemo(() => localStorage.getItem('user')?.username ?? '', []);
 
   const items: MenuProps['items'] = [
     {
@@ -24,7 +24,7 @@ export function UserInfo() {
       key: 'logout',
       onClick: async () => {
         await authProvider.signout();
-        navigate('/login');
+        navigate('/login', { replace: true });
       },
     },
   ];

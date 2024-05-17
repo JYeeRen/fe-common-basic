@@ -12,7 +12,7 @@ export const GuardRoute = ({ children }: PropsWithChildren) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       message.error("登录已过期，请重新登录");
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, [message, navigate]);
 

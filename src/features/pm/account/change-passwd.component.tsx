@@ -18,7 +18,7 @@ function ChangePasswdComponent() {
 
   const onFinish = async (values: { oldPassword: string; newPassword: string }) => {
     await store.changePasswd(values);
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (

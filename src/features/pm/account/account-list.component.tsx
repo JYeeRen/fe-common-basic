@@ -50,7 +50,7 @@ function AccountList() {
   );
 
   const editAccount = useCallback(
-    (id: number) => navigate(`${id}`),
+    (id: number) => navigate(`/pm/accounts/${id}`),
     [navigate]
   );
 
@@ -95,7 +95,7 @@ function AccountList() {
     <Button
       className="operation-btn"
       icon={<UsergroupAddOutlined />}
-      onClick={() => navigate("create")}
+      onClick={() => navigate("/pm/account/create")}
     >
       {t("新增账号")}
     </Button>
@@ -128,6 +128,7 @@ function AccountList() {
         {/* <ClientGrid columns={columns} store={gridStore} /> */}
         <Table
           bordered
+          widthFit
           loading={gridStore.loading}
           // rowSelection={{ type: "checkbox" }}
           rowKey="id"

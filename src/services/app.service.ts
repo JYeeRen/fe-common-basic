@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { NavigateFunction } from "react-router-dom";
+import localStorage from './localStorage';
 
 interface AppServiceParams {
   navigate: NavigateFunction;
@@ -9,6 +10,8 @@ class AppService {
 
   loadingCount = 0;
   navigate?: NavigateFunction = undefined;
+
+  permissionDict: Record<string, boolean> = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -26,6 +29,12 @@ class AppService {
   setLoading(loading: boolean) {
     if (loading) return this.loadingCount += 1;
     return this.loadingCount = Math.max(0, this.loadingCount - 1);
+  }
+
+  refreshPermission() {
+    const { permissions = [] } = localStorage.getItem('user') || {};
+    this.permissionDict = permissions.reduce((acc: Record<string, boolean>, cur) => (acc[cur] = true, acc), {});
+
   }
 
 }

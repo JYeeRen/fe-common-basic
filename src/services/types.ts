@@ -1,4 +1,3 @@
-export interface User {
-  userId: number;
-  name: string;
-}
+import { Sources } from "@types";
+
+export type User = Sources['/api/account/login']['res'];

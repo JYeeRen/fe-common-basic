@@ -16,7 +16,7 @@ function RoleList() {
   const navigate = useNavigate();
   const viewRole = useCallback((id: number) => navigate(`${id}`), [navigate]);
   const editRole = useCallback(
-    (id: number) => navigate(`${id}/edit`),
+    (id: number) => navigate(`/pm/roles/${id}/edit`),
     [navigate]
   );
   const deleteRole = useCallback(

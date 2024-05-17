@@ -17,10 +17,16 @@ const MainLayout = observer(() => {
   useEffect(() => (optionsService.init(), undefined), []);
 
   const {
-    topnav, topnavs, sidenavs, defaultSelectedKeys, defaultOpenKeys, onOpenChange, setTopnav
+    topnav,
+    topnavs,
+    sidenavs,
+    selectedKeys,
+    defaultOpenKeys,
+    onOpenChange,
+    setTopnav,
   } = useMenuCtrl();
 
-  const onLogoClick = () => navigate('/');
+  const onLogoClick = () => navigate("/", { replace: true });
   const onSideMenuSelect = ({ key }: { key: string }) => navigate(key);
 
   return (
@@ -47,7 +53,7 @@ const MainLayout = observer(() => {
             mode="inline"
             items={sidenavs}
             defaultOpenKeys={defaultOpenKeys}
-            defaultSelectedKeys={defaultSelectedKeys}
+            selectedKeys={selectedKeys}
             onOpenChange={onOpenChange}
             onSelect={onSideMenuSelect}
           />
