@@ -34,9 +34,9 @@ function TrackTraceComponent() {
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, actionCode } = values;
     gridStore.setQueryParams({
-      noList: compact(noList).length ? compact(noList) : undefined,
-      noType: noType || undefined,
-      actionCode: actionCode || undefined,
+      noList: compact(noList),
+      noType: noType,
+      actionCode: actionCode,
     });
   }, []);
 

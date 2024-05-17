@@ -30,8 +30,8 @@ function TrackTraceComponent() {
     const { noList, noType, statusType } = values;
     gridStore.setQueryParams({
       noList: compact(noList),
-      noType: noType || undefined,
-      statusType: statusType || undefined,
+      noType: noType,
+      statusType: statusType,
     });
   }, []);
 

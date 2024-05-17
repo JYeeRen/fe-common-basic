@@ -43,7 +43,7 @@ function TrackLogMawbComponent(props: MawbProps) {
     const { masterWaybillNoList, waybillStatusCode } = values;
     gridStore.setQueryParams({
       noList: compact(masterWaybillNoList),
-      waybillStatusCode: waybillStatusCode || undefined,
+      waybillStatusCode: waybillStatusCode,
     });
   }, []);
 

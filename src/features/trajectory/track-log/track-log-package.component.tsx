@@ -35,7 +35,7 @@ function TrackLogPackageComponent(props: PackageProps) {
   );
 
   const initialValues: PackageFormValues = useMemo(
-    () => ({ actionCode: "all" }),
+    () => ({ noType: 0, actionCode: "all" }),
     []
   );
 
@@ -47,9 +47,9 @@ function TrackLogPackageComponent(props: PackageProps) {
   const handleFinish = useCallback((values: any = {}) => {
     const { noList, noType, actionCode } = values;
     gridStore.setQueryParams({
-      noList: compact(noList) ? compact(noList) : undefined,
-      noType: noType || undefined,
-      actionCode: actionCode || undefined,
+      noList: compact(noList),
+      noType: noType,
+      actionCode: actionCode,
     });
   }, []);
 
