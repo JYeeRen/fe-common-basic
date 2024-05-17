@@ -77,19 +77,32 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     widthFit ?? false
   );
 
-  const adaptiveHeight = scroll?.y ? Number(scroll?.y) : useHeight("#table-container");
+  const [adaptiveHeight, bounding] = useHeight("#table-container");
 
   const heights = useMemo(() => {
     const container = Math.max(300, adaptiveHeight - 36);
-    const table = Math.max(200, adaptiveHeight - 150);
+    let table: number | undefined = Math.max(250, adaptiveHeight - 150);
+    if (bounding?.height && bounding.height < table) {
+      table = undefined;
+    }
     return { container, table };
   }, [adaptiveHeight]);
+
+  const containerStyle = useMemo(
+    () => {
+      if (!autoHeight) {
+        return undefined;
+      }
+      return { height: `${heights.container}px` };
+    },
+    [autoHeight, heights.container]
+  );
 
   return (
     <div
       id="table-container"
       className="w-full overflow-hidden"
-      style={autoHeight ? { height: `${heights.container}px` } : undefined}
+      style={containerStyle}
     >
       <AntTable
         {...restProps}

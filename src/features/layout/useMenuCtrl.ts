@@ -142,6 +142,9 @@ export const useMenuCtrl = () => {
 
   const topnavs = useMemo(() => {
     return config.filter(item => {
+      if (localStorage.getItem('user')?.isManager) {
+        return true;
+      }
       if (!item.permissions) {
         return true;
       }

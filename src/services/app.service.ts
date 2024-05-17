@@ -1,6 +1,7 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { NavigateFunction } from "react-router-dom";
 import localStorage from './localStorage';
+import { net } from "@infra";
 
 interface AppServiceParams {
   navigate: NavigateFunction;
@@ -34,7 +35,16 @@ class AppService {
   refreshPermission() {
     const { permissions = [] } = localStorage.getItem('user') || {};
     this.permissionDict = permissions.reduce((acc: Record<string, boolean>, cur) => (acc[cur] = true, acc), {});
+  }
 
+  async fetchUserInfo() {
+    const userInfo = await net.post('/api/account/getUserInfo');
+    const cur = localStorage.getItem('user');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    localStorage.setItem('user', { ...cur, ...userInfo } as any);
+    runInAction(() => {
+      this.refreshPermission();
+    });
   }
 
 }

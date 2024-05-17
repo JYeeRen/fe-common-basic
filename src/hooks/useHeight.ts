@@ -6,13 +6,13 @@ import { useWindowSize } from './useWindowSize';
  * @param name
  * @returns
  */
-export function useHeight(name: string): number {
+export function useHeight(name: string): [number, DOMRect | null] {
   const element = document.querySelector(name);
   const { height } = useWindowSize();
 
   if (element == null) {
-    return 0;
+    return [0, null];
   }
-  const { top } = element.getBoundingClientRect();
-  return height - top;
+  const bounding = element.getBoundingClientRect();
+  return [height - bounding.top, bounding];
 }

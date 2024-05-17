@@ -7,7 +7,8 @@ import appService from "@services/app.service";
 function App() {
   useEffect(() => {
     debug.infra('refresh permission');
-    appService.refreshPermission();
+    appService.fetchUserInfo();
+    // appService.refreshPermission();
   }, []);
 
   return <RouterProvider router={router} />;

@@ -24,12 +24,7 @@ export interface AccountAPI {
     res: ListRes<
       Pick<
         Schema.Account,
-        | "id"
-        | "account"
-        | "username"
-        | "active"
-        | "roleName"
-        | "scope"
+        "id" | "account" | "username" | "active" | "roleName" | "scope"
       >
     >;
   };
@@ -65,7 +60,14 @@ export interface AccountAPI {
       newPassword: string;
     };
     res: never;
-  }
+  };
+  "/api/account/getUserInfo": {
+    params?: never;
+    res: {
+      isManager: boolean;
+      username: string;
+      permissions: string[];
+      userId: number;
+    };
+  };
 }
-
-
