@@ -20,8 +20,10 @@ import styles from "./bill-of-lading.module.less";
 import { useCallback, useMemo } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./bill-of-lading.store";
-import { FormValues } from "./type";
+import { FormValues, QueryParams } from "./type";
 import { PlusOutlined } from "@ant-design/icons";
+import { compact } from "lodash";
+import { convertDate } from "@infra";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(BillOfLadingStore)();
@@ -30,11 +32,65 @@ function TrackTraceComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, customsStatusType } = values;
+    const { 
+      masterWaybillNoList,
+      departPortCode,
+      arrivePortCode,
+      flightDateTZ,
+      flightDate,
+      etdTZ,
+      etd,
+      etaTZ,
+      eta,
+      atdTZ,
+      atd,
+      ataTZ,
+      ata,
+    } = values;
+
+    const params: Omit<QueryParams, 'page' | 'size'> = {};
+
+    if (flightDate) {
+      params.flightDate = {
+        zone: flightDateTZ,
+        start: convertDate(flightDate[0], flightDateTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: convertDate(flightDate[1], flightDateTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+    }
+    if (etd) {
+      params.etd = {
+        zone: etdTZ,
+        start: convertDate(etd[0], etdTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: convertDate(etd[1], etdTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+    }
+    if (eta) {
+      params.eta = {
+        zone: etaTZ,
+        start: convertDate(eta[0], etaTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: convertDate(eta[1], etaTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+    }
+    if (atd) {
+      params.atd = {
+        zone: atdTZ,
+        start: convertDate(atd[0], atdTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: convertDate(atd[1], atdTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+    }
+    if (ata) {
+      params.ata = {
+        zone: ataTZ,
+        start: convertDate(ata[0], ataTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: convertDate(ata[1], ataTZ).format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+    }
+
     gridStore.setQueryParams({
-      noList: noList || undefined,
-      noType: noType || undefined,
-      customsStatusType: customsStatusType || undefined,
+      ...params,
+      masterWaybillNoList: compact(masterWaybillNoList),
+      departPortCode,
+      arrivePortCode,
     });
   }, []);
 
@@ -58,7 +114,7 @@ function TrackTraceComponent() {
             </div>
             <Form.Item
               style={{ width: "100%" }}
-              name="noList"
+              name="masterWaybillNoList"
               wrapperCol={{ span: 22 }}
               rules={numberRules}
             >
@@ -97,62 +153,73 @@ function TrackTraceComponent() {
           <Row>
             <Form.Item
               label={t("航班时间")}
-              labelAlign="left"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 18 }}
+              labelAlign="right"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
                 <Form.Item name="flightDateTZ" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
-                    placeholder={t("请选择时区")}
-                    style={{ width: "40%" }}
+                    placeholder={t("选择时区")}
+                    style={{ width: "100px" }}
                   />
                 </Form.Item>
                 <Form.Item name="flightDate" noStyle>
-                  <DatePicker.RangePicker style={{ width: "60%" }} />
+                  <DatePicker.RangePicker
+                    style={{ width: "360px" }}
+                    placeholder={[t("请选择起始日期"), t("请选择结束日期")]}
+                  />
                 </Form.Item>
               </Space.Compact>
             </Form.Item>
           </Row>
           <Row>
             <Form.Item
-              label={t("航班时间")}
-              labelAlign="left"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 18 }}
+              label={t("ETD")}
+              labelAlign="right"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
-                <Form.Item name="flightDateTZ" noStyle>
+                <Form.Item name="etdTZ" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
-                    placeholder={t("请选择时区")}
-                    style={{ width: "40%" }}
+                    placeholder={t("选择时区")}
+                    style={{ width: "100px" }}
                   />
                 </Form.Item>
-                <Form.Item name="flightDate" noStyle>
-                  <DatePicker.RangePicker style={{ width: "60%" }} />
+                <Form.Item name="etd" noStyle>
+                  <DatePicker.RangePicker
+                    showTime
+                    style={{ width: "360px" }}
+                    placeholder={[t("开始日期时间"), t("结束日期时间")]}
+                  />
                 </Form.Item>
               </Space.Compact>
             </Form.Item>
           </Row>
           <Row>
             <Form.Item
-              label={t("航班时间")}
-              labelAlign="left"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 18 }}
+              label={t("ETA")}
+              labelAlign="right"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
-                <Form.Item name="flightDateTZ" noStyle>
+                <Form.Item name="eta" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
-                    placeholder={t("请选择时区")}
-                    style={{ width: "40%" }}
+                    placeholder={t("选择时区")}
+                    style={{ width: "100px" }}
                   />
                 </Form.Item>
-                <Form.Item name="flightDate" noStyle>
-                  <DatePicker.RangePicker style={{ width: "60%" }} />
+                <Form.Item name="etaTZ" noStyle>
+                  <DatePicker.RangePicker
+                    showTime
+                    style={{ width: "360px" }}
+                    placeholder={[t("开始日期时间"), t("结束日期时间")]}
+                  />
                 </Form.Item>
               </Space.Compact>
             </Form.Item>
@@ -160,20 +227,24 @@ function TrackTraceComponent() {
           <Row>
             <Form.Item
               label={t("ATD")}
-              labelAlign="left"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 18 }}
+              labelAlign="right"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
-                <Form.Item name="flightDateTZ" noStyle>
+                <Form.Item name="atdTZ" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
-                    placeholder={t("请选择时区")}
-                    style={{ width: "40%" }}
+                    placeholder={t("选择时区")}
+                    style={{ width: "100px" }}
                   />
                 </Form.Item>
-                <Form.Item name="flightDate" noStyle>
-                  <DatePicker.RangePicker style={{ width: "60%" }} />
+                <Form.Item name="atd" noStyle>
+                  <DatePicker.RangePicker
+                    showTime
+                    style={{ width: "360px" }}
+                    placeholder={[t("开始日期时间"), t("结束日期时间")]}
+                  />
                 </Form.Item>
               </Space.Compact>
             </Form.Item>
@@ -181,20 +252,24 @@ function TrackTraceComponent() {
           <Row>
             <Form.Item
               label={t("ATA")}
-              labelAlign="left"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 18 }}
+              labelAlign="right"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
-                <Form.Item name="ata" noStyle>
+                <Form.Item name="ataTZ" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
-                    placeholder={t("请选择时区")}
-                    style={{ width: "40%" }}
+                    placeholder={t("选择时区")}
+                    style={{ width: "100px" }}
                   />
                 </Form.Item>
-                <Form.Item name="flightDate" noStyle>
-                  <DatePicker.RangePicker style={{ width: "60%" }} />
+                <Form.Item name="ata" noStyle>
+                  <DatePicker.RangePicker
+                    showTime
+                    style={{ width: "360px" }}
+                    placeholder={[t("开始日期时间"), t("结束日期时间")]}
+                  />
                 </Form.Item>
               </Space.Compact>
             </Form.Item>

@@ -3,4 +3,4 @@ export * from './debug';
 export * from './error-boundary';
 export * from './error';
 export * from './loading';
-export { default as dayjs } from './dayjs';
+export { default as dayjs, convertDate } from './dayjs';

@@ -25,7 +25,7 @@ import * as listConfig from "./create-modal-config";
 import { compact, find } from "lodash";
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
-import { dayjs, debug } from "@infra";
+import { convertDate, dayjs, debug } from "@infra";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -65,17 +65,7 @@ const Field = observer((props: FieldProps) => {
     const selectedDate = operateTime;
     debug.features('选择的日期', selectedDate.format('YYYY-MM-DDTHH:mm:ssZ'))
 
-    const targetZoneDate = dayjs()
-      .utcOffset((tzItem?.offset ?? 0) / 60)
-      .year(operateTime.year())
-      .month(operateTime.month())
-      .date(operateTime.date())
-      .hour(operateTime.hour())
-      .minute(operateTime.minute())
-      .second(operateTime.second());
-
-    debug.features('增加时区信息后的时间', targetZoneDate.format('YYYY-MM-DDTHH:mm:ssZ'))
-    debug.features('对应的东八区时间', targetZoneDate.utcOffset(480).format('YYYY-MM-DDTHH:mm:ssZ'))
+    const targetZoneDate = convertDate(operateTime, timeZone)
 
     // 全都转成 +8:00 再计算
     const diffmins = targetZoneDate.utcOffset(480).diff(dayjs().utcOffset(480), 'm');

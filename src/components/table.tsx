@@ -80,7 +80,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
   const [adaptiveHeight, bounding] = useHeight("#table-container");
 
   const heights = useMemo(() => {
-    const container = Math.max(300, adaptiveHeight - 36);
+    const container = Math.max(350, adaptiveHeight - 36);
     let table: number | undefined = Math.max(250, adaptiveHeight - 150);
     if (bounding?.height && bounding.height < table) {
       table = undefined;
