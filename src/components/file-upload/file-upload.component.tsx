@@ -2,11 +2,11 @@ import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "@locale";
 import { Button, Upload, UploadFile } from "antd";
 import uploadStyles from "./file-upload.module.less";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 interface FileUploadProps {
   loading?: boolean;
-  title: string;
+  title: string | ReactNode;
   value?: UploadFile[];
   onChange?: (files: UploadFile[]) => void;
   multiple?: boolean;

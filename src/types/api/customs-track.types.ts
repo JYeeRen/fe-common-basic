@@ -85,4 +85,14 @@ export interface CustomsTrackAPI {
     };
     res: { failed: { number: string; reason: string }[] };
   };
+  "/api/customsTrack/checkMawbTrackFile": {
+    // params: { file: unknown, timeZone: string };
+    params: FormData;
+    res: {
+      formatError: { number: string, reason: string }[];
+      numberError: { number: string, reason: string }[];
+      timeChange: { number: string, reason: string }[];
+      timeout: { number: string, reason: string }[];
+    }
+  }
 }

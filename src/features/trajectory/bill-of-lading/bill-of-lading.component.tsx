@@ -24,54 +24,62 @@ import { useCallback, useMemo } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./bill-of-lading.store";
 import { CustomsTrack, FormValues, QueryParams } from "./type";
-import { CloudDownloadOutlined, CloudUploadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { compact } from "lodash";
 import { convertDate, dayjs } from "@infra";
+import { UploadModal } from "./upload-modal.component";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(BillOfLadingStore)();
   const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows);
 
-  const updateConfirm = useCallback(async (record: CustomsTrack, key: string) => {
-    const typeDict: Record<string, string> = {
-      customs_submitted: t("数据提交海关"),
-      customs_accepted: t("海关接收数据"),
-      customs_release: t("海关放行（整票放行）"),
-      picked_up: t("货物已提货"),
-      handed_over: t("货物交接尾程"),
-      customs_inspection: t("海关查验（整票查验）"),
-    };
+  const updateConfirm = useCallback(
+    async (record: CustomsTrack, key: string) => {
+      const typeDict: Record<string, string> = {
+        customs_submitted: t("数据提交海关"),
+        customs_accepted: t("海关接收数据"),
+        customs_release: t("海关放行（整票放行）"),
+        picked_up: t("货物已提货"),
+        handed_over: t("货物交接尾程"),
+        customs_inspection: t("海关查验（整票查验）"),
+      };
 
-    return new Promise(resolve => {
-      Modal.confirm({
-        title: t("操作确认"),
-        content: (
-          <>
-            <p>
-              {t(
-                "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？",
-                { no: record.masterWaybillNo, type: typeDict[key] }
-              )}
-            </p>
-            <p>
-              <span style={{ display: "inline-block", color: "orange" }}>
-                {t("注意：")}
-              </span>
-              <span>
+      return new Promise((resolve) => {
+        Modal.confirm({
+          title: t("操作确认"),
+          content: (
+            <>
+              <p>
                 {t(
-                  "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！"
+                  "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？",
+                  { no: record.masterWaybillNo, type: typeDict[key] }
                 )}
-              </span>
-            </p>
-          </>
-        ),
-        onOk: () => resolve(true),
-        onCancel: () => resolve(false),
-        okText: t('确认上传'),
-        cancelText: t('放弃录入')
+              </p>
+              <p>
+                <span style={{ display: "inline-block", color: "orange" }}>
+                  {t("注意：")}
+                </span>
+                <span>
+                  {t(
+                    "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！"
+                  )}
+                </span>
+              </p>
+            </>
+          ),
+          onOk: () => resolve(true),
+          onCancel: () => resolve(false),
+          okText: t("确认上传"),
+          cancelText: t("放弃录入"),
+        });
       });
-    });
-  }, []);
+    },
+    []
+  );
 
   const over24Confirm = useCallback(async (): Promise<boolean> => {
     return await new Promise((resolve) => {
@@ -85,21 +93,22 @@ function TrackTraceComponent() {
         icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
         onOk: () => resolve(true),
-        onCancel: () => resolve(false)
+        onCancel: () => resolve(false),
       });
     });
   }, []);
 
   const handleSave = useCallback(
     async (record: CustomsTrack, key: string, value: string) => {
-
-      if (!await updateConfirm(record, key)) {
+      if (!(await updateConfirm(record, key))) {
         return true;
       }
 
-      const diffmins = dayjs(value).utcOffset(480).diff(dayjs().utcOffset(480), 'm');
+      const diffmins = dayjs(value)
+        .utcOffset(480)
+        .diff(dayjs().utcOffset(480), "m");
 
-      if ((diffmins > 24 * 60) && !await over24Confirm()) {
+      if (diffmins > 24 * 60 && !(await over24Confirm())) {
         return false;
       }
 
@@ -201,6 +210,8 @@ function TrackTraceComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
+      <UploadModal store={store} />
+      {/* <UploadConfirmModal store={store} /> */}
       <FilterContainer
         onFinish={handleFinish}
         // layout="vertical"
@@ -394,7 +405,11 @@ function TrackTraceComponent() {
           >
             {t("导出已筛选数据")}
           </Button>
-          <Button className="operation-btn" icon={<CloudUploadOutlined />}>
+          <Button
+            className="operation-btn"
+            icon={<CloudUploadOutlined />}
+            onClick={store.showUploadModal.bind(store)}
+          >
             {t("批量添加轨迹时间")}
           </Button>
         </Row>

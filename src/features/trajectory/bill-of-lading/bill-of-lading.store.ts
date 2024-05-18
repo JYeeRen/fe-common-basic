@@ -4,9 +4,18 @@ import { QueryParams } from "./type";
 
 export class BillOfLadingStore {
   loading = false;
+  uploadModalVisible = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  showUploadModal() {
+    this.uploadModalVisible = true;
+  }
+
+  hideUploadModal() {
+    this.uploadModalVisible = false;
   }
 
   @loading()
@@ -27,5 +36,11 @@ export class BillOfLadingStore {
       operateTime: value,
     });
     return failed;
+  }
+
+  @loading()
+  async checkMawbTrackFile(formData: FormData) {
+    const res = await net.upload("/api/customsTrack/checkMawbTrackFile", formData);
+    return res;
   }
 }
