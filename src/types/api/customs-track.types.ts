@@ -43,6 +43,10 @@ export interface CustomsTrackAPI {
     };
     res: ListRes<Schema.MawbCustomsTrack>;
   };
+  "/api/customsTrack/exportMawbTrack": {
+    params: CustomsTrackAPI["/api/customsTrack/findMawbList"]["params"];
+    res: { url: string; fileName: string };
+  };
   "/api/customsTrack/findAddPackageList": {
     params: ListParams & {
       noList?: string[];
@@ -66,6 +70,18 @@ export interface CustomsTrackAPI {
       operateTime: string;
       timeZone: string;
       actionCode: string;
+    };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsTrack/downloadTemplate": {
+    params?: never;
+    res: { url: string; fileName: string };
+  };
+  "/api/customsTrack/addMawbTrack": {
+    params: {
+      ids: number[];
+      operateTime: string;
+      waybillStatusCode: string;
     };
     res: { failed: { number: string; reason: string }[] };
   };

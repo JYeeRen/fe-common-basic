@@ -49,7 +49,7 @@ function TrackTraceComponent() {
         layout="vertical"
         initialValues={initialValues}
       >
-        <Col span={8}>
+        <Col span={10}>
           <div style={{ paddingBottom: "8px" }}>
             <Form.Item noStyle name="noType">
               <Radio.Group>

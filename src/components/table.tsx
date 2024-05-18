@@ -58,6 +58,7 @@ function useColumnAutoWidth<T>(
 interface ExternalTableProps {
   widthFit?: boolean;
   autoHeight?: boolean;
+  maxHeight?: number;
 }
 
 export const Table = observer((props: TableProps & ExternalTableProps) => {
@@ -68,6 +69,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     dataSource,
     widthFit,
     autoHeight = true,
+    maxHeight = 250,
     ...restProps
   } = props;
 
@@ -81,12 +83,12 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
 
   const heights = useMemo(() => {
     const container = Math.max(350, adaptiveHeight - 36);
-    let table: number | undefined = Math.max(250, adaptiveHeight - 150);
+    let table: number | undefined = Math.max(maxHeight, adaptiveHeight - 150);
     if (bounding?.height && bounding.height < table) {
       table = undefined;
     }
     return { container, table };
-  }, [adaptiveHeight]);
+  }, [adaptiveHeight, bounding?.height, maxHeight]);
 
   const containerStyle = useMemo(
     () => {

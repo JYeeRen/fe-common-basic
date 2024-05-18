@@ -46,7 +46,7 @@ const Field = observer((props: FieldProps) => {
       Modal.confirm({
         title: t("警告！"),
         content: t(
-          "当前录入的轨迹发生事件已超过当前时间24小时以上，是否确认上传轨迹？"
+          "当前录入的轨迹发生时间已超过当前时间24小时以上，是否确认上传轨迹？"
         ),
         okText: t("确认上传"),
         cancelText: t("放弃录入"),

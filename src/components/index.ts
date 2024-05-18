@@ -27,6 +27,8 @@ export { SearchSelect } from './search-select';
 
 export { EditableCell } from './editable-cell.component';
 
+export { EditableDateCell } from './editable-date-cell.component';
+
 export { FileUpload } from './file-upload/file-upload.component';
 
 // antd begin

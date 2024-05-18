@@ -35,7 +35,7 @@ export interface CustomsStatusAPI {
     res: never;
   };
   "/api/customsStatus/export": {
-    params?: {
+    params: {
       noList?: string[];
       noType?: number;
       uploadDate?: {
