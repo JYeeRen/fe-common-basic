@@ -1,10 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import * as authService from "@services/auth.service";
+import { t } from "@locale";
 
 class LoginStore {
 
   tipVisible = false;
-  tips = '用户名或密码不正确';
+  tips = t('用户名或密码不正确');
 
   constructor() {
     makeAutoObservable(this);

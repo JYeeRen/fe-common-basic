@@ -2,8 +2,7 @@ import { Schema, Sources } from "@types";
 
 export type CustomsTrack = Schema.MawbCustomsTrack;
 
-export type QueryParams =
-  Sources["/api/customsTrack/findMawbList"]["params"];
+export type QueryParams = Sources["/api/customsTrack/findMawbList"]["params"];
 
 export interface FormValues {
   noList?: string[];
@@ -22,3 +21,5 @@ export type AddMawbTrackFormValues = {
   timeZone: string;
   actionCode: string;
 };
+
+export type UploadRes = Sources["/api/customsTrack/uploadMawbTrack"]["res"];

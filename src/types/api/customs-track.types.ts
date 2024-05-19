@@ -95,4 +95,13 @@ export interface CustomsTrackAPI {
       timeout: { number: string, reason: string }[];
     }
   }
+  "/api/customsTrack/uploadMawbTrack": {
+    // params: { file: unknown, timeZone: string };
+    params: FormData;
+    res: {
+      failed: { number: string; reason: string }[];
+      total: number;
+      success: number;
+    };
+  }
 }

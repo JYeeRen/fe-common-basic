@@ -27,7 +27,7 @@ export const getColumns = (operatons: Operations): TableColumnsType<Role> => {
       key: "linkedCount",
       dataIndex: "linkedCount",
       title: t("关联账号"),
-      render: (value) => `${value}个`,
+      render: (value) => t('{{n}}个', { n: value }),
     },
     {
       key: "active",

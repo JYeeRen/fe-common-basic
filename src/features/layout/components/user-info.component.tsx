@@ -4,14 +4,16 @@ import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import localStorage from '@services/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { authProvider } from '@services/auth.service';
+import { useTranslation } from '@locale';
 
 export function UserInfo() {
   const navigate = useNavigate();
   const userName =  useMemo(() => localStorage.getItem('user')?.username ?? '', []);
+  const [t] = useTranslation();
 
   const items: MenuProps['items'] = [
     {
-      label: '修改密码',
+      label: t('修改密码'),
       icon: <UserOutlined />,
       key: 'changepassword',
       onClick: () => {
@@ -19,7 +21,7 @@ export function UserInfo() {
       }
     },
     {
-      label: '注销登录',
+      label: t('注销登录'),
       icon: <LogoutOutlined />,
       key: 'logout',
       onClick: async () => {
@@ -33,7 +35,7 @@ export function UserInfo() {
     <Dropdown menu={{ items }} trigger={['click']}>
     <div onClick={e => e.preventDefault()} className="mx-2">
       <Avatar style={{ backgroundColor: '#f56a00' }}>{userName}</Avatar>
-      <span className="ml-2">您好，{userName}！</span>
+      <span className="ml-2">{t('您好，{{userName}}！', { userName })}</span>
     </div>
     </Dropdown>
   );

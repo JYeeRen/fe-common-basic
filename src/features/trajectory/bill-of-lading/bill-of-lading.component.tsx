@@ -210,7 +210,7 @@ function TrackTraceComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
-      <UploadModal store={store} />
+      <UploadModal store={store} refreshTable={gridStore.loadData.bind(gridStore)} />
       {/* <UploadConfirmModal store={store} /> */}
       <FilterContainer
         onFinish={handleFinish}

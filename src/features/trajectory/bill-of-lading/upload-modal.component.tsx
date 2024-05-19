@@ -12,13 +12,15 @@ import {
 import { useTranslation } from "@locale";
 import { chain, uniq } from "lodash";
 import { useCallback } from "react";
+import { UploadRes } from "./type";
 
 interface UploadModalProps {
   store: BillOfLadingStore;
+  refreshTable: () => void;
 }
 
 export const UploadModal = observer((props: UploadModalProps) => {
-  const { store } = props;
+  const { store, refreshTable } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
@@ -156,7 +158,7 @@ export const UploadModal = observer((props: UploadModalProps) => {
             <Button
               className="mr-4"
               type="primary"
-              style={{ background: 'red' }}
+              style={{ background: "red" }}
               onClick={() => resolve(true)}
             >
               {t("确认上传")}
@@ -164,6 +166,84 @@ export const UploadModal = observer((props: UploadModalProps) => {
           </Row>
         ),
       });
+    });
+  }, []);
+
+  const headerError = useCallback(() => {
+    Modal.error({
+      title: t("操作确认"),
+      content: t(
+        "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。"
+      ),
+      okText: t("确认"),
+    });
+  }, []);
+
+  const otherError = useCallback(
+    (errors: { number: string; reason: string }[]) => {
+      Modal.confirm({
+        title: t("警告！"),
+        content: (
+          <>
+            <p>{t("上传文件内存在错误，请修改后重新上传。")}</p>
+            <div className="my-4">
+              <p style={{ color: "#c9c9c9" }}>{t("错误的提单号如下：")}</p>
+              {errors.map((item, idx) => (
+                <p key={`${idx}_${item.number}`} style={{ color: "#c9c9c9" }}>
+                  {item.number} {item.reason}
+                </p>
+              ))}
+            </div>
+          </>
+        ),
+        okText: t("复制单号"),
+        cancelText: t("放弃录入"),
+        onOk: async () => {
+          await navigator.clipboard.writeText(
+            uniq(errors.map((i) => i.number)).join("\n")
+          );
+        },
+        onCancel: () => {
+          store.hideUploadModal();
+        },
+      });
+    },
+    []
+  );
+
+  const operationConfirm = useCallback((res: UploadRes) => {
+    const { failed, total, success } = res;
+    Modal.confirm({
+      okText: t('确认'),
+      cancelText: t('复制未完成单号'),
+      title: t("操作确认"),
+      onOk: () => {
+        refreshTable();
+      },
+      onCancel: async () => {
+        await navigator.clipboard.writeText(
+          uniq(failed.map((i) => i.number)).join("\n")
+        );
+      },
+      content: (
+        <>
+          <p style={{ color: "#c7c7c7" }}>
+            {t("全部上传数据：{{n}}条。", { n: total })}
+          </p>
+          <p style={{ color: "#c7c7c7" }}>
+            {t("完成上传数据：{{n1}}条。未上传数据：{{n2}}条。", {
+              n1: success,
+              n2: total - success,
+            })}
+          </p>
+          <p style={{ color: "#c7c7c7" }}>{t("未完成数据提单号如下：")}</p>
+          {failed.map((item, index) => (
+            <p key={`${index}_${item.number}`} style={{ color: "#c7c7c7" }}>
+              {item.number}
+            </p>
+          ))}
+        </>
+      ),
     });
   }, []);
 
@@ -176,25 +256,26 @@ export const UploadModal = observer((props: UploadModalProps) => {
     const res = await store.checkMawbTrackFile(formdata);
 
     if (res.formatError.length) {
-      Modal.error({
-        title: t("操作确认"),
-        content: t(
-          "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。"
-        ),
-        okText: t("确认"),
-      });
+      headerError();
       return;
     }
 
-    if (res.timeChange.length > 0) {
-      const confirm = await updateConfirm(res.timeChange);
-      console.log(confirm);
+    if (res.numberError.length) {
+      otherError(res.numberError);
+      return;
+    }
+
+    if (res.timeChange.length > 0 && !(await updateConfirm(res.timeChange))) {
       return;
     }
 
     if (res.timeout.length && !(await over24Confirm(res.timeout))) {
       return;
     }
+
+    const uploadRes = await store.uploadMawbTrack(formdata);
+    store.hideUploadModal();
+    operationConfirm(uploadRes);
   };
 
   return (

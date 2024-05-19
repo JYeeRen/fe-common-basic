@@ -20,9 +20,11 @@ import {
 import styles from "./login.module.less";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import LoginStore from "./login.store";
+import { useTranslation } from "@locale";
 
 function Login() {
   const [store] = useState(() => new LoginStore());
+  const [t] = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -40,7 +42,7 @@ function Login() {
       <Layout.Header className={styles.header}>
         <div className={styles.main}>
           <div className={styles.logo}>LOGO</div>
-          <span className={styles.path}>登录</span>
+          <span className={styles.path}>{t('登录')}</span>
         </div>
       </Layout.Header>
       <Layout.Content>
@@ -73,14 +75,14 @@ function Login() {
             <Form.Item label="" name="username" rules={[{ required: true }]}>
               <Input
                 className={styles.input}
-                placeholder="请输入用户名"
+                placeholder={t("请输入用户名")}
                 prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               />
             </Form.Item>
             <Form.Item label="" name="password" rules={[{ required: true }]}>
               <Input.Password
                 className={styles.input}
-                placeholder="请输入密码"
+                placeholder={t("请输入密码")}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
@@ -109,7 +111,7 @@ function Login() {
                       .filter(({ errors }) => errors.length).length
                   }
                 >
-                  登录
+                  {t('登录')}
                 </Button>
               )}
             </Form.Item>

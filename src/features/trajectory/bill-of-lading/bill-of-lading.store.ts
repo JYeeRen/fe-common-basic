@@ -43,4 +43,9 @@ export class BillOfLadingStore {
     const res = await net.upload("/api/customsTrack/checkMawbTrackFile", formData);
     return res;
   }
+
+  @loading()
+  async uploadMawbTrack(formData: FormData) {
+    return await net.upload("/api/customsTrack/uploadMawbTrack", formData);
+  }
 }

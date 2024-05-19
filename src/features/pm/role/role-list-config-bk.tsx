@@ -29,7 +29,7 @@ export const getGridColumns = (
       field: "linkedCount",
       headerName: t("关联账号"),
       pinned: "left",
-      valueFormatter: (params) => `${params.value}个`,
+      valueFormatter: (params) => t('{{n}}个', { n: params.value }),
     },
     {
       field: "active",
