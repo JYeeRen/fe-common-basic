@@ -35,6 +35,16 @@ export const getColumns = (
       title: t("ETA"),
     },
     {
+      key: "ata",
+      dataIndex: "ata",
+      title: t("ATA"),
+    },
+    {
+      key: "atd",
+      dataIndex: "atd",
+      title: t("ATD"),
+    },
+    {
       key: "departPortCode",
       dataIndex: "departPortCode",
       title: t("起飞港口"),

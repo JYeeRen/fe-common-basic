@@ -319,14 +319,14 @@ function TrackTraceComponent() {
               wrapperCol={{ span: 16 }}
             >
               <Space.Compact>
-                <Form.Item name="eta" noStyle>
+                <Form.Item name="etaTZ" noStyle>
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
                     style={{ width: "100px" }}
                   />
                 </Form.Item>
-                <Form.Item name="etaTZ" noStyle>
+                <Form.Item name="eta" noStyle>
                   <DatePicker.RangePicker
                     showTime
                     style={{ width: "360px" }}
