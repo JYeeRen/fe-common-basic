@@ -96,8 +96,8 @@ export function EditableDateCell(props: EditableDateCellProps) {
           ref={inputRef}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onPressEnter={handleSave}
-          // onBlur={handleSave}
+          // onPressEnter={handleSave}
+          onBlur={handleSave}
           variant="borderless"
         />
       </Form.Item>
