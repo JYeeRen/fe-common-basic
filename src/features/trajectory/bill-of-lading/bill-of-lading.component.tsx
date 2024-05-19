@@ -109,7 +109,7 @@ function TrackTraceComponent() {
         .diff(dayjs().utcOffset(480), "m");
 
       if (diffmins > 24 * 60 && !(await over24Confirm())) {
-        return false;
+        return true;
       }
 
       try {
