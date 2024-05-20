@@ -38,7 +38,7 @@ function TrackTraceComponent() {
       noType: noType,
       actionCode: actionCode,
     });
-  }, []);
+  }, [gridStore]);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 

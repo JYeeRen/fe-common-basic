@@ -22,7 +22,11 @@ import { compact } from "lodash";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(TrackTraceStore)();
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, { autoLoad: false });
+  const initialValues: CustomsTrackStatusFormValues = useMemo(
+    () => ({ statusType: 0, noType: 0 }),
+    []
+  );
+  const gridStore = ClientGrid.useGridStore(listConfig.getRows, { initialValues });
   const columns = useMemo(() => listConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,11 +38,6 @@ function TrackTraceComponent() {
       statusType: statusType,
     });
   }, []);
-
-  const initialValues: CustomsTrackStatusFormValues = useMemo(
-    () => ({ statusType: 0, noType: 0 }),
-    []
-  );
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 

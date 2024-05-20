@@ -8,6 +8,12 @@ import { find } from "lodash";
 export const getColumns = (): TableColumnsType<CustomsTrack> => {
   return [
     {
+      key: "no",
+      title: t("序号"),
+      width: 80,
+      render: (__vlaue, __record, index) => index + 1,
+    },
+    {
       key: "bigBagNo",
       dataIndex: "bigBagNo",
       title: t("袋号"),

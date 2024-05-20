@@ -124,6 +124,7 @@ const Field = observer((props: FieldProps) => {
           <SearchSelect
             optionKey="actionCodeList"
             allowClear={false}
+            omitKey={['all']}
             style={{ width: "160px" }}
           />
         </Form.Item>
