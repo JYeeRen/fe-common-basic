@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import * as authService from "@services/auth.service";
 import { t } from "@locale";
+import appService from "@services/app.service";
 
 class LoginStore {
 
@@ -12,7 +13,8 @@ class LoginStore {
   }
 
   async login(account: string, password: string) {
-      await authService.signin({ account, password });
+    await authService.signin({ account, password });
+    appService.refreshPermission();
   }
 
 

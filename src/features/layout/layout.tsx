@@ -40,7 +40,10 @@ const MainLayout = observer(() => {
           mode="horizontal"
           items={topnavs}
           className={styles.topnav}
-          onSelect={({ key }) => setTopnav(key)}
+          onSelect={({ key }) => {
+            setTopnav(key);
+            navigate(`${key}`);
+          }}
           selectedKeys={[topnav]}
         />
         <Lang />

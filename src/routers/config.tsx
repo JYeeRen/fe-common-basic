@@ -2,6 +2,7 @@ import { RouteObject, redirect } from "react-router-dom";
 import Layout from "@features/layout/layout";
 import { loginLoader } from "./loginLoader";
 import { authProvider } from "@services/auth.service";
+import Welcome from '@features/welcome/welcome';
 
 const template: RouteObject[] = [
   {
@@ -153,13 +154,18 @@ export const routesConfig: RouteObject[] = [
     path: "/",
     // loader: protectedLoader, // 会导致无法直接访问子路由
     Component: Layout,
-    // errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        lazy: async () => ({
-          Component: (await import("@features/welcome/welcome")).default,
-        }),
+        Component: Welcome,
+      },
+      {
+        path: "/customs",
+        Component: Welcome,
+      },
+      {
+        path: "/pm",
+        Component: Welcome,
       },
       {
         path: "/customs",
