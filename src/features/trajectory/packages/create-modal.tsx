@@ -68,7 +68,7 @@ const Field = observer((props: FieldProps) => {
     const targetZoneDate = convertDate(operateTime, timeZone)
 
     // 全都转成 +8:00 再计算
-    const diffmins = targetZoneDate.utcOffset(480).diff(dayjs().utcOffset(480), 'm');
+    const diffmins = dayjs().utcOffset(480).utcOffset(480).diff(targetZoneDate, 'm');
     debug.features('时间差', diffmins, '分钟')
 
     if (diffmins > 24 * 60 && !await confirm()) {

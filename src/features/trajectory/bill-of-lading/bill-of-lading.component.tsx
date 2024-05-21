@@ -104,9 +104,9 @@ function TrackTraceComponent() {
         return true;
       }
 
-      const diffmins = dayjs(value)
+      const diffmins = dayjs().utcOffset(480)
         .utcOffset(480)
-        .diff(dayjs().utcOffset(480), "m");
+        .diff(dayjs(value), "m");
 
       if (diffmins > 24 * 60 && !(await over24Confirm())) {
         return true;

@@ -159,7 +159,10 @@ export const UploadModal = observer((props: UploadModalProps) => {
               className="mr-4"
               type="primary"
               style={{ background: "red" }}
-              onClick={() => resolve(true)}
+              onClick={() => {
+                Modal.destroyAll();
+                resolve(true);
+              }}
             >
               {t("确认上传")}
             </Button>
