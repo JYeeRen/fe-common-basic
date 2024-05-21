@@ -7,10 +7,10 @@ import {
   Space,
   Switch,
   Block,
-  Select,
+  SearchSelect,
 } from "@components";
 import { useTranslation } from "@locale";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import styles from "./account-detail.module.less";
 import { AccountParams } from "./types";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
@@ -25,7 +25,7 @@ interface RoleDetailProps {
 }
 
 function AccountDetailComponent(props: RoleDetailProps) {
-  const { title, onCommit, initialValues, roleOptions, loading } = props;
+  const { title, onCommit, initialValues, loading } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
@@ -39,19 +39,6 @@ function AccountDetailComponent(props: RoleDetailProps) {
     onCommit({ roleId: Number(roleId), ...restFields });
   };
 
-  const SelectOptions = useMemo(
-    () =>
-      roleOptions.map((item) => ({
-        value: item.id.toString(),
-        label: item.val,
-      })),
-    [roleOptions]
-  );
-
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
     <Container title={title} loading={loading}>
@@ -81,12 +68,7 @@ function AccountDetailComponent(props: RoleDetailProps) {
           name="roleId"
           rules={[{ required: true }]}
         >
-          <Select
-            showSearch
-            placeholder={t("内部员工")}
-            options={SelectOptions}
-            filterOption={filterOption}
-          />
+          <SearchSelect optionKey="roles" />
         </Form.Item>
         <Form.Item label={t("启用状态")} name="active">
           <Switch checkedChildren={t("启用")} unCheckedChildren={t("停用")} />

@@ -95,7 +95,7 @@ function AccountList() {
     <Button
       className="operation-btn"
       icon={<UsergroupAddOutlined />}
-      onClick={() => navigate("/pm/account/create")}
+      onClick={() => navigate("/pm/accounts/create")}
     >
       {t("新增账号")}
     </Button>
