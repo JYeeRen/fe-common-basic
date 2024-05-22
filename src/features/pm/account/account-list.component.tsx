@@ -16,9 +16,10 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import * as accountListConfig from "./account-list-config";
 import { useTranslation } from "@locale";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AccountListStore } from "./account-list.store";
 import styles from "./account-list.module.less";
+import optionsService from "@services/options.service";
 
 function AccountList() {
   const { notification } = App.useApp();
@@ -27,6 +28,10 @@ function AccountList() {
   const navigate = useNavigate();
 
   const gridStore = ClientGrid.useGridStore(accountListConfig.getRows);
+
+  useEffect(() => {
+    optionsService.refresh('roles');
+  }, []);
 
   const resetPassword = useCallback(
     (id: number, account: string) => {
