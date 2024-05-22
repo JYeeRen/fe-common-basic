@@ -19,6 +19,7 @@ export interface CustomTemplateListOperations {
 export type CustomsTemplate = Schema.CustomTemplate;
 
 export type CustomTemplateCol = {
+  uuid: string;
   type?: 'predefined' | 'custom';
   key: string;
   index?: number;

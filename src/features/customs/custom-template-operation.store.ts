@@ -7,7 +7,7 @@ import {
 import optionsService from "@services/options.service";
 import { v4 as uuidv4 } from "uuid";
 import { loading, net } from "@infra";
-import { isEqual, keyBy, uniqBy } from "lodash";
+import { isEqual, keyBy, uniq, uniqBy } from "lodash";
 import { Schema } from "@types";
 
 export class CustomTemplateOperationStore {
@@ -30,8 +30,24 @@ export class CustomTemplateOperationStore {
     this.isColumnSelectModalOpen = true;
   }
 
-  handleColumnRemove(key: string) {
-    this.templateColumns = this.templateColumns.filter((col) => col.key !== key);
+  handleColumnRemove(uuid: string) {
+    this.templateColumns = this.templateColumns.filter(
+      (col) => col.uuid !== uuid
+    );
+  }
+
+  handleColumnCopy(uuid: string) {
+    const targetIdx = this.templateColumns.findIndex(
+      (col) => col.uuid === uuid
+    );
+    if (targetIdx === -1) {
+      return;
+    }
+    this.templateColumns = [
+      ...this.templateColumns.slice(0, targetIdx),
+      { ...this.templateColumns[targetIdx], uuid: uuidv4() },
+      ...this.templateColumns.slice(targetIdx),
+    ].map((col, index) => ({ ...col, index }));
   }
 
   @loading()
@@ -55,6 +71,7 @@ export class CustomTemplateOperationStore {
     this.templateColumns = [
       ...this.templateColumns,
       {
+        uuid: uuidv4(),
         type: "custom",
         key: uuidv4(),
         index: this.templateColumns.length,
@@ -77,7 +94,7 @@ export class CustomTemplateOperationStore {
     record: CustomTemplateCol
   ) {
     const newCols = this.templateColumns.map((item) => {
-      if (item.key === record.key) {
+      if (item.uuid === record.uuid) {
         return { ...item, [key]: value };
       }
       return item;
@@ -90,23 +107,30 @@ export class CustomTemplateOperationStore {
   }
 
   resetTemplateColumns() {
-    this.templateColumns = this.formatTemplateColsFromServer(this.customTemplate?.columns ?? []);
+    this.templateColumns = this.formatTemplateColsFromServer(
+      this.customTemplate?.columns ?? []
+    ).map((col) => ({ ...col, uuid: uuidv4() }));
   }
 
   handleColumnSelected(keys: string[]) {
     const cols = this.templateColumns.filter(
       (col) => !this.templateColumnDict[col.key] || keys.includes(col.key)
     );
-    const newColumns = keys.map((key) => this.templateColumnDict[key]);
+    const newColumns = keys.map((key) => ({
+      ...this.templateColumnDict[key],
+      uuid: uuidv4(),
+    }));
     const templateColumns = uniqBy([...cols, ...newColumns], "key");
     this.templateColumns = templateColumns;
     this.closeColumnSelectModal();
   }
 
   get columnKeys() {
-    return this.templateColumns
-      .map((col) => col.key)
-      .filter((key) => this.templateColumnDict[key]);
+    return uniq(
+      this.templateColumns
+        .map((col) => col.key)
+        .filter((key) => this.templateColumnDict[key])
+    );
   }
 
   get templateColumnDict() {
@@ -151,13 +175,12 @@ export class CustomTemplateOperationStore {
 
   formatTemplateColsFromServer(cols: Schema.CustomTemplateCol[]) {
     return cols.map((col) => ({
+      uuid: uuidv4(),
       ...col,
       interceptBefore: Boolean(
         col.interceptBeforeStart || col.interceptBeforeEnd
       ),
-      interceptAfter: Boolean(
-        col.interceptAfterStart || col.interceptAfterEnd
-      ),
+      interceptAfter: Boolean(col.interceptAfterStart || col.interceptAfterEnd),
     }));
   }
 
@@ -166,7 +189,9 @@ export class CustomTemplateOperationStore {
     const template = await net.post("/api/customsTemplate/getInfo", { id });
     runInAction(() => {
       this.customTemplate = template;
-      this.templateColumns = this.formatTemplateColsFromServer(template.columns);
+      this.templateColumns = this.formatTemplateColsFromServer(
+        template.columns
+      );
     });
   }
 
@@ -174,23 +199,19 @@ export class CustomTemplateOperationStore {
     if (!this.id) {
       return false;
     }
-    const {
-      name,
-      type,
-      active,
-      mergeOrderNumber
-    } = this.initialValues;
-    if (!isEqual(formValues, {
-      name,
-      type,
-      active,
-      mergeOrderNumber
-    })) {
+    const { name, type, active, mergeOrderNumber } = this.initialValues;
+    if (
+      !isEqual(formValues, {
+        name,
+        type,
+        active,
+        mergeOrderNumber,
+      })
+    ) {
       return true;
     }
-    
-    return !isEqual(this.customTemplate?.columns, this.columns);
 
+    return !isEqual(this.customTemplate?.columns, this.columns);
   }
 
   get changeNotSave() {

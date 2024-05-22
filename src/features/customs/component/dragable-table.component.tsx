@@ -79,7 +79,8 @@ interface DragableTableProps {
     record: CustomTemplateCol
   ) => void;
   setDataSource: (dataSource: CustomTemplateCol[]) => void;
-  handleColumnRemove?: (key: string) => void;
+  handleColumnRemove?: (uuid: string) => void;
+  handleColumnCopy?: (uuid: string) => void;
 }
 
 export function DragableTable(props: DragableTableProps) {
@@ -89,6 +90,7 @@ export function DragableTable(props: DragableTableProps) {
     setDataSource,
     handleRecordFieldChange,
     handleColumnRemove,
+    handleColumnCopy,
   } = props;
   const [t] = useTranslation();
 
@@ -196,19 +198,24 @@ export function DragableTable(props: DragableTableProps) {
         width: 80,
         key: "operation",
         title: t("操作"),
-        dataIndex: "key",
+        dataIndex: "uuid",
         fixed: "right",
-        render: (key) => {
+        render: (uuid) => {
           return (
-            <Button type="link" onClick={() => handleColumnRemove?.(key)}>
+            <>
+            <Button type="link" onClick={() => handleColumnCopy?.(uuid)}>
+              {t("复制列")}
+            </Button>
+            <Button type="link" onClick={() => handleColumnRemove?.(uuid)}>
               {t("删除列")}
             </Button>
+            </>
           );
         },
       });
     }
     return cols;
-  }, [columnDefs, handleColumnRemove, handleRecordFieldChange, readonly, t]);
+  }, [columnDefs, handleColumnCopy, handleColumnRemove, handleRecordFieldChange, readonly, t]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -224,8 +231,8 @@ export function DragableTable(props: DragableTableProps) {
       setDataSource(
         (() => {
           const prev = dataSource;
-          const activeIndex = prev.findIndex((i) => i.key === active.id);
-          const overIndex = prev.findIndex((i) => i.key === over?.id);
+          const activeIndex = prev.findIndex((i) => i.uuid === active.id);
+          const overIndex = prev.findIndex((i) => i.uuid === over?.id);
           return arrayMove(prev, activeIndex, overIndex);
         })()
       );
@@ -236,7 +243,7 @@ export function DragableTable(props: DragableTableProps) {
     return (
       <Table
         bordered
-        rowKey="key"
+        rowKey="uuid"
         columns={columns as TableColumnsType<CustomTemplateCol>}
         dataSource={dataSource}
         size="small"
@@ -253,13 +260,13 @@ export function DragableTable(props: DragableTableProps) {
       onDragEnd={onDragEnd}
     >
       <SortableContext
-        items={dataSource.map((i) => i.key)}
+        items={dataSource.map((i) => i.uuid)}
         strategy={verticalListSortingStrategy}
       >
         <Table
           bordered
           components={{ body: { row: Row, cell: EditableCell } }}
-          rowKey="key"
+          rowKey="uuid"
           columns={columns as TableColumnsType<CustomTemplateCol>}
           dataSource={dataSource}
           size="small"
