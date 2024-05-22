@@ -29,6 +29,11 @@ const navConfig = (): TopNavItem[] => [
       "customs.status",
       "customs.document",
       "customs.template",
+      "track.mawb",
+      "track.package",
+      "track.log",
+      "track.status",
+      "risk.customer",
     ],
     sidenavs: [
       {
@@ -141,15 +146,17 @@ export const useMenuCtrl = () => {
   const permissionDict = appService.permissionDict;
 
   const topnavs = useMemo(() => {
-    return config.filter(item => {
-      if (localStorage.getItem('user')?.isManager) {
-        return true;
-      }
-      if (!item.permissions) {
-        return true;
-      }
-      return item.permissions?.some(item => permissionDict[item]);
-    }).map(({ key, label }) => ({ key, label }));
+    return config
+      .filter((item) => {
+        if (localStorage.getItem("user")?.isManager) {
+          return true;
+        }
+        if (!item.permissions) {
+          return true;
+        }
+        return item.permissions?.some((item) => permissionDict[item]);
+      })
+      .map(({ key, label }) => ({ key, label }));
   }, [config, permissionDict]);
 
   const sidenavs = useMemo(() => {
