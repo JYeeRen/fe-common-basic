@@ -9,6 +9,7 @@ interface AppServiceParams {
 
 class AppService {
 
+  lang: 'en' | 'zh-CN';
   loadingCount = 0;
   navigate?: NavigateFunction = undefined;
 
@@ -16,6 +17,7 @@ class AppService {
 
   constructor() {
     makeAutoObservable(this);
+    this.lang = localStorage.getItem('lang') || 'zh-CN';
   }
 
   get loading() {

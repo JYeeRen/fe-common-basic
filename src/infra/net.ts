@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from "uuid";
 import localStorage from "@services/localStorage";
 import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
+import dayjs from "./dayjs";
+import appService from "@services/app.service";
 
 const baseURL = import.meta.env.VITE_BACKEND_HOST;
 
@@ -19,15 +21,19 @@ type OptionalParams<
 class Net {
   private readonly svc: Axios;
 
+  // private readonly tz: string;
+  private readonly utcOffset: number;
+
   constructor() {
     this.svc = axios.create({
       baseURL,
       // timeout: 1000,
     });
 
-    this.svc.interceptors.request.use(this.requestInterceptor);
-    this.svc.interceptors.response.use(this.responseRedirectInterceptor);
-    this.svc.interceptors.response.use(this.responseInterceptor);
+    this.svc.interceptors.request.use(this.requestInterceptor.bind(this));
+    this.svc.interceptors.response.use(this.responseRedirectInterceptor.bind(this));
+    this.svc.interceptors.response.use(this.responseInterceptor.bind(this));
+    this.utcOffset = dayjs().utcOffset() * 60;
   }
 
   async get<URL extends URLs, R = Sources[URL]["res"]>(
@@ -127,11 +133,14 @@ class Net {
   private async requestInterceptor(
     config: InternalAxiosRequestConfig
   ): Promise<InternalAxiosRequestConfig> {
+    
     config.headers = config.headers || {};
     config.headers["X-Request-ID"] = uuidv4();
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       "authToken"
     )}`;
+    config.headers['client-language'] = appService.lang;
+    config.headers.utcOffset = this.utcOffset;
     return config;
   }
 
