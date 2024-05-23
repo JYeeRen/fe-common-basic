@@ -139,8 +139,8 @@ class Net {
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       "authToken"
     )}`;
-    config.headers['client-language'] = appService.lang;
-    config.headers.utcOffset = this.utcOffset;
+    config.headers.Lang = appService.lang;
+    config.headers.Utcoffset = this.utcOffset;
     return config;
   }
 
