@@ -17,7 +17,7 @@ export function UserInfo() {
       icon: <UserOutlined />,
       key: 'changepassword',
       onClick: () => {
-        navigate('/pm/accounts/change-passwd');
+        navigate('/change-passwd');
       }
     },
     {

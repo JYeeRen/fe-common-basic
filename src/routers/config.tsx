@@ -140,13 +140,6 @@ const accounts: RouteObject[] = [
         .default,
     }),
   },
-  {
-    path: "/pm/accounts/change-passwd",
-    lazy: async () => ({
-      Component: (await import("@features/pm/account/change-passwd.component"))
-        .default,
-    }),
-  },
 ];
 
 export const routesConfig: RouteObject[] = [
@@ -206,6 +199,13 @@ export const routesConfig: RouteObject[] = [
       {
         path: "/pm",
         children: [...roles, ...accounts],
+      },
+      {
+        path: "/change-passwd",
+        lazy: async () => ({
+          Component: (await import("@features/pm/account/change-passwd.component"))
+            .default,
+        }),
       },
       {
         path: "/error/403",
