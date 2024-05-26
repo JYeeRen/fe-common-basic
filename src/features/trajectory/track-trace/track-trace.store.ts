@@ -17,7 +17,6 @@ export class TrackTraceStore {
   }
 
   setEditingCell(editingCell?: TrackTraceStore['editingCell']) {
-    console.log('>>>>>>>', editingCell);
     this.editingCell = editingCell;
   }
 

@@ -19,6 +19,8 @@ import { TrackTraceStore } from "./track-trace.store";
 const keymap = {
   ata: "ata",
   atd: "atd",
+  pickedUpTime: 'pickedUpTime',
+  deliveredTime: 'deliveredTime'
 } as const;
 
 interface UploadModalProps {
