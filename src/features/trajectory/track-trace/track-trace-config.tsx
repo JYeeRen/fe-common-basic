@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { net } from "@infra";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
@@ -5,7 +6,16 @@ import { CustomsTrackStatus, CustomsTrackStatusQueryParams } from "./type";
 import optionsService from "@services/options.service";
 import { find } from "lodash";
 
-export const getColumns = (): TableColumnsType<CustomsTrackStatus> => {
+type handleDoubleClick = (editingCell: {
+  key: string;
+  title: string;
+  value: string;
+  record: CustomsTrackStatus;
+}) => void;
+
+export const getColumns = (
+  handleDoubleCick: handleDoubleClick
+): TableColumnsType<CustomsTrackStatus> => {
   return [
     {
       key: "masterWaybillNo",
@@ -39,12 +49,76 @@ export const getColumns = (): TableColumnsType<CustomsTrackStatus> => {
       key: "pickedUpTime",
       dataIndex: "pickedUpTime",
       title: t("上网时间"),
+      onCell: (record: CustomsTrackStatus) =>
+        ({
+          record,
+          editable: true,
+          value: record.pickedUpTime,
+          handleDoubleCick: () =>
+            handleDoubleCick({
+              key: "pickedUpTime",
+              title: t("上网时间"),
+              value: record.pickedUpTime,
+              record,
+            }),
+        } as any),
     },
-    { key: "deliveredTime", dataIndex: "deliveredTime", title: t("签收时间") },
+    {
+      key: "deliveredTime",
+      dataIndex: "deliveredTime",
+      title: t("签收时间"),
+      onCell: (record: CustomsTrackStatus) =>
+        ({
+          record,
+          editable: true,
+          value: record.deliveredTime,
+          handleDoubleCick: () =>
+            handleDoubleCick({
+              key: "deliveredTime",
+              title: t("签收时间"),
+              value: record.deliveredTime,
+              record,
+            }),
+        } as any),
+    },
     { key: "transportName", dataIndex: "transportName", title: t("航班号") },
     { key: "flightDate", dataIndex: "flightDate", title: t("航班日期") },
-    { key: "etd", dataIndex: "etd", title: t("ATD") },
-    { key: "eta", dataIndex: "eta", title: t("ATA") },
+    {
+      key: "ata",
+      dataIndex: "ata",
+      title: t("ATA"),
+      onCell: (record: CustomsTrackStatus) =>
+        ({
+          record,
+          editable: true,
+          value: record.ata,
+          handleDoubleCick: () =>
+            handleDoubleCick({
+              key: "ata",
+              title: t("ATA"),
+              value: record.ata,
+              record,
+            }),
+        } as any),
+    },
+    {
+      key: "atd",
+      dataIndex: "atd",
+      title: t("ATD"),
+      onCell: (record: CustomsTrackStatus) =>
+        ({
+          record,
+          editable: true,
+          value: record.atd,
+          handleDoubleCick: () =>
+            handleDoubleCick({
+              key: "atd",
+              title: t("ATD"),
+              value: record.atd,
+              record,
+            }),
+        } as any),
+    },
     {
       key: "departPortCode",
       dataIndex: "departPortCode",

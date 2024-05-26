@@ -125,4 +125,24 @@ export interface CustomsTrackAPI {
       failed: { number: string; reason: string }[];
     };
   };
+  "/api/customsTrack/setPackageDelivered": {
+    params: {
+      ids: number[];
+      time: string;
+      timeZone: string;
+    };
+    res: {
+      failed: { number: string; reason: string }[];
+    };
+  };
+  "/api/customsTrack/setPackagePickedUp": {
+    params: {
+      ids: number[];
+      time: string;
+      timeZone: string;
+    };
+    res: {
+      failed: { number: string; reason: string }[];
+    };
+  };
 }
