@@ -24,6 +24,12 @@ class AppService {
     return this.loadingCount > 0;
   }
 
+  setLang(lang: AppService['lang']) {
+    this.lang = lang;
+    localStorage.setItem('lang', lang);
+    window.location.reload();
+  }
+
   init({ navigate }: AppServiceParams) {
     this.navigate = navigate;
     this.loadingCount = 0;

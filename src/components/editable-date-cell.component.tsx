@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Input, InputRef, Modal } from "antd";
 import { useBoolean } from "ahooks";
 import {
@@ -10,23 +11,27 @@ import {
 } from "react";
 import { dayjs } from "@infra";
 import { t } from "i18next";
+import { observer } from "mobx-react-lite";
 
 interface EditableDateCellProps extends PropsWithChildren {
   value: string;
-  onSave: (value: string) => Promise<boolean>;
+  onSave?: (value: string) => Promise<boolean>;
   editable?: boolean;
   children: React.ReactNode;
+  handleDoubleCick?: (record?: any) => void;
+  record: any;
 }
 
-export function EditableDateCell(props: EditableDateCellProps) {
-  const { value, onSave, editable = false, children, ...restProps } = props;
+export const EditableDateCell = observer((props: EditableDateCellProps) => {
+  const { value, onSave, editable = false, children, handleDoubleCick, record, ...restProps } = props;
   const inputRef = useRef<InputRef>(null);
   const [editing, { toggle }] = useBoolean(false);
   const [inputValue, setInputValue] = useState(value);
 
   const handleDoubleClick = useCallback(() => {
     if (editable) {
-      toggle();
+      handleDoubleCick?.(record);
+      // toggle();
     }
   }, []);
 
@@ -73,7 +78,7 @@ export function EditableDateCell(props: EditableDateCellProps) {
       errorNotice();
       return;
     }
-    if (await onSave(inputValue)) {
+    if (await onSave?.(inputValue)) {
       toggle();
     // } else {
     //   Modal.confirm({
@@ -111,4 +116,4 @@ export function EditableDateCell(props: EditableDateCellProps) {
       {childNode}
     </td>
   );
-}
+})

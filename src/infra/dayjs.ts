@@ -12,6 +12,9 @@ export default dayjs;
 
 
 export const convertDate = (date: Dayjs, timeZone: string) => {
+  if (!timeZone) {
+    return date;
+  }
   const tzItem = find(optionsService.timeZones, { value: timeZone });
   const selectedDate = date;
   debug.features('选择的日期', selectedDate.format('YYYY-MM-DDTHH:mm:ssZ'))

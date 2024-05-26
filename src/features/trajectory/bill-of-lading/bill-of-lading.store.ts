@@ -1,13 +1,24 @@
 import { loading, net } from "@infra";
 import { makeAutoObservable } from "mobx";
-import { QueryParams } from "./type";
+import { CustomsTrack, QueryParams } from "./type";
 
 export class BillOfLadingStore {
   loading = false;
   uploadModalVisible = false;
 
+  editingCell?: {
+    title: string;
+    value: string;
+    key: string;
+    record: CustomsTrack;
+  } = undefined;
+
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setEditingCell(editingCell?: BillOfLadingStore['editingCell']) {
+    this.editingCell = editingCell;
   }
 
   showUploadModal() {
@@ -29,11 +40,13 @@ export class BillOfLadingStore {
   }
 
   @loading()
-  async addMawbTrack(id: number, key: string, value: string) {
+  async addMawbTrack(id: number, key: string, value: string, tz: string) {
     const { failed } = await net.post("/api/customsTrack/addMawbTrack", {
       ids: [id],
+      timeZone: tz,
       waybillStatusCode: key,
       operateTime: value,
+
     });
     return failed;
   }
@@ -47,5 +60,25 @@ export class BillOfLadingStore {
   @loading()
   async uploadMawbTrack(formData: FormData) {
     return await net.upload("/api/customsTrack/uploadMawbTrack", formData);
+  }
+
+  @loading()
+  async setMawbAta(id: number, tz: string, time: string) {
+    const res = await net.post('/api/customsTrack/setMawbAta', {
+      ids: [id],
+      timeZone: tz,
+      time: time
+    })
+    return res.failed;
+  }
+
+  @loading()
+  async setMawbAtd(id: number, tz: string, time: string) {
+    const res = await net.post('/api/customsTrack/setMawbAtd', {
+      ids: [id],
+      timeZone: tz,
+      time: time
+    })
+    return res.failed;
   }
 }

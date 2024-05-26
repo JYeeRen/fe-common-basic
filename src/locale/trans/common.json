@@ -1,1202 +1,1210 @@
 {
+  "时间录入": {
+      "zh": "时间录入",
+      "en": "时间录入"
+  },
+  "请选择时间": {
+      "zh": "请选择时间",
+      "en": "请选择时间"
+  },
   "旧密码": {
-    "zh": "旧密码",
-    "en": "旧密码"
+      "zh": "旧密码",
+      "en": "旧密码"
   },
   "新密码": {
-    "zh": "新密码",
-    "en": "新密码"
+      "zh": "新密码",
+      "en": "新密码"
   },
   "确认密码": {
-    "zh": "确认密码",
-    "en": "确认密码"
+      "zh": "确认密码",
+      "en": "确认密码"
   },
   "复制列": {
-    "zh": "复制列",
-    "en": "复制列"
+      "zh": "复制列",
+      "en": "复制列"
   },
   "上传文件内录入的轨迹发生时间已超出当前时间24小时以上，是否确认上传轨迹？": {
-    "zh": "上传文件内录入的轨迹发生时间已超出当前时间24小时以上，是否确认上传轨迹？",
-    "en": "上传文件内录入的轨迹发生时间已超出当前时间24小时以上，是否确认上传轨迹？"
+      "zh": "上传文件内录入的轨迹发生时间已超出当前时间24小时以上，是否确认上传轨迹？",
+      "en": "上传文件内录入的轨迹发生时间已超出当前时间24小时以上，是否确认上传轨迹？"
   },
   "超时的数据单号如下：": {
-    "zh": "超时的数据单号如下：",
-    "en": "超时的数据单号如下："
+      "zh": "超时的数据单号如下：",
+      "en": "超时的数据单号如下："
   },
   "{{n}}个": {
-    "zh": "{{n}}个",
-    "en": "{{n}}个"
+      "zh": "{{n}}个",
+      "en": "{{n}}个"
   },
   "复制未完成单号": {
-    "zh": "复制未完成单号",
-    "en": "复制未完成单号"
+      "zh": "复制未完成单号",
+      "en": "复制未完成单号"
   },
   "请输入用户名": {
-    "zh": "请输入用户名",
-    "en": "请输入用户名"
+      "zh": "请输入用户名",
+      "en": "Please enter username"
   },
   "请输入密码": {
-    "zh": "请输入密码",
-    "en": "请输入密码"
+      "zh": "请输入密码",
+      "en": "Please enter password"
   },
   "登录": {
-    "zh": "登录",
-    "en": "登录"
+      "zh": "登录",
+      "en": "Login"
   },
   "用户名或密码不正确": {
-    "zh": "用户名或密码不正确",
-    "en": "用户名或密码不正确"
+      "zh": "用户名或密码不正确",
+      "en": "用户名或密码不正确"
   },
   "您好，{{userName}}！": {
-    "zh": "您好，{{userName}}！",
-    "en": "您好，{{userName}}！"
+      "zh": "您好，{{userName}}！",
+      "en": "您好，{{userName}}！"
   },
   "注销登录": {
-    "zh": "注销登录",
-    "en": "注销登录"
+      "zh": "注销登录",
+      "en": "Log out"
   },
   "修改密码": {
-    "zh": "修改密码",
-    "en": "修改密码"
+      "zh": "修改密码",
+      "en": "Change password"
   },
   "全部上传数据：{{n}}条。": {
-    "zh": "全部上传数据：{{n}}条。",
-    "en": "全部上传数据：{{n}}条。"
+      "zh": "全部上传数据：{{n}}条。",
+      "en": "Upload all data：{{n}}item."
   },
   "完成上传数据：{{n1}}条。未上传数据：{{n2}}条。": {
-    "zh": "完成上传数据：{{n1}}条。未上传数据：{{n2}}条。",
-    "en": "完成上传数据：{{n1}}条。未上传数据：{{n2}}条。"
+      "zh": "完成上传数据：{{n1}}条。未上传数据：{{n2}}条。",
+      "en": "Upload complete：{{n1}}item。upload failed：{{n2}}item."
   },
   "未完成数据提单号如下：": {
-    "zh": "未完成数据提单号如下：",
-    "en": "未完成数据提单号如下："
+      "zh": "未完成数据提单号如下：",
+      "en": "Upload failed air waybill number shown below:"
   },
   "错误的提单号如下：": {
-    "zh": "错误的提单号如下：",
-    "en": "错误的提单号如下："
+      "zh": "错误的提单号如下：",
+      "en": "Incorrect air waybill number shown below:"
   },
   "上传文件内存在错误，请修改后重新上传。": {
-    "zh": "上传文件内存在错误，请修改后重新上传。",
-    "en": "上传文件内存在错误，请修改后重新上传。"
+      "zh": "上传文件内存在错误，请修改后重新上传。",
+      "en": "There is an error with the upload file, please try again"
   },
   "复制单号": {
-    "zh": "复制单号",
-    "en": "复制单号"
+      "zh": "复制单号",
+      "en": "Copy order number"
   },
   "上传文件内录入的轨迹时间与旧时间不一致，不一致的数据单号如下，请查看后确认是否覆盖原有轨迹时间？": {
-    "zh": "上传文件内录入的轨迹时间与旧时间不一致，不一致的数据单号如下，请查看后确认是否覆盖原有轨迹时间？",
-    "en": "上传文件内录入的轨迹时间与旧时间不一致，不一致的数据单号如下，请查看后确认是否覆盖原有轨迹时间？"
+      "zh": "上传文件内录入的轨迹时间与旧时间不一致，不一致的数据单号如下，请查看后确认是否覆盖原有轨迹时间？",
+      "en": " The track time entered in the uploaded file is inconsistent with the previous time. The inconsistent data order numbers are shown below. Please check and confirm whether the original track time is overwritten？"
   },
   "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。": {
-    "zh": "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。",
-    "en": "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。"
+      "zh": "文件上传失败。文件内数据字段表头与模板不一致，请下载批量上传模板制作文件。",
+      "en": " File upload failed. The data field headers in the file are inconsistent with the template. Please download the custom template manually."
   },
   "不一致的提单号如下：": {
-    "zh": "不一致的提单号如下：",
-    "en": "不一致的提单号如下："
+      "zh": "不一致的提单号如下：",
+      "en": "Inconsistent air waybill numbers shown below："
   },
   "确认修改后，将刷新上传时间，影响时效计算，该操作不可逆，请谨慎操作！": {
-    "zh": "确认修改后，将刷新上传时间，影响时效计算，该操作不可逆，请谨慎操作！",
-    "en": "确认修改后，将刷新上传时间，影响时效计算，该操作不可逆，请谨慎操作！"
+      "zh": "确认修改后，将刷新上传时间，影响时效计算，该操作不可逆，请谨慎操作！",
+      "en": "Once confirmed, this action is irreversible. The upload time will be refreshed, which will affect the elapsed time calculation!"
   },
   "点击可下载模板进行制作。": {
-    "zh": "点击可下载模板进行制作。",
-    "en": "点击可下载模板进行制作。"
+      "zh": "点击可下载模板进行制作。",
+      "en": "Click to download template."
   },
   "请确保上传的表格数据表头字段正确。": {
-    "zh": "请确保上传的表格数据表头字段正确。",
-    "en": "请确保上传的表格数据表头字段正确。"
+      "zh": "请确保上传的表格数据表头字段正确。",
+      "en": " Please ensure that the header fields of the uploaded form data are correct."
   },
   "文件上传": {
-    "zh": "文件上传",
-    "en": "文件上传"
+      "zh": "文件上传",
+      "en": "File Upload"
   },
   "请上传附件": {
-    "zh": "请上传附件",
-    "en": "请上传附件"
+      "zh": "请上传附件",
+      "en": "Please upload attachments"
   },
   "请选择本次上传轨迹时间所属时区": {
-    "zh": "请选择本次上传轨迹时间所属时区",
-    "en": "请选择本次上传轨迹时间所属时区"
+      "zh": "请选择本次上传轨迹时间所属时区",
+      "en": "Please select the correct time zone for this tracking"
   },
   "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？": {
-    "zh": "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？",
-    "en": "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？"
+      "zh": "当前录入的轨迹时间与旧时间不一致，是否确认修改提单号“{{no}}”的“{{type}}”时间？",
+      "en": "The currently entered track time is inconsistent with the previous time. Are you sure to modify the “{{no}}” of \"{{type}}\" time of the bill of lading number?"
   },
   "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！": {
-    "zh": "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！",
-    "en": "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！"
+      "zh": "确认修改后，将更新操作时间为最新时间，影响时效计算，该操作不可逆，请谨慎操作！",
+      "en": "Once confirmed, this action is irreversible. The upload time will be refreshed, which will affect the elapsed time calculation!"
   },
   "保存失败": {
-    "zh": "保存失败",
-    "en": "保存失败"
+      "zh": "保存失败",
+      "en": "Save failed"
   },
   "放弃修改": {
-    "zh": "放弃修改",
-    "en": "放弃修改"
+      "zh": "放弃修改",
+      "en": "Abort changes"
   },
   "修改日期": {
-    "zh": "修改日期",
-    "en": "修改日期"
+      "zh": "修改日期",
+      "en": "modification date"
   },
   "输入的日期格式不正确。请参照 2000-01-01T00:00:00+08:00 格式输入。": {
-    "zh": "输入的日期格式不正确。请参照 2000-01-01T00:00:00+08:00 格式输入。",
-    "en": "输入的日期格式不正确。请参照 2000-01-01T00:00:00+08:00 格式输入。"
+      "zh": "输入的日期格式不正确。请参照 2000-01-01T00:00:00+08:00 格式输入。",
+      "en": "the entered date is in the wrong format。Use format 2000-01-01T00:00:00+08:00 for entry."
   },
   "导出已筛选数据": {
-    "zh": "导出已筛选数据",
-    "en": "导出已筛选数据"
+      "zh": "导出已筛选数据",
+      "en": "Export filtered data"
   },
   "批量添加轨迹时间": {
-    "zh": "批量添加轨迹时间",
-    "en": "批量添加轨迹时间"
+      "zh": "批量添加轨迹时间",
+      "en": "Export filtered data"
   },
   "下载批量上传模板": {
-    "zh": "下载批量上传模板",
-    "en": "下载批量上传模板"
+      "zh": "下载批量上传模板",
+      "en": "Download upload template"
   },
   "返回首页": {
-    "zh": "返回首页",
-    "en": "返回首页"
+      "zh": "返回首页",
+      "en": "Return to homepage"
   },
   "请选择起始日期": {
-    "zh": "请选择起始日期",
-    "en": "请选择起始日期"
+      "zh": "请选择起始日期",
+      "en": "Please select a start date"
   },
   "请选择结束日期": {
-    "zh": "请选择结束日期",
-    "en": "请选择结束日期"
+      "zh": "请选择结束日期",
+      "en": " Please select an end date "
   },
   "结束日期时间": {
-    "zh": "结束日期时间",
-    "en": "结束日期时间"
+      "zh": "结束日期时间",
+      "en": "End date time"
   },
   "开始日期时间": {
-    "zh": "开始日期时间",
-    "en": "开始日期时间"
+      "zh": "开始日期时间",
+      "en": "Start date time"
   },
   "你访问的页面不存在": {
-    "zh": "你访问的页面不存在",
-    "en": "你访问的页面不存在"
+      "zh": "你访问的页面不存在",
+      "en": "The page you visited does not exist"
   },
   "你没有权限访问此页面": {
-    "zh": "你没有权限访问此页面",
-    "en": "你没有权限访问此页面"
+      "zh": "你没有权限访问此页面",
+      "en": "You do not have permission to access this page "
   },
   "当前录入的轨迹发生时间已超过当前时间24小时以上，是否确认上传轨迹？": {
-    "zh": "当前录入的轨迹发生时间已超过当前时间24小时以上，是否确认上传轨迹？",
-    "en": "当前录入的轨迹发生时间已超过当前时间24小时以上，是否确认上传轨迹？"
+      "zh": "当前录入的轨迹发生时间已超过当前时间24小时以上，是否确认上传轨迹？",
+      "en": "The currently entered trajectory time has exceeded the current time by more than 24 hours. Do you want to confirm uploading this trajectory?"
   },
   "确认上传": {
-    "zh": "确认上传",
-    "en": "确认上传"
+      "zh": "确认上传",
+      "en": "Confirm upload"
   },
   "放弃录入": {
-    "zh": "放弃录入",
-    "en": "放弃录入"
+      "zh": "放弃录入",
+      "en": "Abort Entry"
   },
   "数据提交海关": {
-    "zh": "数据提交海关",
-    "en": "数据提交海关"
+      "zh": "数据提交海关",
+      "en": "Customs entries submitted to CBP"
   },
   "海关接收数据": {
-    "zh": "海关接收数据",
-    "en": "海关接收数据"
+      "zh": "海关接收数据",
+      "en": "CBP received customs entries."
   },
   "海关放行（整票放行）": {
-    "zh": "海关放行（整票放行）",
-    "en": "海关放行（整票放行）"
+      "zh": "海关放行（整票放行）",
+      "en": "Customs release (Entire air waybill)"
   },
   "货物已提货": {
-    "zh": "货物已提货",
-    "en": "货物已提货"
+      "zh": "货物已提货",
+      "en": "Cargo picked up"
   },
   "货物交接尾程": {
-    "zh": "货物交接尾程",
-    "en": "货物交接尾程"
+      "zh": "货物交接尾程",
+      "en": "Cargo tendered to last mile vendor"
   },
   "海关查验（整票查验）": {
-    "zh": "海关查验（整票查验）",
-    "en": "海关查验（整票查验）"
+      "zh": "海关查验（整票查验）",
+      "en": " Customs Hold (Entire air waybill) "
   },
   "操作人员": {
-    "zh": "操作人员",
-    "en": "操作人员"
+      "zh": "操作人员",
+      "en": "Operator"
   },
   "轨迹发生时间": {
-    "zh": "轨迹发生时间",
-    "en": "轨迹发生时间"
+      "zh": "轨迹发生时间",
+      "en": "Trajectory occurrence time"
   },
   "下一步": {
-    "zh": "下一步",
-    "en": "下一步"
+      "zh": "下一步",
+      "en": "Next step"
   },
   "数据查找：": {
-    "zh": "数据查找：",
-    "en": "数据查找："
+      "zh": "数据查找：",
+      "en": "Data search："
   },
   "轨迹时间": {
-    "zh": "轨迹时间",
-    "en": "轨迹时间"
+      "zh": "轨迹时间",
+      "en": "Trajectory time"
   },
   "录入时间": {
-    "zh": "录入时间",
-    "en": "录入时间"
+      "zh": "录入时间",
+      "en": "Entry time"
   },
   "异常轨迹录入": {
-    "zh": "异常轨迹录入",
-    "en": "异常轨迹录入"
+      "zh": "异常轨迹录入",
+      "en": "Abnormal trajectory entry"
   },
   "提单轨迹信息": {
-    "zh": "提单轨迹信息",
-    "en": "提单轨迹信息"
+      "zh": "提单轨迹信息",
+      "en": "Air waybill tracking data"
   },
   "包裹轨迹信息": {
-    "zh": "包裹轨迹信息",
-    "en": "包裹轨迹信息"
+      "zh": "包裹轨迹信息",
+      "en": "Package tracking data"
   },
   "轨迹时间（原时区）": {
-    "zh": "轨迹时间（原时区）",
-    "en": "轨迹时间（原时区）"
+      "zh": "轨迹时间（原时区）",
+      "en": "Trajectory time (local time zone)"
   },
   "轨迹时间（中国）": {
-    "zh": "轨迹时间（中国）",
-    "en": "轨迹时间（中国）"
+      "zh": "轨迹时间（中国）",
+      "en": "Trajectory time (China time zone)"
   },
   "录入时间（中国）": {
-    "zh": "录入时间（中国）",
-    "en": "录入时间（中国）"
+      "zh": "录入时间（中国）",
+      "en": "Entry time (China time zone)"
   },
   "录入人员": {
-    "zh": "录入人员",
-    "en": "录入人员"
+      "zh": "录入人员",
+      "en": "Entry Operator"
   },
   "尾程单号": {
-    "zh": "尾程单号",
-    "en": "尾程单号"
+      "zh": "尾程单号",
+      "en": "Tracking Number"
   },
   "轨迹名称": {
-    "zh": "轨迹名称",
-    "en": "轨迹名称"
+      "zh": "轨迹名称",
+      "en": "Trajectory Name"
   },
   "ATA": {
-    "zh": "ATA",
-    "en": "ATA"
+      "zh": "ATA",
+      "en": "ATA"
   },
   "ATD": {
-    "zh": "ATD",
-    "en": "ATD"
+      "zh": "ATD",
+      "en": "ATD"
   },
   "签收时间": {
-    "zh": "签收时间",
-    "en": "签收时间"
+      "zh": "签收时间",
+      "en": "POD time"
   },
   "上网时间": {
-    "zh": "上网时间",
-    "en": "上网时间"
+      "zh": "上网时间",
+      "en": "Online time"
   },
   "最新轨迹名称": {
-    "zh": "最新轨迹名称",
-    "en": "最新轨迹名称"
+      "zh": "最新轨迹名称",
+      "en": "newest trajectory status"
   },
   "清关文件模板": {
-    "zh": "清关文件模板",
-    "en": "清关文件模板"
+      "zh": "清关文件模板",
+      "en": "Customs clearance template"
   },
   "预报文件模板": {
-    "zh": "预报文件模板",
-    "en": "预报文件模板"
+      "zh": "预报文件模板",
+      "en": "Pre-alert template"
   },
   "全部上传文件：{{no}}个": {
-    "zh": "全部上传文件：{{no}}个",
-    "en": "全部上传文件：{{no}}个"
+      "zh": "全部上传文件：{{no}}个",
+      "en": "Upload all files：{{no}}item"
   },
   "完成上传文件：{{no}}个": {
-    "zh": "完成上传文件：{{no}}个",
-    "en": "完成上传文件：{{no}}个"
+      "zh": "完成上传文件：{{no}}个",
+      "en": "Upload files completed：{{no}}item"
   },
   "未完成的文件对应提单号如下：": {
-    "zh": "未完成的文件对应提单号如下：",
-    "en": "未完成的文件对应提单号如下："
+      "zh": "未完成的文件对应提单号如下：",
+      "en": "Uploaded files without corresponding air waybill number"
   },
   "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。": {
-    "zh": "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。",
-    "en": "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
+      "zh": "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。",
+      "en": "Pre-alert file generated, please check the data and modify if necessary."
   },
   "修改预报文件：": {
-    "zh": "修改预报文件：",
-    "en": "修改预报文件："
+      "zh": "修改预报文件：",
+      "en": "Modify pre-alert file:"
   },
   "当前订单 “订单号{{no}}”，已制作文件如下，请下载检查，若资料有误，请修改后在下方附件处上传。": {
-    "zh": "当前订单 “订单号{{no}}”，已制作文件如下，请下载检查，若资料有误，请修改后在下方附件处上传。",
-    "en": "当前订单 “订单号{{no}}”，已制作文件如下，请下载检查，若资料有误，请修改后在下方附件处上传。"
+      "zh": "当前订单 “订单号{{no}}”，已制作文件如下，请下载检查，若资料有误，请修改后在下方附件处上传。",
+      "en": "Current order {{no}} generated, please check the data and modify if necessary."
   },
   "编辑相关文件": {
-    "zh": "编辑相关文件",
-    "en": "编辑相关文件"
+      "zh": "编辑相关文件",
+      "en": "Edit related files"
   },
   "此操作不可恢复，请谨慎操作。": {
-    "zh": "此操作不可恢复，请谨慎操作。",
-    "en": "此操作不可恢复，请谨慎操作。"
+      "zh": "此操作不可恢复，请谨慎操作。",
+      "en": "Warning, this action is irreversible."
   },
   "确认修改模板": {
-    "zh": "确认修改模板",
-    "en": "确认修改模板"
+      "zh": "确认修改模板",
+      "en": "Confirm template modification"
   },
   "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。": {
-    "zh": "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。",
-    "en": "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。"
+      "zh": "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。",
+      "en": "It is detected that the currently selected order has a completed file in the system. If you choose to continue the operation, the system will generate a new file based on the selected template and overwrite the currently uploaded file. "
   },
   "修改清关文件：": {
-    "zh": "修改清关文件：",
-    "en": "修改清关文件："
+      "zh": "修改清关文件：",
+      "en": "Modify customs clearance file"
   },
   "附件支持的格式：'xlsx'，'xls'": {
-    "zh": "附件支持的格式：'xlsx'，'xls'",
-    "en": "附件支持的格式：'xlsx'，'xls'"
+      "zh": "附件支持的格式：'xlsx'，'xls'",
+      "en": "Supported formats for attachments：'xlsx'，'xls'"
   },
   "上传新文件后，将覆盖之前的文件，请谨慎操作！": {
-    "zh": "上传新文件后，将覆盖之前的文件，请谨慎操作！",
-    "en": "上传新文件后，将覆盖之前的文件，请谨慎操作！"
+      "zh": "上传新文件后，将覆盖之前的文件，请谨慎操作！",
+      "en": " Warning, after uploading a new file, the previous file will be overwritten!"
   },
   "确定": {
-    "zh": "确定",
-    "en": "确定"
+      "zh": "确定",
+      "en": "Confirm"
   },
   "确认无误，提交文件": {
-    "zh": "确认无误，提交文件",
-    "en": "确认无误，提交文件"
+      "zh": "确认无误，提交文件",
+      "en": "Confirm and submit"
   },
   "上传附件": {
-    "zh": "上传附件",
-    "en": "上传附件"
+      "zh": "上传附件",
+      "en": "Upload attachment"
   },
   "修改文件时，请不要增删文件的行列数，不要修改字段名称。": {
-    "zh": "修改文件时，请不要增删文件的行列数，不要修改字段名称。",
-    "en": "修改文件时，请不要增删文件的行列数，不要修改字段名称。"
+      "zh": "修改文件时，请不要增删文件的行列数，不要修改字段名称。",
+      "en": " When modifying a file, please do not add or delete the number of rows and columns in the file or modify the field names. "
   },
   "注意：": {
-    "zh": "注意：",
-    "en": "注意："
+      "zh": "注意：",
+      "en": "Notice:"
   },
   "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。": {
-    "zh": "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。 ",
-    "en": "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
+      "zh": "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。 ",
+      "en": "The customs clearance information has been generated. Please download and check. If the information is incorrect, please modify it and upload it in the attachment below. "
   },
   "选择模板": {
-    "zh": "选择模板",
-    "en": "选择模板"
+      "zh": "选择模板",
+      "en": "Select template"
   },
   "请选择模板": {
-    "zh": "请选择模板",
-    "en": "请选择模板"
+      "zh": "请选择模板",
+      "en": "Please select a template "
   },
   "当前订单 “订单号{{no}}”，已制作文件如下，请下载查看：": {
-    "zh": "当前订单 “订单号{{no}}”，已制作文件如下，请下载查看：",
-    "en": "当前订单 “订单号{{no}}”，已制作文件如下，请下载查看："
+      "zh": "当前订单 “订单号{{no}}”，已制作文件如下，请下载查看：",
+      "en": " The current order is \"Order No. {{no}}\". The following files have been produced. Please download and view them:"
   },
   "下载预报文件": {
-    "zh": "下载预报文件",
-    "en": "下载预报文件"
+      "zh": "下载预报文件",
+      "en": "Download pre-alert file"
   },
   "下载清关文件": {
-    "zh": "下载清关文件",
-    "en": "下载清关文件"
+      "zh": "下载清关文件",
+      "en": "Download customs clearance file"
   },
   "确认取消制作": {
-    "zh": "确认取消制作",
-    "en": "确认取消制作"
+      "zh": "确认取消制作",
+      "en": "Confirm cancel action"
   },
   "取消制作后，订单关务状态会变为“未制作”，已保存的文件将被永久删除。此操作不可恢复，请谨慎操作。": {
-    "zh": "取消制作后，订单关务状态会变为“未制作”，已保存的文件将被永久删除。此操作不可恢复，请谨慎操作。",
-    "en": "取消制作后，订单关务状态会变为“未制作”，已保存的文件将被永久删除。此操作不可恢复，请谨慎操作。"
+      "zh": "取消制作后，订单关务状态会变为“未制作”，已保存的文件将被永久删除。此操作不可恢复，请谨慎操作。",
+      "en": " Warning, this is irreversible. After canceling, the order customs status will change to \"Not Made\" and the saved files will be permanently deleted."
   },
   "查看相关文件": {
-    "zh": "查看相关文件",
-    "en": "查看相关文件"
+      "zh": "查看相关文件",
+      "en": "View related files"
   },
   "取消制作": {
-    "zh": "取消制作",
-    "en": "取消制作"
+      "zh": "取消制作",
+      "en": "Cancel processing"
   },
   "预报文件制作": {
-    "zh": "预报文件制作",
-    "en": "预报文件制作"
+      "zh": "预报文件制作",
+      "en": "Pre-alert file creation"
   },
   "下载清关提货文件": {
-    "zh": "下载清关提货文件",
-    "en": "下载清关提货文件"
+      "zh": "下载清关提货文件",
+      "en": "Download customs clearance and delivery order files"
   },
   "警告！": {
-    "zh": "警告！",
-    "en": "警告！"
+      "zh": "警告！",
+      "en": "Warning!"
   },
   "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！": {
-    "zh": "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！",
-    "en": "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！"
+      "zh": "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！",
+      "en": "Warning! There is a tracking number in which the goods have taken off, but the relevant customs clearance forecast information has not been completed. Please check!"
   },
   "去查看": {
-    "zh": "去查看",
-    "en": "去查看"
+      "zh": "去查看",
+      "en": "Go search"
   },
   "航班号": {
-    "zh": "航班号",
-    "en": "航班号"
+      "zh": "航班号",
+      "en": "Flight number"
   },
   "航班日期": {
-    "zh": "航班日期",
-    "en": "航班日期"
+      "zh": "航班日期",
+      "en": "Flight date"
   },
   "ETD": {
-    "zh": "ETD",
-    "en": "ETD"
+      "zh": "ETD",
+      "en": "ETD"
   },
   "ETA": {
-    "zh": "ETA",
-    "en": "ETA"
+      "zh": "ETA",
+      "en": "ETA"
   },
   "起飞港口": {
-    "zh": "起飞港口",
-    "en": "起飞港口"
+      "zh": "起飞港口",
+      "en": "Port of departure"
   },
   "落地港口": {
-    "zh": "落地港口",
-    "en": "落地港口"
+      "zh": "落地港口",
+      "en": "Port of arrival"
   },
   "备注": {
-    "zh": "备注",
-    "en": "备注"
+      "zh": "备注",
+      "en": "Remark"
   },
   "异常轨迹信息": {
-    "zh": "异常轨迹信息",
-    "en": "异常轨迹信息"
+      "zh": "异常轨迹信息",
+      "en": "Abnormal trajectory information "
   },
   "航空信息": {
-    "zh": "航空信息",
-    "en": "航空信息"
+      "zh": "航空信息",
+      "en": "Airline information"
   },
   "轨迹信息": {
-    "zh": "轨迹信息",
-    "en": "轨迹信息"
+      "zh": "轨迹信息",
+      "en": "Trajectory information "
   },
   "提单信息录入": {
-    "zh": "提单信息录入",
-    "en": "提单信息录入"
+      "zh": "提单信息录入",
+      "en": "Air waybill entry"
   },
   "包裹信息录入": {
-    "zh": "包裹信息录入",
-    "en": "包裹信息录入"
+      "zh": "包裹信息录入",
+      "en": "Package information entry "
   },
   "货物状态跟踪": {
-    "zh": "货物状态跟踪",
-    "en": "货物状态跟踪"
+      "zh": "货物状态跟踪",
+      "en": "Cargo status tracking "
   },
   "客户上传时间": {
-    "zh": "客户上传时间",
-    "en": "客户上传时间"
+      "zh": "客户上传时间",
+      "en": "Customer upload time"
   },
   "昨天": {
-    "zh": "昨天",
-    "en": "昨天"
+      "zh": "昨天",
+      "en": "Yesterday"
   },
   "当天": {
-    "zh": "当天",
-    "en": "当天"
+      "zh": "当天",
+      "en": "Today"
   },
   "3天内": {
-    "zh": "3天内",
-    "en": "3天内"
+      "zh": "3天内",
+      "en": "Within 3 days"
   },
   "航班时间": {
-    "zh": "航班时间",
-    "en": "航班时间"
+      "zh": "航班时间",
+      "en": "Flight time"
   },
   "选择时区": {
-    "zh": "选择时区",
-    "en": "选择时区"
+      "zh": "选择时区",
+      "en": "Select time zone"
   },
   "请选择时区": {
-    "zh": "请选择时区",
-    "en": "请选择时区"
+      "zh": "请选择时区",
+      "en": "Please select time zone"
   },
   "关务状态": {
-    "zh": "关务状态",
-    "en": "关务状态"
+      "zh": "关务状态",
+      "en": "Customs status"
   },
   "提单列表": {
-    "zh": "提单列表",
-    "en": "提单列表"
+      "zh": "提单列表",
+      "en": "Air waybill list"
   },
   "发起关务任务": {
-    "zh": "发起关务任务",
-    "en": "发起关务任务"
+      "zh": "发起关务任务",
+      "en": "Begin customs clearance task"
   },
   "客户信息": {
-    "zh": "客户信息",
-    "en": "客户信息"
+      "zh": "客户信息",
+      "en": "Customer information"
   },
   "中文品名": {
-    "zh": "中文品名",
-    "en": "中文品名"
+      "zh": "中文品名",
+      "en": "Chinese commodity name"
   },
   "英文品名": {
-    "zh": "英文品名",
-    "en": "英文品名"
+      "zh": "英文品名",
+      "en": "English commodity name"
   },
   "出口 HS CODE": {
-    "zh": "出口 HS CODE",
-    "en": "出口 HS CODE"
+      "zh": "出口 HS CODE",
+      "en": "Export HS CODE"
   },
   "进口 HS CODE": {
-    "zh": "进口 HS CODE",
-    "en": "进口 HS CODE"
+      "zh": "进口 HS CODE",
+      "en": "Import HS CODE"
   },
   "提单号": {
-    "zh": "提单号",
-    "en": "提单号"
+      "zh": "提单号",
+      "en": "Air waybill number"
   },
   "最多可查询50条": {
-    "zh": "最多可查询50条",
-    "en": "最多可查询50条"
+      "zh": "最多可查询50条",
+      "en": "Search up to 50 items"
   },
   "最多可查询50条，以逗号，空格或回车隔开": {
-    "zh": "最多可查询50条，以逗号，空格或回车隔开",
-    "en": "最多可查询50条，以逗号，空格或回车隔开"
+      "zh": "最多可查询50条，以逗号，空格或回车隔开",
+      "en": " Search up to 50 items, separated by comma or space"
   },
   "袋号": {
-    "zh": "袋号",
-    "en": "袋号"
+      "zh": "袋号",
+      "en": "carton number"
   },
   "运单号": {
-    "zh": "运单号",
-    "en": "运单号"
+      "zh": "运单号",
+      "en": "Provider Order ID"
   },
   "尾程号": {
-    "zh": "尾程号",
-    "en": "尾程号"
+      "zh": "尾程号",
+      "en": "tracking number"
   },
   "订单号": {
-    "zh": "订单号",
-    "en": "订单号"
+      "zh": "订单号",
+      "en": "order number"
   },
   "导出所有商品信息": {
-    "zh": "导出所有商品信息",
-    "en": "导出所有商品信息"
+      "zh": "导出所有商品信息",
+      "en": "Export all product information"
   },
   "导出已筛选商品信息": {
-    "zh": "导出已筛选商品信息",
-    "en": "导出已筛选商品信息"
+      "zh": "导出已筛选商品信息",
+      "en": "Export filtered product information"
   },
   "全部": {
-    "zh": "全部",
-    "en": "全部"
+      "zh": "全部",
+      "en": "All"
   },
   "数据筛选": {
-    "zh": "数据筛选",
-    "en": "数据筛选"
+      "zh": "数据筛选",
+      "en": "Data filter"
   },
   "编辑账号信息": {
-    "zh": "编辑账号信息",
-    "en": "编辑账号信息"
+      "zh": "编辑账号信息",
+      "en": "Edit account information"
   },
   "您所作的更改可能未保存，是否离开该页面。": {
-    "zh": "您所作的更改可能未保存，是否离开该页面。",
-    "en": "您所作的更改可能未保存，是否离开该页面。"
+      "zh": "您所作的更改可能未保存，是否离开该页面。",
+      "en": "Your changes may not be saved; do you want to leave this page?"
   },
   "确认离开": {
-    "zh": "确认离开",
-    "en": "确认离开"
+      "zh": "确认离开",
+      "en": "Confirm exit page"
   },
   "留在当前页面": {
-    "zh": "留在当前页面",
-    "en": "留在当前页面"
+      "zh": "留在当前页面",
+      "en": "Stay on current page"
   },
   "删除列": {
-    "zh": "删除列",
-    "en": "删除列"
+      "zh": "删除列",
+      "en": "Delete column"
   },
   "返回": {
-    "zh": "返回",
-    "en": "返回"
+      "zh": "返回",
+      "en": "Return"
   },
   "从第": {
-    "zh": "从第",
-    "en": "从第"
+      "zh": "从第",
+      "en": "From"
   },
   "位": {
-    "zh": "位",
-    "en": "位"
+      "zh": "位",
+      "en": "Bit"
   },
   "到第": {
-    "zh": "到第",
-    "en": "到第"
+      "zh": "到第",
+      "en": "To"
   },
   "从第(": {
-    "zh": "从第(",
-    "en": "从第("
+      "zh": "从第(",
+      "en": "From("
   },
   ")位": {
-    "zh": ")位",
-    "en": ")位"
+      "zh": ")位",
+      "en": ")Bit"
   },
   "到第(": {
-    "zh": "到第(",
-    "en": "到第("
+      "zh": "到第(",
+      "en": "To("
   },
   "请选择导出列": {
-    "zh": "请选择导出列",
-    "en": "请选择导出列"
+      "zh": "请选择导出列",
+      "en": "Please select export columns"
   },
   "保存": {
-    "zh": "保存",
-    "en": "保存"
+      "zh": "保存",
+      "en": "Save"
   },
   "项": {
-    "zh": "项",
-    "en": "项"
+      "zh": "项",
+      "en": "Item"
   },
   "请输入搜索内容": {
-    "zh": "请输入搜索内容",
-    "en": "请输入搜索内容"
+      "zh": "请输入搜索内容",
+      "en": " Enter search content"
   },
   "待选项": {
-    "zh": "待选项",
-    "en": "待选项"
+      "zh": "待选项",
+      "en": " Options to be selected"
   },
   "已选项": {
-    "zh": "已选项",
-    "en": "已选项"
+      "zh": "已选项",
+      "en": "Selected options"
   },
   "商品详细信息": {
-    "zh": "商品详细信息",
-    "en": "商品详细信息"
+      "zh": "商品详细信息",
+      "en": "Product details"
   },
   "提单关务状态": {
-    "zh": "提单关务状态",
-    "en": "提单关务状态"
+      "zh": "提单关务状态",
+      "en": "Air waybill customs status"
   },
   "清关单证制作": {
-    "zh": "清关单证制作",
-    "en": "清关单证制作"
+      "zh": "清关单证制作",
+      "en": " Customs clearance document production"
   },
   "轨迹维护": {
-    "zh": "轨迹维护",
-    "en": "轨迹维护"
+      "zh": "轨迹维护",
+      "en": "Tracking maintenance"
   },
   "列英文": {
-    "zh": "列英文",
-    "en": "列英文"
+      "zh": "列英文",
+      "en": "Column in English"
   },
   "列中文": {
-    "zh": "列中文",
-    "en": "列中文"
+      "zh": "列中文",
+      "en": "Column in Chinese"
   },
   "导出列名称": {
-    "zh": "导出列名称",
-    "en": "导出列名称"
+      "zh": "导出列名称",
+      "en": " Export column names"
   },
   "固定值": {
-    "zh": "固定值",
-    "en": "固定值"
+      "zh": "固定值",
+      "en": "Fixed value"
   },
   "截取字段": {
-    "zh": "截取字段",
-    "en": "截取字段"
+      "zh": "截取字段",
+      "en": "Intercept field"
   },
   "单位换算": {
-    "zh": "单位换算",
-    "en": "单位换算"
+      "zh": "单位换算",
+      "en": "Unit conversion"
   },
   "请填写模板名称": {
-    "zh": "请填写模板名称",
-    "en": "请填写模板名称"
+      "zh": "请填写模板名称",
+      "en": "Please provide template name"
   },
   "是否启用": {
-    "zh": "是否启用",
-    "en": "是否启用"
+      "zh": "是否启用",
+      "en": "Whether to enable"
   },
   "按运单号合并商品": {
-    "zh": "按运单号合并商品",
-    "en": "按运单号合并商品"
+      "zh": "按运单号合并商品",
+      "en": "Combine products by tracking number"
   },
   "导出列配置": {
-    "zh": "导出列配置",
-    "en": "导出列配置"
+      "zh": "导出列配置",
+      "en": "Export column configuration"
   },
   "选择/修改导出列": {
-    "zh": "选择/修改导出列",
-    "en": "选择/修改导出列"
+      "zh": "选择/修改导出列",
+      "en": "Select/modify export columns"
   },
   "从前段截取": {
-    "zh": "从前段截取",
-    "en": "从前段截取"
+      "zh": "从前段截取",
+      "en": "Export from the front"
   },
   "从后段截取": {
-    "zh": "从后段截取",
-    "en": "从后段截取"
+      "zh": "从后段截取",
+      "en": "Export from the back"
   },
   "新增自定义": {
-    "zh": "新增自定义",
-    "en": "新增自定义"
+      "zh": "新增自定义",
+      "en": "Add customization"
   },
   "从第({{start}})位到第({{end}})位": {
-    "zh": "从第({{start}})位到第({{end}})位",
-    "en": "从第({{start}})位到第({{end}})位"
+      "zh": "从第({{start}})位到第({{end}})位",
+      "en": "From({{start}})To({{end}})item"
   },
   "是": {
-    "zh": "是",
-    "en": "是"
+      "zh": "是",
+      "en": "Yes"
   },
   "否": {
-    "zh": "否",
-    "en": "否"
+      "zh": "否",
+      "en": "No"
   },
   "关务单证": {
-    "zh": "关务单证",
-    "en": "关务单证"
+      "zh": "关务单证",
+      "en": "Customs documents"
   },
   "序号": {
-    "zh": "序号",
-    "en": "序号"
+      "zh": "序号",
+      "en": "Serial number"
   },
   "模板编号": {
-    "zh": "模板编号",
-    "en": "模板编号"
+      "zh": "模板编号",
+      "en": "Template number"
   },
   "模板名称": {
-    "zh": "模板名称",
-    "en": "模板名称"
+      "zh": "模板名称",
+      "en": "Template name"
   },
   "模板类型": {
-    "zh": "模板类型",
-    "en": "模板类型"
+      "zh": "模板类型",
+      "en": "Template type"
   },
   "模板状态": {
-    "zh": "模板状态",
-    "en": "模板状态"
+      "zh": "模板状态",
+      "en": "Template status"
   },
   "模板维护": {
-    "zh": "模板维护",
-    "en": "模板维护"
+      "zh": "模板维护",
+      "en": "Template maintenance"
   },
   "新增模板": {
-    "zh": "新增模板",
-    "en": "新增模板"
+      "zh": "新增模板",
+      "en": "Add template"
   },
   "编辑模板": {
-    "zh": "编辑模板",
-    "en": "编辑模板"
+      "zh": "编辑模板",
+      "en": "Edit template"
   },
   "查看模板": {
-    "zh": "查看模板",
-    "en": "查看模板"
+      "zh": "查看模板",
+      "en": "View template"
   },
   "请稍后...": {
-    "zh": "请稍后...",
-    "en": "请稍后..."
+      "zh": "请稍后...",
+      "en": "please wait..."
   },
   "共{{total}}条": {
-    "zh": "共{{total}}条",
-    "en": "共{{total}}条"
+      "zh": "共{{total}}条",
+      "en": "Total{{total}}items"
   },
   "禁用后，该账号将无法登陆系统。确认要将【{{username}}】禁用吗？": {
-    "zh": "禁用后，该账号将无法登陆系统。确认要将【{{username}}】禁用吗？",
-    "en": "禁用后，该账号将无法登陆系统。确认要将【{{username}}】禁用吗？"
+      "zh": "禁用后，该账号将无法登陆系统。确认要将【{{username}}】禁用吗？",
+      "en": "禁用后，该账号将无法登陆系统。确认要将【{{username}}】禁用吗？"
   },
   "确定要将【{{username}}】启用吗？": {
-    "zh": "确定要将【{{username}}】启用吗？",
-    "en": "确定要将【{{username}}】启用吗？"
+      "zh": "确定要将【{{username}}】启用吗？",
+      "en": "After the account is disabled, account will not be able to log in to the system. Are you sure you want to disable [{{username}}]? "
   },
   "登录密码": {
-    "zh": "登录密码",
-    "en": "登录密码"
+      "zh": "登录密码",
+      "en": "Login password"
   },
   "新账号初始密码为 {{passwd}}": {
-    "zh": "新账号初始密码为 {{passwd}}",
-    "en": "新账号初始密码为 {{passwd}}"
+      "zh": "新账号初始密码为 {{passwd}}",
+      "en": "New account password is {{passwd}}"
   },
   "启用状态": {
-    "zh": "启用状态",
-    "en": "启用状态"
+      "zh": "启用状态",
+      "en": "Activate"
   },
   "选择角色": {
-    "zh": "选择角色",
-    "en": "选择角色"
+      "zh": "选择角色",
+      "en": "Select role"
   },
   "账号列表": {
-    "zh": "账号列表",
-    "en": "账号列表"
+      "zh": "账号列表",
+      "en": "Account list"
   },
   "关务风控": {
-    "zh": "关务风控",
-    "en": "关务风控"
+      "zh": "关务风控",
+      "en": "Customs risk control"
   },
   "权限管理": {
-    "zh": "权限管理",
-    "en": "权限管理"
+      "zh": "权限管理",
+      "en": "Admin management"
   },
   "账号管理": {
-    "zh": "账号管理",
-    "en": "账号管理"
+      "zh": "账号管理",
+      "en": "Account management"
   },
   "查询": {
-    "zh": "查询",
-    "en": "查询"
+      "zh": "查询",
+      "en": "Inquire"
   },
   "重置初始密码": {
-    "zh": "重置初始密码",
-    "en": "重置初始密码"
+      "zh": "重置初始密码",
+      "en": "Reset password"
   },
   "重置密码成功": {
-    "zh": "重置密码成功",
-    "en": "重置密码成功"
+      "zh": "重置密码成功",
+      "en": "Password reset success"
   },
   "是否确认将账号 {{account}} 的密码重置为初始密码？": {
-    "zh": "是否确认将账号 {{account}} 的密码重置为初始密码？",
-    "en": "是否确认将账号 {{account}} 的密码重置为初始密码？"
+      "zh": "是否确认将账号 {{account}} 的密码重置为初始密码？",
+      "en": "Are you sure you want to reset the password for account {{account}} to the default password?"
   },
   "账号状态": {
-    "zh": "账号状态",
-    "en": "账号状态"
+      "zh": "账号状态",
+      "en": "Account status"
   },
   "用户删除成功": {
-    "zh": "用户删除成功",
-    "en": "用户删除成功"
+      "zh": "用户删除成功",
+      "en": "User delete success"
   },
   "新增账号": {
-    "zh": "新增账号",
-    "en": "新增账号"
+      "zh": "新增账号",
+      "en": "Add account"
   },
   "输入查询": {
-    "zh": "输入查询",
-    "en": "输入查询"
+      "zh": "输入查询",
+      "en": "Enter search"
   },
   "用户账号/名称": {
-    "zh": "用户账号/名称",
-    "en": "用户账号/名称"
+      "zh": "用户账号/名称",
+      "en": "User account/name"
   },
   "解除关联后，该账号不再具有该角色的权限，立即生效，是否确认解除关联？": {
-    "zh": "解除关联后，该账号不再具有该角色的权限，立即生效，是否确认解除关联？",
-    "en": "解除关联后，该账号不再具有该角色的权限，立即生效，是否确认解除关联？"
+      "zh": "解除关联后，该账号不再具有该角色的权限，立即生效，是否确认解除关联？",
+      "en": "Confirm role removal? The account no longer has the permissions of the role effective immediately."
   },
   "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作": {
-    "zh": "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作",
-    "en": "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作"
+      "zh": "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作",
+      "en": "Warning! Once confirmed, the data will be permanently deleted and this operation is irreversible."
   },
   "禁用后，关联的账号将失去角色所具有的权限，确定要将【{{roleName}}】禁用吗？": {
-    "zh": "禁用后，关联的账号将失去角色所具有的权限，确定要将【{{roleName}}】禁用吗？",
-    "en": "禁用后，关联的账号将失去角色所具有的权限，确定要将【{{roleName}}】禁用吗？"
+      "zh": "禁用后，关联的账号将失去角色所具有的权限，确定要将【{{roleName}}】禁用吗？",
+      "en": "Confirm disable account? The account will lose the permissions of the role. Are you sure you want to disable [{{roleName}}]?？"
   },
   "确定要将【{{roleName}}】启用吗？": {
-    "zh": "确定要将【{{roleName}}】启用吗？",
-    "en": "确定要将【{{roleName}}】启用吗？"
+      "zh": "确定要将【{{roleName}}】启用吗？",
+      "en": "Are you sure you want to enable [{{roleName}}]?"
   },
   "操作确认": {
-    "zh": "操作确认",
-    "en": "操作确认"
+      "zh": "操作确认",
+      "en": "Operation confirmed"
   },
   "确认": {
-    "zh": "确认",
-    "en": "确认"
+      "zh": "确认",
+      "en": "confirm"
   },
   "确认删除": {
-    "zh": "确认删除",
-    "en": "确认删除"
+      "zh": "确认删除",
+      "en": "confirm deletion"
   },
   "取消": {
-    "zh": "取消",
-    "en": "取消"
+      "zh": "取消",
+      "en": "cancel"
   },
   "用户编号": {
-    "zh": "用户编号",
-    "en": "用户编号"
+      "zh": "用户编号",
+      "en": "User ID"
   },
   "当前角色": {
-    "zh": "当前角色",
-    "en": "当前角色"
+      "zh": "当前角色",
+      "en": "Current role"
   },
   "已启用": {
-    "zh": "已启用",
-    "en": "已启用"
+      "zh": "已启用",
+      "en": "Active"
   },
   "已停用": {
-    "zh": "已停用",
-    "en": "已停用"
+      "zh": "已停用",
+      "en": "Inactive"
   },
   "启用": {
-    "zh": "启用",
-    "en": "启用"
+      "zh": "启用",
+      "en": "Enable"
   },
   "停用": {
-    "zh": "停用",
-    "en": "停用"
+      "zh": "停用",
+      "en": "Disable"
   },
   "内部员工": {
-    "zh": "内部员工",
-    "en": "内部员工"
+      "zh": "内部员工",
+      "en": "Internal staff"
   },
   "角色管理": {
-    "zh": "角色管理",
-    "en": "角色管理"
+      "zh": "角色管理",
+      "en": "Role management"
   },
   "新增角色": {
-    "zh": "新增角色",
-    "en": "新增角色"
+      "zh": "新增角色",
+      "en": "Add new role"
   },
   "账号角色": {
-    "zh": "账号角色",
-    "en": "账号角色"
+      "zh": "账号角色",
+      "en": "Account role"
   },
   "关联账号": {
-    "zh": "关联账号",
-    "en": "关联账号"
+      "zh": "关联账号",
+      "en": "Link account"
   },
   "角色状态": {
-    "zh": "角色状态",
-    "en": "角色状态"
+      "zh": "角色状态",
+      "en": "Role status"
   },
   "查看": {
-    "zh": "查看",
-    "en": "查看"
+      "zh": "查看",
+      "en": "Search"
   },
   "编辑": {
-    "zh": "编辑",
-    "en": "编辑"
+      "zh": "编辑",
+      "en": "Edit"
   },
   "删除": {
-    "zh": "删除",
-    "en": "删除"
+      "zh": "删除",
+      "en": "Delete"
   },
   "操作": {
-    "zh": "操作",
-    "en": "操作"
+      "zh": "操作",
+      "en": "Proceed"
   },
   "权限设置": {
-    "zh": "权限设置",
-    "en": "权限设置"
+      "zh": "权限设置",
+      "en": "Permission settings"
   },
   "提交": {
-    "zh": "提交",
-    "en": "提交"
+      "zh": "提交",
+      "en": "Submit"
   },
   "重置": {
-    "zh": "重置",
-    "en": "重置"
+      "zh": "重置",
+      "en": "Reset"
   },
   "查看角色信息": {
-    "zh": "查看角色信息",
-    "en": "查看角色信息"
+      "zh": "查看角色信息",
+      "en": "View role information"
   },
   "角色名称": {
-    "zh": "角色名称",
-    "en": "角色名称"
+      "zh": "角色名称",
+      "en": "Role name"
   },
   "编辑角色信息": {
-    "zh": "编辑角色信息",
-    "en": "编辑角色信息"
+      "zh": "编辑角色信息",
+      "en": "Edit role information"
   },
   "ID": {
-    "zh": "ID",
-    "en": "ID"
+      "zh": "ID",
+      "en": "ID"
   },
   "解除账号关联": {
-    "zh": "解除账号关联",
-    "en": "解除账号关联"
+      "zh": "解除账号关联",
+      "en": "Unlink account"
   },
   "用户账号": {
-    "zh": "用户账号",
-    "en": "用户账号"
+      "zh": "用户账号",
+      "en": "User account"
   },
   "用户名称": {
-    "zh": "用户名称",
-    "en": "用户名称"
+      "zh": "用户名称",
+      "en": "User name"
   },
   "主提运单号": {
-    "zh": "主提运单号",
-    "en": "Master Waybill No"
+      "zh": "主提运单号",
+      "en": "Master Waybill No"
   },
   "运输方式": {
-    "zh": "运输方式",
-    "en": "Transport Name"
+      "zh": "运输方式",
+      "en": "Transport Mode"
   },
   "起运港": {
-    "zh": "起运港",
-    "en": "Depart Port Code"
+      "zh": "起运港",
+      "en": "Departure Port Code"
   },
   "抵运港": {
-    "zh": "抵运港",
-    "en": "Arrive Port Code"
+      "zh": "抵运港",
+      "en": "Arrival Port Code"
   },
   "预计离港日期": {
-    "zh": "预计离港日期",
-    "en": "ETD"
+      "zh": "预计离港日期",
+      "en": "ETD"
   },
   "预计抵港日期": {
-    "zh": "预计抵港日期",
-    "en": "ETA"
+      "zh": "预计抵港日期",
+      "en": "ETA"
   },
   "客户名称": {
-    "zh": "客户名称",
-    "en": "Customer Name"
+      "zh": "客户名称",
+      "en": "Customer Name"
   },
   "物流订单号": {
-    "zh": "物流订单号",
-    "en": "Provider Order Id"
+      "zh": "物流订单号",
+      "en": "Provider Order Id"
   },
   "申报订单号": {
-    "zh": "申报订单号",
-    "en": "Declaration Bill Id"
+      "zh": "申报订单号",
+      "en": "Declaration Bill Id"
   },
   "面单号": {
-    "zh": "面单号",
-    "en": "Tracking No"
+      "zh": "面单号",
+      "en": "Tracking No"
   },
   "操作时间": {
-    "zh": "操作时间",
-    "en": "Operate Time"
+      "zh": "操作时间",
+      "en": "Operate Time"
   },
   "用户发货备注": {
-    "zh": "用户发货备注",
-    "en": "Remark"
+      "zh": "用户发货备注",
+      "en": "Remark"
   },
   "公司代码": {
-    "zh": "公司代码",
-    "en": "Entity Code"
+      "zh": "公司代码",
+      "en": "Entity Code"
   },
   "交易单号": {
-    "zh": "交易单号",
-    "en": "Order No"
+      "zh": "交易单号",
+      "en": "Order No"
   },
   "大包号": {
-    "zh": "大包号",
-    "en": "Big Bag No"
+      "zh": "大包号",
+      "en": "Big Bag No"
   },
   "集装箱号": {
-    "zh": "集装箱号",
-    "en": "Container No"
+      "zh": "集装箱号",
+      "en": "Carton No"
   },
   "包裹售卖国家": {
-    "zh": "包裹售卖国家",
-    "en": "Buyer Region"
+      "zh": "包裹售卖国家",
+      "en": "Seller Region"
   },
   "下一段服务商名称": {
-    "zh": "下一段服务商名称",
-    "en": "Next Provider Name"
+      "zh": "下一段服务商名称",
+      "en": "Next Provider Name"
   },
   "包裹申报价格": {
-    "zh": "包裹申报价格",
-    "en": "Goods Value",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "包裹申报价格",
+      "en": "Goods Value",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "包裹运费": {
-    "zh": "包裹运费",
-    "en": "Package Shipping Fee",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "包裹运费",
+      "en": "Package Shipping Fee",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "币种": {
-    "zh": "币种",
-    "en": "Currency"
+      "zh": "币种",
+      "en": "Currency"
   },
   "毛重": {
-    "zh": "毛重",
-    "en": "Real Weight"
+      "zh": "毛重",
+      "en": "Gross weight"
   },
   "重量单位": {
-    "zh": "重量单位",
-    "en": "Weight Unit"
+      "zh": "重量单位",
+      "en": "Weight Unit"
   },
   "商品ID": {
-    "zh": "商品ID",
-    "en": "Item Id"
+      "zh": "商品ID",
+      "en": "Item Id"
   },
   "商品sku标识id": {
-    "zh": "商品sku标识id",
-    "en": "Sku Id"
+      "zh": "商品sku标识id",
+      "en": "SKU Id"
   },
   "商品英文品名": {
-    "zh": "商品英文品名",
-    "en": "Product Name"
+      "zh": "商品英文品名",
+      "en": "Product Name"
   },
   "商品中文名称": {
-    "zh": "商品中文名称",
-    "en": "Product Name Cn"
+      "zh": "商品中文名称",
+      "en": "Product Name CN"
   },
   "item重量": {
-    "zh": "item重量",
-    "en": "Weight"
+      "zh": "item重量",
+      "en": "Item weight"
   },
   "出口HS编码": {
-    "zh": "出口HS编码",
-    "en": "Export Hs Code"
+      "zh": "出口HS编码",
+      "en": "Export HS Code"
   },
   "进口HS编码": {
-    "zh": "进口HS编码",
-    "en": "Import Hs Code"
+      "zh": "进口HS编码",
+      "en": "Import HS Code"
   },
   "数量": {
-    "zh": "数量",
-    "en": "Qty"
+      "zh": "数量",
+      "en": "QTY"
   },
   "数量单位": {
-    "zh": "数量单位",
-    "en": "Unit"
+      "zh": "数量单位",
+      "en": "Unit"
   },
   "商品申报单价": {
-    "zh": "商品申报单价",
-    "en": "Unit Price",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "商品申报单价",
+      "en": "Unit Price",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "商品运费": {
-    "zh": "商品运费",
-    "en": "Item Shipping Fee",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "商品运费",
+      "en": "Item Shipping Fee",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "COD金额": {
-    "zh": "COD金额",
-    "en": "Cod Fee",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "COD金额",
+      "en": "COD Fee",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "增值税率": {
-    "zh": "增值税率",
-    "en": "Vat Rate"
+      "zh": "增值税率",
+      "en": "VAT Rate"
   },
   "增值税": {
-    "zh": "增值税",
-    "en": "Vat Fee",
-    "variants": [
-      "CNY",
-      "USD"
-    ]
+      "zh": "增值税",
+      "en": "VAT Fee",
+      "variants": [
+          "CNY",
+          "USD"
+      ]
   },
   "原产国": {
-    "zh": "原产国",
-    "en": "Origin Country"
+      "zh": "原产国",
+      "en": "Origin Country"
   },
   "类型": {
-    "zh": "类型",
-    "en": "Item Type"
+      "zh": "类型",
+      "en": "Item Type"
   },
   "商品链接": {
-    "zh": "商品链接",
-    "en": "Item Url"
+      "zh": "商品链接",
+      "en": "Item URL"
   },
   "商品已税/未税": {
-    "zh": "商品已税/未税",
-    "en": "Tax Mark"
+      "zh": "商品已税/未税",
+      "en": "Duty required/duty exempt"
   }
 }

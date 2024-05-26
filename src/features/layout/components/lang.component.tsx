@@ -1,7 +1,10 @@
 import { TranslationOutlined } from "@ant-design/icons";
-import { Dropdown, MenuProps } from "@components";
+import { Dropdown, MenuItemProps, MenuProps } from "@components";
+import { changeLanguage } from "@locale";
+import appService from "@services/app.service";
+import { observer } from "mobx-react-lite";
 
-export function Lang() {
+function LangComponent() {
   const items: MenuProps["items"] = [
     {
       label: "中文",
@@ -13,11 +16,18 @@ export function Lang() {
     },
   ];
 
+  const handlerItemClick: MenuItemProps['onClick'] = ({ key }) => {
+    appService.setLang(key as 'en' | 'zh-CN');
+    changeLanguage(key);
+  };
+
   return (
-    <Dropdown menu={{ items }} trigger={["click"]}>
+    <Dropdown menu={{ items, onClick: handlerItemClick, selectedKeys: [appService.lang] }} trigger={["click"]}>
       <div onClick={(e) => e.preventDefault()} className="mx-2">
       <TranslationOutlined />
       </div>
     </Dropdown>
   );
 }
+
+export const Lang = observer(LangComponent);

@@ -79,16 +79,22 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     widthFit ?? false
   );
 
-  const [adaptiveHeight, bounding] = useHeight("#table-container");
+  const [topToTop, bounding] = useHeight("#table-container");
 
   const heights = useMemo(() => {
-    const container = Math.max(350, adaptiveHeight - 36);
-    let table: number | undefined = Math.max(maxHeight, adaptiveHeight - 150);
+    const container = Math.max(400, topToTop - 36);
+    let table: number | undefined = topToTop - 150;
+    // 为了显示最小 100
+    table = Math.max(150, table);
+    // 最大不超过 maxHeight
+    table = Math.min(maxHeight, table);
+
     if (bounding?.height && bounding.height < table) {
       table = undefined;
     }
     return { container, table };
-  }, [adaptiveHeight, bounding?.height, maxHeight]);
+
+  }, [topToTop, bounding?.height, maxHeight]);
 
   const containerStyle = useMemo(
     () => {

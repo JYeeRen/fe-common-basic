@@ -1,12 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { net } from "@infra";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
 import { CustomsTrack, QueryParams } from "./type";
 
-type HandleSave = (record: CustomsTrack, key: string, value: string) => Promise<boolean>;
+type handleDoubleClick = (editingCell: {
+  key: string;
+  title: string;
+  value: string;
+  record: CustomsTrack;
+}) => void;
 
 export const getColumns = (
-  onSave: HandleSave
+  handleDoubleCick: handleDoubleClick
 ): TableColumnsType<CustomsTrack> => {
   return [
     {
@@ -38,11 +44,37 @@ export const getColumns = (
       key: "ata",
       dataIndex: "ata",
       title: t("ATA"),
+      onCell: (record: CustomsTrack) =>
+      ({
+        record,
+        editable: true,
+        value: record.customsSubmittedTime,
+        handleDoubleCick: () =>
+        handleDoubleCick({
+            key: "ata",
+            title: t("ATA"),
+            value: record.customsSubmittedTime,
+            record
+          }),
+      } as any),
     },
     {
       key: "atd",
       dataIndex: "atd",
       title: t("ATD"),
+      onCell: (record: CustomsTrack) =>
+      ({
+        record,
+        editable: true,
+        value: record.customsSubmittedTime,
+        handleDoubleCick: () =>
+        handleDoubleCick({
+            key: "atd",
+            title: t("ATD"),
+            value: record.customsSubmittedTime,
+            record
+          }),
+      } as any),
     },
     {
       key: "departPortCode",
@@ -61,11 +93,16 @@ export const getColumns = (
       title: t("数据提交海关"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.customsSubmittedTime,
-          onSave: async (value: string) =>
-            await onSave(record, "customs_submitted", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "customs_submitted",
+              title: t("数据提交海关"),
+              value: record.customsSubmittedTime,
+              record
+            }),
         } as any),
     },
     {
@@ -75,11 +112,16 @@ export const getColumns = (
       title: t("海关接收数据"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.customsAcceptedTime,
-          onSave: async (value: string) =>
-            await onSave(record, "customs_accepted", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "customs_accepted",
+              title: t("海关接收数据"),
+              value: record.customsAcceptedTime,
+              record
+            }),
         } as any),
     },
     {
@@ -89,11 +131,16 @@ export const getColumns = (
       title: t("海关放行（整票放行）"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.customsReleaseTime,
-          onSave: async (value: string) =>
-            await onSave(record, "customs_release", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "customs_release",
+              title: t("海关放行（整票放行）"),
+              value: record.customsReleaseTime,
+              record
+            }),
         } as any),
     },
     {
@@ -103,11 +150,16 @@ export const getColumns = (
       title: t("货物已提货"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.pickedUpTime,
-          onSave: async (value: string) =>
-            await onSave(record, "picked_up", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "picked_up",
+              title: t("货物已提货"),
+              value: record.pickedUpTime,
+              record
+            }),
         } as any),
     },
     {
@@ -117,11 +169,16 @@ export const getColumns = (
       title: t("货物交接尾程"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.handedOverTime,
-          onSave: async (value: string) =>
-            await onSave(record, "handed_over", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "handed_over",
+              title: t("货物交接尾程"),
+              value: record.handedOverTime,
+              record
+            }),
         } as any),
     },
     {
@@ -131,11 +188,16 @@ export const getColumns = (
       title: t("海关查验（整票查验）"),
       onCell: (record: CustomsTrack) =>
         ({
+          record,
           editable: true,
           value: record.customsInspection,
-          onSave: async (value: string) =>
-            await onSave(record, "customs_inspection", value),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "customs_inspection",
+              title: t("海关查验（整票查验）"),
+              value: record.customsInspection,
+              record
+            }),
         } as any),
     },
     {

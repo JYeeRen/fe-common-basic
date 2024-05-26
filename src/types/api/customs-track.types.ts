@@ -82,6 +82,7 @@ export interface CustomsTrackAPI {
       ids: number[];
       operateTime: string;
       waybillStatusCode: string;
+      timeZone: string;
     };
     res: { failed: { number: string; reason: string }[] };
   };
@@ -89,12 +90,12 @@ export interface CustomsTrackAPI {
     // params: { file: unknown, timeZone: string };
     params: FormData;
     res: {
-      formatError: { number: string, reason: string }[];
-      numberError: { number: string, reason: string }[];
-      timeChange: { number: string, reason: string }[];
-      timeout: { number: string, reason: string }[];
-    }
-  }
+      formatError: { number: string; reason: string }[];
+      numberError: { number: string; reason: string }[];
+      timeChange: { number: string; reason: string }[];
+      timeout: { number: string; reason: string }[];
+    };
+  };
   "/api/customsTrack/uploadMawbTrack": {
     // params: { file: unknown, timeZone: string };
     params: FormData;
@@ -103,5 +104,25 @@ export interface CustomsTrackAPI {
       total: number;
       success: number;
     };
-  }
+  };
+  "/api/customsTrack/setMawbAta": {
+    params: {
+      ids: number[];
+      time: string;
+      timeZone: string;
+    };
+    res: {
+      failed: { number: string; reason: string }[];
+    };
+  };
+  "/api/customsTrack/setMawbAtd": {
+    params: {
+      ids: number[];
+      time: string;
+      timeZone: string;
+    };
+    res: {
+      failed: { number: string; reason: string }[];
+    };
+  };
 }

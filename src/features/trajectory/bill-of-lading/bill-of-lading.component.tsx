@@ -32,6 +32,7 @@ import {
 import { compact } from "lodash";
 import { convertDate, dayjs } from "@infra";
 import { UploadModal } from "./upload-modal.component";
+import { CellEditModal } from "./cell-edit-modal.component";
 
 function TrackTraceComponent() {
   const { store, t } = useStore(BillOfLadingStore)();
@@ -98,42 +99,53 @@ function TrackTraceComponent() {
     });
   }, []);
 
-  const handleSave = useCallback(
-    async (record: CustomsTrack, key: string, value: string) => {
-      if (!(await updateConfirm(record, key))) {
+  const handleSave = async (date: string, tz: string) => {
+    if (!store.editingCell?.record || !store.editingCell.key) {
+      return false;
+    }
+    const record = store.editingCell.record;
+    const key = store.editingCell.key;
+    const value = date;
+    if (!(await updateConfirm(record, key))) {
+      return true;
+    }
+
+    const diffmins = dayjs()
+      .utcOffset(480)
+      .diff(dayjs(value).utcOffset(480), "m");
+
+    if (diffmins > 24 * 60 && !(await over24Confirm())) {
+      return true;
+    }
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let failed: any[] = [];
+      if (key === "ata") {
+        await store.setMawbAta(record.id, tz, value);
+      } else if (key === "atd") {
+        await store.setMawbAtd(record.id, tz, value);
+      } else {
+        failed = await store.addMawbTrack(record.id, key, value, tz);
+      }
+      if (!failed.length) {
         return true;
       }
-
-      const diffmins = dayjs().utcOffset(480)
-        .utcOffset(480)
-        .diff(dayjs(value), "m");
-
-      if (diffmins > 24 * 60 && !(await over24Confirm())) {
-        return true;
-      }
-
-      try {
-        const failed = await store.addMawbTrack(record.id, key, value);
-        if (!failed.length) {
-          return true;
-        }
-        notification.error({
-          message: t("保存失败"),
-          description: failed
-            .map((item) => `${item.number} ${item.reason}`)
-            .join("\n"),
-        });
-        return true;
-      } finally {
-        gridStore.loadData();
-      }
-    },
-    [gridStore, over24Confirm, store, t, updateConfirm]
-  );
+      notification.error({
+        message: t("保存失败"),
+        description: failed
+          .map((item) => `${item.number} ${item.reason}`)
+          .join("\n"),
+      });
+      return true;
+    } finally {
+      gridStore.loadData();
+    }
+  };
 
   const columns = useMemo(
-    () => BillOfLadingConfig.getColumns(handleSave),
-    [handleSave]
+    () => BillOfLadingConfig.getColumns(store.setEditingCell.bind(store)),
+    [store]
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -210,7 +222,20 @@ function TrackTraceComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
-      <UploadModal store={store} refreshTable={gridStore.loadData.bind(gridStore)} />
+      {Boolean(store.editingCell) && (
+        <CellEditModal
+          open={Boolean(store.editingCell)}
+          store={store}
+          record={gridStore.rowData.find(
+            (r) => r.id === store.editingCell?.record.id
+          )}
+          handleSave={handleSave}
+        />
+      )}
+      <UploadModal
+        store={store}
+        refreshTable={gridStore.loadData.bind(gridStore)}
+      />
       {/* <UploadConfirmModal store={store} /> */}
       <FilterContainer
         onFinish={handleFinish}
@@ -274,7 +299,7 @@ function TrackTraceComponent() {
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
-                    style={{ width: "100px" }}
+                    style={{ width: "200px" }}
                   />
                 </Form.Item>
                 <Form.Item name="flightDate" noStyle>
@@ -298,7 +323,7 @@ function TrackTraceComponent() {
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
-                    style={{ width: "100px" }}
+                    style={{ width: "200px" }}
                   />
                 </Form.Item>
                 <Form.Item name="etd" noStyle>
@@ -323,7 +348,7 @@ function TrackTraceComponent() {
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
-                    style={{ width: "100px" }}
+                    style={{ width: "200px" }}
                   />
                 </Form.Item>
                 <Form.Item name="eta" noStyle>
@@ -348,7 +373,7 @@ function TrackTraceComponent() {
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
-                    style={{ width: "100px" }}
+                    style={{ width: "200px" }}
                   />
                 </Form.Item>
                 <Form.Item name="atd" noStyle>
@@ -373,7 +398,7 @@ function TrackTraceComponent() {
                   <SearchSelect
                     optionKey="timeZones"
                     placeholder={t("选择时区")}
-                    style={{ width: "100px" }}
+                    style={{ width: "200px" }}
                   />
                 </Form.Item>
                 <Form.Item name="ata" noStyle>
