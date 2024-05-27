@@ -149,7 +149,7 @@ function DeclareStatusComponent() {
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("清关单证制作")} wrapperClassName={styles.wrapper}>
+      <Container title={t("清关单证制作")} wrapperClassName={styles.wrapper} table>
         <Row justify="start" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"

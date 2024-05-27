@@ -95,7 +95,7 @@ function ClearanceOfGoodsComponent() {
           </div>
         </Col>
       </FilterContainer>
-      <Container title={t("商品详细信息")}>
+      <Container title={t("商品详细信息")} table>
         <Row className="my-4" justify="end">
           <Button
             onClick={handleExportAll}

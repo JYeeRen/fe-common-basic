@@ -30,7 +30,7 @@ function RoleDetailComponent() {
   }, [t]);
 
   return (
-    <Container title={t("查看角色信息")} loading={store.loading}>
+    <Container title={t("查看角色信息")} loading={store.loading} table>
       <Form className={styles.form}>
         <Form.Item
           label={t("当前角色")}

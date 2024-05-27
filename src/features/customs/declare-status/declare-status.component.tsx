@@ -93,10 +93,10 @@ function DeclareStatusComponent() {
   useEffect(() => {
     if (store.warning) {
       Modal.warning({
-        title: "警告！",
+        title: t("警告！"),
         content:
-          "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！",
-        okText: "去查看",
+          t("有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！"),
+        okText: t("去查看"),
         icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
         onOk: () => store.setWarning(false),
@@ -279,7 +279,7 @@ function DeclareStatusComponent() {
           </Row>
         </Col>
       </FilterContainer>
-      <Container title={t("提单列表")} wrapperClassName={styles.wrapper}>
+      <Container title={t("提单列表")} wrapperClassName={styles.wrapper} table>
         <Row justify="space-between" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mb-4"

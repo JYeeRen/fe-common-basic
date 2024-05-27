@@ -233,6 +233,7 @@ const Query = observer((props: QueryProps) => {
         </Row>
       </Form>
       <Table
+        enableResize={false}
         autoHeight={false}
         widthFit
         bordered

@@ -73,7 +73,7 @@ function TrackLogMawbComponent(props: MawbProps) {
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("轨迹信息")} wrapperClassName={styles.wrapper}>
+      <Container title={t("轨迹信息")} wrapperClassName={styles.wrapper} table>
         <Table
           widthFit
           bordered

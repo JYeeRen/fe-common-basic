@@ -129,7 +129,7 @@ function AccountList() {
         </Col>
       </FilterContainer>
       <div className="w-full"></div>
-      <Container title={t("账号列表")} operation={operation}>
+      <Container title={t("账号列表")} operation={operation} table>
         {/* <ClientGrid columns={columns} store={gridStore} /> */}
         <Table
           bordered

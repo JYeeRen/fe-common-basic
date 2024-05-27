@@ -1,5 +1,5 @@
 import { Block } from "@components";
-import { useHeight } from "@hooks";
+// import { useHeight } from "@hooks";
 import {
   TableProps,
   Table as AntTable,
@@ -9,7 +9,8 @@ import {
 } from "antd";
 import { get } from "lodash";
 import { observer } from "mobx-react-lite";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Resizable } from "re-resizable";
 
 function getTextWidth(text: string) {
   const canvas = document.createElement("canvas");
@@ -59,6 +60,7 @@ interface ExternalTableProps {
   widthFit?: boolean;
   autoHeight?: boolean;
   maxHeight?: number;
+  enableResize?: false;
 }
 
 export const Table = observer((props: TableProps & ExternalTableProps) => {
@@ -68,8 +70,9 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     columns: columnsDefs,
     dataSource,
     widthFit,
-    autoHeight = true,
-    maxHeight = 250,
+    enableResize,
+    // autoHeight = true,
+    // maxHeight = 250,
     ...restProps
   } = props;
 
@@ -79,52 +82,76 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     widthFit ?? false
   );
 
-  const [topToTop, bounding] = useHeight("#table-container");
+  // const [topToTop, bounding] = useHeight("#table-container");
 
-  const heights = useMemo(() => {
-    const container = Math.max(400, topToTop - 36);
-    let table: number | undefined = topToTop - 150;
-    // 为了显示最小 100
-    table = Math.max(150, table);
-    // 最大不超过 maxHeight
-    table = Math.min(maxHeight, table);
+  // const heights = useMemo(() => {
+  //   const container = Math.max(400, topToTop - 36);
+  //   let table: number | undefined = topToTop - 150;
+  //   // 为了显示最小 100
+  //   table = Math.max(150, table);
+  //   // 最大不超过 maxHeight
+  //   table = Math.min(maxHeight, table);
 
-    if (bounding?.height && bounding.height < table) {
-      table = undefined;
-    }
-    return { container, table };
+  //   if (bounding?.height && bounding.height < table) {
+  //     table = undefined;
+  //   }
+  //   return { container, table };
+  // }, [topToTop, bounding?.height, maxHeight]);
 
-  }, [topToTop, bounding?.height, maxHeight]);
+  // const containerStyle = useMemo(() => {
+  //   if (!autoHeight) {
+  //     return undefined;
+  //   }
+  //   return { height: `${heights.container}px` };
+  // }, [autoHeight, heights.container]);
 
-  const containerStyle = useMemo(
-    () => {
-      if (!autoHeight) {
-        return undefined;
-      }
-      return { height: `${heights.container}px` };
-    },
-    [autoHeight, heights.container]
-  );
+  const [height, setHeight] = useState(300);
+  const [prevHeight, setPrevHeight] = useState(0);
 
   return (
-    <div
-      id="table-container"
-      className="w-full overflow-hidden"
-      style={containerStyle}
-    >
-      <AntTable
-        {...restProps}
-        columns={columns}
-        dataSource={dataSource}
-        scroll={{ y: heights.table, x: "max-content", ...scroll }}
-        pagination={false}
-      />
-      <Block if={Boolean(pagination)}>
-        <Pagination
-          className="flex justify-end mt-4 mr-4 mb-8"
-          {...pagination}
-        />
-      </Block>
-    </div>
+    // <div
+    //   id="table-container"
+    //   className="w-full"
+    //   // style={containerStyle}
+    // >
+      <Resizable
+        enable={enableResize}
+        className="resizable"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          border: "solid 1px #ddd",
+          marginBottom: '30px'
+        }}
+        maxWidth="100%"
+        minWidth="100%"
+        minHeight={300}
+        defaultSize={{
+          width: "100%",
+          height: "auto",
+        }}
+        onResize={(_, __, ___, d) => {
+          setPrevHeight(d.height);
+          setHeight(Math.max(height + d.height- prevHeight, 300));
+        }}
+        onResizeStop={() => {
+          setPrevHeight(0);
+        }}
+      >
+          <AntTable
+            {...restProps}
+            columns={columns}
+            dataSource={dataSource}
+            scroll={{ y: height - 90, x: "max-content", ...scroll }}
+            pagination={false}
+          />
+          <Block if={Boolean(pagination)}>
+            <Pagination
+              className="flex justify-end mt-4 mr-4 mb-8"
+              {...pagination}
+            />
+          </Block>
+      </Resizable>
+    // </div>
   );
 });

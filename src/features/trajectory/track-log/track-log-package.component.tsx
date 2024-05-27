@@ -94,7 +94,7 @@ function TrackLogPackageComponent(props: PackageProps) {
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper}>
+      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper} table>
         <Table
           widthFit
           bordered

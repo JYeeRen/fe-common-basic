@@ -126,13 +126,29 @@ function TrackTraceComponent() {
       return true;
     }
 
+    if (key === 'ata' || key === 'atd') {
+      if (!record.mawbId) {
+        notification.error({
+          message: t("保存失败"),
+          description: t("提单未关联不能设置 ATA ATD"),
+        });
+        return true;
+      }
+    }
+
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let failed: any[] = [];
       if (key === "ata") {
-        await store.setMawbAta(record.id, tz, value);
+        if (!record.mawbId) {
+          return true;
+        }
+        await store.setMawbAta(record.mawbId, tz, value);
       } else if (key === "atd") {
-        await store.setMawbAtd(record.id, tz, value);
+        if (!record.mawbId) {
+          return true;
+        }
+        await store.setMawbAtd(record.mawbId, tz, value);
       } else if (key == 'deliveredTime') {
         await store.setPackageDelivered(record.id, tz, value);
       } else if (key == 'pickedUpTime') {
@@ -197,7 +213,7 @@ function TrackTraceComponent() {
           handleSave={handleSave}
         />
       )}
-      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper}>
+      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper} table>
         <Table
           widthFit
           bordered

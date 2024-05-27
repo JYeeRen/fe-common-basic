@@ -43,7 +43,7 @@ function TrackTraceComponent() {
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
-    <Container className={styles.container} loading={store.loading}>
+    <Container className={styles.container} loading={store.loading} table>
       <FilterContainer
         onFinish={handleFinish}
         layout="vertical"

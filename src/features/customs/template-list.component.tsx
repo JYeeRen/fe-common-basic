@@ -61,7 +61,7 @@ function TemplateListComponent() {
         activeOptions={store.activeOptions}
         onFinish={gridStore.setQueryParams.bind(gridStore)}
       />
-      <Container title={t("模板维护")} wrapperClassName={styles.wrapper}>
+      <Container title={t("模板维护")} wrapperClassName={styles.wrapper} table>
         <Row className="my-4">
           <Button
             onClick={handleCreate}

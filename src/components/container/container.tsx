@@ -15,6 +15,7 @@ interface ContainerProps extends PropsWithChildren {
   backable?: boolean;
   onBack?: () => void;
   wrapperClassName?: string;
+  table?: boolean;
 }
 
 export function Container(props: ContainerProps) {
@@ -26,7 +27,8 @@ export function Container(props: ContainerProps) {
     backable,
     onBack,
     loading = false,
-    wrapperClassName
+    wrapperClassName,
+    table
   } = props;
 
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ export function Container(props: ContainerProps) {
   const handleback = () => navigate(-1);
 
   return (
-    <div className={clsx("flex h-full flex-col", styles.content, className)}>
+    <div className={clsx("flex h-full flex-col", styles.content, { [styles.heightunset]: table }, className)}>
       <Block if={title}>
         <Row className={styles.header}>
           <span className={styles.title}>{title}</span>

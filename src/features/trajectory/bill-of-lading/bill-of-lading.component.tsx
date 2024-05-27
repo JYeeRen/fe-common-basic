@@ -413,7 +413,7 @@ function TrackTraceComponent() {
           </Row>
         </Col>
       </FilterContainer>
-      <Container title={t("航空信息")} wrapperClassName={styles.wrapper}>
+      <Container title={t("航空信息")} wrapperClassName={styles.wrapper} table>
         <Row justify="end" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"

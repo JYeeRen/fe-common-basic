@@ -242,6 +242,7 @@ export function DragableTable(props: DragableTableProps) {
   if (dataSource.length === 0 || readonly) {
     return (
       <Table
+        enableResize={false}
         bordered
         rowKey="uuid"
         columns={columns as TableColumnsType<CustomTemplateCol>}
@@ -264,6 +265,7 @@ export function DragableTable(props: DragableTableProps) {
         strategy={verticalListSortingStrategy}
       >
         <Table
+          enableResize={false}
           bordered
           components={{ body: { row: Row, cell: EditableCell } }}
           rowKey="uuid"

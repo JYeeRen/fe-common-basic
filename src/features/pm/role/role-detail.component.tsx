@@ -125,6 +125,7 @@ function RoleDetailComponent(props: RoleDetailProps) {
         <Block if={Boolean(linkedAccounts)}>
           <Form.Item label={t("关联账号")}>
             <Table
+              enableResize={false}
               widthFit
               autoHeight={false}
               size="small"

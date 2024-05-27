@@ -54,7 +54,7 @@ function TemplateListComponent() {
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("客户信息")} wrapperClassName={styles.wrapper}>
+      <Container title={t("客户信息")} wrapperClassName={styles.wrapper} table>
         <Table
           widthFit
           bordered

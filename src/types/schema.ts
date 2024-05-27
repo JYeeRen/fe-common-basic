@@ -135,6 +135,7 @@ export interface CustomsDocument extends CustomsStatus {
 }
 
 export interface CustomsTrackStatus {
+  mawbId?: number;
   id: number;
   masterWaybillNo: string;
   bigBagNo: string;

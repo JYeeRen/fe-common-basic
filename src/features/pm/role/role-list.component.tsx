@@ -67,7 +67,7 @@ function RoleList() {
   );
 
   return (
-    <Container title={t("角色管理")} operation={operation}>
+    <Container title={t("角色管理")} operation={operation} table>
       <Table
         bordered
         loading={gridStore.loading}
