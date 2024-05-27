@@ -4,6 +4,7 @@ import { TemplateColOption } from "../types";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./column-select-modal.module.less";
 import { observer } from "mobx-react-lite";
+import appService from "@services/app.service";
 
 interface ColumnSelectModalProps {
   templateCols: TemplateColOption[];
@@ -15,6 +16,7 @@ interface ColumnSelectModalProps {
 
 export const ColumnSelectModal = observer((props: ColumnSelectModalProps) => {
   const { templateCols, targetKeys, open, onOk, onCancel } = props;
+  console.log(templateCols);
   const [t] = useTranslation();
   const [selectedKeys, setSelectedKeys] =
     useState<TransferProps["targetKeys"]>([]);
@@ -72,7 +74,7 @@ export const ColumnSelectModal = observer((props: ColumnSelectModalProps) => {
           }}
           titles={[t("待选项"), t("已选项")]}
           onChange={handleChange}
-          render={(item) => item.cnName}
+          render={(item) => item[({ en: 'enName', 'zh-CN': 'cnName'} as const)[appService.lang]]}
         />
       </div>
     </Modal>

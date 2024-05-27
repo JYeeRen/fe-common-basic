@@ -185,6 +185,7 @@ export const UploadModal = observer((props: UploadModalProps) => {
   const otherError = useCallback(
     (errors: { number: string; reason: string }[]) => {
       Modal.confirm({
+        width: 600,
         title: t("警告！"),
         content: (
           <>

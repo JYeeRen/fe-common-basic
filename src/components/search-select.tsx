@@ -1,3 +1,4 @@
+import { useTranslation } from "@locale";
 import optionsService, { OptionKey } from "@services/options.service";
 import { Select, SelectProps } from "antd";
 import { observer } from "mobx-react-lite";
@@ -11,6 +12,8 @@ interface SearchSelectProps<K extends OptK> extends SelectProps {
 }
 
 export const SearchSelect = observer(function <K extends OptK>(props: SearchSelectProps<K>) {
+  const [t] = useTranslation();
+
   const { options, optionKey, omitKey = [], ...restProps } = props;
 
   const getOptions = (optionKey?: K) => {
@@ -37,7 +40,7 @@ export const SearchSelect = observer(function <K extends OptK>(props: SearchSele
       showSearch
       allowClear
       options={selectOpts}
-      placeholder="全部"
+      placeholder={t("全部")}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       filterOption={filterOption as any}
       {...restProps}
