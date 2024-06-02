@@ -207,3 +207,13 @@ export interface MawbCustomsTrack {
   handedOverTime: string;
   userName: string;
 }
+
+export interface PacakgeChange {
+  uid: string;
+  id: number;
+  masterWaybillNo: string;
+  change: string;
+  changeType: string;
+  changeTypeValue: string;
+  trackingNoList: string;
+}

@@ -2,7 +2,7 @@ import { RouteObject, redirect } from "react-router-dom";
 import Layout from "@features/layout/layout";
 import { loginLoader } from "./loginLoader";
 import { authProvider } from "@services/auth.service";
-import Welcome from '@features/welcome/welcome';
+import Welcome from "@features/welcome/welcome";
 
 const template: RouteObject[] = [
   {
@@ -164,6 +164,16 @@ export const routesConfig: RouteObject[] = [
         path: "/customs",
         children: [
           {
+            path: "/customs/package-change",
+            lazy: async () => ({
+              Component: (
+                await import(
+                  "@features/customs/package-change/package-change.component"
+                )
+              ).default,
+            }),
+          },
+          {
             path: "/customs/clearance-of-goods",
             lazy: async () => ({
               Component: (
@@ -203,8 +213,9 @@ export const routesConfig: RouteObject[] = [
       {
         path: "/change-passwd",
         lazy: async () => ({
-          Component: (await import("@features/pm/account/change-passwd.component"))
-            .default,
+          Component: (
+            await import("@features/pm/account/change-passwd.component")
+          ).default,
         }),
       },
       {

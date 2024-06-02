@@ -1,4 +1,24 @@
 {
+    "导出勾选数据": {
+        "zh": "导出勾选数据",
+        "en": "Export Selected Data"
+    },
+    "包裹变动状态": {
+        "zh": "包裹变动状态",
+        "en": "Package Status Change"
+    },
+    "发生变更的包裹尾程号": {
+        "zh": "发生变更的包裹尾程号",
+        "en": "Affected Package Serial Number"
+    },
+    "变动方式": {
+        "zh": "变动方式",
+        "en": "Change Method"
+    },
+    "是否变动": {
+        "zh": "是否变动",
+        "en": "Has Changed"
+    },
     "提单未关联不能设置 ATA ATD": {
         "zh": "提单未关联不能设置 ATA ATD",
         "en": "The waybill is not associated and cannot set ATA/ATD."

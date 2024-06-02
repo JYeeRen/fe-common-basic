@@ -25,6 +25,7 @@ const navConfig = (): TopNavItem[] => [
     key: "customs",
     label: t("关务风控"),
     permissions: [
+      // "customs.item",
       "customs.item",
       "customs.status",
       "customs.document",
@@ -40,6 +41,11 @@ const navConfig = (): TopNavItem[] => [
         key: "/customs",
         label: t("关务单证"),
         children: [
+          {
+            key: "/customs/package-change",
+            label: t("包裹变动状态"),
+            // permission: "customs.item",
+          },
           {
             key: "/customs/clearance-of-goods",
             label: t("商品详细信息"),
