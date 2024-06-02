@@ -17,4 +17,10 @@ export interface CustomsTrackLogAPI {
     };
     res: ListRes<Schema.MawbCustomsTrackLog>;
   };
+  "/api/customsTrackLog/findMawbStatusList": {
+    params: ListParams & {
+      masterWaybillNoList?: string[];
+    };
+    res: ListRes<Schema.MawbStatus>;
+  }
 }

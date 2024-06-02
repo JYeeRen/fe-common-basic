@@ -1,4 +1,32 @@
 {
+    "进口清关开始": {
+        "zh": "进口清关开始",
+        "en": "Customs Clearance Started"
+    },
+    "海关放行": {
+        "zh": "海关放行",
+        "en": "Customs Release"
+    },
+    "进口清关完成": {
+        "zh": "进口清关完成",
+        "en": "Customs Clearance Completed"
+    },
+    "进口清关异常": {
+        "zh": "进口清关异常",
+        "en": "Customs Clearance Exception"
+    },
+    "进口清关查验": {
+        "zh": "进口清关查验",
+        "en": "Customs Inspection"
+    },
+    "交接给末端配送服务商": {
+        "zh": "交接给末端配送服务商",
+        "en": "Handover to Last-Mile Delivery Service Provider"
+    },
+    "提单状态占比": {
+        "zh": "提单状态占比",
+        "en": "Shipment Status Proportion"
+    },
     "导出勾选数据": {
         "zh": "导出勾选数据",
         "en": "Export Selected Data"

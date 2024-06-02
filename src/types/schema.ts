@@ -217,3 +217,14 @@ export interface PacakgeChange {
   changeTypeValue: string;
   trackingNoList: string;
 }
+
+export interface MawbStatus {
+  id: number;
+  masterWaybillNo: string;
+  customsStart: string;
+  customsInspection: string;
+  customsRelease: string;
+  customsFinished: string;
+  customsException: string;
+  transportHandover: string;
+}
