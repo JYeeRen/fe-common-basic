@@ -50,6 +50,16 @@ const trajectory: RouteObject[] = [
     }),
   },
   {
+    path: "/customs/trajectory/clearance",
+    lazy: async () => ({
+      Component: (
+        await import(
+          "@features/trajectory/bill-of-lading/clearance.component"
+        )
+      ).default,
+    }),
+  },
+  {
     path: "/customs/trajectory/packages",
     lazy: async () => ({
       Component: (

@@ -1,4 +1,32 @@
 {
+    "附件支持的格式：'png','pdf'": {
+        "zh": "附件支持的格式：'png','pdf'",
+        "en": "Supported formats for attachments：'png'，'pdf'"
+    },
+    "请上传文件": {
+        "zh": "请上传文件",
+        "en": "Upload files"
+    },
+    "文件下载": {
+        "zh": "文件下载",
+        "en": "Download"
+    },
+    "尾程服务商": {
+        "zh": "尾程服务商",
+        "en": "Last Mile Service Provider"
+    },
+    "回传状态": {
+        "zh": "回传状态",
+        "en": "Status"
+    },
+    "POD回传": {
+        "zh": "POD回传",
+        "en": "POD Feedback"
+    },
+    "通关文件回传": {
+        "zh": "通关文件回传",
+        "en": "Customs Clearance Document Feedback"
+    },
     "进口清关开始": {
         "zh": "进口清关开始",
         "en": "Customs Clearance Started"

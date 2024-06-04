@@ -2,7 +2,21 @@ import * as Schema from "../schema";
 import { File, ListParams, ListRes } from "./common.types";
 
 export interface CustomsDocumentAPI {
+  "/api/customsDocument/uploadClearanceFiles": {
+    params: FormData;
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/downloadClearanceFile": {
+    params: { id: number };
+    res: { filename: string; url: string };
+  };
   "/api/customsDocument/findList": {
+    params: ListParams & {
+      masterWaybillNoList?: string[];
+    };
+    res: ListRes<Schema.CustomsDocument>;
+  };
+  "/api/customsDocument/findClearanceList": {
     params: ListParams & {
       noList?: string[];
       noType?: number;

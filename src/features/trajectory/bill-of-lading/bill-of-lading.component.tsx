@@ -16,6 +16,8 @@ import {
   EditableDateCell,
   notification,
   Modal,
+  TabsProps,
+  Tabs,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
@@ -33,9 +35,11 @@ import { compact } from "lodash";
 import { convertDate, dayjs } from "@infra";
 import { UploadModal } from "./upload-modal.component";
 import { CellEditModal } from "./cell-edit-modal.component";
+import tabsStyles from './tabs.module.less';
+import clsx from "clsx";
 
 function TrackTraceComponent() {
-  const { store, t } = useStore(BillOfLadingStore)();
+  const { store, t, navigate } = useStore(BillOfLadingStore)();
   const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows);
 
   const updateConfirm = useCallback(
@@ -220,8 +224,11 @@ function TrackTraceComponent() {
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
-  return (
-    <Container className={styles.container} loading={store.loading}>
+  const children = (
+    <Container
+      className={clsx(tabsStyles.subcontainer, tabsStyles.container)}
+      loading={store.loading}
+    >
       {Boolean(store.editingCell) && (
         <CellEditModal
           open={Boolean(store.editingCell)}
@@ -242,7 +249,7 @@ function TrackTraceComponent() {
         // layout="vertical"
         initialValues={initialValues}
       >
-        <Col span={10}>
+        <Col span={9}>
           <Row>
             <div style={{ paddingBottom: "8px" }}>
               <Form.Item noStyle>
@@ -462,6 +469,33 @@ function TrackTraceComponent() {
           }}
         />
       </Container>
+    </Container>
+  );
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: t("提单轨迹信息"),
+      children: children,
+    },
+    {
+      key: "2",
+      label: t("通关文件回传"),
+    },
+  ];
+
+  return (
+    <Container className={tabsStyles.container}>
+      <Tabs
+        activeKey="1"
+        items={items}
+        onTabClick={(activeKey) => {
+          if (activeKey === "1") {
+            return;
+          }
+          navigate("/customs/trajectory/clearance");
+        }}
+      />
     </Container>
   );
 }

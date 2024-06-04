@@ -228,3 +228,10 @@ export interface MawbStatus {
   customsException: string;
   transportHandover: string;
 }
+
+export interface Clearance {
+  id: number;
+  masterWaybillNo: string;
+  nextProviderNames: string;
+  status: number;
+}

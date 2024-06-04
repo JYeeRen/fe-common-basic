@@ -11,10 +11,21 @@ interface FileUploadProps {
   onChange?: (files: UploadFile[]) => void;
   multiple?: boolean;
   maxCount?: number;
+  desc?: string;
+  accept?: string;
 }
 
 export const FileUpload = (props: FileUploadProps) => {
-  const { loading, title, value, onChange, multiple = false, maxCount } = props;
+  const {
+    loading,
+    title,
+    value,
+    onChange,
+    multiple = false,
+    maxCount,
+    desc,
+    accept = ".xlsx,.xls",
+  } = props;
   const [t] = useTranslation();
   const [files, setFiles] = useState(value ?? []);
   const handleChange = (fileList: UploadFile[]) => {
@@ -27,7 +38,7 @@ export const FileUpload = (props: FileUploadProps) => {
       <Upload
         name="file"
         action=""
-        accept=".xlsx,.xls"
+        accept={accept}
         multiple={multiple}
         maxCount={maxCount}
         beforeUpload={() => false}
@@ -41,7 +52,7 @@ export const FileUpload = (props: FileUploadProps) => {
               {t("上传附件")}
             </Button>
             <span className={uploadStyles.tip}>
-              {t("附件支持的格式：'xlsx'，'xls'")}
+              {desc ?? t("附件支持的格式：'xlsx'，'xls'")}
             </span>
           </div>
         </div>
