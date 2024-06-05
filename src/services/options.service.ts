@@ -11,6 +11,7 @@ export type InnerOptions = { value: string | number; label: string }[];
 
 export type OptionKey =
   | "clearanceFileStatusTypes"
+  | "customsTrackAddPackageNoTypes"
   | "actives"
   | "customsItemInfoOtherTypes"
   | "mawbStatuses"
@@ -50,6 +51,7 @@ class OptionService {
   customsTrackPackageNoTypes: InnerOptions = [];
   customsTrackStatusNoTypes: InnerOptions = [];
   customsTrackStatusTypes: InnerOptions = [];
+  customsTrackAddPackageNoTypes: InnerOptions = [];
   roles: InnerOptions = [];
   customsTemplates: InnerOptions = [];
   prealertTemplates: InnerOptions = [];
@@ -87,6 +89,11 @@ class OptionService {
       formater: this.id_val_formatter,
     },
     customsStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    customsTrackAddPackageNoTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,

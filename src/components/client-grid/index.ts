@@ -12,9 +12,14 @@ interface UseGridStoreOptions {
   initialValues?: any;
 }
 
-function useGridStore<T>(getRows?: getRowsFunc<T>, options?: UseGridStoreOptions) {
+interface GridStoreOptions {
+  pagination?: boolean;
+}
+
+
+function useGridStore<T>(getRows?: getRowsFunc<T>, options?: UseGridStoreOptions, gridStoreOptions?: GridStoreOptions) {
   const { autoLoad = true, initialValues } = options || {};
-  const gridStore = useMemo(() => new ClientGrid.GridStore(getRows), []);
+  const gridStore = useMemo(() => new ClientGrid.GridStore(getRows, gridStoreOptions), []);
   useEffect(() => {
     if (initialValues) {
       gridStore.setQueryParams(initialValues);

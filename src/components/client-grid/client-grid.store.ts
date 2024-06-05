@@ -6,6 +6,7 @@ import { loading } from "@infra";
 export class ClientGridStore<T> {
   loading = false;
 
+  pagination = true;
   page: number = 1;
   pageSize: number = 50;
   total: number = 0;
@@ -13,7 +14,8 @@ export class ClientGridStore<T> {
   private readonly getRows?: getRowsFunc<T> = undefined;
   queryParams: AnyObject = {};
 
-  constructor(getRows?: getRowsFunc<T>) {
+  constructor(getRows?: getRowsFunc<T>, options?: { pagination?: boolean }) {
+    this.pagination = options?.pagination ?? true;
     this.getRows = getRows;
     makeAutoObservable(this);
 
@@ -35,8 +37,8 @@ export class ClientGridStore<T> {
       return;
     }
     const { list, total } = await this.getRows({
-      page: this.page,
-      size: this.pageSize,
+      page: (this.pagination ? this.page : undefined) as number,
+      size: (this.pagination? this.pageSize : undefined) as number,
       ...this.queryParams,
     });
     runInAction(() => {

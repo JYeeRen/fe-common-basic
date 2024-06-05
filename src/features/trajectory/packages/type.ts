@@ -12,6 +12,7 @@ export interface FormValues {
 
 export type Package = Pick<
 Schema.PackageCustomsTrack,
+| 'masterWaybillNo'
 | "id"
 | "bigBagNo"
 | "providerOrderId"

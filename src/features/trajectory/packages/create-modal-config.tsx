@@ -2,8 +2,9 @@ import { net } from "@infra";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
 import { Package, QueryParams } from "./type";
+import { chain } from "lodash";
 
-export const getColumns = (): TableColumnsType<Package> => {
+export const getColumns = (rows: Package[]): TableColumnsType<Package> => {
   return [
     {
       width: 60,
@@ -11,6 +12,17 @@ export const getColumns = (): TableColumnsType<Package> => {
       dataIndex: "index",
       title: t("序号"),
       render: (__v, __r, index) => index + 1,
+    },
+    {
+      key: "masterWaybillNo",
+      dataIndex: "masterWaybillNo",
+      title: t("提单号"),
+      filters: chain(rows).map('masterWaybillNo').uniq().compact().map(v => ({ text: v, value: v })).value(),
+      filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value, record) => {
+        return record.masterWaybillNo === value;
+      },
     },
     {
       key: "bigBagNo",
