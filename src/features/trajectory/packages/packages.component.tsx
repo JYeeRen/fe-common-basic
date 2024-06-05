@@ -107,7 +107,7 @@ function TrackTraceComponent() {
           }}
         />
       </Container>
-      <CreateModal store={store} />
+      {store.createModalVisible && <CreateModal store={store} />}
     </Container>
   );
 }

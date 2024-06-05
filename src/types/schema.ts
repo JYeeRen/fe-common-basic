@@ -186,7 +186,7 @@ export interface PackageCustomsTrack {
   operateTime: string;
   createdTime: string;
   userName: string;
-  masterWaybillNo: number;
+  masterWaybillNo: string;
 }
 
 export interface MawbCustomsTrack {

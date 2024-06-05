@@ -44,6 +44,7 @@ export const getColumns = (operatons: Operation): TableColumnsType<Clearance> =>
                 icon: <CloudDownloadOutlined />,
                 onClick: () => operatons.download?.(data.id),
                 label: t("文件下载"),
+                disabled: data.status === 1
               },
               {
                 key: "upload",

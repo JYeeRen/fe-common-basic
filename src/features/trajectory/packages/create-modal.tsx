@@ -249,6 +249,7 @@ const Query = observer((props: QueryProps) => {
         columns={columns}
         size="small"
         scroll={{ y: 300 }}
+        useColWidth
         // pagination={
         //   gridStore.total > 0 && {
         //     total: gridStore.total,
