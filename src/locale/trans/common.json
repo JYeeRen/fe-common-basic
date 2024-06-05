@@ -1,4 +1,20 @@
 {
+    "上传失败": {
+        "zh": "上传失败",
+        "en": "Failed"
+    },
+    "上传文件": {
+        "zh": "上传文件",
+        "en": "Upload"
+    },
+    "上传成功": {
+        "zh": "上传成功",
+        "en": "Success"
+    },
+    "未命名的文件": {
+        "zh": "未命名的文件",
+        "en": "unknownFile"
+    },
     "附件支持的格式：'png','pdf'": {
         "zh": "附件支持的格式：'png','pdf'",
         "en": "Supported formats for attachments：'png'，'pdf'"

@@ -17,10 +17,13 @@ interface UploadClearanceProps {
   refreshTable: () => void;
   onCancel: () => void;
   open: boolean;
+  uploadingId: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleOk: (files: any[]) => void;
 }
 
 export const UploadClearance = observer((props: UploadClearanceProps) => {
-  const { store, open } = props;
+  const { store, open, onCancel, handleOk } = props;
   const [t] = useTranslation();
   const [form] = Form.useForm();
   // const otherError = useCallback(
@@ -57,12 +60,8 @@ export const UploadClearance = observer((props: UploadClearanceProps) => {
   // );
 
   const onOk = async () => {
-    const { timeZone, file } = form.getFieldsValue();
-
-    const formdata = new FormData();
-    formdata.append("file", file[0].originFileObj);
-    formdata.append("timeZone", timeZone);
-    // const res = await store.checkMawbTrackFile(formdata);
+    const { files } = form.getFieldsValue();
+    handleOk(files);
   };
 
   return (
@@ -71,24 +70,25 @@ export const UploadClearance = observer((props: UploadClearanceProps) => {
       title={t("文件上传")}
       width={550}
       destroyOnClose
-      // onCancel={onCancel}
+      onCancel={onCancel}
       maskClosable={false}
       footer={null}
       afterClose={form.resetFields}
     >
       <Form form={form}>
         <div className="my-10">
-          <Form.Item noStyle name="file" rules={[{ required: true }]}>
+          <Form.Item noStyle name="files" rules={[{ required: true, type: 'array', min: 1 }]}>
             <FileUpload
+              multiple
               title={<span className="mr-4">{t("请上传文件")}:</span>}
-              maxCount={1}
               desc={t("附件支持的格式：'png','pdf'")}
               accept=".png,.pdf"
+              loading={store.loading}
             />
           </Form.Item>
         </div>
         <Row justify="end" className="my-4">
-          <Button className="mr-4" onClick={() => {}}>
+          <Button className="mr-4" onClick={onCancel}>
             {t("取消")}
           </Button>
           <SubmitButton form={form} onClick={onOk} loading={store.loading}>

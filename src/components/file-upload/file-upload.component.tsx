@@ -29,7 +29,7 @@ export const FileUpload = (props: FileUploadProps) => {
   const [t] = useTranslation();
   const [files, setFiles] = useState(value ?? []);
   const handleChange = (fileList: UploadFile[]) => {
-    setFiles(fileList);
+    setFiles([...fileList]);
     onChange?.(fileList);
   };
 

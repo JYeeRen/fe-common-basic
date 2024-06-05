@@ -18,8 +18,12 @@ export const SubmitButton: FC<PropsWithChildren<SubmitButtonProps>> = ({
   useEffect(() => {
     form
       .validateFields({ validateOnly: true })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
+      .then(() => {
+        setSubmittable(true);
+      })
+      .catch((err) => {
+        setSubmittable(err.errorFields.length === 0);
+      });
   }, [form, values]);
 
   return (

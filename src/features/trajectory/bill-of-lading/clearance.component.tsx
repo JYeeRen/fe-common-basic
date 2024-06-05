@@ -5,6 +5,7 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Modal,
   SearchSelect,
   Table,
   Tabs,
@@ -44,14 +45,68 @@ function ClearanceComponent() {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleUpload = async (files: any[]) => {
+    const formData = new FormData();
+    formData.append("id", uploadingId.toString());
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    files.forEach((file: any) => {
+      formData.append("files", file.originFileObj);
+    });
+
+    setUploadingId(0);
+
+    const failed = await store.upload(formData);
+
+    Modal.confirm({
+      width: 700,
+      title: t("操作确认"),
+      content: (
+        <div>
+          <p style={{ marginBottom: '5px' }}>
+            {t("上传文件")}: {files.length}
+          </p>
+          <p style={{ marginBottom: '5px' }}>
+            {t("上传成功")}: {files.length - failed.length}
+          </p>
+          <p style={{ marginBottom: '5px' }}>
+            {t("上传失败")}: {failed.length}
+          </p>
+          {failed.length ? (
+            <Table
+            columns={[
+              { title: t("文件名"), dataIndex: "number" },
+              { title: t("失败原因"), dataIndex: "reason" },
+            ]}
+            dataSource={failed}
+            pagination={false}
+          />
+          ) : null}
+        </div>
+      ),
+      cancelButtonProps: { style: { display: "none" } },
+      onOk: () => {
+        gridStore.loadData();
+      }
+    });
+    // const failed = await store.upload(formData);
+  };
+
   const children = (
-    <Container className={clsx(tabsStyles.subcontainer, tabsStyles.container)}>
-      <UploadClearance
-        store={store}
-        refreshTable={gridStore.loadData.bind(gridStore)}
-        onCancel={() => setUploadingId(0)}
-        open={uploadingId !== 0}
-      />
+    <Container
+      className={clsx(tabsStyles.subcontainer, tabsStyles.container)}
+      loading={store.loading}
+    >
+      {uploadingId !== 0 && (
+        <UploadClearance
+          store={store}
+          refreshTable={gridStore.loadData.bind(gridStore)}
+          onCancel={() => setUploadingId(0)}
+          open={uploadingId !== 0}
+          uploadingId={uploadingId}
+          handleOk={handleUpload}
+        />
+      )}
       <FilterContainer onFinish={handleFinish} layout="vertical">
         <Col span={12}>
           <Form.Item

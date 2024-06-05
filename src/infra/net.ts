@@ -10,6 +10,7 @@ import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
 import dayjs from "./dayjs";
 import appService from "@services/app.service";
+import { t } from "@locale";
 
 const baseURL = import.meta.env.VITE_BACKEND_HOST;
 
@@ -105,7 +106,6 @@ class Net {
       url: string;
     };
 
-    if (!fileName) throw new Error('导出失败');
     if (!downloadUrl) throw new Error('导出失败');
 
     const res = await axios.get(downloadUrl, {
@@ -119,7 +119,7 @@ class Net {
 
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
+    link.download = fileName || t('未命名的文件');
     link.click();
     window.URL.revokeObjectURL(link.href);
   }
