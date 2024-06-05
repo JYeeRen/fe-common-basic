@@ -148,7 +148,7 @@ export class CustomTemplateOperationStore {
   get initialValues(): CustomTemplateFormValues {
     return {
       name: "",
-      type: 0,
+      type: 1,
       active: true,
       mergeOrderNumber: false,
       columns: [],

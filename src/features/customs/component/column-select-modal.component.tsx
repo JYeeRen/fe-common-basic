@@ -16,7 +16,6 @@ interface ColumnSelectModalProps {
 
 export const ColumnSelectModal = observer((props: ColumnSelectModalProps) => {
   const { templateCols, targetKeys, open, onOk, onCancel } = props;
-  console.log(templateCols);
   const [t] = useTranslation();
   const [selectedKeys, setSelectedKeys] =
     useState<TransferProps["targetKeys"]>([]);
