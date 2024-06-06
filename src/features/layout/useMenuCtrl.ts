@@ -124,6 +124,35 @@ const navConfig = (): TopNavItem[] => [
       },
     ],
   },
+  {
+    key: "warehouse",
+    label: t("仓库管理"),
+    permissions: ["warehouse.receipt"],
+    sidenavs: [
+      {
+        key: "/warehouse/prediction",
+        label: t("预报管理"),
+        children: [
+          {
+            key: "/warehouse/prediction/list",
+            label: t("入库预报"),
+            permission: "warehouse.receipt"
+          }
+        ]
+      },
+      {
+        key: "/warehouse/cargo",
+        label: t("货物跟踪"),
+        children: [
+          {
+            key: "/warehouse/cargo/query",
+            label: t("货物查询"),
+            permission: "warehouse.receipt"
+          }
+        ]
+      },
+    ],
+  }
 ];
 
 export const useMenuCtrl = () => {

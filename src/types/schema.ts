@@ -217,3 +217,11 @@ export interface PacakgeChange {
   changeTypeValue: string;
   trackingNoList: string;
 }
+
+export interface WarehouseReceipt {
+  id: number;
+  masterWaybillNo: string,
+  bigBagNo: string,
+  tailProviderName: string,
+  status: number;
+}

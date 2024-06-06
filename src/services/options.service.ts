@@ -29,7 +29,9 @@ export type OptionKey =
   | "roles"
   | "customsTemplates"
   | "prealertTemplates"
-  | "permissions";
+  | "permissions"
+  | "receiptNoTypes"
+  | "receiptStatusTypes";
 
 class OptionService {
   actives: InnerOptions = [];
@@ -52,6 +54,8 @@ class OptionService {
   customsTemplates: InnerOptions = [];
   prealertTemplates: InnerOptions = [];
   permissions: Schema.Permission[] = [];
+  receiptNoTypes: InnerOptions = [];
+  receiptStatusTypes: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -169,6 +173,16 @@ class OptionService {
       dataGetter: "permissions",
       optsfrom: "permissions",
       formater: (opts: Schema.Permission[]) => opts,
+    },
+    receiptNoTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    receiptStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
     },
   } as const;
 

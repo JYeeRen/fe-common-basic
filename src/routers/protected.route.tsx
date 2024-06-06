@@ -40,6 +40,9 @@ const routerPermission: Record<string, string> = {
   "/pm/roles/create": "admin.role",
   "/pm/roles/:id/edit": "admin.role",
   "/pm/roles/:id": "admin.role",
+  // 仓库管理
+  "/warehouse/prediction/list": "warehouse.receipt",
+  "/warehouse/cargo/query": "warehouse.receipt"
 };
 
 export function ProtectedRoute(props: PropsWithChildren) {

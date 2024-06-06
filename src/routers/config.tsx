@@ -142,6 +142,23 @@ const accounts: RouteObject[] = [
   },
 ];
 
+const Warehouse: RouteObject[] = [
+  {
+    path: "/warehouse/prediction/list",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/prediction/prediction.component"))
+          .default,
+    }),
+  },
+  {
+    path: "/warehouse/cargo/query",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/cargo-track/cargo-track.component"))
+          .default,
+    }),
+  },
+]
+
 export const routesConfig: RouteObject[] = [
   {
     path: "/",
@@ -159,6 +176,14 @@ export const routesConfig: RouteObject[] = [
       {
         path: "/pm",
         Component: Welcome,
+      },
+      {
+        path: "/warehouse",
+        Component: Welcome,
+      },
+      {
+        path: "/warehouse",
+        children: [...Warehouse],
       },
       {
         path: "/customs",

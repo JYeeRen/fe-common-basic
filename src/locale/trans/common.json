@@ -1230,5 +1230,45 @@
     "商品已税/未税": {
         "zh": "商品已税/未税",
         "en": "Duty required/duty exempt"
+    },
+    "仓库管理": {
+        "zh": "仓库管理",
+        "en": "Warehouse Management"
+    },
+    "预报管理": {
+        "zh": "预报管理",
+        "en": "Prediction Management"
+    },
+    "入库预报": {
+        "zh": "入库预报",
+        "en": "Warehouse Prediction"
+    },
+    "货物跟踪": {
+        "zh": "货物跟踪",
+        "en": "Cargo Tracking"
+    },
+    "货物查询": {
+        "zh": "货物查询",
+        "en": "Cargo Query"
+    },
+    "新增入库预报": {
+        "zh": "新增入库预报",
+        "en": "Add Warehouse Prediction"
+    },
+    "批量添加入库预报": {
+        "zh": "批量添加入库预报",
+        "en": "Add Warehouse Prediction In Batches"
+    },
+    "尾程服务商名称": {
+        "zh": "尾程服务商名称",
+        "en": "Tail End Service Provider Name"
+    },
+    "货物状态": {
+        "zh": "货物状态",
+        "en": "Cargo Status"
+    },
+    "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作。": {
+        "zh": "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作。",
+        "en": "Warning! Once confirmed to continue, the data will be permanently deleted, this operation cannot be recovered, please be cautious."
     }
 }
