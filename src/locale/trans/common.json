@@ -19,9 +19,9 @@
         "zh": "未命名的文件",
         "en": "unknownFile"
     },
-    "附件支持的格式：'png','pdf'": {
-        "zh": "附件支持的格式：'png','pdf'",
-        "en": "Supported formats for attachments：'png'，'pdf'"
+    "附件支持的格式：'jpg','jpeg','png','pdf'": {
+        "zh": "附件支持的格式：'jpg','jpeg','png','pdf'",
+        "en": "Supported formats for attachments: 'jpg','jpeg','png','pdf'"
     },
     "请上传文件": {
         "zh": "请上传文件",
