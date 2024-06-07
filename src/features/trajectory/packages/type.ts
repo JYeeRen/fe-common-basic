@@ -18,6 +18,7 @@ Schema.PackageCustomsTrack,
 | "providerOrderId"
 | "declarationBillId"
 | "trackingNo"
+| "nextProviderName"
 >
 
 export type AddPacakageTrackFormValues = {
