@@ -1255,6 +1255,10 @@
         "zh": "新增入库预报",
         "en": "Add Warehouse Prediction"
     },
+    "编辑入库预报": {
+        "zh": "编辑入库预报",
+        "en": "Edit Warehouse Prediction"
+    },
     "批量添加入库预报": {
         "zh": "批量添加入库预报",
         "en": "Add Warehouse Prediction In Batches"
@@ -1270,5 +1274,25 @@
     "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作。": {
         "zh": "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作。",
         "en": "Warning! Once confirmed to continue, the data will be permanently deleted, this operation cannot be recovered, please be cautious."
+    },
+    "请填写提单号": {
+        "zh": "请填写提单号",
+        "en": "Please enter the Air Waybill Number"
+    },
+    "请填写袋号": {
+        "zh": "请填写袋号",
+        "en": "Please enter the Carton Number"
+    },
+    "请填写尾程服务商名称": {
+        "zh": "尾程服务商名称",
+        "en": "Please enter the Tail End Service Provider Name"
+    },
+    "注：提单号和袋号不可修改，若数据错误，请删除后重新录入。": {
+        "zh": "注：提单号和袋号不可修改，若数据错误，请删除后重新录入。",
+        "en": "Note: The Air Waybill Number and Carton Number cannot be modified, if the data is incorrect, please delete and re-enter."
+    },
+    "入库时间": {
+        "zh": "入库时间",
+        "en": "Warehouse Time"
     }
 }

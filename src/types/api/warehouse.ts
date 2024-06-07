@@ -25,4 +25,33 @@ export interface WarehouseAPI {
         };
         res: { failed: { number: string; reason: string }[] };
     };
+
+    "/api/warehouse/receipt/downloadTemplate": {
+        params?: never;
+        res: { url: string; fileName: string };
+    };
+
+    "/api/warehouse/receipt/upload": {
+        params: FormData;
+        res: {
+            failed: { number: string; reason: string }[];
+            total: number;
+            success: number;
+        };
+    };
+
+    "/api/warehouse/receipt/getInfo": {
+        params: { id: number };
+        res: Schema.WarehouseReceipt;
+    };
+
+    "/api/warehouse/receipt/created": {
+        params: Schema.WarehouseReceipt;
+        res: never;
+    };
+
+    "/api/warehouse/receipt/edit": {
+        params: Schema.WarehouseReceipt;
+        res: never;
+    };
 }

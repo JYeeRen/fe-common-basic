@@ -29,6 +29,11 @@ export const getColumns = (params: {
             },
         },
         {
+            key: "receiptTime",
+            dataIndex: "receiptTime",
+            title: t("入库时间"),
+        },
+        {
             key: "tailProviderName",
             dataIndex: "tailProviderName",
             title: t("尾程服务商名称")

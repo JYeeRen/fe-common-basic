@@ -11,17 +11,18 @@ import {
 } from "@components";
 import styles from "./prediction.module.less";
 import optionsService from "@services/options.service.ts";
-import {CloudUploadOutlined, PlusOutlined} from "@ant-design/icons";
+import {CloudDownloadOutlined, CloudUploadOutlined, PlusOutlined} from "@ant-design/icons";
 import * as PredictionConfig from "./prediction-config.tsx";
 import {useStore} from "@hooks";
 import {PredictionStore} from "@features/warehouse/prediction/prediction.store.ts";
 import {useCallback, useEffect, useMemo} from "react";
 import {compact} from "lodash";
 import {WarehouseReceiptFormValues} from "@features/warehouse/prediction/type.ts";
+import {PredictionUploadModal} from "@features/warehouse/prediction/prediction-upload.component.tsx";
 
 function PredictionComponent() {
     const gridStore = ClientGrid.useGridStore(PredictionConfig.getRows, { autoLoad: false });
-    const { store, t } = useStore(PredictionStore, gridStore)(gridStore);
+    const { store, t, navigate,} = useStore(PredictionStore, gridStore)(gridStore);
 
     useEffect(() => {
         store.gridStore.loadData();
@@ -42,7 +43,15 @@ function PredictionComponent() {
 
     const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
-    const deletePrediction = useCallback(({ id }: { id: number }) => {
+    const handleCreate = () => {
+        navigate("/warehouse/prediction/create");
+    };
+
+    const handleEdit = useCallback(({ id }: { id: number }) => {
+        navigate(`/warehouse/prediction/edit/${id}`)
+    }, []);
+
+    const handleDelete = useCallback(({ id }: { id: number }) => {
         Modal.confirm({
             title: t("操作确认"),
             content: t(
@@ -58,8 +67,8 @@ function PredictionComponent() {
         const colDefs = PredictionConfig.getColumns({
             receiptStatusTypes: optionsService.receiptStatusTypes,
             operation: {
-                edit: store.setEditing.bind(store),
-                delete: deletePrediction,
+                edit: handleEdit,
+                delete: handleDelete,
             },
         });
         return colDefs;
@@ -93,12 +102,21 @@ function PredictionComponent() {
                     <Button
                         className="operation-btn mr-4 mb-4"
                         icon={<PlusOutlined />}
+                        onClick={handleCreate}
                     >
                         {t("新增入库预报")}
                     </Button>
                     <Button
                         className="operation-btn mr-4 mb-4"
+                        icon={<CloudDownloadOutlined />}
+                        onClick={store.downloadTemplate.bind(store)}
+                    >
+                        {t("下载批量上传模板")}
+                    </Button>
+                    <Button
+                        className="operation-btn mr-4 mb-4"
                         icon={<CloudUploadOutlined />}
+                        onClick={store.showUploadModal.bind(store)}
                     >
                         {t("批量添加入库预报")}
                     </Button>
@@ -108,12 +126,12 @@ function PredictionComponent() {
                     widthFit
                     bordered
                     loading={gridStore.loading}
-                    rowSelection={{
-                        hideSelectAll: true,
-                        type: "checkbox",
-                        onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
-                        selectedRowKeys: store.selectedRowKeys,
-                    }}
+                    // rowSelection={{
+                    //     hideSelectAll: true,
+                    //     type: "checkbox",
+                    //     onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
+                    //     selectedRowKeys: store.selectedRowKeys,
+                    // }}
                     rowKey="id"
                     dataSource={gridStore.rowData}
                     columns={columns}
@@ -132,6 +150,10 @@ function PredictionComponent() {
                     }}
                 />
             </Container>
+            <PredictionUploadModal
+                store={store}
+                refreshTable={gridStore.loadData.bind(gridStore)}
+            />
         </Container>
     );
 }

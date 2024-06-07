@@ -84,12 +84,12 @@ function CargoTrackComponent() {
                     widthFit
                     bordered
                     loading={gridStore.loading}
-                    rowSelection={{
-                        hideSelectAll: true,
-                        type: "checkbox",
-                        onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
-                        selectedRowKeys: store.selectedRowKeys,
-                    }}
+                    // rowSelection={{
+                    //     hideSelectAll: true,
+                    //     type: "checkbox",
+                    //     onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
+                    //     selectedRowKeys: store.selectedRowKeys,
+                    // }}
                     rowKey="id"
                     dataSource={gridStore.rowData}
                     columns={columns}
