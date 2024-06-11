@@ -1294,5 +1294,9 @@
     "入库时间": {
         "zh": "入库时间",
         "en": "Warehouse Time"
+    },
+    "未完成数据袋号如下": {
+        "zh": "未完成数据袋号如下：",
+        "en": "Upload failed carton number shown below:"
     }
 }

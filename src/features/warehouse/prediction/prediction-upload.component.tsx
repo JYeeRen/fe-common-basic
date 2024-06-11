@@ -52,7 +52,7 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
                             n2: total - success,
                         })}
                     </p>
-                    <p style={{ color: "#c7c7c7" }}>{t("未完成数据提单号如下：")}</p>
+                    <p style={{ color: "#c7c7c7" }}>{t("未完成数据袋号如下：")}</p>
                     {failed.map((item, index) => (
                         <p key={`${index}_${item.number}`} style={{ color: "#c7c7c7" }}>
                             {item.number}
