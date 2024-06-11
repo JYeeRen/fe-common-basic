@@ -62,6 +62,7 @@ export interface CustomsTrackAPI {
         | "declarationBillId"
         | "trackingNo"
         | "masterWaybillNo"
+        | "nextProviderName"
       >
     >;
   };

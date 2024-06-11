@@ -217,6 +217,21 @@ export const getColumns = (rows: Package[]): TableColumnsType<Package> => {
         return record.declarationBillId === value;
       },
     },
+    {
+      key: "nextProviderName",
+      dataIndex: "nextProviderName",
+      title: t("下一段服务商名称"),
+      ...getColumnSearchProps(
+        chain(rows)
+          .map("nextProviderName")
+          .uniq()
+          .compact()
+          .value()
+      ),
+      onFilter: (value, record) => {
+        return record.nextProviderName === value;
+      },
+    }
   ];
 };
 
