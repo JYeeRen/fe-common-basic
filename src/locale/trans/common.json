@@ -1,4 +1,80 @@
 {
+    "包裹轨迹录入": {
+        "zh": "包裹轨迹录入",
+        "en": "Package track entry"
+    },
+    "上传失败": {
+        "zh": "上传失败",
+        "en": "Failed"
+    },
+    "上传文件": {
+        "zh": "上传文件",
+        "en": "Upload"
+    },
+    "上传成功": {
+        "zh": "上传成功",
+        "en": "Success"
+    },
+    "未命名的文件": {
+        "zh": "未命名的文件",
+        "en": "unknownFile"
+    },
+    "附件支持的格式：'jpg','jpeg','png','pdf'": {
+        "zh": "附件支持的格式：'jpg','jpeg','png','pdf'",
+        "en": "Supported formats for attachments: 'jpg','jpeg','png','pdf'"
+    },
+    "请上传文件": {
+        "zh": "请上传文件",
+        "en": "Upload files"
+    },
+    "文件下载": {
+        "zh": "文件下载",
+        "en": "Download"
+    },
+    "尾程服务商": {
+        "zh": "尾程服务商",
+        "en": "Last Mile Service Provider"
+    },
+    "回传状态": {
+        "zh": "回传状态",
+        "en": "Status"
+    },
+    "POD回传": {
+        "zh": "POD回传",
+        "en": "POD Feedback"
+    },
+    "通关文件回传": {
+        "zh": "通关文件回传",
+        "en": "Customs Clearance Document Feedback"
+    },
+    "进口清关开始": {
+        "zh": "进口清关开始",
+        "en": "Customs Clearance Started"
+    },
+    "海关放行": {
+        "zh": "海关放行",
+        "en": "Customs Release"
+    },
+    "进口清关完成": {
+        "zh": "进口清关完成",
+        "en": "Customs Clearance Completed"
+    },
+    "进口清关异常": {
+        "zh": "进口清关异常",
+        "en": "Customs Clearance Exception"
+    },
+    "进口清关查验": {
+        "zh": "进口清关查验",
+        "en": "Customs Inspection"
+    },
+    "交接给末端配送服务商": {
+        "zh": "交接给末端配送服务商",
+        "en": "Handover to Last-Mile Delivery Service Provider"
+    },
+    "提单状态占比": {
+        "zh": "提单状态占比",
+        "en": "Shipment Status Proportion"
+    },
     "导出勾选数据": {
         "zh": "导出勾选数据",
         "en": "Export Selected Data"

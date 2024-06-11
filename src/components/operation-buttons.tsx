@@ -7,6 +7,7 @@ interface OperationButtonsProps {
     icon?: ReactElement;
     onClick?: () => void;
     label: string;
+    disabled?: boolean;
   }[];
   show?: boolean;
 }
@@ -16,8 +17,9 @@ export function OperationButtons(props: OperationButtonsProps) {
   if (!show) {
     return <span style={{ height: '32px', display: 'inline-block' }} />;
   }
-  return items.map(({ key, icon, onClick, label }) => (
+  return items.map(({ key, icon, onClick, label, disabled }) => (
     <Button
+      disabled={disabled}
       key={key}
       type="link"
       icon={icon}

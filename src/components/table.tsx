@@ -1,5 +1,4 @@
 import { Block } from "@components";
-// import { useHeight } from "@hooks";
 import {
   TableProps,
   Table as AntTable,
@@ -7,7 +6,7 @@ import {
   TableColumnType,
   TableColumnsType,
 } from "antd";
-import { get } from "lodash";
+import { get, sumBy } from "lodash";
 import { observer } from "mobx-react-lite";
 import { useMemo, useState } from "react";
 import { Resizable } from "re-resizable";
@@ -31,7 +30,7 @@ function useColumnAutoWidth<T>(
       return columns;
     }
     const cols: TableColumnsType = columns.map((col) => {
-      const { dataIndex, title, width: predefWidth } = col;
+      const { dataIndex, title, width: predefWidth, filterDropdown } = col;
       if (predefWidth) {
         return col;
       }
@@ -45,9 +44,13 @@ function useColumnAutoWidth<T>(
         return acc;
       }, "");
 
-      const width =
+      let width =
         Math.ceil(Math.max(titleWidth ?? 100, getTextWidth(maxValue) ?? 0)) +
         20;
+
+      if (filterDropdown) {
+        width += 30
+      }
       return { ...col, width };
     });
     return cols;
@@ -61,6 +64,7 @@ interface ExternalTableProps {
   autoHeight?: boolean;
   maxHeight?: number;
   enableResize?: false;
+  useColWidth?: boolean;
 }
 
 export const Table = observer((props: TableProps & ExternalTableProps) => {
@@ -73,6 +77,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     enableResize,
     // autoHeight = true,
     // maxHeight = 250,
+    useColWidth,
     ...restProps
   } = props;
 
@@ -142,7 +147,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
             {...restProps}
             columns={columns}
             dataSource={dataSource}
-            scroll={{ y: height - 90, x: "max-content", ...scroll }}
+            scroll={{ y: height - 90, x: useColWidth ? sumBy(columns, 'width') : "max-content", ...scroll }}
             pagination={false}
           />
           <Block if={Boolean(pagination)}>

@@ -39,6 +39,11 @@ function AccountDetailComponent(props: RoleDetailProps) {
     onCommit({ roleId: Number(roleId), ...restFields });
   };
 
+  const onReset = () => {
+    form.resetFields();
+    form.setFieldsValue(initialValues);
+};
+
 
   return (
     <Container title={title} loading={loading}>
@@ -48,6 +53,7 @@ function AccountDetailComponent(props: RoleDetailProps) {
         form={form}
         className={styles.form}
         onFinish={handleFinish}
+        onReset={onReset}
       >
         <Form.Item
           label={t("用户账号")}

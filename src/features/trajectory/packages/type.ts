@@ -12,11 +12,13 @@ export interface FormValues {
 
 export type Package = Pick<
 Schema.PackageCustomsTrack,
+| 'masterWaybillNo'
 | "id"
 | "bigBagNo"
 | "providerOrderId"
 | "declarationBillId"
 | "trackingNo"
+| "nextProviderName"
 >
 
 export type AddPacakageTrackFormValues = {

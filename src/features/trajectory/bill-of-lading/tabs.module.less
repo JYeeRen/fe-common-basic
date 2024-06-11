@@ -1,0 +1,38 @@
+.container {
+  background-color: transparent;
+
+  :global {
+    .ant-tabs.ant-tabs-top {
+      height: 100%;
+    }
+
+    .ant-tabs-content-holder {
+      flex: 1;
+    }
+
+    .ant-tabs-nav {
+      margin-bottom: 4px;
+
+      .ant-tabs-nav-wrap {
+        background-color: #fff;
+        padding: 0 20px;
+
+        .ant-tabs-tab {
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+
+}
+
+.wrapper {
+  :global(.ant-spin-container) {
+    overflow: hidden;
+  }
+}
+
+.subcontainer {
+  padding-left: 0;
+  padding-right: 0;
+}

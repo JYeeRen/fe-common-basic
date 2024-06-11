@@ -186,6 +186,8 @@ export interface PackageCustomsTrack {
   operateTime: string;
   createdTime: string;
   userName: string;
+  masterWaybillNo: string;
+  nextProviderName: string;
 }
 
 export interface MawbCustomsTrack {
@@ -223,5 +225,22 @@ export interface WarehouseReceipt {
   masterWaybillNo: string,
   bigBagNo: string,
   tailProviderName: string,
+  status: number;
+}
+export interface MawbStatus {
+  id: number;
+  masterWaybillNo: string;
+  customsStart: string;
+  customsInspection: string;
+  customsRelease: string;
+  customsFinished: string;
+  customsException: string;
+  transportHandover: string;
+}
+
+export interface Clearance {
+  id: number;
+  masterWaybillNo: string;
+  nextProviderNames: string;
   status: number;
 }

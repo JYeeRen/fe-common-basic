@@ -6,6 +6,7 @@ import { TrackLogStore } from "./track-log.store";
 import { useMemo } from "react";
 import MawbTrackLog from "./track-log-mawb.component";
 import PacakgeTrackLog from "./track-log-package.component";
+import TrackLogMawbPercentage from "./track-log-percentage.component";
 
 
 function TrackInfoComponent() {
@@ -21,6 +22,11 @@ function TrackInfoComponent() {
       key: "pacage",
       label: t('包裹轨迹信息'),
       children: (<PacakgeTrackLog store={store} />),
+    },
+    {
+      key: "status",
+      label: t('提单状态占比'),
+      children: (<TrackLogMawbPercentage store={store} />),
     },
   ], []);
 

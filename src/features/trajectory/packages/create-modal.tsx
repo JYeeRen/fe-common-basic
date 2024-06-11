@@ -177,12 +177,12 @@ const Query = observer((props: QueryProps) => {
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
-  const columns = useMemo(() => listConfig.getColumns(), []);
-
   const gridStore = ClientGrid.useGridStore(listConfig.getRows, {
     autoLoad: false,
-  });
+  }, { pagination: false });
 
+  const columns = listConfig.getColumns(gridStore.rowData);
+  
   const [form] = Form.useForm();
 
   const handleQuery = () => {
@@ -207,7 +207,7 @@ const Query = observer((props: QueryProps) => {
           <Col span={18}>
             <Form.Item noStyle name="noType">
               <Radio.Group className="mb-2">
-                {optionsService.customsTrackPackageNoTypes.map((opt) => (
+                {optionsService.customsTrackAddPackageNoTypes.map((opt) => (
                   <Radio key={opt.value} value={opt.value}>
                     {opt.label}
                   </Radio>
@@ -249,20 +249,22 @@ const Query = observer((props: QueryProps) => {
         columns={columns}
         size="small"
         scroll={{ y: 300 }}
-        pagination={
-          gridStore.total > 0 && {
-            total: gridStore.total,
-            pageSize: gridStore.pageSize,
-            current: gridStore.page,
-            showTotal: (total) => t("共{{total}}条", { total }),
-            showQuickJumper: true,
-            showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
-            defaultPageSize: 50,
-            size: "default",
-            onChange: gridStore.onTableChange.bind(gridStore),
-          }
-        }
+        useColWidth
+        // pagination={
+        //   gridStore.total > 0 && {
+        //     total: gridStore.total,
+        //     pageSize: gridStore.pageSize,
+        //     current: gridStore.page,
+        //     showTotal: (total) => t("共{{total}}条", { total }),
+        //     showQuickJumper: true,
+        //     showSizeChanger: true,
+        //     pageSizeOptions: [10, 30, 50, 100, 200, 500],
+        //     defaultPageSize: 50,
+        //     size: "default",
+        //     onChange: gridStore.onTableChange.bind(gridStore),
+        //   }
+        // }
+        pagination={false}
       />
       <Row justify="end" className="my-4">
         <Button className="mr-4" onClick={store.toogleModalVisible.bind(store)}>
@@ -304,7 +306,7 @@ export const CreateModal = observer((props: CreateModalProps) => {
       destroyOnClose
       onCancel={store.toogleModalVisible.bind(store)}
       maskClosable={false}
-      title={t("异常轨迹录入")}
+      title={t("包裹轨迹录入")}
       width={760}
       footer={null}
       afterClose={() => {

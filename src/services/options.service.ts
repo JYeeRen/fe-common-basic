@@ -10,6 +10,8 @@ import { TZ } from "../types/api/options.types";
 export type InnerOptions = { value: string | number; label: string }[];
 
 export type OptionKey =
+  | "clearanceFileStatusTypes"
+  | "customsTrackAddPackageNoTypes"
   | "actives"
   | "customsItemInfoOtherTypes"
   | "mawbStatuses"
@@ -34,13 +36,14 @@ export type OptionKey =
   | "receiptStatusTypes";
 
 class OptionService {
+  clearanceFileStatusTypes: InnerOptions = [];
   actives: InnerOptions = [];
   customsItemInfoOtherTypes: InnerOptions = [];
   mawbStatuses: InnerOptions = [];
   packageStatuses: InnerOptions = [];
   customsStatusNoTypes: InnerOptions = [];
   customsStatusTypes: InnerOptions = [];
-  timeZones: (TZ & { label: string, originValue: string })[] = [];
+  timeZones: (TZ & { label: string; originValue: string })[] = [];
   templateTypes: InnerOptions = [];
   templateColumns: BackendOptions["templateColumns"] = [];
   unitTypes: InnerOptions = [];
@@ -50,6 +53,7 @@ class OptionService {
   customsTrackPackageNoTypes: InnerOptions = [];
   customsTrackStatusNoTypes: InnerOptions = [];
   customsTrackStatusTypes: InnerOptions = [];
+  customsTrackAddPackageNoTypes: InnerOptions = [];
   roles: InnerOptions = [];
   customsTemplates: InnerOptions = [];
   prealertTemplates: InnerOptions = [];
@@ -60,7 +64,7 @@ class OptionService {
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
     { value: 2, label: "预报文件模板" },
-  ]
+  ];
 
   optionConfig = {
     actives: {
@@ -93,15 +97,21 @@ class OptionService {
       optsfrom: "base",
       formater: this.id_val_formatter,
     },
+    customsTrackAddPackageNoTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
     timeZones: {
       url: "/api/option/getBase",
       optsfrom: "base",
-      formater: (opts: TZ[]) => opts.map(zone => ({
-        ...zone,
-        // value: `${zone.value}_${zone.offset}`,
-        // originValue: zone.value,
-        label: zone.text,
-      }))
+      formater: (opts: TZ[]) =>
+        opts.map((zone) => ({
+          ...zone,
+          // value: `${zone.value}_${zone.offset}`,
+          // originValue: zone.value,
+          label: zone.text,
+        })),
     },
     templateTypes: {
       url: "/api/option/getBase",
@@ -119,6 +129,11 @@ class OptionService {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.key_val_formater,
+    },
+    clearanceFileStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
     },
     actionCodeList: {
       url: "/api/option/getBase",
@@ -194,13 +209,15 @@ class OptionService {
     const base = await net.post("/api/option/getBase");
     const roles = await net.post("/api/option/getRoleNames");
     const customsTemplates = await net.post("/api/option/getCustomsTemplates");
-    const prealertTemplates = await net.post("/api/option/getPrealertTemplates");
+    const prealertTemplates = await net.post(
+      "/api/option/getPrealertTemplates"
+    );
     const permissions = await net.post("/api/option/getPermissions");
-    localStorage.setItem('options.base', base);
-    localStorage.setItem('options.roles', roles);
-    localStorage.setItem('options.customsTemplates', customsTemplates);
-    localStorage.setItem('options.prealertTemplates', prealertTemplates);
-    localStorage.setItem('options.permissions', permissions);
+    localStorage.setItem("options.base", base);
+    localStorage.setItem("options.roles", roles);
+    localStorage.setItem("options.customsTemplates", customsTemplates);
+    localStorage.setItem("options.prealertTemplates", prealertTemplates);
+    localStorage.setItem("options.permissions", permissions);
     return {
       base,
       roles,
