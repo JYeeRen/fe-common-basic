@@ -142,6 +142,7 @@ class Net {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     config.headers.Lang = ({ 'zh': 'zh-CN' } as any)[appService.lang] ?? appService.lang;
     config.headers.Utcoffset = this.utcOffset;
+    config.headers.Tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     return config;
   }
 

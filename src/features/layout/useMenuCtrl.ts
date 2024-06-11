@@ -127,7 +127,7 @@ const navConfig = (): TopNavItem[] => [
   {
     key: "warehouse",
     label: t("仓库管理"),
-    permissions: ["warehouse.receipt"],
+    permissions: ["warehouse.receipt", "warehouse.receipt_track"],
     sidenavs: [
       {
         key: "/warehouse/prediction",
@@ -147,7 +147,7 @@ const navConfig = (): TopNavItem[] => [
           {
             key: "/warehouse/cargo/query",
             label: t("货物查询"),
-            permission: "warehouse.receipt"
+            permission: "warehouse.receipt_track"
           }
         ]
       },
