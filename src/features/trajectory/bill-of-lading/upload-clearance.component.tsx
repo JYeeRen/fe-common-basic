@@ -82,7 +82,7 @@ export const UploadClearance = observer((props: UploadClearanceProps) => {
               multiple
               title={<span className="mr-4">{t("请上传文件")}:</span>}
               desc={t("附件支持的格式：'jpg','jpeg','png','pdf'")}
-              accept=".jpg,.jpeg.png,.pdf"
+              accept=".jpg,.jpeg,.png,.pdf"
               loading={store.loading}
             />
           </Form.Item>
