@@ -104,6 +104,10 @@ function RoleDetailComponent(props: RoleDetailProps) {
         form={form}
         className={styles.form}
         onFinish={handleFinish}
+        onReset={() => {
+          form.resetFields();
+          form.setFieldsValue(initialValues);
+        }}
       >
         <Form.Item
           label={t("角色名称")}
