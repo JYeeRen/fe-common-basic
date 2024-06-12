@@ -13,6 +13,7 @@ import { useTranslation } from "@locale";
 import { observer } from "mobx-react-lite";
 import type { DeclrationStore } from "../declaration.store";
 import { useState } from "react";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 interface CreatePrealertModalProps {
   store: DeclrationStore;
@@ -93,7 +94,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
       return store.gridStore.loadData();
     }
     
-    Modal.confirm({
+    const modal = Modal.confirm({
       title: t('操作确认'),
       content: (
         <div>
@@ -103,13 +104,32 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
           {failed.map(({ number }, index) => <p key={`${number}-${index}`}>{number}</p>)}
         </div>
       ),
-      okText: t('确认'),
-      cancelText: t('复制未完成单号'),
-      onCancel: async () => {
-        await navigator.clipboard.writeText(failed.map(i => i.number).join('\n'));
-        store.gridStore.loadData();
-      },
-      onOk: () => store.gridStore.loadData()
+      footer: (
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <CopyToClipboard text={failed.map(i => i.number).join('\n')}>
+              <Button
+                  key="back"
+                  onClick={() => {
+                    store.gridStore.loadData();
+                    modal.destroy()
+                  }}
+                  style={{marginRight: '10px'}} // 添加右边距
+              >
+                {t('复制未完成单号')}
+              </Button>
+            </CopyToClipboard>
+            <Button
+                key="submit"
+                type="primary"
+                onClick={() => {
+                  store.gridStore.loadData()
+                  modal.destroy();
+                }}
+            >
+              {t('确认')}
+            </Button>
+          </div>
+      ),
     });
   };
 

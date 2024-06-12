@@ -26,6 +26,7 @@ import { compact, find } from "lodash";
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
 import { convertDate, dayjs, debug } from "@infra";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -88,7 +89,7 @@ const Field = observer((props: FieldProps) => {
       return;
     }
 
-    Modal.confirm({
+    const modal = Modal.confirm({
       title: t("操作确认"),
       content: (
         <div>
@@ -99,11 +100,30 @@ const Field = observer((props: FieldProps) => {
           </ul>
         </div>
       ),
-      okText: t('确认'),
-      cancelText: t('复制未完成单号'),
-      onCancel: async () => {
-        await navigator.clipboard.writeText(failed.map(i => i.number).join('\n'));
-      }
+      footer: (
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <CopyToClipboard text={failed.map(i => i.number).join('\n')}>
+              <Button
+                  key="back"
+                  onClick={() => {
+                    modal.destroy()
+                  }}
+                  style={{marginRight: '10px'}} // 添加右边距
+              >
+                {t('复制未完成单号')}
+              </Button>
+            </CopyToClipboard>
+            <Button
+                key="submit"
+                type="primary"
+                onClick={() => {
+                  modal.destroy();
+                }}
+            >
+              {t('确认')}
+            </Button>
+          </div>
+      ),
     });
   };
 

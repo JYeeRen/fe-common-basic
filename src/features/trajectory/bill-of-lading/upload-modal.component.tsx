@@ -13,6 +13,7 @@ import { useTranslation } from "@locale";
 import { chain, uniq } from "lodash";
 import { useCallback } from "react";
 import { UploadRes } from "./type";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 interface UploadModalProps {
   store: BillOfLadingStore;
@@ -68,18 +69,17 @@ export const UploadModal = observer((props: UploadModalProps) => {
           maskClosable: false,
           footer: (
             <Row justify="end" className="my-4">
-              <Button
-                className="mr-4"
-                onClick={async () => {
-                  await navigator.clipboard.writeText(
-                    uniq(timeChange.map((i) => i.number)).join("\n")
-                  );
-                  Modal.destroyAll();
-                  resolve(false);
-                }}
-              >
-                {t("复制单号")}
-              </Button>
+              <CopyToClipboard text={uniq(timeChange.map((i) => i.number)).join("\n")}>
+                  <Button
+                      className="mr-4"
+                      onClick={async () => {
+                          Modal.destroyAll();
+                          resolve(false);
+                      }}
+                  >
+                      {t("复制单号")}
+                  </Button>
+              </CopyToClipboard>
               <Button
                 className="mr-4"
                 onClick={() => {
@@ -133,18 +133,17 @@ export const UploadModal = observer((props: UploadModalProps) => {
         ),
         footer: (
           <Row justify="end" className="my-4">
-            <Button
-              className="mr-4"
-              onClick={async () => {
-                await navigator.clipboard.writeText(
-                  uniq(overtime.map((i) => i.number)).join("\n")
-                );
-                Modal.destroyAll();
-                resolve(false);
-              }}
-            >
-              {t("复制单号")}
-            </Button>
+            <CopyToClipboard text={uniq(overtime.map((i) => i.number)).join("\n")}>
+                <Button
+                    className="mr-4"
+                    onClick={async () => {
+                        Modal.destroyAll();
+                        resolve(false);
+                    }}
+                >
+                    {t("复制单号")}
+                </Button>
+            </CopyToClipboard>
             <Button
               className="mr-4"
               onClick={() => {
@@ -184,7 +183,7 @@ export const UploadModal = observer((props: UploadModalProps) => {
 
   const otherError = useCallback(
     (errors: { number: string; reason: string }[]) => {
-      Modal.confirm({
+      const modal = Modal.confirm({
         width: 600,
         title: t("警告！"),
         content: (
@@ -200,55 +199,85 @@ export const UploadModal = observer((props: UploadModalProps) => {
             </div>
           </>
         ),
-        okText: t("复制单号"),
-        cancelText: t("放弃录入"),
-        onOk: async () => {
-          await navigator.clipboard.writeText(
-            uniq(errors.map((i) => i.number)).join("\n")
-          );
-        },
-        onCancel: () => {
-          store.hideUploadModal();
-        },
+        footer: (
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <Button
+                    key="back"
+                    onClick={() => {
+                        modal.destroy();
+                        store.hideUploadModal();
+                    }}
+                    style={{marginRight: '10px'}} // 添加右边距
+                >
+                    {t('放弃录入')}
+                </Button>
+                <CopyToClipboard text={uniq(errors.map((i) => i.number)).join("\n")}>
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            modal.destroy()
+                        }}
+                    >
+                        {t('复制单号')}
+                    </Button>
+                </CopyToClipboard>
+            </div>
+        ),
       });
     },
     []
   );
 
   const operationConfirm = useCallback((res: UploadRes) => {
-    const { failed, total, success } = res;
-    Modal.confirm({
-      okText: t('确认'),
-      cancelText: t('复制未完成单号'),
-      title: t("操作确认"),
-      onOk: () => {
-        refreshTable();
-      },
-      onCancel: async () => {
-        await navigator.clipboard.writeText(
-          uniq(failed.map((i) => i.number)).join("\n")
-        );
-      },
-      content: (
-        <>
-          <p style={{ color: "#c7c7c7" }}>
-            {t("全部上传数据：{{n}}条。", { n: total })}
-          </p>
-          <p style={{ color: "#c7c7c7" }}>
-            {t("完成上传数据：{{n1}}条。未上传数据：{{n2}}条。", {
-              n1: success,
-              n2: total - success,
-            })}
-          </p>
-          <p style={{ color: "#c7c7c7" }}>{t("未完成数据提单号如下：")}</p>
-          {failed.map((item, index) => (
-            <p key={`${index}_${item.number}`} style={{ color: "#c7c7c7" }}>
-              {item.number}
-            </p>
-          ))}
-        </>
-      ),
-    });
+        const {failed, total, success} = res;
+        const modal = Modal.confirm({
+            title: t("操作确认"),
+            footer: (
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <CopyToClipboard text={uniq(failed.map((i) => i.number)).join("\n")}>
+                        <Button
+                            key="back"
+                            onClick={() => {
+                                modal.destroy()
+                            }}
+                            style={{marginRight: '10px'}} // 添加右边距
+                        >
+                            {t('复制未完成单号')}
+                        </Button>
+                    </CopyToClipboard>
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            refreshTable();
+                            modal.destroy();
+                        }}
+                    >
+                        {t('确认')}
+                    </Button>
+                </div>
+            ),
+            content: (
+                <>
+                    <p style={{color: "#c7c7c7"}}>
+                        {t("全部上传数据：{{n}}条。", {n: total})}
+                    </p>
+                    <p style={{color: "#c7c7c7"}}>
+                        {t("完成上传数据：{{n1}}条。未上传数据：{{n2}}条。", {
+                            n1: success,
+                            n2: total - success,
+                        })}
+                    </p>
+                    <p style={{color: "#c7c7c7"}}>{t("未完成数据提单号如下：")}</p>
+                    {failed.map((item, index) => (
+                        <p key={`${index}_${item.number}`} style={{color: "#c7c7c7"}}>
+                            {item.number}
+                        </p>
+                    ))}
+                </>
+            ),
+        });
   }, []);
 
   const onOk = async () => {

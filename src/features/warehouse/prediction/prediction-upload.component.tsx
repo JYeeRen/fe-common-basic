@@ -6,6 +6,7 @@ import {useCallback} from "react";
 import {UploadRes} from "./type.ts";
 import {uniq} from "lodash";
 import {Table} from "antd";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 interface IPredictionUpload {
     store: PredictionStore;
@@ -47,19 +48,34 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
                 key: 'reason',
             },
         ];
-        Modal.confirm({
+        const modal = Modal.confirm({
             width: '50%',
-            okText: t('确认'),
-            cancelText: t('复制未完成袋号'),
             title: t("操作确认"),
-            onOk: () => {
-                refreshTable();
-            },
-            onCancel: async () => {
-                await navigator.clipboard.writeText(
-                    uniq(failed.map((i) => i.bigBagNo)).join("\n")
-                );
-            },
+            footer: (
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <CopyToClipboard text={uniq(failed.map((i) => i.bigBagNo)).join("\n")}>
+                        <Button
+                            key="back"
+                            onClick={() => {
+                                modal.destroy()
+                            }}
+                            style={{marginRight: '10px'}} // 添加右边距
+                        >
+                            {t('复制未完成袋号')}
+                        </Button>
+                    </CopyToClipboard>
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            refreshTable();
+                            modal.destroy();
+                        }}
+                    >
+                        {t('确认')}
+                    </Button>
+                </div>
+            ),
             content: (
                 <>
                     <p style={{ color: "#c7c7c7" }}>
