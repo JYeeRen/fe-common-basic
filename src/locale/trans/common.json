@@ -1371,8 +1371,16 @@
         "zh": "入库时间",
         "en": "Warehouse Time"
     },
-    "未完成数据袋号如下": {
+    "未完成数据袋号如下：": {
         "zh": "未完成数据袋号如下：",
         "en": "Upload failed carton number shown below:"
+    },
+    "复制未完成袋号": {
+        "zh": "复制未完成袋号",
+        "en": "Copy Unfinished Carton Numbers"
+    },
+    "原因": {
+        "zh": "原因",
+        "en": "Reason"
     }
 }

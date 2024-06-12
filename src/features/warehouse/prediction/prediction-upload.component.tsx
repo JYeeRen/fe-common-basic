@@ -5,6 +5,7 @@ import {useTranslation} from "@locale";
 import {useCallback} from "react";
 import {UploadRes} from "@features/trajectory/bill-of-lading/type.ts";
 import {uniq} from "lodash";
+import {Table} from "antd";
 
 interface IPredictionUpload {
     store: PredictionStore;
@@ -29,9 +30,27 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
 
     const operationConfirm = useCallback((res: UploadRes) => {
         const { failed, total, success } = res;
+        const columns = [
+            {
+                title: t('提单号'),
+                dataIndex: 'masterWaybillNo',
+                key: 'masterWaybillNo',
+            },
+            {
+                title: t('袋号'),
+                dataIndex: 'bigBagNo',
+                key: 'bigBagNo',
+            },
+            {
+                title: t('原因'),
+                dataIndex: 'reason',
+                key: 'reason',
+            },
+        ];
         Modal.confirm({
+            width: '50%',
             okText: t('确认'),
-            cancelText: t('复制未完成单号'),
+            cancelText: t('复制未完成袋号'),
             title: t("操作确认"),
             onOk: () => {
                 refreshTable();
@@ -53,11 +72,7 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
                         })}
                     </p>
                     <p style={{ color: "#c7c7c7" }}>{t("未完成数据袋号如下：")}</p>
-                    {failed.map((item, index) => (
-                        <p key={`${index}_${item.number}`} style={{ color: "#c7c7c7" }}>
-                            {item.number}
-                        </p>
-                    ))}
+                    <Table dataSource={failed} columns={columns} bordered={true} pagination={{pageSize: 5}}/>
                 </>
             ),
         });
