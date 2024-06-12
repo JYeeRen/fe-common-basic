@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {PredictionStore} from "@features/warehouse/prediction/prediction.store.ts";
 import {useTranslation} from "@locale";
 import {useCallback} from "react";
-import {UploadRes} from "@features/trajectory/bill-of-lading/type.ts";
+import {UploadRes} from "./type.ts";
 import {uniq} from "lodash";
 import {Table} from "antd";
 
@@ -57,7 +57,7 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
             },
             onCancel: async () => {
                 await navigator.clipboard.writeText(
-                    uniq(failed.map((i) => i.number)).join("\n")
+                    uniq(failed.map((i) => i.bigBagNo)).join("\n")
                 );
             },
             content: (

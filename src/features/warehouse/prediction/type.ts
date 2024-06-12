@@ -13,3 +13,5 @@ export interface WarehouseReceiptFormValues {
 
 export interface WarehouseCargoTrackFormValues {
 }
+
+export type UploadRes = Sources["/api/warehouse/receipt/upload"]["res"];

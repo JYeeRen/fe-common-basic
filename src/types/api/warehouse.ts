@@ -34,7 +34,7 @@ export interface WarehouseAPI {
     "/api/warehouse/receipt/upload": {
         params: FormData;
         res: {
-            failed: { number: string; reason: string }[];
+            failed: { masterWaybillNo: string, bigBagNo: string, reason: string }[];
             total: number;
             success: number;
         };
