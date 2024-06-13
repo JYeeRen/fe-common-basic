@@ -231,6 +231,7 @@ export const UploadModal = observer((props: UploadModalProps) => {
 
   const operationConfirm = useCallback((res: UploadRes) => {
         const {failed, total, success} = res;
+        refreshTable();
         const modal = Modal.confirm({
             title: t("操作确认"),
             footer: (
@@ -250,7 +251,6 @@ export const UploadModal = observer((props: UploadModalProps) => {
                         key="submit"
                         type="primary"
                         onClick={() => {
-                            refreshTable();
                             modal.destroy();
                         }}
                     >

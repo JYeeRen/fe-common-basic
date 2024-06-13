@@ -48,6 +48,7 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
                 key: 'reason',
             },
         ];
+        refreshTable();
         const modal = Modal.confirm({
             width: '50%',
             title: t("操作确认"),
@@ -68,7 +69,6 @@ export const PredictionUploadModal = observer((props: IPredictionUpload) => {
                         key="submit"
                         type="primary"
                         onClick={() => {
-                            refreshTable();
                             modal.destroy();
                         }}
                     >
