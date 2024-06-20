@@ -54,4 +54,70 @@ export interface WarehouseAPI {
         params: Schema.WarehouseReceipt;
         res: never;
     };
+
+    "/api/warehouse/deduction/findList": {
+        params: ListParams & {
+            noList?: string[];
+            noType?: number;
+            receiptStatus?: number;
+            deductionStatus?: number;
+        };
+        res: ListRes<Schema.Deduction>;
+    };
+
+    "/api/warehouse/deduction/findInitiateList": {
+        params: ListParams & {
+            noList?: string[];
+            noType?: number;
+        };
+        res: ListRes<Schema.DeductionInitiate>;
+    };
+
+    "/api/warehouse/deduction/cancel": {
+        params: { id: number };
+        res: never;
+    };
+
+    "/api/warehouse/deduction/initiate": {
+        params: { ids: number[] };
+        res: never;
+    };
+
+    "/api/warehouse/order/findList": {
+        params: ListParams & {
+            noList?: string[];
+            noType?: number;
+            receiptTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            }
+        };
+        res: ListRes<Schema.WarehouseOutbound>;
+    }
+
+    "/api/warehouse/pallet/findList": {
+        params: ListParams & {
+            codes?: string[];
+            date?: {
+                zone: string;
+                start: string;
+                end: string;
+            }
+        };
+        res: ListRes<Schema.PalletInfo>;
+    }
+
+    "/api/warehouse/pallet/downloadCodes": {
+        params?: { ids: number[] };
+        res: { url: string; fileName: string };
+    };
+
+    "/api/warehouse/pallet/create": {
+        params: {
+            date: string,
+            count: number,
+        };
+        res: never;
+    }
 }

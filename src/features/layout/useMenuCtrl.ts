@@ -127,7 +127,13 @@ const navConfig = (): TopNavItem[] => [
   {
     key: "warehouse",
     label: t("仓库管理"),
-    permissions: ["warehouse.receipt", "warehouse.receipt_track"],
+    permissions: [
+      "warehouse.receipt",
+      "warehouse.order",
+      "warehouse.deduction",
+      "warehouse.track",
+      "warehouse.pallet"
+    ],
     sidenavs: [
       {
         key: "/warehouse/prediction",
@@ -137,6 +143,22 @@ const navConfig = (): TopNavItem[] => [
             key: "/warehouse/prediction/list",
             label: t("入库预报"),
             permission: "warehouse.receipt"
+          },
+          {
+            key: "/warehouse/outbound/list",
+            label: t("出库预报"),
+            permission: "warehouse.order"
+          }
+        ]
+      },
+      {
+        key: "/warehouse/exception",
+        label: t("异常处理"),
+        children: [
+          {
+            key: "/warehouse/exception/deduction",
+            label: t("扣货管理"),
+            permission: "warehouse.deduction"
           }
         ]
       },
@@ -147,7 +169,18 @@ const navConfig = (): TopNavItem[] => [
           {
             key: "/warehouse/cargo/query",
             label: t("货物查询"),
-            permission: "warehouse.receipt_track"
+            permission: "warehouse.track"
+          }
+        ]
+      },
+      {
+        key: "/warehouse/pallet",
+        label: t("托盘管理"),
+        children: [
+          {
+            key: "/warehouse/pallet/info",
+            label: t("托盘信息管理"),
+            permission: "warehouse.pallet"
           }
         ]
       },

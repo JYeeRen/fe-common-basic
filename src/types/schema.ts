@@ -244,3 +244,36 @@ export interface Clearance {
   nextProviderNames: string;
   status: number;
 }
+
+export interface Deduction {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  receiptStatus: number;
+  deductionStatus: number;
+  deductionOperator: string;
+  deductionTime: string;
+}
+
+export interface DeductionInitiate {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  receiptStatus: number;
+}
+
+export interface WarehouseOutbound {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  receiptTime: string;
+  tailProviderName: string;
+  palletCode: string;
+  status: number;
+}
+
+export interface PalletInfo {
+  id: number;
+  code: string;
+  date: string;
+}

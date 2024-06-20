@@ -32,8 +32,10 @@ export type OptionKey =
   | "customsTemplates"
   | "prealertTemplates"
   | "permissions"
+  | "noTypes"
   | "receiptNoTypes"
-  | "receiptStatusTypes";
+  | "receiptStatusTypes"
+  | "deductionStatusTypes";
 
 class OptionService {
   clearanceFileStatusTypes: InnerOptions = [];
@@ -58,8 +60,10 @@ class OptionService {
   customsTemplates: InnerOptions = [];
   prealertTemplates: InnerOptions = [];
   permissions: Schema.Permission[] = [];
+  noTypes: InnerOptions = [];
   receiptNoTypes: InnerOptions = [];
   receiptStatusTypes: InnerOptions = [];
+  deductionStatusTypes: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -189,6 +193,11 @@ class OptionService {
       optsfrom: "permissions",
       formater: (opts: Schema.Permission[]) => opts,
     },
+    noTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
     receiptNoTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
@@ -199,6 +208,11 @@ class OptionService {
       optsfrom: "base",
       formater: this.id_val_formatter,
     },
+    deductionStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    }
   } as const;
 
   constructor() {

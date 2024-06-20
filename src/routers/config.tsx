@@ -175,9 +175,30 @@ const Warehouse: RouteObject[] = [
     }),
   },
   {
+    path: "/warehouse/outbound/list",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/outbound/outbound.component"))
+          .default,
+    }),
+  },
+  {
+    path: "/warehouse/exception/deduction",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/exception/deduction.component"))
+          .default,
+    }),
+  },
+  {
     path: "/warehouse/cargo/query",
     lazy: async () => ({
       Component: (await import("@features/warehouse/cargo-track/cargo-track.component"))
+          .default,
+    }),
+  },
+  {
+    path: "/warehouse/pallet/info",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/pallet/pallet-info.component"))
           .default,
     }),
   },

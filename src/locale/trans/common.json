@@ -1382,5 +1382,53 @@
     "原因": {
         "zh": "原因",
         "en": "Reason"
+    },
+    "出库预报": {
+        "zh": "出库预报",
+        "en": "Outbound Prediction"
+    },
+    "异常处理": {
+        "zh": "异常处理",
+        "en": "Exception Handling"
+    },
+    "扣货管理": {
+        "zh": "扣货管理",
+        "en": "Deduction Management"
+    },
+    "托盘管理": {
+        "zh": "托盘管理",
+        "en": "Pallet Management"
+    },
+    "托盘信息管理": {
+        "zh": "托盘信息管理",
+        "en": "Pallet Information Management"
+    },
+    "扣货标记": {
+        "zh": "扣货标记",
+        "en": "Deduction Mark"
+    },
+    "撤销扣货指令": {
+        "zh": "撤销扣货指令",
+        "en": "Cancel Deduction Instruction"
+    },
+    "托盘码": {
+        "zh": "托盘码",
+        "en": "Pallet Code"
+    },
+    "编辑入库时间": {
+        "zh": "编辑入库时间",
+        "en": "Edit Warehouse Time"
+    },
+    "托盘码生成日期": {
+        "zh": "托盘码生成日期",
+        "en": "Pallet Code Generation Date"
+    },
+    "打印": {
+        "zh": "打印",
+        "en": "Print"
+    },
+    "打印条码": {
+        "zh": "打印条码",
+        "en": "Print Barcode"
     }
 }
