@@ -1,6 +1,8 @@
 import {ClientGridStore} from "@components";
 import {WarehouseReceipt} from "@features/warehouse/prediction/type.ts";
 import {makeAutoObservable, reaction} from "mobx";
+import {QueryParams} from "@features/trajectory/bill-of-lading/type.ts";
+import {loading, net} from "@infra";
 
 export class CargoTrackStore {
     loading = false;
@@ -23,5 +25,10 @@ export class CargoTrackStore {
 
     setSelectedRowKeys(keys: number[]) {
         this.selectedRowKeys = keys;
+    }
+
+    @loading()
+    async export(params: QueryParams) {
+        await net.download("/api/warehouse/track/export", params);
     }
 }

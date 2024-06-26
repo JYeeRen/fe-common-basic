@@ -47,5 +47,5 @@ export const getColumns = (params: {
 }
 
 export const getRows = async (params: PalletInfoQueryParam) => {
-    return await net.post("/api/warehouse/pallet/findList", params);
+    return await net.post("/api/warehouse/pallet_merge/findList", params);
 };

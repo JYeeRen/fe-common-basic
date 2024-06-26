@@ -10,13 +10,44 @@ export interface WarehouseAPI {
         res: ListRes<Schema.WarehouseReceipt>;
     };
 
-    "/api/warehouse/receipt/findTrackList": {
+    "/api/warehouse/track/findList": {
         params: ListParams & {
             noList?: string[];
             noType?: number;
-            status?: number;
+            receiptStatus?: number;
+            deductionStatus?: number;
+            receiptTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            };
+            outboundTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            }
         };
-        res: ListRes<Schema.WarehouseReceipt>;
+        res: ListRes<Schema.CargoTrack>;
+    };
+
+    "/api/warehouse/track/export": {
+        params: ListParams & {
+            noList?: string[];
+            noType?: number;
+            receiptStatus?: number;
+            deductionStatus?: number;
+            receiptTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            };
+            outboundTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            }
+        };
+        res: { url: string; fileName: string };
     };
 
     "/api/warehouse/receipt/delete": {
@@ -96,7 +127,15 @@ export interface WarehouseAPI {
         res: ListRes<Schema.WarehouseOutbound>;
     }
 
-    "/api/warehouse/pallet/findList": {
+    "/api/warehouse/order/editReceiptTime": {
+        params: {
+            id: number,
+            receiptTime: string,
+        };
+        res: never;
+    }
+
+    "/api/warehouse/pallet_merge/findList": {
         params: ListParams & {
             codes?: string[];
             date?: {
@@ -108,12 +147,12 @@ export interface WarehouseAPI {
         res: ListRes<Schema.PalletInfo>;
     }
 
-    "/api/warehouse/pallet/downloadCodes": {
+    "/api/warehouse/pallet_merge/downloadCodes": {
         params?: { ids: number[] };
         res: { url: string; fileName: string };
     };
 
-    "/api/warehouse/pallet/create": {
+    "/api/warehouse/pallet_merge/create": {
         params: {
             date: string,
             count: number,

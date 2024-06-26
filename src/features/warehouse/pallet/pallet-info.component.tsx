@@ -1,10 +1,11 @@
 import {observer} from "mobx-react-lite";
 import {
+    Button,
     ClientGrid,
     Col, Container, DatePicker, EditableCell,
     FilterContainer,
     FilterTextArea,
-    Form,
+    Form, Row,
     SearchSelect,
     Space, Table,
     textareaMaxLengthRule
@@ -17,6 +18,9 @@ import {convertDate} from "@infra";
 import {compact} from "lodash";
 import {WarehouseOutboundFormValues} from "@features/warehouse/outbound/type.ts";
 import styles from "./pallet-info.module.less";
+import {PrinterOutlined, PlusOutlined} from "@ant-design/icons";
+import {PalletInfoAddModal} from "@features/warehouse/pallet/pallet-info-add.component.tsx";
+import {PalletInfo} from "@features/warehouse/pallet/type.ts";
 
 function PalletInfoComponent() {
     const gridStore = ClientGrid.useGridStore(PalletInfoConfig.getRows, {autoLoad: false});
@@ -40,8 +44,16 @@ function PalletInfoComponent() {
         gridStore.setQueryParams({codes: compact(codes), date});
     }, []);
 
-    const handlePrint = () => {
+    const handlePrint = async (value: PalletInfo) => {
+        await store.printPallets([value.id]);
+    };
 
+    const handleBatchPrint = async () => {
+        await store.printPallets(store.selectedRowKeys);
+    };
+
+    const handleAdd = () => {
+        store.showAddModal();
     };
 
     const initialValues: WarehouseOutboundFormValues = useMemo(
@@ -105,6 +117,23 @@ function PalletInfoComponent() {
                 </Col>
             </FilterContainer>
             <Container title={t("托盘管理")} wrapperClassName={styles.wrapper} table>
+                <Row justify="start" style={{padding: "0 10px"}}>
+                    <Button
+                        className="operation-btn mr-4 mb-4"
+                        icon={<PlusOutlined/>}
+                        onClick={handleAdd}
+                    >
+                        {t("生成托盘")}
+                    </Button>
+                    <Button
+                        className="operation-btn mr-4 mb-4"
+                        icon={<PrinterOutlined/>}
+                        disabled={store.selectedRowKeys.length === 0}
+                        onClick={handleBatchPrint}
+                    >
+                        {t("批量打印已选项")}
+                    </Button>
+                </Row>
                 <Table
                     components={{body: {cell: EditableCell}}}
                     widthFit
@@ -134,6 +163,10 @@ function PalletInfoComponent() {
                     }}
                 />
             </Container>
+            <PalletInfoAddModal
+                store={store}
+                refreshTable={gridStore.loadData.bind(gridStore)}
+            />
         </Container>
     );
 }

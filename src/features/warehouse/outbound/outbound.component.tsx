@@ -15,9 +15,10 @@ import {OutboundStore} from "./outbound.store.ts";
 import {useCallback, useEffect, useMemo} from "react";
 import {compact} from "lodash";
 import optionsService from "@services/options.service.ts";
-import {WarehouseOutboundFormValues} from "@features/warehouse/outbound/type.ts";
+import {WarehouseOutbound, WarehouseOutboundFormValues} from "@features/warehouse/outbound/type.ts";
 import styles from "./outbound.module.less";
 import {convertDate} from "@infra";
+import {OutboundEditModal} from "@features/warehouse/outbound/outbound-edit.component.tsx";
 
 function OutboundComponent() {
     const gridStore = ClientGrid.useGridStore(OutboundConfig.getRows, {autoLoad: false});
@@ -41,8 +42,9 @@ function OutboundComponent() {
         gridStore.setQueryParams({noList: compact(noList), noType, receiptTime});
     }, []);
 
-    const handleEdit = () => {
-
+    const handleEdit = (value: WarehouseOutbound) => {
+        store.currentSelectId = value.id;
+        store.showEditModal();
     };
 
     const initialValues: WarehouseOutboundFormValues = useMemo(
@@ -115,8 +117,9 @@ function OutboundComponent() {
                             </Form.Item>
                             <Form.Item name="date" noStyle>
                                 <DatePicker.RangePicker
+                                    showTime
                                     style={{width: "300px"}}
-                                    placeholder={[t("请选择起始日期"), t("请选择结束日期")]}
+                                    placeholder={[t("开始日期时间"), t("结束日期时间")]}
                                 />
                             </Form.Item>
                         </Space.Compact>
@@ -147,6 +150,10 @@ function OutboundComponent() {
                     }}
                 />
             </Container>
+            <OutboundEditModal
+                store={store}
+                refreshTable={gridStore.loadData.bind(gridStore)}
+            />
         </Container>
     );
 }

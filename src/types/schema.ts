@@ -277,3 +277,24 @@ export interface PalletInfo {
   code: string;
   date: string;
 }
+
+export interface CargoTrack {
+  id: number;
+  masterWaybillNo: string,
+  bigBagNo: string,
+  tailProviderName: string,
+  receiptStatus: number;
+  deductionStatus: number;
+  receiptTime: string;
+  loadTime: string;
+  outboundTime: string;
+  palletCode: string;
+  cabinetNo: string;
+  lockNo: string;
+  companyName: string;
+  contact: string;
+  direction: string;
+  inboundUser: string;
+  loadUser: string;
+  deductionUser: string;
+}

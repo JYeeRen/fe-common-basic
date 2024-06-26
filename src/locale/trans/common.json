@@ -1430,5 +1430,65 @@
     "打印条码": {
         "zh": "打印条码",
         "en": "Print Barcode"
+    },
+    "装车时间": {
+        "zh": "装车时间",
+        "en": "Loading Time"
+    },
+    "出库时间": {
+        "zh": "出库时间",
+        "en": "Outbound Time"
+    },
+    "车柜号": {
+        "zh": "车柜号",
+        "en": "Cabinet Number"
+    },
+    "锁号": {
+        "zh": "锁号",
+        "en": "Lock Number"
+    },
+    "卡车公司名称": {
+        "zh": "卡车公司名称",
+        "en": "Truck Company Name"
+    },
+    "卡车公司联系方式": {
+        "zh": "卡车公司联系方式",
+        "en": "Truck Company Contact"
+    },
+    "卡车方向": {
+        "zh": "卡车方向",
+        "en": "Truck Direction"
+    },
+    "入库": {
+        "zh": "入库",
+        "en": "Warehouse"
+    },
+    "装车": {
+        "zh": "装车",
+        "en": "Loading"
+    },
+    "出库": {
+        "zh": "出库",
+        "en": "Outbound"
+    },
+    "系统时区": {
+        "zh": "系统时区",
+        "en": "System Time Zone"
+    },
+    "生成托盘": {
+        "zh": "生成托盘",
+        "en": "Generate Pallet"
+    },
+    "批量打印已选项": {
+        "zh": "批量打印已选项",
+        "en": "Batch Print Selected"
+    },
+    "新增托盘": {
+        "zh": "新增托盘",
+        "en": "Add Pallet"
+    },
+    "生成托盘数量": {
+        "zh": "生成托盘数量",
+        "en": "Number of Generated Pallet"
     }
 }
