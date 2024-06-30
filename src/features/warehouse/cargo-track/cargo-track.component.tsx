@@ -102,6 +102,8 @@ function CargoTrackComponent() {
         return colDefs;
     }, [optionsService.receiptStatusTypes, optionsService.deductionStatusTypes]);
 
+    const filterTemplate = [1, 2, 6];
+
     return (
         <Container className={styles.container} loading={store.loading}>
             <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
@@ -109,11 +111,15 @@ function CargoTrackComponent() {
                     <div style={{paddingBottom: "8px"}}>
                         <Form.Item noStyle name="noType">
                             <Radio.Group>
-                                {optionsService.receiptNoTypes.map((opt) => (
-                                    <Radio key={opt.value} value={opt.value}>
-                                        {opt.label}
-                                    </Radio>
-                                ))}
+                                {optionsService.noTypes.map((opt) => {
+                                    if (filterTemplate.includes(opt.value as number)) {
+                                        return (
+                                            <Radio key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </Radio>
+                                        );
+                                    }
+                                })}
                             </Radio.Group>
                         </Form.Item>
                     </div>

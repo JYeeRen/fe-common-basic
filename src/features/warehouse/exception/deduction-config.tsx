@@ -13,7 +13,7 @@ export const getColumns = (params: {
         revert?: (record: DeductionStruct) => void;
     };
 }): TableColumnsType<DeductionStruct> => {
-    const { receiptStatusTypes, deductionStatusTypes, operation } = params;
+    const {receiptStatusTypes, deductionStatusTypes, operation} = params;
     return [
         {
             key: "masterWaybillNo",
@@ -30,7 +30,7 @@ export const getColumns = (params: {
             dataIndex: "receiptStatus",
             title: t("货物状态"),
             render: (value) => {
-                return find(receiptStatusTypes, { value })?.label;
+                return find(receiptStatusTypes, {value})?.label;
             },
         },
         {
@@ -38,7 +38,7 @@ export const getColumns = (params: {
             dataIndex: "deductionStatus",
             title: t("扣货标记"),
             render: (value) => {
-                return find(deductionStatusTypes, { value })?.label;
+                return find(deductionStatusTypes, {value})?.label;
             },
         },
         {
@@ -59,13 +59,15 @@ export const getColumns = (params: {
                 const operations = [
                     {
                         key: "edit",
-                        icon: <DeleteOutlined />,
+                        icon: <DeleteOutlined/>,
                         onClick: () => operation.revert?.(data),
                         label: t("撤销扣货指令"),
                     },
                 ];
 
-                return (<OperationButtons items={operations} />);
+                if (data.deductionStatus != 2) {
+                    return (<OperationButtons items={operations}/>);
+                }
             },
         },
     ];

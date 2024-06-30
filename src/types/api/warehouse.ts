@@ -135,7 +135,7 @@ export interface WarehouseAPI {
         res: never;
     }
 
-    "/api/warehouse/pallet_merge/findList": {
+    "/api/warehouse/pallet/findList": {
         params: ListParams & {
             codes?: string[];
             date?: {
@@ -147,12 +147,12 @@ export interface WarehouseAPI {
         res: ListRes<Schema.PalletInfo>;
     }
 
-    "/api/warehouse/pallet_merge/downloadCodes": {
+    "/api/warehouse/pallet/downloadCodes": {
         params?: { ids: number[] };
         res: { url: string; fileName: string };
     };
 
-    "/api/warehouse/pallet_merge/create": {
+    "/api/warehouse/pallet/create": {
         params: {
             date: string,
             count: number,

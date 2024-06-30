@@ -42,12 +42,12 @@ export class PalletInfoStore {
 
     @loading()
     async addPallets(formData: { date: string, count: number }) {
-        return await net.post("/api/warehouse/pallet_merge/create", formData);
+        return await net.post("/api/warehouse/pallet/create", formData);
     }
 
     @loading()
     async printPallets(ids: number[]) {
-        const {url} = await net.post("/api/warehouse/pallet_merge/downloadCodes", {ids});
+        const {url} = await net.post("/api/warehouse/pallet/downloadCodes", {ids});
         const newWindow = window.open('', "_blank");
         if (newWindow) {
             newWindow.document.write(`

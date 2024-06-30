@@ -1,11 +1,12 @@
 import {observer} from "mobx-react-lite";
 import {
+    Button,
     ClientGrid,
     Col, Container, EditableCell,
     FilterContainer,
     FilterTextArea,
-    Form,
-    Radio,
+    Form, Modal,
+    Radio, Row,
     SearchSelect, Table,
     textareaMaxLengthRule
 } from "@components";
@@ -17,6 +18,8 @@ import {WarehouseDeductionFormValues} from "@features/warehouse/exception/type.t
 import optionsService from "@services/options.service.ts";
 import styles from "./deduction.module.less";
 import {compact} from "lodash";
+import {PlusOutlined} from "@ant-design/icons";
+import {DeductionModal} from "@features/warehouse/exception/deduction-modal.component.tsx";
 
 function DeductionComponent() {
     const gridStore = ClientGrid.useGridStore(DeductionConfig.getRows, {autoLoad: false});
@@ -31,9 +34,17 @@ function DeductionComponent() {
         gridStore.setQueryParams({noList: compact(noList), noType, receiptStatus, deductionStatus});
     }, []);
 
-    const handleRevert = () => {
-
-    };
+    const handleRevert = useCallback(({id}: { id: number }) => {
+        Modal.confirm({
+            title: t("操作确认"),
+            content: t(
+                "是否确认撤销选中货物的扣货指令？确认后，将数据的扣货标记置空，并刷新当前页面的数据表格。"
+            ),
+            okText: t("确认撤销"),
+            cancelText: t("取消"),
+            onOk: () => store.cancel(id),
+        });
+    }, []);
 
     const initialValues: WarehouseDeductionFormValues = useMemo(
         () => ({
@@ -58,6 +69,8 @@ function DeductionComponent() {
         return colDefs;
     }, [optionsService.receiptStatusTypes, optionsService.deductionStatusTypes]);
 
+    const filterTemplate = [1, 2];
+
     return (
         <Container className={styles.container} loading={store.loading}>
             <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
@@ -65,11 +78,15 @@ function DeductionComponent() {
                     <div style={{paddingBottom: "8px"}}>
                         <Form.Item noStyle name="noType">
                             <Radio.Group>
-                                {optionsService.receiptNoTypes.map((opt) => (
-                                    <Radio key={opt.value} value={opt.value}>
-                                        {opt.label}
-                                    </Radio>
-                                ))}
+                                {optionsService.noTypes.map((opt) => {
+                                    if (filterTemplate.includes(opt.value as number)) {
+                                        return (
+                                            <Radio key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </Radio>
+                                        );
+                                    }
+                                })}
                             </Radio.Group>
                         </Form.Item>
                     </div>
@@ -90,6 +107,15 @@ function DeductionComponent() {
                 </Col>
             </FilterContainer>
             <Container title={t("扣货管理")} wrapperClassName={styles.wrapper} table>
+                <Row justify="start" style={{padding: "0 10px"}}>
+                    <Button
+                        className="operation-btn mr-4 mb-4"
+                        icon={<PlusOutlined/>}
+                        onClick={store.showInitiateModal.bind(store)}
+                    >
+                        {t("发起新扣货指令")}
+                    </Button>
+                </Row>
                 <Table
                     components={{body: {cell: EditableCell}}}
                     widthFit
@@ -113,6 +139,10 @@ function DeductionComponent() {
                     }}
                 />
             </Container>
+            <DeductionModal
+                mainStore={store}
+                refreshTable={gridStore.loadData.bind(gridStore)}
+            />
         </Container>
     );
 }

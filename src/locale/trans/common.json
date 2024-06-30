@@ -1490,5 +1490,21 @@
     "生成托盘数量": {
         "zh": "生成托盘数量",
         "en": "Number of Generated Pallet"
+    },
+    "发起扣货": {
+        "zh": "发起扣货",
+        "en": "Initiate Deduction"
+    },
+    "发起新扣货指令": {
+        "zh": "发起新扣货指令",
+        "en": "Initiate New Deduction"
+    },
+    "是否确认撤销选中货物的扣货指令？确认后，将数据的扣货标记置空，并刷新当前页面的数据表格。": {
+        "zh": "是否确认撤销选中货物的扣货指令？确认后，将数据的扣货标记置空，并刷新当前页面的数据表格。",
+        "en": "Are you sure to cancel the deduction instruction of the selected goods? After confirmation, the deduction mark of the data will be cleared and the data table of the current page will be refreshed."
+    },
+    "是否确认发起对选中货物的扣货指令？": {
+        "zh": "是否确认发起对选中货物的扣货指令？",
+        "en": "Are you sure to initiate the deduction instruction of the selected goods?"
     }
 }
