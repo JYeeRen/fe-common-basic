@@ -102,7 +102,7 @@ function DeductionComponent() {
                         <SearchSelect optionKey="receiptStatusTypes"/>
                     </Form.Item>
                     <Form.Item name="deductionStatus" label={t("扣货标记")}>
-                        <SearchSelect optionKey="deductionStatusTypes"/>
+                        <SearchSelect optionKey="deductionStatusTypes" omitKey={[1]}/>
                     </Form.Item>
                 </Col>
             </FilterContainer>

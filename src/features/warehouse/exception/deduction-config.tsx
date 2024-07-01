@@ -65,7 +65,7 @@ export const getColumns = (params: {
                     },
                 ];
 
-                if (data.deductionStatus != 2) {
+                if (data.deductionStatus != 3) {
                     return (<OperationButtons items={operations}/>);
                 }
             },

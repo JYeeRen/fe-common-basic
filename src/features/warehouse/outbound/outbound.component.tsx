@@ -72,7 +72,7 @@ function OutboundComponent() {
         return colDefs;
     }, [optionsService.receiptStatusTypes]);
 
-    const filterTemplate = [0, 1, 2, 6];
+    const filterTemplate = [1, 2, 6];
 
     return (
         <Container className={styles.container} loading={store.loading}>

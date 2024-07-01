@@ -136,7 +136,7 @@ function CargoTrackComponent() {
                             <SearchSelect optionKey="receiptStatusTypes" style={{width: "150px"}}/>
                         </Form.Item>
                         <Form.Item name="deductionStatus" label={t("扣货标记")}>
-                            <SearchSelect optionKey="deductionStatusTypes" style={{width: "150px"}}/>
+                            <SearchSelect optionKey="deductionStatusTypes" omitKey={[1]} style={{width: "150px"}}/>
                         </Form.Item>
                     </Row>
                     <Form.Item
