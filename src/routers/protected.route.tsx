@@ -42,7 +42,10 @@ const routerPermission: Record<string, string> = {
   "/pm/roles/:id": "admin.role",
   // 仓库管理
   "/warehouse/prediction/list": "warehouse.receipt",
-  "/warehouse/cargo/query": "warehouse.receipt_track"
+  "/warehouse/cargo/query": "warehouse.track",
+  "/warehouse/outbound/list": "warehouse.order",
+  "/warehouse/exception/deduction": "warehouse.deduction",
+  "/warehouse/pallet/info": "warehouse.pallet",
 };
 
 export function ProtectedRoute(props: PropsWithChildren) {

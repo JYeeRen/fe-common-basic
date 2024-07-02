@@ -1506,5 +1506,9 @@
     "是否确认发起对选中货物的扣货指令？": {
         "zh": "是否确认发起对选中货物的扣货指令？",
         "en": "Are you sure to initiate the deduction instruction of the selected goods?"
+    },
+    "扣货": {
+        "zh": "扣货",
+        "en": "Deduction"
     }
 }

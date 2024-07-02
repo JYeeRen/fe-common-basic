@@ -96,7 +96,7 @@ export const getColumns = (params: {
                     <Col>
                         <div>{t("入库") + ": " + data.inboundUser}</div>
                         <div>{t("装车") + ": " + data.loadUser}</div>
-                        <div>{t("出库") + ": " + data.deductionUser}</div>
+                        <div>{t("扣货") + ": " + data.deductionUser}</div>
                     </Col>
                 );
             },
