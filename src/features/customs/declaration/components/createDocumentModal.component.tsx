@@ -13,6 +13,7 @@ import { useTranslation } from "@locale";
 import { observer } from "mobx-react-lite";
 import type { DeclrationStore } from "../declaration.store";
 import { useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 interface CreateDocumentModalProps {
   store: DeclrationStore;
@@ -67,23 +68,68 @@ const SelectTemplate = observer((props: SelectTemplateProps) => {
 interface CheckDocumentProps {
   store: DeclrationStore;
   onCancel?: () => void;
-  onOk: (formData: FormData) => void;
+  onOk: (formData: FormData, direct: boolean) => void;
 }
 
 const CheckDocument = observer((props: CheckDocumentProps) => {
-  const { onCancel, onOk, store } = props;
+  const { onCancel, store } = props;
 
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
-  const handleOk = () => {
+  const handleOk = async () => {
     const { customsFiles = [] } = form.getFieldsValue();
     const formData = new FormData();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (customsFiles as any[]).forEach(file => {
       formData.append("files[]", file.originFileObj);
     });
-    onOk(formData);
+
+    const failed = await store.uploadCustomsFiles(formData, customsFiles.length === 0);
+
+    store.setCreatingCustomDocs(false);
+
+    if (!failed.length) {
+      return store.gridStore.loadData();
+    }
+
+    const modal = Modal.confirm({
+      title: t('操作确认'),
+      content: (
+        <div>
+          <p>{t('全部上传文件：{{no}}个', { no: customsFiles.length })}</p>
+          <p>{t('完成上传文件：{{no}}个', { no: customsFiles.length })}</p>
+          <p>{t('未完成的文件对应提单号如下：')}</p>
+          {failed.map(({ number }, index) => <p key={`${number}-${index}`}>{number}</p>)}
+        </div>
+      ),
+      footer: (
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <CopyToClipboard text={failed.map(i => i.number).join('\n')}>
+              <Button
+                  key="back"
+                  onClick={() => {
+                    store.gridStore.loadData();
+                    modal.destroy()
+                  }}
+                  style={{marginRight: '10px'}} // 添加右边距
+              >
+                {t('复制未完成单号')}
+              </Button>
+            </CopyToClipboard>
+            <Button
+                key="submit"
+                type="primary"
+                onClick={() => {
+                  store.gridStore.loadData()
+                  modal.destroy();
+                }}
+            >
+              {t('确认')}
+            </Button>
+          </div>
+      ),
+    });
   };
 
   return (
@@ -110,7 +156,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
             <Col span={12} className="flex justify-center">
               <Button
                 type="primary"
-                onClick={store.downloadSelectedCustomsFile.bind(store)}
+                onClick={store.downloadTempCustomsFile.bind(store)}
                 loading={store.loading}
               >
                 {t("下载清关文件")}
@@ -158,8 +204,8 @@ export const CreateDocumentModal = observer(
       setSetp(1);
     };
 
-    const handleFileUpload = async (formData: FormData) => {
-      const failed = await store.uploadCustomsFiles(formData);
+    const handleFileUpload = async (formData: FormData, direct: boolean) => {
+      const failed = await store.uploadCustomsFiles(formData, direct);
       console.log(failed);
       store.setCreatingCustomDocs(false);
     };

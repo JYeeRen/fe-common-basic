@@ -87,7 +87,7 @@ export const getColumns = (params: {
         ];
 
         if (data.atd || data.etd) {
-          if (dayjs(data.atd || data.etd).isBefore(dayjs())) {
+          if (dayjs(data.atdIso || data.etdIso).isBefore(dayjs())) {
             operations.splice(1, 1);
           }
         } else if (!data.customsFile && !data.prealertFile) {

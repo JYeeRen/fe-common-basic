@@ -79,6 +79,30 @@ export interface CustomsDocumentAPI {
     params: { ids: number[]; templateId: number };
     res: { failed: { number: string; reason: string }[] };
   };
+  "/api/customsDocument/createTempCustomsFile": {
+    params: { ids: number[]; templateId: number };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/createTempPrealert": {
+    params: { ids: number[]; templateId: number };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/useTempPrealert": {
+    params: { ids: number[]; };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/downloadTempCustomsFile": {
+    params: { ids: number[]; };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/downloadTempPrealert": {
+    params: { ids: number[]; };
+    res: { failed: { number: string; reason: string }[] };
+  };
+  "/api/customsDocument/useTempCustomsFile": {
+    params: { ids: number[] };
+    res: { failed: { number: string; reason: string }[] };
+  };
   "/api/customsDocument/createPrealert": {
     params: { ids: number[]; templateId: number };
     res: { failed: { number: string; reason: string }[] };

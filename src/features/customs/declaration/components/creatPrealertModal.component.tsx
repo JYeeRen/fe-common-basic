@@ -86,7 +86,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
     (prealertFiles as any[]).forEach(file => {
       formData.append("files[]", file.originFileObj);
     });
-    const failed = await store.uploadPrealerts(formData);
+    const failed = await store.uploadPrealerts(formData, prealertFiles.length === 0);
 
     store.setCreatingPrealertDocs(false);
     
@@ -158,7 +158,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
             <Col span={12} className="flex justify-center">
               <Button
                 type="primary"
-                onClick={store.downloadSelectedPrealertFile.bind(store)}
+                onClick={store.downloadTempPrealert.bind(store)}
                 loading={store.loading}
               >
                 {t("下载预报文件")}

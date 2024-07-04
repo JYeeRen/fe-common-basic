@@ -46,7 +46,9 @@ export class DeclrationStore {
   }
 
   get selectedRows() {
-    return this.gridStore.rowData.filter(r => this.selectedRowKeys.includes(r.id));
+    return this.gridStore.rowData.filter((r) =>
+      this.selectedRowKeys.includes(r.id)
+    );
   }
 
   get hasTakeOf() {
@@ -97,7 +99,9 @@ export class DeclrationStore {
 
   @loading()
   async downloadSelectedCopyFile() {
-    await net.download("/api/customsDocument/downloadCopyFile", { ids: this.selectedRowKeys });
+    await net.download("/api/customsDocument/downloadCopyFile", {
+      ids: this.selectedRowKeys,
+    });
   }
 
   @loading()
@@ -141,6 +145,12 @@ export class DeclrationStore {
       ids: [id],
     });
   }
+  @loading()
+  async downloadTempCustomsFile() {
+    await net.download("/api/customsDocument/downloadTempCustomsFile", {
+      ids: this.selectedRowKeys,
+    });
+  }
 
   @loading()
   async downloadPrealert(id?: number) {
@@ -149,45 +159,83 @@ export class DeclrationStore {
   }
 
   @loading()
-  async createCustomFile(templateId: number) {
-    const { failed } = await net.post('/api/customsDocument/createCustomsFile', {
+  async downloadTempPrealert() {
+    await net.download("/api/customsDocument/downloadTempPrealert", {
       ids: this.selectedRowKeys,
-      templateId
-    })
+    });
+  }
+
+  @loading()
+  async createCustomFile(templateId: number) {
+    const { failed } = await net.post(
+      "/api/customsDocument/createTempCustomsFile",
+      {
+        ids: this.selectedRowKeys,
+        templateId,
+      }
+    );
     return failed;
   }
 
   @loading()
   async createPrealert(templateId: number) {
-    const { failed } = await net.post('/api/customsDocument/createPrealert', {
-      ids: this.selectedRowKeys,
-      templateId
-    })
+    const { failed } = await net.post(
+      "/api/customsDocument/createTempPrealert",
+      {
+        ids: this.selectedRowKeys,
+        templateId,
+      }
+    );
     return failed;
   }
 
   @loading()
   async uploadCustomsFile(data: FormData) {
-    const { failed } = await net.upload("/api/customsDocument/uploadCustomsFile", data);
+    const { failed } = await net.upload(
+      "/api/customsDocument/uploadCustomsFile",
+      data
+    );
     return failed;
   }
 
   @loading()
   async uploadPrealert(data: FormData) {
-    const { failed } = await net.upload("/api/customsDocument/uploadPrealert", data);
+    const { failed } = await net.upload(
+      "/api/customsDocument/uploadPrealert",
+      data
+    );
     return failed;
   }
 
   @loading()
-  async uploadCustomsFiles(formData: FormData) {
-    const { failed } = await net.upload("/api/customsDocument/uploadCustomsFiles", formData);
+  async uploadCustomsFiles(formData: FormData, direct: boolean) {
+    if (direct) {
+      const { failed } = await net.post(
+        "/api/customsDocument/useTempCustomsFile",
+        { ids: this.selectedRowKeys }
+      );
+      return failed;
+    }
+    const { failed } = await net.upload(
+      "/api/customsDocument/uploadCustomsFiles",
+      formData
+    );
     return failed;
   }
 
   @loading()
-  async uploadPrealerts(formData: FormData) {
-    const { failed } = await net.upload("/api/customsDocument/uploadPrealerts", formData);
+  async uploadPrealerts(formData: FormData, direct: boolean) {
+    if (direct) {
+      const { failed } = await net.post(
+        "/api/customsDocument/useTempPrealert",
+        { ids: this.selectedRowKeys }
+      );
+      return failed;
+    }
+    const { failed } = await net.upload(
+      "/api/customsDocument/uploadPrealerts",
+      formData
+    );
     return failed;
   }
-
 }

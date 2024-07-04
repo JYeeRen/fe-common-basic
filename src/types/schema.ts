@@ -132,6 +132,8 @@ export interface CustomsDocument extends CustomsStatus {
   customsFile: boolean;
   prealertFile: boolean;
   copyImgFile: boolean;
+  atdIso: string;
+  etdIso: string;
 }
 
 export interface CustomsTrackStatus {
