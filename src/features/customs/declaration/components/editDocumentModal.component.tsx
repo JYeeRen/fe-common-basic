@@ -21,7 +21,6 @@ export const EditDocumentModal = observer((props: EditDocumentModalProps) => {
       return;
     }
 
-
     const failds = [];
 
     if (customsFiles && customsFiles.length > 0) {
@@ -76,55 +75,62 @@ export const EditDocumentModal = observer((props: EditDocumentModalProps) => {
           </div>
         </Row>
         <Row className="my-5 mb-10" align="top">
-          <Col span={12}>
-            <Row justify="center" className="mb-4">
-              <Button
-                type="primary"
-                onClick={store.downloadCustomsFile.bind(
-                  store,
-                  store.editing?.id
-                )}
-                loading={store.loading}
-                disabled={!store.editing?.customsFile}
-              >
-                {t("下载清关文件")}
-              </Button>
-            </Row>
-            <Row justify="start">
-              <Block if={!store.hasTakeOf}>
-                <Form.Item noStyle name="customsFiles">
-                  <FileUpload
-                    maxCount={1}
-                    loading={store.loading}
-                    title={t("修改清关文件：")}
-                  />
-                </Form.Item>
-              </Block>
-            </Row>
-          </Col>
-          <Col span={12} className="justify-center">
-            <Row justify="center" className="mb-4">
-              <Button
-                type="primary"
-                onClick={store.downloadPrealert.bind(store, store.editing?.id)}
-                loading={store.loading}
-                disabled={!store.editing?.prealertFile}
-              >
-                {t("下载预报文件")}
-              </Button>
-            </Row>
-            <Row justify="start">
-              <Block if={!store.hasTakeOf}>
-                <Form.Item noStyle name="prealertFiles">
-                  <FileUpload
-                    maxCount={1}
-                    loading={store.loading}
-                    title={t("修改预报文件：")}
-                  />
-                </Form.Item>
-              </Block>
-            </Row>
-          </Col>
+          <Block if={store.editing?.customsFile}>
+            <Col span={12}>
+              <Row justify="center" className="mb-4">
+                <Button
+                  type="primary"
+                  onClick={store.downloadCustomsFile.bind(
+                    store,
+                    store.editing?.id
+                  )}
+                  loading={store.loading}
+                  disabled={!store.editing?.customsFile}
+                >
+                  {t("下载清关文件")}
+                </Button>
+              </Row>
+              <Row justify="start">
+                <Block if={!store.hasTakeOf}>
+                  <Form.Item noStyle name="customsFiles">
+                    <FileUpload
+                      maxCount={1}
+                      loading={store.loading}
+                      title={t("修改清关文件：")}
+                    />
+                  </Form.Item>
+                </Block>
+              </Row>
+            </Col>
+          </Block>
+          <Block if={store.editing?.prealertFile}>
+            <Col span={12} className="justify-center">
+              <Row justify="center" className="mb-4">
+                <Button
+                  type="primary"
+                  onClick={store.downloadPrealert.bind(
+                    store,
+                    store.editing?.id
+                  )}
+                  loading={store.loading}
+                  disabled={!store.editing?.prealertFile}
+                >
+                  {t("下载预报文件")}
+                </Button>
+              </Row>
+              <Row justify="start">
+                <Block if={!store.hasTakeOf}>
+                  <Form.Item noStyle name="prealertFiles">
+                    <FileUpload
+                      maxCount={1}
+                      loading={store.loading}
+                      title={t("修改预报文件：")}
+                    />
+                  </Form.Item>
+                </Block>
+              </Row>
+            </Col>
+          </Block>
         </Row>
         <Row justify="end" className="my-4">
           <Button className="mr-4" onClick={onCancel}>
