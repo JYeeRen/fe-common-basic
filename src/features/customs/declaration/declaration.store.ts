@@ -51,15 +51,15 @@ export class DeclrationStore {
     );
   }
 
+  get selectedTakeOf() {
+    const rows = this.selectedRows.filter(row => {
+      return dayjs(row.atdIso || row.etdIso).isBefore(dayjs());
+    });
+    return rows;
+  }
+
   get hasTakeOf() {
-    for (const record of this.selectedRows) {
-      const takeOfAt = record.atdIso || record.etdIso;
-      if (!takeOfAt) continue;
-      if (dayjs(takeOfAt).isBefore(dayjs())) {
-        return true;
-      }
-    }
-    return false;
+    return this.selectedTakeOf.length > 0;
   }
 
   setCreatingCustomDocs(creatingCustomDocs: boolean) {

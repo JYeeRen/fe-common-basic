@@ -31,17 +31,17 @@ import { ViewDocumentModal } from "./components/viewDocumentModal.component";
 import { CreateDocumentModal } from "./components/createDocumentModal.component";
 import { EditDocumentModal } from "./components/editDocumentModal.component";
 import { CreatePrealerttModal } from "./components/creatPrealertModal.component";
+import dayjs from "dayjs";
 
 function DeclareStatusComponent() {
-  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, { autoLoad: false });
-  const { store, t } = useStore(
-    DeclrationStore,
-    gridStore
-  )(gridStore);
+  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, {
+    autoLoad: false,
+  });
+  const { store, t } = useStore(DeclrationStore, gridStore)(gridStore);
 
   useEffect(() => {
-    optionsService.refresh('customsTemplates');
-    optionsService.refresh('prealertTemplates');
+    optionsService.refresh("customsTemplates");
+    optionsService.refresh("prealertTemplates");
   }, []);
 
   useEffect(() => {
@@ -106,25 +106,75 @@ function DeclareStatusComponent() {
     []
   );
 
-    const handleDocumentCreate = () => {
-      if (!some(store.selectedRows, r => r.customsFile)) {
-        return store.setCreatingCustomDocs(true); 
-      }
-      Modal.confirm({
+  const takeofCheck = () => {
+    if (
+      store.selectedTakeOf.length > 0 &&
+      store.selectedTakeOf.length !== store.selectedRows.length
+    ) {
+      Modal.error({
         title: t('操作确认'),
-        content: (
-          <div>
-            <p>{t('检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。')}</p>
-            <p>{t('此操作不可恢复，请谨慎操作。')}</p>
-          </div>
-        ),
-        okText: t('确认修改模板'),
-        cancelText: t('取消'),
-        onOk: () => store.setCreatingCustomDocs(true)
+        content: t('已选提单中包含已起飞提单，无法人工制作。如需系统生成文件，请单独操作已起飞提单。'),
+        okText: t('确认'),
       });
-    };
+      return false;
+    }
+    return true;
+  };
 
-    const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
+  const handleDocumentCreate = () => {
+    if (!takeofCheck()) {
+      return;
+    }
+
+    if (!some(store.selectedRows, (r) => r.customsFile)) {
+      return store.setCreatingCustomDocs(true);
+    }
+    Modal.confirm({
+      title: t("操作确认"),
+      content: (
+        <div>
+          <p>
+            {t(
+              "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。"
+            )}
+          </p>
+          <p>{t("此操作不可恢复，请谨慎操作。")}</p>
+        </div>
+      ),
+      okText: t("确认修改模板"),
+      cancelText: t("取消"),
+      onOk: () => store.setCreatingCustomDocs(true),
+    });
+  };
+
+  const handlePrealerCreate = () => {
+
+    if (!takeofCheck()) {
+      return;
+    }
+    
+    if (!some(store.selectedRows, (r) => r.prealertFile)) {
+      return store.setCreatingPrealertDocs(true);
+    }
+    Modal.confirm({
+      title: t("操作确认"),
+      content: (
+        <div>
+          <p>
+            {t(
+              "检测到当前选择的订单在系统内存在已制作完成的文件，若选择继续操作，系统将根据选择的模板生成新文件覆盖当前已上传的文件。"
+            )}
+          </p>
+          <p>{t("此操作不可恢复，请谨慎操作。")}</p>
+        </div>
+      ),
+      okText: t("确认修改模板"),
+      cancelText: t("取消"),
+      onOk: () => store.setCreatingPrealertDocs(true),
+    });
+  };
+
+  const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   return (
     <Container className={styles.container} loading={store.loading}>
@@ -141,7 +191,11 @@ function DeclareStatusComponent() {
               </Radio.Group>
             </Form.Item>
           </div>
-          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+          <Form.Item
+            name="noList"
+            wrapperCol={{ span: 22 }}
+            rules={numberRules}
+          >
             <FilterTextArea
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
@@ -149,7 +203,11 @@ function DeclareStatusComponent() {
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("清关单证制作")} wrapperClassName={styles.wrapper} table>
+      <Container
+        title={t("清关单证制作")}
+        wrapperClassName={styles.wrapper}
+        table
+      >
         <Row justify="start" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
@@ -163,7 +221,7 @@ function DeclareStatusComponent() {
             className="operation-btn mr-4 mb-4"
             icon={<UploadOutlined />}
             disabled={store.initiateDisabled}
-            onClick={store.setCreatingPrealertDocs.bind(store, true)}
+            onClick={handlePrealerCreate}
           >
             {t("预报文件制作")}
           </Button>
@@ -186,6 +244,15 @@ function DeclareStatusComponent() {
             type: "checkbox",
             onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
             selectedRowKeys: store.selectedRowKeys,
+            getCheckboxProps: (row) => {
+              const takeOfAt = row.atdIso || row.etdIso;
+              return {
+                disabled:
+                  dayjs(takeOfAt).isBefore(dayjs()) &&
+                  row.customsFile &&
+                  row.prealertFile,
+              };
+            },
           }}
           rowKey="id"
           dataSource={gridStore.rowData}

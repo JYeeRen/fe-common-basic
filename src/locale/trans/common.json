@@ -463,6 +463,10 @@
         "zh": "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。",
         "en": "Pre-alert file generated, please check the data and modify if necessary."
     },
+    "预报文件已生成，可下载查看。（提单已起飞，无法人工上传修改。）": {
+        "zh": "预报文件已生成，可下载查看。（提单已起飞，无法人工上传修改。） ",
+        "en": "Pre-alert has been generated. Can download and check. (The selected orders include in-flight orders, which cannot be manually created.)"
+    },
     "修改预报文件：": {
         "zh": "修改预报文件：",
         "en": "Modify pre-alert file:"
@@ -518,6 +522,10 @@
     "注意：": {
         "zh": "注意：",
         "en": "Notice:"
+    },
+    "清关资料已生成，可下载查看。（提单已起飞，无法人工上传修改。）": {
+        "zh": "清关资料已生成，可下载查看。（提单已起飞，无法人工上传修改。） ",
+        "en": "The customs clearance information has been generated. Can download and check. (The selected orders include in-flight orders, which cannot be manually created.)"
     },
     "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。": {
         "zh": "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。 ",
@@ -594,6 +602,10 @@
     "ETA": {
         "zh": "ETA",
         "en": "ETA"
+    },
+    "已选提单中包含已起飞提单，无法人工制作。如需系统生成文件，请单独操作已起飞提单。": {
+        "zh": "已选提单中包含已起飞提单，无法人工制作。如需系统生成文件，请单独操作已起飞提单。",
+        "en": "The selected orders include in-flight orders, which cannot be manually created. If you need the system to generate files, please operate on the in-flight orders separately."
     },
     "起飞港口": {
         "zh": "起飞港口",

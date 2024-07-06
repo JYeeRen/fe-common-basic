@@ -92,7 +92,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
         (no) => file.name === `${no}_customs_file.xlsx`
       );
       if (matchName) {
-        formData.append("files[]", file.originFileObj);
+        formData.append("files", file.originFileObj);
       }
     });
 
@@ -131,7 +131,8 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
                 color: "#787878",
               }}
             >
-              {t('备注')}{': '}
+              {t("备注")}
+              {": "}
               {t("未找到对应提单号文件，不予上传。")}
               {t("文件命名规则： 提单号_prealert.xlsx")}
             </p>
@@ -144,7 +145,9 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
             <CopyToClipboard
               text={failed.map((i) => `${i.number} ${i.reason}`).join("\n")}
             >
-              <span style={{ color: '#fff', cursor: 'pointer' }}>{'复制原因'}</span>
+              <span style={{ color: "#fff", cursor: "pointer" }}>
+                {"复制原因"}
+              </span>
             </CopyToClipboard>
           </span>
           <span>
@@ -180,22 +183,31 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
     <>
       <Form form={form}>
         <div className="mt-10">
-          <Row justify="center" className="my-5">
-            {t(
-              "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
-            )}
-          </Row>
-          <Row justify="center" className="my-5">
-            <div style={{ display: "inline-block", color: "orange" }}>
-              {t("注意：")}
-            </div>
-            <div style={{ display: "inline-block" }}>
-              <p>
-                {t("修改文件时，请不要增删文件的行列数，不要修改字段名称。")}
-              </p>
-              <p>{t("上传新文件后，将覆盖之前的文件，请谨慎操作！")}</p>
-            </div>
-          </Row>
+          <Block if={store.hasTakeOf}>
+            <Row justify="center" className="my-5">
+              {t(
+                "清关资料已生成，可下载查看。（提单已起飞，无法人工上传修改。）"
+              )}
+            </Row>
+          </Block>
+          <Block if={!store.hasTakeOf}>
+            <Row justify="center" className="my-5">
+              {t(
+                "清关资料已生成，请下载检查，若资料有误，请修改后在下方附件处上传。"
+              )}
+            </Row>
+            <Row justify="center" className="my-5">
+              <div style={{ display: "inline-block", color: "orange" }}>
+                {t("注意：")}
+              </div>
+              <div style={{ display: "inline-block" }}>
+                <p>
+                  {t("修改文件时，请不要增删文件的行列数，不要修改字段名称。")}
+                </p>
+                <p>{t("上传新文件后，将覆盖之前的文件，请谨慎操作！")}</p>
+              </div>
+            </Row>
+          </Block>
           <Row className="my-5 mb-10" align="middle">
             <Col span={12} className="flex justify-center">
               <Button
@@ -220,12 +232,27 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
           </Row>
         </div>
         <Row justify="end" className="my-4">
-          <Button className="mr-4" onClick={onCancel}>
-            {t("取消")}
-          </Button>
-          <Button type="primary" onClick={handleOk} loading={store.loading}>
-            {t("确认无误，提交文件")}
-          </Button>
+          <Block if={store.hasTakeOf}>
+            <Button
+              className="mr-4"
+              onClick={() => {
+                onCancel?.();
+                store.gridStore.loadData();
+              }}
+            >
+              {t("确定")}
+            </Button>
+          </Block>
+          <Block if={!store.hasTakeOf}>
+            <>
+              <Button className="mr-4" onClick={onCancel}>
+                {t("取消")}
+              </Button>
+              <Button type="primary" onClick={handleOk} loading={store.loading}>
+                {t("确认无误，提交文件")}
+              </Button>
+            </>
+          </Block>
         </Row>
       </Form>
     </>
