@@ -459,6 +459,18 @@
         "zh": "未完成的文件对应提单号如下：",
         "en": "Uploaded files without corresponding air waybill number"
     },
+    "已起飞的提单确认提交后无法修改。": {
+        "zh": "已起飞的提单确认提交后无法修改。",
+        "en": "In-flight orders confirmed and submitted cannot be modified."
+    },
+    "已选提单中包含已起飞且清关单证已完成提单，无法操作。已完成提单如下：": {
+        "zh": "已选提单中包含已起飞且清关单证已完成提单，无法操作。已完成提单如下：",
+        "en": "The selected orders include in-flight orders with customs clearance documents already generated, which cannot be operated on. The generated orders are as follows:"
+    },
+    "已选提单中包含已起飞且预报文件已完成提单，无法操作。已完成提单如下：": {
+        "zh": "已选提单中包含已起飞且预报文件已完成提单，无法操作。已完成提单如下：",
+        "en": "The selected orders include in-flight orders with Pre-alert file already generated, which cannot be operated on. The generated orders are as follows:"
+    },
     "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。": {
         "zh": "预报文件已生成，请下载检查，若资料有误，请修改后在下方附件处上传。",
         "en": "Pre-alert file generated, please check the data and modify if necessary."

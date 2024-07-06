@@ -41,6 +41,14 @@ export class DeclrationStore {
     // )
   }
 
+  get customFileCreated() {
+    return this.selectedRows.filter(row => row.customsFile);
+  }
+
+  get prealertFileCreated() {
+    return this.selectedRows.filter(row => row.prealertFile);
+  }
+
   get initiateDisabled() {
     return this.selectedRowKeys.length === 0;
   }

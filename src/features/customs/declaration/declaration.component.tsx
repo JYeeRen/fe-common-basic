@@ -26,7 +26,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import optionsService from "@services/options.service";
-import { compact, some } from "lodash";
+import { compact } from "lodash";
 import { ViewDocumentModal } from "./components/viewDocumentModal.component";
 import { CreateDocumentModal } from "./components/createDocumentModal.component";
 import { EditDocumentModal } from "./components/editDocumentModal.component";
@@ -112,9 +112,11 @@ function DeclareStatusComponent() {
       store.selectedTakeOf.length !== store.selectedRows.length
     ) {
       Modal.error({
-        title: t('操作确认'),
-        content: t('已选提单中包含已起飞提单，无法人工制作。如需系统生成文件，请单独操作已起飞提单。'),
-        okText: t('确认'),
+        title: t("操作确认"),
+        content: t(
+          "已选提单中包含已起飞提单，无法人工制作。如需系统生成文件，请单独操作已起飞提单。"
+        ),
+        okText: t("确认"),
       });
       return false;
     }
@@ -126,9 +128,30 @@ function DeclareStatusComponent() {
       return;
     }
 
-    if (!some(store.selectedRows, (r) => r.customsFile)) {
+    if (store.customFileCreated.length > 0 && store.hasTakeOf) {
+      Modal.error({
+        title: t("操作确认"),
+        content: (
+          <span>
+            <p>
+              {t(
+                "已选提单中包含已起飞且清关单证已完成提单，无法操作。已完成提单如下："
+              )}
+            </p>
+            {store.customFileCreated.map((row) => (
+              <p key={row.id}>{row.masterWaybillNo}</p>
+            ))}
+          </span>
+        ),
+        okText: t("确认"),
+      });
+      return;
+    }
+
+    if (!(store.customFileCreated.length > 0)) {
       return store.setCreatingCustomDocs(true);
     }
+
     Modal.confirm({
       title: t("操作确认"),
       content: (
@@ -148,14 +171,34 @@ function DeclareStatusComponent() {
   };
 
   const handlePrealerCreate = () => {
-
     if (!takeofCheck()) {
       return;
     }
-    
-    if (!some(store.selectedRows, (r) => r.prealertFile)) {
+
+    if (store.prealertFileCreated.length > 0 && store.hasTakeOf) {
+      Modal.error({
+        title: t("操作确认"),
+        content: (
+          <span>
+            <p>
+              {t(
+                "已选提单中包含已起飞且预报文件已完成提单，无法操作。已完成提单如下："
+              )}
+            </p>
+            {store.prealertFileCreated.map((row) => (
+              <p key={row.id}>{row.masterWaybillNo}</p>
+            ))}
+          </span>
+        ),
+        okText: t("确认"),
+      });
+      return;
+    }
+
+    if (!(store.prealertFileCreated.length > 0)) {
       return store.setCreatingPrealertDocs(true);
     }
+
     Modal.confirm({
       title: t("操作确认"),
       content: (

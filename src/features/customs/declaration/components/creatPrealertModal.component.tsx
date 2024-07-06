@@ -183,11 +183,14 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
       <Form form={form}>
         <div className="mt-10">
           <Block if={store.hasTakeOf}>
-            <Row justify="center" className="my-5">
-              {t(
-                "预报文件已生成，可下载查看。（提单已起飞，无法人工上传修改。）"
-              )}
-            </Row>
+              <Row justify="center" className="my-5">
+                {t(
+                  "预报文件已生成，可下载查看。（提单已起飞，无法人工上传修改。）"
+                )}
+              </Row>
+              <Row justify="center" className="my-5">
+                {t("已起飞的提单确认提交后无法修改。")}
+              </Row>
           </Block>
           <Block if={!store.hasTakeOf}>
             <Row justify="center" className="my-5">
@@ -231,21 +234,27 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
           </Row>
         </div>
         <Row justify="end" className="my-4">
-          <Block if={store.hasTakeOf}>
-            <Button className="mr-4" onClick={onCancel}>
+          {/* <Block if={store.hasTakeOf}>
+            <Button
+              className="mr-4"
+              onClick={() => {
+                onCancel?.();
+                store.gridStore.loadData();
+              }}
+            >
               {t("确定")}
             </Button>
-          </Block>
-          <Block if={!store.hasTakeOf}>
-            <>
-              <Button className="mr-4" onClick={onCancel}>
-                {t("取消")}
-              </Button>
-              <Button type="primary" onClick={handleOk} loading={store.loading}>
-                {t("确认无误，提交文件")}
-              </Button>
-            </>
-          </Block>
+          </Block> */}
+          {/* <Block if={!store.hasTakeOf}> */}
+          <>
+            <Button className="mr-4" onClick={onCancel}>
+              {t("取消")}
+            </Button>
+            <Button type="primary" onClick={handleOk} loading={store.loading}>
+              {t("确认无误，提交文件")}
+            </Button>
+          </>
+          {/* </Block> */}
         </Row>
       </Form>
     </>
