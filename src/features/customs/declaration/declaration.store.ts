@@ -53,7 +53,7 @@ export class DeclrationStore {
 
   get hasTakeOf() {
     for (const record of this.selectedRows) {
-      const takeOfAt = record.atd || record.etd;
+      const takeOfAt = record.atdIso || record.etdIso;
       if (!takeOfAt) continue;
       if (dayjs(takeOfAt).isBefore(dayjs())) {
         return true;
@@ -214,13 +214,13 @@ export class DeclrationStore {
         "/api/customsDocument/useTempCustomsFile",
         { ids: this.selectedRowKeys }
       );
-      return failed;
+      return { failed, total: 0, success: 0 };
     }
-    const { failed } = await net.upload(
+    const { failed, total, success } = await net.upload(
       "/api/customsDocument/uploadCustomsFiles",
       formData
     );
-    return failed;
+    return { failed, total, success };
   }
 
   @loading()
@@ -230,12 +230,12 @@ export class DeclrationStore {
         "/api/customsDocument/useTempPrealert",
         { ids: this.selectedRowKeys }
       );
-      return failed;
+      return { failed, total: 0, success: 0 };
     }
-    const { failed } = await net.upload(
+    const { failed, total, success } = await net.upload(
       "/api/customsDocument/uploadPrealerts",
       formData
     );
-    return failed;
+    return { failed, total, success };
   }
 }

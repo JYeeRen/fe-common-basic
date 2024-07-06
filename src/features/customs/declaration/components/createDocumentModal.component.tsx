@@ -80,54 +80,98 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
   const handleOk = async () => {
     const { customsFiles = [] } = form.getFieldsValue();
     const formData = new FormData();
+    formData.append("ids", JSON.stringify(store.selectedRowKeys));
+
+    const masterWaybillNos = store.selectedRows.map(
+      (row) => row.masterWaybillNo
+    );
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (customsFiles as any[]).forEach(file => {
-      formData.append("files[]", file.originFileObj);
+    (customsFiles as any[]).forEach((file) => {
+      const matchName = masterWaybillNos.some(
+        (no) => file.name === `${no}_customs_file.xlsx`
+      );
+      if (matchName) {
+        formData.append("files[]", file.originFileObj);
+      }
     });
 
-    const failed = await store.uploadCustomsFiles(formData, customsFiles.length === 0);
+    const { failed, total, success } = await store.uploadCustomsFiles(
+      formData,
+      customsFiles.length === 0
+    );
 
     store.setCreatingCustomDocs(false);
 
-    if (!failed.length) {
+    if (customsFiles.length === 0 && failed.length === 0) {
       return store.gridStore.loadData();
     }
 
     const modal = Modal.confirm({
-      title: t('操作确认'),
+      title: t("操作确认"),
+      width: 500,
       content: (
         <div>
-          <p>{t('全部上传文件：{{no}}个', { no: customsFiles.length })}</p>
-          <p>{t('完成上传文件：{{no}}个', { no: customsFiles.length })}</p>
-          <p>{t('未完成的文件对应提单号如下：')}</p>
-          {failed.map(({ number }, index) => <p key={`${number}-${index}`}>{number}</p>)}
+          <p style={{ marginBottom: "5px" }}>
+            {t("选择提单个数：{{no}}个", { no: total })}
+          </p>
+          <p style={{ marginBottom: "5px" }}>
+            {t("完成上传提单个数：{{no}}个", { no: success })}
+          </p>
+          <Block if={failed.length > 0}>
+            <p style={{ marginBottom: "5px" }}>{t("未完成数据提单号如下：")}</p>
+            {failed.map(({ number }, index) => (
+              <p key={`${number}-${index}`}>{number}</p>
+            ))}
+            <p
+              style={{
+                marginTop: "20px",
+                marginBottom: "5px",
+                fontSize: "13px",
+                color: "#787878",
+              }}
+            >
+              {t('备注')}{': '}
+              {t("未找到对应提单号文件，不予上传。")}
+              {t("文件命名规则： 提单号_prealert.xlsx")}
+            </p>
+          </Block>
         </div>
       ),
       footer: (
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <CopyToClipboard text={failed.map(i => i.number).join('\n')}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>
+            <CopyToClipboard
+              text={failed.map((i) => `${i.number} ${i.reason}`).join("\n")}
+            >
+              <span style={{ color: '#fff', cursor: 'pointer' }}>{'复制原因'}</span>
+            </CopyToClipboard>
+          </span>
+          <span>
+            <CopyToClipboard text={failed.map((i) => i.number).join("\n")}>
               <Button
-                  key="back"
-                  onClick={() => {
-                    store.gridStore.loadData();
-                    modal.destroy()
-                  }}
-                  style={{marginRight: '10px'}} // 添加右边距
+                key="back"
+                onClick={() => {
+                  store.gridStore.loadData();
+                  modal.destroy();
+                }}
+                style={{ marginRight: "10px" }} // 添加右边距
               >
-                {t('复制未完成单号')}
+                {t("复制未完成单号")}
               </Button>
             </CopyToClipboard>
             <Button
-                key="submit"
-                type="primary"
-                onClick={() => {
-                  store.gridStore.loadData()
-                  modal.destroy();
-                }}
+              key="submit"
+              type="primary"
+              onClick={() => {
+                store.gridStore.loadData();
+                modal.destroy();
+              }}
             >
-              {t('确认')}
+              {t("确认")}
             </Button>
-          </div>
+          </span>
+        </div>
       ),
     });
   };

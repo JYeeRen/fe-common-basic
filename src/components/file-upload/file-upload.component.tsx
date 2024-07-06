@@ -29,7 +29,7 @@ export const FileUpload = (props: FileUploadProps) => {
   const [t] = useTranslation();
   const [files, setFiles] = useState(value ?? []);
   const handleChange = (fileList: UploadFile[]) => {
-    setFiles([...fileList]);
+    setFiles(fileList);
     onChange?.(fileList);
   };
 
@@ -41,14 +41,22 @@ export const FileUpload = (props: FileUploadProps) => {
         accept={accept}
         multiple={multiple}
         maxCount={maxCount}
-        beforeUpload={() => false}
+        beforeUpload={() => {
+          return false;
+        }}
         fileList={files}
         onChange={({ fileList }) => handleChange(fileList)}
       >
         <div className="flex flex-row">
           <span>{title}</span>
           <div className="flex flex-col">
-            <Button icon={<UploadOutlined />} loading={loading}>
+            <Button
+              icon={<UploadOutlined />}
+              loading={loading}
+              onClick={() => {
+                handleChange([]);
+              }}
+            >
               {t("上传附件")}
             </Button>
             <span className={uploadStyles.tip}>

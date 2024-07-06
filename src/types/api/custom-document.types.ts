@@ -115,7 +115,7 @@ export interface CustomsDocumentAPI {
   "/api/customsDocument/uploadCustomsFiles": {
     // params: { files: unknown[] };
     params: FormData;
-    res: { failed: { number: string; reason: string }[] };
+    res: { failed: { number: string; reason: string }[]; total: number; success: number; };
   };
   "/api/customsDocument/uploadPrealert": {
     // params: { id: number; file: unknown };
@@ -125,6 +125,6 @@ export interface CustomsDocumentAPI {
   "/api/customsDocument/uploadPrealerts": {
     // params: { files: unknown[] };
     params: FormData;
-    res: { failed: { number: string; reason: string }[] };
+    res: { failed: { number: string; reason: string }[]; total: number; success: number; };
   };
 }

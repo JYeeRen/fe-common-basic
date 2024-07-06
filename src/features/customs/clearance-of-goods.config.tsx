@@ -2,6 +2,8 @@ import { net } from "@infra";
 import { CustomItem, TemplateListQueryParams } from "./types";
 import { t } from "@locale";
 import { TableColumnsType } from "@components";
+import { find } from "lodash";
+import optionsService from "@services/options.service";
 
 export const getRows = async (params: TemplateListQueryParams) => {
   return net.post("/api/customsItem/findList", params);
@@ -12,32 +14,32 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
     {
       key: "mawbInfo.masterWaybillNo",
       dataIndex: ["mawbInfo", "masterWaybillNo"],
-      title: t("主提运单号"),
+      title: t("提单号2"),
     },
     {
       key: "transportName",
       dataIndex: "transportName",
-      title: t("运输方式"),
+      title: t("运输名称"),
     },
     {
       key: "mawbInfo.departPortCode",
       dataIndex: ["mawbInfo", "departPortCode"],
-      title: t("起运港"),
+      title: t("起运港代码"),
     },
     {
       key: "mawbInfo.arrivePortCode",
       dataIndex: ["mawbInfo", "arrivePortCode"],
-      title: t("抵运港"),
+      title: t("目的港代码"),
     },
     {
       key: "mawbInfo.etd",
       dataIndex: ["mawbInfo", "etd"],
-      title: t("预计离港日期"),
+      title: t("ETD"),
     },
     {
       key: "mawbInfo.eta",
       dataIndex: ["mawbInfo", "eta"],
-      title: t("预计抵港日期"),
+      title: t("ETA"),
     },
     {
       key: "mawbInfo.customerName",
@@ -47,176 +49,187 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
     {
       key: "packageInfo.providerOrderId",
       dataIndex: ["packageInfo", "providerOrderId"],
-      title: t("物流订单号"),
+      title: t("运单号2"),
     },
     {
       key: "packageInfo.declarationBillId",
       dataIndex: ["packageInfo", "declarationBillId"],
-      title: t("申报订单号"),
+      title: t("订单号2"),
     },
     {
       key: "packageInfo.trackingNo",
       dataIndex: ["packageInfo", "trackingNo"],
-      title: t("面单号"),
+      title: t("尾程单号2"),
     },
     {
       key: "packageInfo.operateTime",
       dataIndex: ["packageInfo", "operateTime"],
-      title: t("操作时间"),
+      title: t("操作时间2"),
     },
     {
       key: "packageInfo.remark",
       dataIndex: ["packageInfo", "remark"],
-      title: t("用户发货备注"),
+      title: t("备注2"),
     },
     {
       key: "packageInfo.entityCode",
       dataIndex: ["packageInfo", "entityCode"],
-      title: t("公司代码"),
+      title: t("公司代码2"),
     },
     {
       key: "packageInfo.orderNo",
       dataIndex: ["packageInfo", "orderNo"],
-      title: t("交易单号"),
+      title: t("交易单号2"),
     },
     {
       key: "packageInfo.bigBagNo",
       dataIndex: ["packageInfo", "bigBagNo"],
-      title: t("大包号"),
+      title: t("袋号2"),
     },
     {
       key: "packageInfo.containerNo",
       dataIndex: ["packageInfo", "containerNo"],
-      title: t("集装箱号"),
+      title: t("集装箱号2"),
     },
     {
       key: "packageInfo.buyerRegion",
       dataIndex: ["packageInfo", "buyerRegion"],
-      title: t("包裹售卖国家"),
+      title: t("包裹售卖国家2"),
     },
     {
       key: "packageInfo.nextProviderName",
       dataIndex: ["packageInfo", "nextProviderName"],
-      title: t("下一段服务商名称"),
+      title: t("下一程服务商"),
     },
     {
       key: "packageInfo.goodsValue",
       dataIndex: ["packageInfo", "goodsValue"],
-      title: t("包裹申报价格"),
+      title: t("货物价值"),
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.goodsValueCNY",
       dataIndex: ["packageInfo", "goodsValueCNY"],
-      title: `${t("包裹申报价格")}(CNY)`,
+      title: `${t("货物价值")}(CNY)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.goodsValueUSD",
       dataIndex: ["packageInfo", "goodsValue"],
-      title: `${t("包裹申报价格")}(USD)`,
+      title: `${t("货物价值")}(USD)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.packageShippingFee",
       dataIndex: ["packageInfo", "packageShippingFee"],
-      title: t("包裹运费"),
+      title: t("运费"),
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.packageShippingFeeCNY",
       dataIndex: ["packageInfo", "packageShippingFeeCNY"],
-      title: `${t("包裹运费")}(CNY)`,
+      title: `${t("运费")}(CNY)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.packageShippingFeeUSD",
       dataIndex: ["packageInfo", "packageShippingFee"],
-      title: `${t("包裹运费")}(USD)`,
+      title: `${t("运费")}(USD)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageInfo.currency",
       dataIndex: ["packageInfo", "currency"],
-      title: t("币种"),
+      title: t("币种2"),
     },
     {
       key: "packageInfo.realWeight",
       dataIndex: ["packageInfo", "realWeight"],
-      title: t("毛重"),
+      title: t("实际重量"),
     },
     {
       key: "packageInfo.weightUnit",
       dataIndex: ["packageInfo", "weightUnit"],
-      title: t("重量单位"),
+      title: t("重量单位2"),
+    },
+    {
+      key: "Status",
+      dataIndex: ["packageInfo", "status"],
+      title: t("状态"),
+      render: (value) => find(optionsService.packageStatuses, { value })?.label,
+    },
+    {
+      key: "cancelRemark",
+      dataIndex: ["packageInfo", "cancelRemark"],
+      title: t("取消原因"),
     },
     {
       key: "packageItemInfo.itemId",
       dataIndex: ["packageItemInfo", "itemId"],
-      title: t("商品ID"),
+      title: t("商品ID2"),
     },
     {
       key: "packageItemInfo.skuId",
       dataIndex: ["packageItemInfo", "skuId"],
-      title: t("商品sku标识id"),
+      title: t("SKU ID"),
     },
     {
       key: "packageItemInfo.productName",
       dataIndex: ["packageItemInfo", "productName"],
-      title: t("商品英文品名"),
+      title: t("商品名称"),
     },
     {
       key: "packageItemInfo.productNameCn",
       dataIndex: ["packageItemInfo", "productNameCn"],
-      title: t("商品中文名称"),
+      title: t("商品中文名称2"),
     },
     {
       key: "packageItemInfo.weight",
       dataIndex: ["packageItemInfo", "weight"],
-      title: t("item重量"),
+      title: t("重量"),
     },
     {
       key: "packageItemInfo.exportHsCode",
       dataIndex: ["packageItemInfo", "exportHsCode"],
-      title: t("出口HS编码"),
+      title: t("出口HS编码2"),
     },
     {
       key: "packageItemInfo.importHsCode",
       dataIndex: ["packageItemInfo", "importHsCode"],
-      title: t("进口HS编码"),
+      title: t("进口HS编码2"),
     },
     {
       key: "packageItemInfo.qty",
       dataIndex: ["packageItemInfo", "qty"],
-      title: t("数量"),
+      title: t("数量2"),
     },
     {
       key: "packageItemInfo.unit",
       dataIndex: ["packageItemInfo", "unit"],
-      title: t("数量单位"),
+      title: t("单位"),
     },
     {
       key: "packageItemInfo.unitPrice",
       dataIndex: ["packageItemInfo", "unitPrice"],
-      title: `${t("商品申报单价")}`,
+      title: `${t("单价")}`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageItemInfo.unitPriceCNY",
       dataIndex: ["packageItemInfo", "unitPriceCNY"],
-      title: `${t("商品申报单价")}(CNY)`,
+      title: `${t("单价")}(CNY)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageItemInfo.unitPriceUSD",
       dataIndex: ["packageItemInfo", "unitPriceUSD"],
-      title: `${t("商品申报单价")}(USD)`,
+      title: `${t("单价")}(USD)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageItemInfo.itemShippingFee",
       dataIndex: ["packageItemInfo", "itemShippingFee"],
-      title: t("商品运费"),
+      title: t("商品运费2"),
       // variants: ["CNY", "USD"],
     },
     {
@@ -234,19 +247,19 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
     {
       key: "packageItemInfo.codFee",
       dataIndex: ["packageItemInfo", "codFee"],
-      title: t("COD金额"),
+      title: t("COD费用"),
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageItemInfo.codFeeCNY",
       dataIndex: ["packageItemInfo", "codFeeCNY"],
-      title: `${t("COD金额")}(CNY)`,
+      title: `${t("COD费用")}(CNY)`,
       // variants: ["CNY", "USD"],
     },
     {
       key: "packageItemInfo.codFeeUSD",
       dataIndex: ["packageItemInfo", "codFeeUSD"],
-      title: `${t("COD金额")}(USD)`,
+      title: `${t("COD费用")}(USD)`,
       // variants: ["CNY", "USD"],
     },
     {
@@ -297,7 +310,7 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "block",
-            width: "100px"
+            width: "100px",
           }}
         >
           {value}
@@ -307,7 +320,7 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
     {
       key: "packageItemInfo.taxMark",
       dataIndex: ["packageItemInfo", "taxMark"],
-      title: t("商品已税/未税"),
+      title: t("税标"),
     },
   ];
 };

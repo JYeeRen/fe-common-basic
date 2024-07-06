@@ -27,6 +27,18 @@
         "zh": "请上传文件",
         "en": "Upload files"
     },
+    "文件名错误": {
+        "zh": "文件名错误",
+        "en": "File name incorrect"
+    },
+    "'文件名应为": {
+        "zh": "文件名应为",
+        "en": "File name should be like"
+    },
+    "'错误文件名如下：": {
+        "zh": "错误文件名如下：",
+        "en": "Incorrect file name shown below:"
+    },
     "文件下载": {
         "zh": "文件下载",
         "en": "Download"
@@ -170,6 +182,22 @@
     "修改密码": {
         "zh": "修改密码",
         "en": "Change password"
+    },
+    "未找到对应提单号文件，不予上传。": {
+        "zh": "未找到对应提单号文件，不予上传。",
+        "en": "Could not find the file for the corresponding bill of lading, unable to upload."
+    },
+    "文件命名规则： 提单号_prealert.xlsx": {
+        "zh": "文件命名规则： 提单号_prealert.xlsx",
+        "en": "The file naming convention is:Air waybill number_prealert.xlsx"
+    },
+    "选择提单个数：{{no}}个": {
+        "zh": "选择提单个数：{{no}}个",
+        "en": "Selected Count: {{no}}"
+    },
+    "完成上传提单个数：{{no}}个": {
+        "zh": "完成上传提单个数：{{no}}个",
+        "en": "Done count: {{no}}"
     },
     "全部上传数据：{{n}}条。": {
         "zh": "全部上传数据：{{n}}条。",
@@ -1299,10 +1327,6 @@
         "zh": "类型",
         "en": "Item Type"
     },
-    "商品链接": {
-        "zh": "商品链接",
-        "en": "Item URL"
-    },
     "商品已税/未税": {
         "zh": "商品已税/未税",
         "en": "Duty required/duty exempt"
@@ -1510,5 +1534,149 @@
     "扣货": {
         "zh": "扣货",
         "en": "Deduction"
+    },
+    "提单号2": {
+        "zh": "提单号",
+        "en": "Master Waybill No"
+    },
+    "运输名称": {
+        "zh": "运输名称",
+        "en": "Transport Name"
+    },
+    "起运港代码": {
+        "zh": "起运港代码",
+        "en": "Depart Port Code"
+    },
+    "目的港代码": {
+        "zh": "目的港代码",
+        "en": "Arrive Port Code"
+    },
+    "运单号2": {
+        "zh": "运单号",
+        "en": "Provider Order Id"
+    },
+    "订单号2": {
+        "zh": "订单号",
+        "en": "Declaration Bill Id"
+    },
+    "尾程单号2": {
+        "zh": "尾程单号",
+        "en": "Tracking No"
+    },
+    "操作时间2": {
+        "zh": "操作时间",
+        "en": "Operate Time"
+    },
+    "备注2": {
+        "zh": "备注",
+        "en": "Remark"
+    },
+    "公司代码2": {
+        "zh": "公司代码",
+        "en": "Entity Code"
+    },
+    "交易单号2": {
+        "zh": "交易单号",
+        "en": "Order No"
+    },
+    "袋号2": {
+        "zh": "袋号",
+        "en": "Big Bag No"
+    },
+    "集装箱号2": {
+        "zh": "集装箱号",
+        "en": "Container No"
+    },
+    "包裹售卖国家2": {
+        "zh": "包裹售卖国家",
+        "en": "Buyer Region"
+    },
+    "下一程服务商": {
+        "zh": "下一程服务商",
+        "en": "Next Provider Name"
+    },
+    "货物价值": {
+        "zh": "货物价值",
+        "en": "Goods Value"
+    },
+    "运费": {
+        "zh": "运费",
+        "en": "Shipping Fee"
+    },
+    "币种2": {
+        "zh": "币种",
+        "en": "Currency"
+    },
+    "实际重量": {
+        "zh": "实际重量",
+        "en": "Real Weight"
+    },
+    "重量单位2": {
+        "zh": "重量单位",
+        "en": "Weight Unit"
+    },
+    "状态": {
+        "zh": "状态",
+        "en": "Status"
+    },
+    "取消原因": {
+        "zh": "取消原因",
+        "en": "Cancel Remark"
+    },
+    "商品ID2": {
+        "zh": "商品ID",
+        "en": "Item ID"
+    },
+    "SKU ID": {
+        "zh": "SKU ID",
+        "en": "SKU ID"
+    },
+    "商品名称": {
+        "zh": "商品名称",
+        "en": "Product Name"
+    },
+    "商品中文名称2": {
+        "zh": "商品中文名称",
+        "en": "Product Name(CN)"
+    },
+    "重量": {
+        "zh": "重量",
+        "en": "Weight"
+    },
+    "出口HS编码2": {
+        "zh": "出口HS编码",
+        "en": "Export HS Code"
+    },
+    "进口HS编码2": {
+        "zh": "进口HS编码",
+        "en": "Import HS Code"
+    },
+    "数量2": {
+        "zh": "数量",
+        "en": "Qty"
+    },
+    "单位": {
+        "zh": "单位",
+        "en": "Unit"
+    },
+    "单价": {
+        "zh": "单价",
+        "en": "Unit Price"
+    },
+    "商品运费2": {
+        "zh": "商品运费",
+        "en": "Shipping Fee"
+    },
+    "COD费用": {
+        "zh": "COD费用",
+        "en": "COD Fee"
+    },
+    "商品链接": {
+        "zh": "商品链接",
+        "en": "Item Url"
+    },
+    "税标": {
+        "zh": "税标",
+        "en": "Tax Mark"
     }
 }
