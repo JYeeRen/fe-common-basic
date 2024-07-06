@@ -4,7 +4,11 @@ import { OperationButtons, TableColumnsType } from "@components";
 import { CustomsDocument, CustomsDocumentQueryParams } from "./type";
 import { find } from "lodash";
 import { Options } from "@types";
-import { EditOutlined, LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  LeftCircleOutlined,
+  RightCircleOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 
 export const getColumns = (params: {
@@ -61,8 +65,8 @@ export const getColumns = (params: {
       title: t("备注"),
     },
     {
-      key: 'operation',
-      title: t('操作'),
+      key: "operation",
+      title: t("操作"),
       width: 380,
       render: (__value, data) => {
         const operations = [
@@ -86,21 +90,18 @@ export const getColumns = (params: {
           },
         ];
 
-        if (data.atd || data.etd) {
-          if (dayjs(data.atdIso || data.etdIso).isBefore(dayjs())) {
-            operations.splice(1, 1);
-          }
+        if (
+          (data.atd || data.etd) &&
+          dayjs(data.atdIso || data.etdIso).isBefore(dayjs())
+        ) {
+          operations.splice(1, 1);
         } else if (!data.customsFile && !data.prealertFile) {
           operations.splice(1, 1);
         }
-        
-        return (
-          <OperationButtons
-            items={operations}
-          />
-        );
+
+        return <OperationButtons items={operations} />;
       },
-    }
+    },
   ];
 };
 
