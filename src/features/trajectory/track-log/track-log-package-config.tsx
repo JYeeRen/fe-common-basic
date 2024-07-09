@@ -50,6 +50,16 @@ export const getColumns = (): TableColumnsType<PackagCustomsTrackLoge> => {
       title: t("录入时间（中国）"),
     },
     { key: "userName", dataIndex: "userName", title: t("录入人员") },
+    {
+      key: "uploadCompleted",
+      dataIndex: "uploadCompleted",
+      title: t("接收状态"),
+      render: (value) => {
+        let id = value ? 1 : 2;
+        return find(optionsService.trackUploadStatusTypes, { value: id })
+          ?.label;
+      },
+    }
   ];
 };
 

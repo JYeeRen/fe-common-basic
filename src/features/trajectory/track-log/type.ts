@@ -10,6 +10,7 @@ export type StatusQueryParams = Sources["/api/customsTrackLog/findMawbStatusList
 export interface MawbFormValues {
   masterWaybillNoList?: string[];
   waybillStatusCode?: string;
+  uploadStatus?: number;
 }
 
 export interface PackageFormValues {

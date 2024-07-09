@@ -8,6 +8,7 @@ export interface FormValues {
   noList?: string[];
   noType?: number;
   actionCode?: string;
+  uploadStatus?: number;
 }
 
 export type Package = Pick<

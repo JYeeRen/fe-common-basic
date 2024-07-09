@@ -8,18 +8,21 @@ import {
   Table,
   textareaMaxLengthRule,
   ClientGrid,
+  Row,
+  Button,
 } from "@components";
-import * as mawbListConfig from './track-log-mawb-config';
+import * as mawbListConfig from "./track-log-mawb-config";
 import { observer } from "mobx-react-lite";
 import * as listConfig from "./track-log-mawb-config";
 import styles from "./track-info.module.less";
-import { useCallback, useMemo } from "react";
+import { Key, useCallback, useMemo, useState } from "react";
 import { MawbFormValues } from "./type";
 import { compact } from "lodash";
 import { TrackLogStore } from "./track-log.store";
 import { useTranslation } from "@locale";
 import clsx from "clsx";
 import optionsService from "@services/options.service";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface MawbProps {
   store: TrackLogStore;
@@ -30,27 +33,50 @@ function TrackLogMawbComponent(props: MawbProps) {
 
   const [t] = useTranslation();
 
+  const [selectedRowKeys, setgSelectedRowKeys] = useState<Key[]>([]);
+
   const initialValues: MawbFormValues = useMemo(
-    () => ({ masterWaybillNoList: [], waybillStatusCode: 'all' }),
+    () => ({
+      masterWaybillNoList: [],
+      waybillStatusCode: "all",
+      uploadStatus: 0,
+    }),
     []
   );
 
-  const gridStore = ClientGrid.useGridStore(mawbListConfig.getRows, { initialValues });
-  const columns = useMemo(() => listConfig.getColumns(), [optionsService.waybillTrackStatusList]);
+  const gridStore = ClientGrid.useGridStore(mawbListConfig.getRows, {
+    initialValues,
+  });
+  const columns = useMemo(
+    () => listConfig.getColumns(),
+    [optionsService.waybillTrackStatusList]
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { masterWaybillNoList, waybillStatusCode } = values;
+    const { masterWaybillNoList, waybillStatusCode, uploadStatus } = values;
+    setgSelectedRowKeys([]);
     gridStore.setQueryParams({
       masterWaybillNoList: compact(masterWaybillNoList),
       waybillStatusCode: waybillStatusCode,
+      uploadStatus,
     });
   }, []);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
+  const handleUpload = async () => {
+    if (!selectedRowKeys.length) return;``
+    await store.uploadMawbTrack(selectedRowKeys as number[]);
+    await gridStore.loadData();
+    setgSelectedRowKeys([]);
+  };
+
   return (
-    <Container className={clsx(styles.container, styles.subcontainer)} loading={store.loading}>
+    <Container
+      className={clsx(styles.container, styles.subcontainer)}
+      loading={store.loading}
+    >
       <FilterContainer
         onFinish={handleFinish}
         layout="vertical"
@@ -68,17 +94,44 @@ function TrackLogMawbComponent(props: MawbProps) {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="waybillStatusCode" label={t("轨迹名称")}>
-            <SearchSelect optionKey="waybillTrackStatusList" />
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item name="waybillStatusCode" label={t("轨迹名称")}>
+                <SearchSelect optionKey="waybillTrackStatusList" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item name="uploadStatus" label={t("接收状态")}>
+                <SearchSelect optionKey="trackUploadStatusTypes" />
+              </Form.Item>
+            </Col>
+          </Row>
         </Col>
       </FilterContainer>
       <Container title={t("轨迹信息")} wrapperClassName={styles.wrapper} table>
+        <Row className="my-4">
+          <Button
+            disabled={selectedRowKeys.length === 0}
+            onClick={handleUpload}
+            className="operation-btn"
+            icon={<PlusOutlined />}
+          >
+            {t("手动推送")}
+          </Button>
+        </Row>
         <Table
           widthFit
           bordered
           loading={gridStore.loading}
-          // rowSelection={{ type: "checkbox" }}
+          rowSelection={{
+            type: "checkbox",
+            hideSelectAll: true,
+            onChange: (keys) => setgSelectedRowKeys(keys),
+            selectedRowKeys,
+            getCheckboxProps: (row) => ({
+              disabled: row.uploadCompleted,
+            }),
+          }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}

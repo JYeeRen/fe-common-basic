@@ -19,10 +19,32 @@ export const getColumns = (): TableColumnsType<MawbCustomsTrackLog> => {
       render: (value) =>
         find(optionsService.waybillTrackStatusList, { value })?.label,
     },
-    { key: "operateTime", dataIndex: "operateTime", title: t("轨迹时间（原时区）") },
-    { key: "operateTimeCn", dataIndex: "operateTimeCn", title: t("轨迹时间（中国）") },
-    { key: "createdTimeCn", dataIndex: "createdTimeCn", title: t("录入时间（中国）") },
+    {
+      key: "operateTime",
+      dataIndex: "operateTime",
+      title: t("轨迹时间（原时区）"),
+    },
+    {
+      key: "operateTimeCn",
+      dataIndex: "operateTimeCn",
+      title: t("轨迹时间（中国）"),
+    },
+    {
+      key: "createdTimeCn",
+      dataIndex: "createdTimeCn",
+      title: t("录入时间（中国）"),
+    },
     { key: "userName", dataIndex: "userName", title: t("录入人员") },
+    {
+      key: "uploadCompleted",
+      dataIndex: "uploadCompleted",
+      title: t("接收状态"),
+      render: (value) => {
+        let id = value ? 1 : 2;
+        return find(optionsService.trackUploadStatusTypes, { value: id })
+          ?.label;
+      },
+    },
   ];
 };
 

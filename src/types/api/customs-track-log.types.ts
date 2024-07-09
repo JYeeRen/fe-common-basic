@@ -23,4 +23,12 @@ export interface CustomsTrackLogAPI {
     };
     res: ListRes<Schema.MawbStatus>;
   }
+  "/api/customsTrackLog/uploadMawbTrack": {
+    params: { ids: number[] };
+    res?: never;
+  }
+  "/api/customsTrackLog/uploadPackageTrack": {
+    params: { ids: number[] };
+    res?: never;
+  }
 }

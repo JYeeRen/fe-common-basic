@@ -23,6 +23,14 @@
         "zh": "附件支持的格式：'jpg','jpeg','png','pdf'",
         "en": "Supported formats for attachments: 'jpg','jpeg','png','pdf'"
     },
+    "接收状态": {
+        "zh": "接收状态",
+        "en": "Status"
+    },
+    "手动推送": {
+        "zh": "手动推送",
+        "en": "Manual upload"
+    },
     "请上传文件": {
         "zh": "请上传文件",
         "en": "Upload files"

@@ -1,4 +1,5 @@
 import {
+  Button,
   ClientGrid,
   Col,
   Container,
@@ -6,6 +7,7 @@ import {
   FilterTextArea,
   Form,
   Radio,
+  Row,
   SearchSelect,
   Table,
   textareaMaxLengthRule,
@@ -13,13 +15,14 @@ import {
 import { observer } from "mobx-react-lite";
 import * as listConfig from "./track-log-package-config";
 import styles from "./track-info.module.less";
-import { useCallback, useMemo } from "react";
+import { Key, useCallback, useMemo, useState } from "react";
 import { PackageFormValues } from "./type";
 import optionsService from "@services/options.service";
 import { compact } from "lodash";
 import { TrackLogStore } from "./track-log.store";
 import { useTranslation } from "@locale";
 import clsx from "clsx";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface PackageProps {
   store: TrackLogStore;
@@ -28,6 +31,8 @@ interface PackageProps {
 function TrackLogPackageComponent(props: PackageProps) {
   const { store } = props;
   const [t] = useTranslation();
+
+  const [selectedRowKeys, setgSelectedRowKeys] = useState<Key[]>([]);
 
   const columns = useMemo(
     () => listConfig.getColumns(),
@@ -45,15 +50,24 @@ function TrackLogPackageComponent(props: PackageProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode } = values;
+    const { noList, noType, actionCode, uploadStatus } = values;
+    setgSelectedRowKeys([]);
     gridStore.setQueryParams({
       noList: compact(noList),
       noType: noType,
       actionCode: actionCode,
+      uploadStatus,
     });
   }, []);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
+
+  const handleUpload = async () => {
+    if (!selectedRowKeys.length) return;``
+    await store.uploadPackageTrack(selectedRowKeys as number[]);
+    await gridStore.loadData();
+    setgSelectedRowKeys([]);
+  };
 
   return (
     <Container
@@ -89,16 +103,48 @@ function TrackLogPackageComponent(props: PackageProps) {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="actionCode" label={t("轨迹名称")}>
-            <SearchSelect optionKey="actionCodeList" />
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item name="actionCode" label={t("轨迹名称")}>
+                <SearchSelect optionKey="actionCodeList" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item name="uploadStatus" label={t("接收状态")}>
+                <SearchSelect optionKey="trackUploadStatusTypes" />
+              </Form.Item>
+            </Col>
+          </Row>
         </Col>
       </FilterContainer>
-      <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper} table>
+      <Container
+        title={t("货物状态跟踪")}
+        wrapperClassName={styles.wrapper}
+        table
+      >
+        <Row className="my-4">
+          <Button
+            disabled={selectedRowKeys.length === 0}
+            onClick={handleUpload}
+            className="operation-btn"
+            icon={<PlusOutlined />}
+          >
+            {t("手动推送")}
+          </Button>
+        </Row>
         <Table
           widthFit
           bordered
           loading={gridStore.loading}
+          rowSelection={{
+            type: "checkbox",
+            hideSelectAll: true,
+            onChange: (keys) => setgSelectedRowKeys(keys),
+            selectedRowKeys,
+            getCheckboxProps: (row) => ({
+              disabled: row.uploadCompleted,
+            }),
+          }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}
