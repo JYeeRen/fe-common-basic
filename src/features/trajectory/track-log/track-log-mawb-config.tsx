@@ -40,10 +40,9 @@ export const getColumns = (): TableColumnsType<MawbCustomsTrackLog> => {
       dataIndex: "uploadCompleted",
       title: t("接收状态"),
       render: (value) => {
-        let id = value ? 1 : 2;
-        return find(optionsService.trackUploadStatusTypes, { value: id })
-          ?.label;
-      },
+        return value ? find(optionsService.trackUploadStatusTypes, { value })?.label : '';
+      }
+        
     },
   ];
 };

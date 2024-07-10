@@ -129,7 +129,7 @@ function TrackLogMawbComponent(props: MawbProps) {
             onChange: (keys) => setgSelectedRowKeys(keys),
             selectedRowKeys,
             getCheckboxProps: (row) => ({
-              disabled: row.uploadCompleted,
+              disabled: row.uploadCompleted !== 3,
             }),
           }}
           rowKey="id"

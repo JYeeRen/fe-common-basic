@@ -116,11 +116,16 @@ export class CustomTemplateOperationStore {
     const cols = this.templateColumns.filter(
       (col) => !this.templateColumnDict[col.key] || keys.includes(col.key)
     );
-    const newColumns = keys.map((key) => ({
-      ...this.templateColumnDict[key],
-      uuid: uuidv4(),
-    }));
-    const templateColumns = uniqBy([...cols, ...newColumns], "key");
+    const curColDict = keyBy(cols, "key");
+    const templateColumns = [...cols];
+    keys.forEach((k) => {
+      if (!curColDict[k]) {
+        templateColumns.push({
+          ...this.templateColumnDict[k],
+          uuid: uuidv4(),
+        });
+      }
+    });
     this.templateColumns = templateColumns;
     this.closeColumnSelectModal();
   }

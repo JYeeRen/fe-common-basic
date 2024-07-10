@@ -176,7 +176,7 @@ export interface MawbCustomsTrackLog {
   operateTimeCn: string;
   createdTimeCn: string;
   userName: string;
-  uploadCompleted: boolean;
+  uploadCompleted: number;
 }
 
 export interface PackageCustomsTrack {
@@ -191,7 +191,7 @@ export interface PackageCustomsTrack {
   userName: string;
   masterWaybillNo: string;
   nextProviderName: string;
-  uploadCompleted: boolean;
+  uploadCompleted: number;
 }
 
 export interface MawbCustomsTrack {
