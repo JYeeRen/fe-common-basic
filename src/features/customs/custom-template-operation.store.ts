@@ -7,7 +7,7 @@ import {
 import optionsService from "@services/options.service";
 import { v4 as uuidv4 } from "uuid";
 import { loading, net } from "@infra";
-import { isEqual, keyBy, uniq, uniqBy } from "lodash";
+import { isEqual, keyBy, uniq } from "lodash";
 import { Schema } from "@types";
 
 export class CustomTemplateOperationStore {
