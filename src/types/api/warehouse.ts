@@ -159,4 +159,62 @@ export interface WarehouseAPI {
         };
         res: never;
     }
+
+    "/api/warehouse/receiptIssue/findList": {
+        params: ListParams & {
+            number?: string;
+            type?: number;
+            receiptTime?: {
+                zone: string;
+                start: string;
+                end: string;
+            },
+            status?: number;
+            palletCode?: string;
+            remark?: string;
+        };
+        res: ListRes<Schema.ReceiptIssue>;
+    }
+
+    "/api/warehouse/receiptIssue/findLinkList": {
+        params: ListParams & {
+            noList?: string[];
+            noType?: number;
+        };
+        res: ListRes<Schema.ReceiptIssueLink>;
+    }
+
+    "/api/warehouse/receiptIssue/downloadWaybillPhoto": {
+        params: {
+            id: number;
+        };
+        res: { url: string; fileName: string };
+    }
+
+    "/api/warehouse/receiptIssue/link": {
+        params: {
+            receiptId: number,
+            issueId: number,
+        };
+        res: never;
+    }
+
+    "/api/warehouse/receiptIssue/createAndLink": {
+        params: {
+            issueId: number,
+            masterWaybillNo: string,
+            bigBagNo: string,
+            tailProviderName: string,
+        };
+        res: never;
+    }
+
+    "/api/warehouse/receipt/inbound": {
+        params: {
+            bigBagIds: number[],
+            receiptTime: string,
+            palletCode: string,
+        };
+        res: never;
+    }
 }

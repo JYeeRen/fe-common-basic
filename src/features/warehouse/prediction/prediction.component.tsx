@@ -21,16 +21,16 @@ import {WarehouseReceiptFormValues} from "@features/warehouse/prediction/type.ts
 import {PredictionUploadModal} from "@features/warehouse/prediction/prediction-upload.component.tsx";
 
 function PredictionComponent() {
-    const gridStore = ClientGrid.useGridStore(PredictionConfig.getRows, { autoLoad: false });
-    const { store, t, navigate,} = useStore(PredictionStore, gridStore)(gridStore);
+    const gridStore = ClientGrid.useGridStore(PredictionConfig.getRows, {autoLoad: false});
+    const {store, t, navigate,} = useStore(PredictionStore, gridStore)(gridStore);
 
     useEffect(() => {
         store.gridStore.loadData();
     }, [store]);
 
     const handleFinish = useCallback((values: any = {}) => {
-        const { noList, noType } = values;
-        gridStore.setQueryParams({ noList: compact(noList), noType });
+        const {noList, noType} = values;
+        gridStore.setQueryParams({noList: compact(noList), noType});
     }, []);
 
     const initialValues: WarehouseReceiptFormValues = useMemo(
@@ -43,15 +43,19 @@ function PredictionComponent() {
 
     const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
+    const handleAdd = () => {
+        navigate("/warehouse/prediction/add");
+    }
+
     const handleCreate = () => {
         navigate("/warehouse/prediction/create");
     };
 
-    const handleEdit = useCallback(({ id }: { id: number }) => {
+    const handleEdit = useCallback(({id}: { id: number }) => {
         navigate(`/warehouse/prediction/edit/${id}`)
     }, []);
 
-    const handleDelete = useCallback(({ id }: { id: number }) => {
+    const handleDelete = useCallback(({id}: { id: number }) => {
         Modal.confirm({
             title: t("操作确认"),
             content: t(
@@ -78,7 +82,7 @@ function PredictionComponent() {
         <Container className={styles.container} loading={store.loading}>
             <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
                 <Col span={7}>
-                    <div style={{ paddingBottom: "8px" }}>
+                    <div style={{paddingBottom: "8px"}}>
                         <Form.Item noStyle name="noType">
                             <Radio.Group>
                                 {optionsService.receiptNoTypes.map((opt) => (
@@ -89,40 +93,47 @@ function PredictionComponent() {
                             </Radio.Group>
                         </Form.Item>
                     </div>
-                    <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+                    <Form.Item name="noList" wrapperCol={{span: 22}} rules={numberRules}>
                         <FilterTextArea
-                            style={{ width: "100%", height: 75, resize: "none" }}
+                            style={{width: "100%", height: 75, resize: "none"}}
                             placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
                         />
                     </Form.Item>
                 </Col>
             </FilterContainer>
             <Container title={t("入库预报")} wrapperClassName={styles.wrapper} table>
-                <Row justify="start" style={{ padding: "0 10px" }}>
+                <Row justify="start" style={{padding: "0 10px"}}>
                     <Button
                         className="operation-btn mr-4 mb-4"
-                        icon={<PlusOutlined />}
+                        icon={<PlusOutlined/>}
                         onClick={handleCreate}
                     >
                         {t("新增入库预报")}
                     </Button>
                     <Button
                         className="operation-btn mr-4 mb-4"
-                        icon={<CloudDownloadOutlined />}
+                        icon={<CloudDownloadOutlined/>}
                         onClick={store.downloadTemplate.bind(store)}
                     >
                         {t("下载批量上传模板")}
                     </Button>
                     <Button
                         className="operation-btn mr-4 mb-4"
-                        icon={<CloudUploadOutlined />}
+                        icon={<CloudUploadOutlined/>}
                         onClick={store.showUploadModal.bind(store)}
                     >
                         {t("批量添加入库预报")}
                     </Button>
+                    <Button
+                        className="operation-btn mr-4 mb-4"
+                        icon={<PlusOutlined/>}
+                        onClick={handleAdd}
+                    >
+                        {t("手动入库")}
+                    </Button>
                 </Row>
                 <Table
-                    components={{ body: { cell: EditableCell } }}
+                    components={{body: {cell: EditableCell}}}
                     widthFit
                     bordered
                     loading={gridStore.loading}
@@ -140,7 +151,7 @@ function PredictionComponent() {
                         total: gridStore.total,
                         pageSize: gridStore.pageSize,
                         current: gridStore.page,
-                        showTotal: (total) => t("共{{total}}条", { total }),
+                        showTotal: (total) => t("共{{total}}条", {total}),
                         showQuickJumper: true,
                         showSizeChanger: true,
                         pageSizeOptions: [10, 30, 50, 100, 200, 500],

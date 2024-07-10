@@ -36,7 +36,8 @@ export type OptionKey =
   | "receiptNoTypes"
   | "receiptStatusTypes"
   | "trackUploadStatusTypes"
-  | "deductionStatusTypes";
+  | "deductionStatusTypes"
+  | "receiptIssueStatusTypes";
 
 class OptionService {
   clearanceFileStatusTypes: InnerOptions = [];
@@ -66,6 +67,7 @@ class OptionService {
   receiptStatusTypes: InnerOptions = [];
   deductionStatusTypes: InnerOptions = [];
   trackUploadStatusTypes: InnerOptions = [];
+  receiptIssueStatusTypes: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -216,6 +218,11 @@ class OptionService {
       formater: this.id_val_formatter,
     },
     trackUploadStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    receiptIssueStatusTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,

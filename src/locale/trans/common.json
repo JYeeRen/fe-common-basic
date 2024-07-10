@@ -1710,5 +1710,45 @@
     "税标": {
         "zh": "税标",
         "en": "Tax Mark"
+    },
+    "问题件管理": {
+        "zh": "问题件管理",
+        "en": "Problem Item Management"
+    },
+    "手动入库信息完善": {
+        "zh": "手动入库信息完善",
+        "en": "Manual Warehouse Information"
+    },
+    "面单照片": {
+        "zh": "面单照片",
+        "en": "Waybill Photo"
+    },
+    "查看照片": {
+        "zh": "查看照片",
+        "en": "View Photo"
+    },
+    "处理状态": {
+        "zh": "处理状态",
+        "en": "Process Status"
+    },
+    "关联包裹": {
+        "zh": "关联包裹",
+        "en": "Related Package"
+    },
+    "选中的待入库包裹列表": {
+        "zh": "选中的待入库包裹列表",
+        "en": "Selected Packages to be Warehouse"
+    },
+    "请完善包裹信息": {
+        "zh": "请完善包裹信息",
+        "en": "Please complete the package information"
+    },
+    "手动入库": {
+        "zh": "手动入库",
+        "en": "Manual Warehouse"
+    },
+    "请填写托盘码": {
+        "zh": "请填写托盘码",
+        "en": "Please fill in the pallet code"
     }
 }

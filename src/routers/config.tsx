@@ -175,6 +175,13 @@ const Warehouse: RouteObject[] = [
     }),
   },
   {
+    path: "/warehouse/prediction/add",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/prediction/prediction-add.component"))
+          .default,
+    }),
+  },
+  {
     path: "/warehouse/outbound/list",
     lazy: async () => ({
       Component: (await import("@features/warehouse/outbound/outbound.component"))
@@ -199,6 +206,13 @@ const Warehouse: RouteObject[] = [
     path: "/warehouse/pallet/info",
     lazy: async () => ({
       Component: (await import("@features/warehouse/pallet/pallet-info.component"))
+          .default,
+    }),
+  },
+  {
+    path: "/warehouse/exception/problem",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/exception/problem.component"))
           .default,
     }),
   },

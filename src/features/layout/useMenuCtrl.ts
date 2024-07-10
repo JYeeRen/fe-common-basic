@@ -132,7 +132,8 @@ const navConfig = (): TopNavItem[] => [
       "warehouse.order",
       "warehouse.deduction",
       "warehouse.track",
-      "warehouse.pallet"
+      "warehouse.pallet",
+      "warehouse.receipt_issue",
     ],
     sidenavs: [
       {
@@ -159,6 +160,11 @@ const navConfig = (): TopNavItem[] => [
             key: "/warehouse/exception/deduction",
             label: t("扣货管理"),
             permission: "warehouse.deduction"
+          },
+          {
+            key: "/warehouse/exception/problem",
+            label: t("问题件管理"),
+            permission: "warehouse.receipt_issue"
           }
         ]
       },

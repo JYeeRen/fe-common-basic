@@ -284,9 +284,9 @@ export interface PalletInfo {
 
 export interface CargoTrack {
   id: number;
-  masterWaybillNo: string,
-  bigBagNo: string,
-  tailProviderName: string,
+  masterWaybillNo: string;
+  bigBagNo: string;
+  tailProviderName: string;
   receiptStatus: number;
   deductionStatus: number;
   receiptTime: string;
@@ -301,4 +301,24 @@ export interface CargoTrack {
   inboundUser: string;
   loadUser: string;
   deductionUser: string;
+}
+
+export interface ReceiptIssue {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  receiptTime: string;
+  tailProviderName: string;
+  palletCode: string;
+  remark: string;
+  waybillPhotoFile: boolean;
+  status: number;
+}
+
+export interface ReceiptIssueLink {
+  id: number;
+  masterWaybillNo: string;
+  bigBagNo: string;
+  tailProviderName: string;
+  status: number;
 }
