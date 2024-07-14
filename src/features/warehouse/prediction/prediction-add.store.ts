@@ -1,31 +1,20 @@
-import {makeAutoObservable, reaction} from "mobx";
+import {makeAutoObservable} from "mobx";
 import {ClientGridStore} from "@components";
-import {WarehouseReceipt} from "@features/warehouse/prediction/type.ts";
+import {WarehouseInBoundQueryParams, WarehouseReceipt} from "@features/warehouse/prediction/type.ts";
+import {loading, net} from "@infra";
 
 export class PredictionAddStore {
     loading = false;
-
-    selectedRowKeys: number[] = [];
 
     gridStore: ClientGridStore<WarehouseReceipt>;
 
     constructor(_options: unknown, gridStore: ClientGridStore<WarehouseReceipt>) {
         makeAutoObservable(this);
         this.gridStore = gridStore;
-
-        reaction(
-            () => this.gridStore.rowData,
-            () => {
-                this.setSelectedRowKeys([]);
-            }
-        );
     }
 
-    get selectedRows() {
-        return this.gridStore.rowData.filter(r => this.selectedRowKeys.includes(r.id));
-    }
-
-    setSelectedRowKeys(keys: number[]) {
-        this.selectedRowKeys = keys;
+    @loading()
+    async doInBound(params: WarehouseInBoundQueryParams) {
+        return await net.post("/api/warehouse/receipt/inbound", params);
     }
 }

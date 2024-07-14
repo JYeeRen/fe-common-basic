@@ -33,8 +33,8 @@ export const getColumns = (params: {
             title: t("尾程服务商名称")
         },
         {
-            key: "receiptStatus",
-            dataIndex: "receiptStatus",
+            key: "status",
+            dataIndex: "status",
             title: t("货物状态"),
             render: (value) => {
                 return find(receiptStatusTypes, {value})?.label;
@@ -43,7 +43,7 @@ export const getColumns = (params: {
         {
             key: 'operation',
             title: t('关联包裹'),
-            width: 150,
+            width: 100,
             render: (__value, data) => {
                 const operations = [
                     {

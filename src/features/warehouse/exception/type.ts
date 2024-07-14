@@ -14,6 +14,10 @@ export type WarehouseProblemQueryParam = Sources["/api/warehouse/receiptIssue/fi
 
 export type WarehouseProblemLinkQueryParam = Sources["/api/warehouse/receiptIssue/findLinkList"]["params"];
 
+export type WarehouseProblemDoLinkQueryParam = Sources["/api/warehouse/receiptIssue/link"]["params"];
+
+export type WarehouseProblemDoLinkCreateQueryParam = Sources["/api/warehouse/receiptIssue/createAndLink"]["params"];
+
 export interface WarehouseDeductionFormValues {
 }
 

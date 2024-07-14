@@ -8,12 +8,13 @@ import {net} from "@infra";
 
 export const getColumns = (params: {
     receiptStatusTypes: Options;
+    receiptIssueStatusTypes: Options;
     operation: {
         showPic?: (record: ReceiptIssue) => void;
         link?: (record: ReceiptIssue) => void;
     };
 }): TableColumnsType<ReceiptIssue> => {
-    const {receiptStatusTypes, operation} = params;
+    const {receiptStatusTypes, receiptIssueStatusTypes, operation} = params;
     return [
         {
             key: "masterWaybillNo",
@@ -68,14 +69,17 @@ export const getColumns = (params: {
             key: "receiptStatus",
             dataIndex: "receiptStatus",
             title: t("货物状态"),
-            render: (value) => {
-                return find(receiptStatusTypes, {value})?.label;
+            render: () => {
+                return find(receiptStatusTypes, {value: 2})?.label;
             },
         },
         {
             key: "status",
             dataIndex: "status",
-            title: t("处理状态")
+            title: t("处理状态"),
+            render: (value) => {
+                return find(receiptIssueStatusTypes, {value})?.label;
+            },
         },
         {
             key: 'operation',
@@ -91,7 +95,9 @@ export const getColumns = (params: {
                     },
                 ];
 
-                return (<OperationButtons items={operations}/>);
+                if (data.status == 1) {
+                    return (<OperationButtons items={operations}/>);
+                }
             },
         },
     ];

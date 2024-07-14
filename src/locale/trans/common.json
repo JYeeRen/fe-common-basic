@@ -1750,5 +1750,25 @@
     "请填写托盘码": {
         "zh": "请填写托盘码",
         "en": "Please fill in the pallet code"
+    },
+    "全部提交数据：{{n}}条。": {
+        "zh": "全部提交数据：{{n}}条。",
+        "en": "Confirm all data：{{n}}item."
+    },
+    "完成提交数据：{{n1}}条。未提交数据：{{n2}}条。": {
+        "zh": "完成提交数据：{{n1}}条。未提交数据：{{n2}}条。",
+        "en": "Confirm complete：{{n1}}item。confirm failed：{{n2}}item."
+    },
+    "未找到包裹？新增一条入库预报>>": {
+        "zh": "未找到包裹？新增一条入库预报>>",
+        "en": "Not found package? Add a new warehouse forecast>>"
+    },
+    "提交并关联": {
+        "zh": "提交并关联",
+        "en": "Submit and associate"
+    },
+    "新增入库包裹": {
+        "zh": "新增入库包裹",
+        "en": "New Warehouse Package"
     }
 }

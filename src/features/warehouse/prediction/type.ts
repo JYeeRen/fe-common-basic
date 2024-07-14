@@ -10,6 +10,8 @@ export type WarehouseReceiptQueryParams =
 export type WarehouseCargoTrackQueryParams =
     Sources["/api/warehouse/track/findList"]["params"];
 
+export type WarehouseInBoundQueryParams = Sources["/api/warehouse/receipt/inbound"]["params"];
+
 export interface WarehouseReceiptFormValues {
 }
 
@@ -17,3 +19,5 @@ export interface WarehouseCargoTrackFormValues {
 }
 
 export type UploadRes = Sources["/api/warehouse/receipt/upload"]["res"];
+
+export type InBoundRes = Sources["/api/warehouse/receipt/inbound"]["res"];

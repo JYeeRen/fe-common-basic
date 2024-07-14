@@ -44,7 +44,8 @@ function PredictionComponent() {
     const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
     const handleAdd = () => {
-        navigate("/warehouse/prediction/add");
+        const bigBagNoArray = store.selectedRows.map(row => row.bigBagNo);
+        navigate("/warehouse/prediction/add", {state: {bigBagNoArray}});
     }
 
     const handleCreate = () => {
@@ -128,6 +129,7 @@ function PredictionComponent() {
                         className="operation-btn mr-4 mb-4"
                         icon={<PlusOutlined/>}
                         onClick={handleAdd}
+                        disabled={store.selectedRowKeys.length === 0}
                     >
                         {t("手动入库")}
                     </Button>
@@ -137,12 +139,12 @@ function PredictionComponent() {
                     widthFit
                     bordered
                     loading={gridStore.loading}
-                    // rowSelection={{
-                    //     hideSelectAll: true,
-                    //     type: "checkbox",
-                    //     onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
-                    //     selectedRowKeys: store.selectedRowKeys,
-                    // }}
+                    rowSelection={{
+                        hideSelectAll: true,
+                        type: "checkbox",
+                        onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
+                        selectedRowKeys: store.selectedRowKeys,
+                    }}
                     rowKey="id"
                     dataSource={gridStore.rowData}
                     columns={columns}

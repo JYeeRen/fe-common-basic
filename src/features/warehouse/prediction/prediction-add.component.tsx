@@ -8,18 +8,23 @@ import {
 import styles from "@features/warehouse/prediction/prediction-operation.module.less";
 import * as PredictionAddConfig from "@features/warehouse/prediction/prediction-add-config.tsx";
 import {useStore} from "@hooks";
-import {PredictionStore} from "@features/warehouse/prediction/prediction.store.ts";
-import {useEffect, useMemo} from "react";
+import {PredictionAddStore} from "@features/warehouse/prediction/prediction-add.store.ts";
+import {useCallback, useEffect, useMemo} from "react";
 import dayjs from "dayjs";
 import {isEqual} from "lodash";
+import {InBoundRes} from "@features/warehouse/prediction/type.ts";
+import {convertDate} from "@infra";
+import {useLocation} from "react-router-dom";
 
 const PredictionAddComponent = observer(() => {
     const gridStore = ClientGrid.useGridStore(PredictionAddConfig.getRows, {autoLoad: false});
-    const {store, t, navigate} = useStore(PredictionStore, gridStore)(gridStore);
+    const {store, t, navigate} = useStore(PredictionAddStore, gridStore)(gridStore);
     const [form] = Form.useForm();
+    const location = useLocation();
 
     useEffect(() => {
-        gridStore.setQueryParams({noType: 2});
+        const bigBagNoArray = location.state?.bigBagNoArray;
+        gridStore.setQueryParams({noList: bigBagNoArray, noType: 1});
         form.setFieldsValue(initialValues);
     }, [store, form]);
 
@@ -66,14 +71,71 @@ const PredictionAddComponent = observer(() => {
         }
     };
 
-    const onConfirm = () => {
+    const operationConfirm = useCallback((res: InBoundRes) => {
+        const {failed, total, success} = res;
+        const modal = Modal.confirm({
+            title: t("操作确认"),
+            footer: (
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => {
+                            modal.destroy();
+                            navigate(-1);
+                        }}
+                    >
+                        {t('确认')}
+                    </Button>
+                </div>
+            ),
+            content: (
+                <>
+                    <p style={{color: "#c7c7c7"}}>
+                        {t("全部提交数据：{{n}}条。", {n: total})}
+                    </p>
+                    <p style={{color: "#c7c7c7"}}>
+                        {t("完成提交数据：{{n1}}条。未提交数据：{{n2}}条。", {
+                            n1: success,
+                            n2: total - success,
+                        })}
+                    </p>
+                    <p style={{color: "#c7c7c7"}}>{t("未完成数据提单号如下：")}</p>
+                    {failed.map((item, index) => (
+                        <p key={`${index}_${item.number}`} style={{color: "#c7c7c7"}}>
+                            {`${item.number} ${t("原因")}: ${item.reason}`}
+                        </p>
+                    ))}
+                </>
+            ),
+        });
+    }, []);
 
+    const onConfirm = async () => {
+        const {
+            receiptTimeZone,
+            receiptTimeData,
+            palletCode,
+        } = form.getFieldsValue();
+
+        const bigBagIds = gridStore.rowData.map(row => row.id);
+
+        const formData = {
+            bigBagIds,
+            receiptTime: receiptTimeData ? convertDate(receiptTimeData, receiptTimeZone).format(
+                "YYYY-MM-DDTHH:mm:ssZ"
+            ) : "",
+            palletCode,
+        }
+
+        const res = await store.doInBound(formData);
+
+        operationConfirm(res);
     };
 
     const onReset = () => {
         form.resetFields();
         form.setFieldsValue(initialValues);
-        store.setSelectedRowKeys([]);
     };
 
     return (
@@ -92,12 +154,6 @@ const PredictionAddComponent = observer(() => {
                                 widthFit
                                 bordered
                                 loading={gridStore.loading}
-                                rowSelection={{
-                                    hideSelectAll: true,
-                                    type: "checkbox",
-                                    onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
-                                    selectedRowKeys: store.selectedRowKeys,
-                                }}
                                 rowKey="id"
                                 dataSource={gridStore.rowData}
                                 columns={columns}
@@ -159,7 +215,7 @@ const PredictionAddComponent = observer(() => {
                     </Col>
                 </Row>
                 <Row justify="end" className="my-4">
-                    <SubmitButton form={form} style={{marginRight: "8px"}}>
+                    <SubmitButton form={form} onClick={onConfirm} style={{marginRight: "8px"}}>
                         {t("提交")}
                     </SubmitButton>
                     <Button className="mr-4" onClick={onReset}>

@@ -23,6 +23,10 @@ export class PredictionStore {
         );
     }
 
+    get selectedRows() {
+        return this.gridStore.rowData.filter(r => this.selectedRowKeys.includes(r.id));
+    }
+
     setSelectedRowKeys(keys: number[]) {
         this.selectedRowKeys = keys;
     }

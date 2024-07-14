@@ -215,6 +215,10 @@ export interface WarehouseAPI {
             receiptTime: string,
             palletCode: string,
         };
-        res: never;
+        res: {
+            failed: { number: string, reason: string }[];
+            total: number;
+            success: number;
+        };
     }
 }
