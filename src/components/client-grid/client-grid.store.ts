@@ -13,6 +13,7 @@ export class ClientGridStore<T> {
   rowData: T[] = [];
   private readonly getRows?: getRowsFunc<T> = undefined;
   queryParams: AnyObject = {};
+  orderKeys: {key: string; order: string}[] = [];
 
   constructor(getRows?: getRowsFunc<T>, options?: { pagination?: boolean }) {
     this.pagination = options?.pagination ?? true;
@@ -39,6 +40,7 @@ export class ClientGridStore<T> {
     const { list, total } = await this.getRows({
       page: (this.pagination ? this.page : undefined) as number,
       size: (this.pagination? this.pageSize : undefined) as number,
+      orderKeys: this.orderKeys,
       ...this.queryParams,
     });
     runInAction(() => {
@@ -50,6 +52,19 @@ export class ClientGridStore<T> {
   onTableChange(page: number, pageSize: number) {
     this.page = page;
     this.pageSize = pageSize;
+    this.loadData();
+  }
+
+  onCommonTableChange(pagination: any, filters: any, sorter: any, extra: any) {
+    console.log(pagination, filters, sorter, extra);
+    this.orderKeys = [];
+    if (sorter instanceof Array) {
+      sorter.forEach((sort) => {
+        this.orderKeys.push({key: sort.columnKey, order: sort.order ?? ''});
+      });
+    } else {
+      this.orderKeys.push({key: sorter.columnKey, order: sorter.order ?? ''});
+    }
     this.loadData();
   }
 }

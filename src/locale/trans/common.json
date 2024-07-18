@@ -1770,5 +1770,17 @@
     "新增入库包裹": {
         "zh": "新增入库包裹",
         "en": "New Warehouse Package"
+    },
+    "司机名称": {
+        "zh": "司机名称",
+        "en": "Driver Name"
+    },
+    "司机联系方式": {
+        "zh": "司机联系方式",
+        "en": "Driver Phone Number"
+    },
+    "Bol码": {
+        "zh": "Bol码",
+        "en": "Bol Number"
     }
 }

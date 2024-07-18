@@ -62,7 +62,7 @@ function ProblemComponent() {
     }, []);
 
     const handleLink = useCallback((value: ReceiptIssue) => {
-        store.showProblemLinkModal(value.id);
+        store.showProblemLinkModal(value);
     }, []);
 
     const columns = useMemo(() => {
@@ -161,6 +161,7 @@ function ProblemComponent() {
                         size: "default",
                         onChange: gridStore.onTableChange.bind(gridStore),
                     }}
+                    onChange={gridStore.onCommonTableChange.bind(gridStore)}
                 />
             </Container>
             <ProblemModalComponent

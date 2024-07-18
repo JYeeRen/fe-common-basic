@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 import {useTranslation} from "@locale";
 import {Button, Container, Form, Input, Modal} from "@components";
 import styles from "@features/warehouse/prediction/prediction-operation.module.less";
+import {useEffect} from "react";
 
 interface IProblemCreateModal {
     store: ProblemModalStore,
@@ -13,6 +14,12 @@ export const ProblemCreateModalComponent = observer((props: IProblemCreateModal)
     const {store, handleConfirm} = props;
     const [t] = useTranslation();
     const [form] = Form.useForm();
+
+    useEffect(() => {
+        if (store.issueData) {
+            form.setFieldsValue(store.issueData);
+        }
+    }, [form, store.issueData]);
 
     const handleCancel = () => {
         store.hideCreateModal();
@@ -25,7 +32,7 @@ export const ProblemCreateModalComponent = observer((props: IProblemCreateModal)
             tailProviderName,
         } = form.getFieldsValue();
         const formData = {
-            issueId: store.issueId,
+            issueId: store.issueData!.id,
             masterWaybillNo,
             bigBagNo,
             tailProviderName,

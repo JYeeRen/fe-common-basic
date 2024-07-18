@@ -19,12 +19,14 @@ export const getColumns = (params: {
         {
             key: "code",
             dataIndex: "code",
-            title: t("托盘码")
+            title: t("托盘码"),
+            sorter: true,
         },
         {
             key: "date",
             dataIndex: "date",
             title: t("托盘码生成日期"),
+            sorter: true,
         },
         {
             key: 'operation',

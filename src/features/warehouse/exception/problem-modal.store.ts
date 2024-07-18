@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {ClientGridStore} from "@components";
 import {
+    ReceiptIssue,
     ReceiptIssueLink,
     WarehouseProblemDoLinkCreateQueryParam,
     WarehouseProblemDoLinkQueryParam
@@ -12,7 +13,7 @@ export class ProblemModalStore {
 
     createModalVisible = false;
 
-    issueId = 0;
+    issueData: ReceiptIssue | undefined;
 
     gridStore: ClientGridStore<ReceiptIssueLink>;
 
@@ -21,14 +22,14 @@ export class ProblemModalStore {
         this.gridStore = gridStore;
     }
 
-    showCreateModal(id: number) {
+    showCreateModal(issue: ReceiptIssue) {
         this.createModalVisible = true;
-        this.issueId = id;
+        this.issueData = issue;
     }
 
     hideCreateModal() {
         this.createModalVisible = false;
-        this.issueId = 0;
+        this.issueData = undefined;
     }
 
     @loading()

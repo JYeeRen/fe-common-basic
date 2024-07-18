@@ -42,6 +42,7 @@ function AgGridImpl<T extends AnyObject>(
           const { list, total } = await getRows!({
             page: params.startRow / 100 + 1,
             size: 100,
+            orderKeys: [],
           });
           params.successCallback(list || [], total);
         },

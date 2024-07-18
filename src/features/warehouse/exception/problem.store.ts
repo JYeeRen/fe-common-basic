@@ -8,7 +8,7 @@ export class ProblemStore {
 
     problemLinkModalVisible = false;
 
-    problemLinkSelected = 0;
+    problemLinkSelected: ReceiptIssue | undefined;
 
     gridStore: ClientGridStore<ReceiptIssue>;
 
@@ -21,14 +21,14 @@ export class ProblemStore {
         this.gridStore = gridStore;
     }
 
-    showProblemLinkModal(id: number) {
+    showProblemLinkModal(value: ReceiptIssue) {
         this.problemLinkModalVisible = true;
-        this.problemLinkSelected = id;
+        this.problemLinkSelected = value;
     }
 
     hideProblemLinkModal() {
         this.problemLinkModalVisible = false;
-        this.problemLinkSelected = 0;
+        this.problemLinkSelected = undefined;
     }
 
     setImageVisible(status: boolean) {

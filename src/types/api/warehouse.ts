@@ -221,4 +221,11 @@ export interface WarehouseAPI {
             success: number;
         };
     }
+
+    "/api/warehouse/track/downloadPhoto": {
+        params: {
+            id: number;
+        };
+        res: { url: string; fileName: string };
+    }
 }

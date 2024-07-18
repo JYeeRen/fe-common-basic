@@ -18,31 +18,37 @@ export const getColumns = (params: {
             key: "masterWaybillNo",
             dataIndex: "masterWaybillNo",
             title: t("提单号"),
+            sorter: true,
         },
         {
             key: "bigBagNo",
             dataIndex: "bigBagNo",
-            title: t("袋号")
+            title: t("袋号"),
+            sorter: true,
         },
         {
             key: "receiptTime",
             dataIndex: "receiptTime",
             title: t("入库时间"),
+            sorter: true,
         },
         {
             key: "tailProviderName",
             dataIndex: "tailProviderName",
             title: t("尾程服务商名称"),
+            sorter: true,
         },
         {
             key: "palletCode",
             dataIndex: "palletCode",
             title: t("托盘码"),
+            sorter: true,
         },
         {
             key: "status",
             dataIndex: "status",
             title: t("货物状态"),
+            sorter: true,
             render: (value) => {
                 return find(receiptStatusTypes, {value})?.label;
             },

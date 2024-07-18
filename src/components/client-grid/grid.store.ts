@@ -7,6 +7,7 @@ export class GridStore<T> {
   pageSize: number = 50;
   total: number = 0;
   rowData: T[] = [];
+  orderKeys: {key: string; order: string}[] = [];
 
   getRows: getRowsFunc<T>;
 
@@ -16,7 +17,7 @@ export class GridStore<T> {
   }
 
   async loadData() {
-    const { list, total } = await this.getRows({ page: this.page, size: this.pageSize });
+    const { list, total } = await this.getRows({ page: this.page, size: this.pageSize, orderKeys: this.orderKeys});
     runInAction(() => {
       this.total = total;
       this.rowData = list || [];

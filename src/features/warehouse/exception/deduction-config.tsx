@@ -19,16 +19,19 @@ export const getColumns = (params: {
             key: "masterWaybillNo",
             dataIndex: "masterWaybillNo",
             title: t("提单号"),
+            sorter: true,
         },
         {
             key: "bigBagNo",
             dataIndex: "bigBagNo",
-            title: t("袋号")
+            title: t("袋号"),
+            sorter: true,
         },
         {
             key: "receiptStatus",
             dataIndex: "receiptStatus",
             title: t("货物状态"),
+            sorter: true,
             render: (value) => {
                 return find(receiptStatusTypes, {value})?.label;
             },
@@ -37,6 +40,7 @@ export const getColumns = (params: {
             key: "deductionStatus",
             dataIndex: "deductionStatus",
             title: t("扣货标记"),
+            sorter: true,
             render: (value) => {
                 return find(deductionStatusTypes, {value})?.label;
             },
@@ -45,11 +49,13 @@ export const getColumns = (params: {
             key: "deductionOperator",
             dataIndex: "deductionOperator",
             title: t("操作人员"),
+            sorter: true,
         },
         {
             key: "deductionTime",
             dataIndex: "deductionTime",
-            title: t("操作时间")
+            title: t("操作时间"),
+            sorter: true,
         },
         {
             key: 'operation',

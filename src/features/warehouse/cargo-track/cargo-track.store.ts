@@ -11,6 +11,10 @@ export class CargoTrackStore {
 
     selectedRowKeys: number[] = [];
 
+    imageUrl = "error";
+
+    imageVisible = false;
+
     constructor(_options: unknown, gridStore: ClientGridStore<WarehouseReceipt>) {
         makeAutoObservable(this);
         this.gridStore = gridStore;
@@ -27,8 +31,19 @@ export class CargoTrackStore {
         this.selectedRowKeys = keys;
     }
 
+    setImageVisible(status: boolean) {
+        this.imageVisible = status;
+        if (!status)
+            this.imageUrl = "error";
+    }
+
     @loading()
     async export(params: QueryParams) {
         await net.download("/api/warehouse/track/export", params);
+    }
+
+    @loading()
+    async getImageUrl(params: { id: number }) {
+        return await net.post("/api/warehouse/track/downloadPhoto", params);
     }
 }

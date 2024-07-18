@@ -13,29 +13,33 @@ export const getColumns = (params: {
         delete?: (record: WarehouseReceipt) => void;
     };
 }): TableColumnsType<WarehouseReceipt> => {
-    const { receiptStatusTypes, operation } = params;
+    const {receiptStatusTypes, operation} = params;
     return [
         {
             key: "masterWaybillNo",
             dataIndex: "masterWaybillNo",
             title: t("提单号"),
+            sorter: true,
         },
         {
             key: "bigBagNo",
             dataIndex: "bigBagNo",
-            title: t("袋号")
+            title: t("袋号"),
+            sorter: true,
         },
         {
             key: "tailProviderName",
             dataIndex: "tailProviderName",
-            title: t("尾程服务商名称")
+            title: t("尾程服务商名称"),
+            sorter: true,
         },
         {
             key: "status",
             dataIndex: "status",
             title: t("货物状态"),
+            sorter: true,
             render: (value) => {
-                return find(receiptStatusTypes, { value })?.label;
+                return find(receiptStatusTypes, {value})?.label;
             },
         },
         {
@@ -46,19 +50,19 @@ export const getColumns = (params: {
                 const operations = [
                     {
                         key: "edit",
-                        icon: <EditOutlined />,
+                        icon: <EditOutlined/>,
                         onClick: () => operation.edit?.(data),
                         label: t("编辑"),
                     },
                     {
                         key: "cancel",
-                        icon: <DeleteOutlined />,
+                        icon: <DeleteOutlined/>,
                         onClick: () => operation.delete?.(data),
                         label: t("删除"),
                     },
                 ];
 
-                return (<OperationButtons items={operations} />);
+                return (<OperationButtons items={operations}/>);
             },
         },
     ];

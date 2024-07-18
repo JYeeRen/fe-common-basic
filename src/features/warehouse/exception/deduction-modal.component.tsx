@@ -144,6 +144,7 @@ export const DeductionModal = observer((props: IDeductionModal) => {
                     size: "default",
                     onChange: gridStore.onTableChange.bind(gridStore),
                 }}
+                onChange={gridStore.onCommonTableChange.bind(gridStore)}
             />
             <Row justify="end" className="my-4">
                 <Button className="mr-4" onClick={onCancel}>

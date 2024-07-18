@@ -296,7 +296,10 @@ export interface CargoTrack {
   cabinetNo: string;
   lockNo: string;
   companyName: string;
-  contact: string;
+  driverName: string;
+  driverContact: string;
+  bolCode: string;
+  vehiclePhoto: boolean;
   direction: string;
   inboundUser: string;
   loadUser: string;

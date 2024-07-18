@@ -161,6 +161,7 @@ function PalletInfoComponent() {
                         size: "default",
                         onChange: gridStore.onTableChange.bind(gridStore),
                     }}
+                    onChange={gridStore.onCommonTableChange.bind(gridStore)}
                 />
             </Container>
             <PalletInfoAddModal

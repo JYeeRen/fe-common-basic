@@ -46,14 +46,14 @@ export const ProblemModalComponent = observer((props: IProblemModal) => {
     const handleLink = async (value: ReceiptIssueLink) => {
         await store.doLink({
             receiptId: value.id,
-            issueId: mainStore.problemLinkSelected,
+            issueId: mainStore.problemLinkSelected!.id,
         })
         mainStore.hideProblemLinkModal();
         refreshTable();
     };
 
     const handleAdd = () => {
-        store.showCreateModal(mainStore.problemLinkSelected);
+        store.showCreateModal(mainStore.problemLinkSelected!);
     };
 
     const handleCancel = () => {
@@ -139,6 +139,7 @@ export const ProblemModalComponent = observer((props: IProblemModal) => {
                     size: "default",
                     onChange: gridStore.onTableChange.bind(gridStore),
                 }}
+                onChange={gridStore.onCommonTableChange.bind(gridStore)}
             />
             <Button onClick={handleAdd}>
                 {t("未找到包裹？新增一条入库预报>>")}
