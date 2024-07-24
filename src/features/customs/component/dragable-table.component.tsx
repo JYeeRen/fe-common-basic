@@ -1,6 +1,8 @@
 import {
   Button,
+  Checkbox,
   Form,
+  Radio,
   Table,
   TableColumnType,
   TableColumnsType,
@@ -167,12 +169,54 @@ export function DragableTable(props: DragableTableProps) {
             />
           ),
       },
-      // {
-      //   width: 100,
-      //   key: "targetUnit",
-      //   dataIndex: "targetUnit",
-      //   title: t("单位换算"),
-      // },
+      {
+        width: 100,
+        key: "selectUnit",
+        dataIndex: "selectUnit",
+        title: t("导出金额单位"),
+        render: (selectUnit, record) => {
+          if (!selectUnit) {
+            return;
+          }
+          if (readonly) {
+            return selectUnit;
+          }
+          return (
+            <Radio.Group
+              value={record.amountUnit}
+              onChange={(e) =>
+                handleRecordFieldChange("amountUnit", e.target.value, record)
+              }
+            >
+              <Radio value="USD">{t("美元")}</Radio>
+              <Radio value="CNY">{t("人民币")}</Radio>
+            </Radio.Group>
+          );
+        },
+      },
+      {
+        width: 100,
+        key: "mergence",
+        dataIndex: "mergence",
+        title: t("是否合并"),
+        render: (mergence, record) => {
+          if (readonly) {
+            return record.isMerge ? t("是") : t("否");
+          }
+          if (mergence) {
+            return (
+              <Checkbox
+                onChange={(e) =>
+                  handleRecordFieldChange("isMerge", e.target.checked, record)
+                }
+                checked={record.isMerge}
+              >
+                {t("是")}
+              </Checkbox>
+            );
+          }
+        },
+      },
     ],
     [handleRecordFieldChange, readonly, t]
   );
@@ -203,19 +247,26 @@ export function DragableTable(props: DragableTableProps) {
         render: (uuid) => {
           return (
             <>
-            <Button type="link" onClick={() => handleColumnCopy?.(uuid)}>
-              {t("复制列")}
-            </Button>
-            <Button type="link" onClick={() => handleColumnRemove?.(uuid)}>
-              {t("删除列")}
-            </Button>
+              <Button type="link" onClick={() => handleColumnCopy?.(uuid)}>
+                {t("复制列")}
+              </Button>
+              <Button type="link" onClick={() => handleColumnRemove?.(uuid)}>
+                {t("删除列")}
+              </Button>
             </>
           );
         },
       });
     }
     return cols;
-  }, [columnDefs, handleColumnCopy, handleColumnRemove, handleRecordFieldChange, readonly, t]);
+  }, [
+    columnDefs,
+    handleColumnCopy,
+    handleColumnRemove,
+    handleRecordFieldChange,
+    readonly,
+    t,
+  ]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

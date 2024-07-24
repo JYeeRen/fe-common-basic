@@ -34,6 +34,10 @@ export type CustomTemplateCol = {
   interceptAfterStart?: number;
   interceptAfterEnd?: number;
   targetUnit?: string;
+  mergence?: boolean;
+  selectUnit?: boolean;
+  amountUnit?: string;
+  isMerge?: boolean;
 }
 
 export interface CustomTemplateParams {
@@ -49,6 +53,7 @@ export interface CustomTemplateFormValues {
   type: number;
   active: boolean;
   mergeOrderNumber: boolean;
+  typesetting: number;
 }
 
 export interface TemplateColOption {

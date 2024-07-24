@@ -22,6 +22,7 @@ import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { ColumnSelectModal } from "./component/column-select-modal.component";
 import { DragableTable } from "./component/dragable-table.component";
+import optionsService from "@services/options.service";
 
 interface TemplateOperationComponentProps {
   title: string;
@@ -55,23 +56,21 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
   };
 
   const handleBack = () => {
-    const {
-      name,
-      type,
-      active,
-      mergeOrderNumber,
-    } = form.getFieldsValue();
-    if (store.isFieldChanged({
-      name,
-      type,
-      active,
-      mergeOrderNumber,
-    })) {
+    const { name, type, active, mergeOrderNumber, typesetting } = form.getFieldsValue();
+    if (
+      store.isFieldChanged({
+        name,
+        type,
+        active,
+        mergeOrderNumber,
+        typesetting,
+      })
+    ) {
       Modal.confirm({
-        title: t('操作确认'),
-        content: t('您所作的更改可能未保存，是否离开该页面。'),
-        okText: t('确认离开'),
-        cancelText: t('留在当前页面'),
+        title: t("操作确认"),
+        content: t("您所作的更改可能未保存，是否离开该页面。"),
+        okText: t("确认离开"),
+        cancelText: t("留在当前页面"),
         onOk: () => {
           navigate(-1);
         },
@@ -124,13 +123,26 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
           <Form.Item name="active" label={t("是否启用")}>
             <Switch checkedChildren={t("启用")} unCheckedChildren={t("停用")} />
           </Form.Item>
-          <Form.Item name="mergeOrderNumber" label={t("按运单号合并商品")}>
+          {/* <Form.Item name="mergeOrderNumber" label={t("按运单号合并商品")}>
             <Radio.Group>
               <Radio value={false}>{t("否")}</Radio>
               <Radio value={true}>{t("是")}</Radio>
             </Radio.Group>
+          </Form.Item> */}
+          <Form.Item
+            name="typesetting"
+            label={t("商品展示规则")}
+            rules={[{ required: true }]}
+          >
+            <Radio.Group>
+              {optionsService.customsDocumentTypesetting.map((item) => (
+                <Radio key={item.value} value={item.value}>{item.label}</Radio>
+              ))}
+            </Radio.Group>
           </Form.Item>
-          <Form.Item label={t("导出列配置")}></Form.Item>
+          <Form.Item label={t("导出列配置")}>
+            <span style={{ color: '#4086ff' }}>{t('请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置')}</span>
+          </Form.Item>
         </div>
         <div className="flex flex-col align-middle justify-center mx-20">
           <Row className="mb-3">

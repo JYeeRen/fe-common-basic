@@ -3,6 +3,30 @@
         "zh": "包裹轨迹录入",
         "en": "Package track entry"
     },
+    "美元": {
+        "zh": "美元",
+        "en": "USD"
+    },
+    "人民币": {
+        "zh": "人民币",
+        "en": "CNY"
+    },
+    "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置": {
+        "zh": "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置",
+        "en": "Note: The number of export column configurations is consistent with the final template export quantity. If there are fields processed according to different rules, please copy and configure the subsequent column."
+    },
+    "是否合并": {
+        "zh": "是否合并",
+        "en": "Merge"
+    },
+    "导出金额单位": {
+        "zh": "导出金额单位",
+        "en": "Amount Unit"
+    },
+    "商品展示规则": {
+        "zh": "商品展示规则",
+        "en": "Product Display Rules"
+    },
     "上传失败": {
         "zh": "上传失败",
         "en": "Failed"

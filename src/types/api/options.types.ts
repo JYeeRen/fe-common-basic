@@ -17,11 +17,17 @@ export interface BackendOptions {
   customsStatusTypes: Option[];
   timeZones: TZ[];
   templateTypes: Option[];
-  templateColumns: { key: string; cnName: string; enName: string }[];
+  templateColumns: {
+    key: string;
+    cnName: string;
+    enName: string;
+    amountUnits?: string[];
+    isMerge?: boolean;
+  }[];
   unitTypes: { key: string; val: string }[];
-  actionCodeList: { code: string, name: string }[];
-  reasonCodeList: { code: string, name: string }[];
-  waybillTrackStatusList: { code: string, name: string }[];
+  actionCodeList: { code: string; name: string }[];
+  reasonCodeList: { code: string; name: string }[];
+  waybillTrackStatusList: { code: string; name: string }[];
   customsTrackPackageNoTypes: Option[];
   customsTrackStatusNoTypes: Option[];
   customsTrackStatusTypes: Option[];

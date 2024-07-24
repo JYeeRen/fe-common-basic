@@ -84,6 +84,8 @@ export class CustomTemplateOperationStore {
         interceptAfterStart: undefined,
         interceptAfterEnd: undefined,
         targetUnit: "",
+        mergence: false,
+        selectUnit: false
       },
     ];
   }
@@ -120,8 +122,11 @@ export class CustomTemplateOperationStore {
     const templateColumns = [...cols];
     keys.forEach((k) => {
       if (!curColDict[k]) {
+        const { isMerge, amountUnits = [], ...target } = this.templateColumnDict[k];
         templateColumns.push({
-          ...this.templateColumnDict[k],
+          ...target,
+          mergence: isMerge ?? false,
+          selectUnit: amountUnits.length > 0,
           uuid: uuidv4(),
         });
       }
@@ -150,13 +155,14 @@ export class CustomTemplateOperationStore {
     return optionsService.templateColumns;
   }
 
-  get initialValues(): CustomTemplateFormValues {
+  get initialValues(): Partial<CustomTemplateFormValues> {
     return {
       name: "",
       type: 1,
       active: true,
       mergeOrderNumber: false,
       columns: [],
+      // typesetting: 1,
       ...this.customTemplate,
     };
   }
@@ -179,14 +185,20 @@ export class CustomTemplateOperationStore {
   }
 
   formatTemplateColsFromServer(cols: Schema.CustomTemplateCol[]) {
-    return cols.map((col) => ({
-      uuid: uuidv4(),
-      ...col,
-      interceptBefore: Boolean(
-        col.interceptBeforeStart || col.interceptBeforeEnd
-      ),
-      interceptAfter: Boolean(col.interceptAfterStart || col.interceptAfterEnd),
-    }));
+    return cols.map((col) => {
+      const target = this.templateColumnDict[col.key];
+      console.log(target);
+      return {
+        uuid: uuidv4(),
+        ...col,
+        interceptBefore: Boolean(
+          col.interceptBeforeStart || col.interceptBeforeEnd
+        ),
+        interceptAfter: Boolean(col.interceptAfterStart || col.interceptAfterEnd),
+        mergence: target?.isMerge ?? false,
+        selectUnit: (target?.amountUnits ?? []).length > 0
+      };
+    });
   }
 
   @loading()
@@ -204,13 +216,14 @@ export class CustomTemplateOperationStore {
     if (!this.id) {
       return false;
     }
-    const { name, type, active, mergeOrderNumber } = this.initialValues;
+    const { name, type, active, mergeOrderNumber, typesetting } = this.initialValues;
     if (
       !isEqual(formValues, {
         name,
         type,
         active,
         mergeOrderNumber,
+        typesetting,
       })
     ) {
       return true;
@@ -236,6 +249,8 @@ export class CustomTemplateOperationStore {
       interceptAfterStart: col.interceptAfterStart || 0,
       interceptAfterEnd: col.interceptAfterEnd || 0,
       targetUnit: col.targetUnit || "",
+      isMerge: col.isMerge,
+      amountUnit: col.amountUnit || "",
     }));
   }
 }
