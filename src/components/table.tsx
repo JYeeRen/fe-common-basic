@@ -110,7 +110,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
   //   return { height: `${heights.container}px` };
   // }, [autoHeight, heights.container]);
 
-  const [height, setHeight] = useState(300);
+  const [height, setHeight] = useState(window.innerHeight - 260);
   const [prevHeight, setPrevHeight] = useState(0);
 
   return (
