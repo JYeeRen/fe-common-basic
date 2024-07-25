@@ -83,6 +83,7 @@ interface DragableTableProps {
   setDataSource: (dataSource: CustomTemplateCol[]) => void;
   handleColumnRemove?: (uuid: string) => void;
   handleColumnCopy?: (uuid: string) => void;
+  omitMerge?: boolean;
 }
 
 export function DragableTable(props: DragableTableProps) {
@@ -93,13 +94,14 @@ export function DragableTable(props: DragableTableProps) {
     handleRecordFieldChange,
     handleColumnRemove,
     handleColumnCopy,
+    omitMerge = false,
   } = props;
   const [t] = useTranslation();
 
-  const columnDefs: (TableColumnType<CustomTemplateCol> & {
-    editable?: "custom" | "all";
-  })[] = useMemo(
-    () => [
+  const columnDefs = useMemo(() => {
+    const cols: (TableColumnType<CustomTemplateCol> & {
+      editable?: "custom" | "all";
+    })[] = [
       {
         width: 60,
         key: "index",
@@ -179,7 +181,12 @@ export function DragableTable(props: DragableTableProps) {
             return;
           }
           if (readonly) {
-            return selectUnit;
+            if (record.amountUnit === "USD") {
+              return t("美元");
+            }
+            if (record.amountUnit === "CNY") {
+              return t("人民币");
+            }
           }
           return (
             <Radio.Group
@@ -217,9 +224,9 @@ export function DragableTable(props: DragableTableProps) {
           }
         },
       },
-    ],
-    [handleRecordFieldChange, readonly, t]
-  );
+    ];
+    return cols.filter((col) => (omitMerge ? col.key !== "mergence" : true));
+  }, [handleRecordFieldChange, readonly, t, omitMerge]);
 
   const columns = useMemo(() => {
     const cols = columnDefs.map((col) => {

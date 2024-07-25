@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { Container, Form } from "@components";
 import styles from "./custom-template-operation.module.less";
 import { DragableTable } from "./component/dragable-table.component";
+import optionsService from "@services/options.service";
+import { find } from "lodash";
 
 const CustomTemplateDetail = observer(() => {
   const { id } = useParams();
@@ -35,13 +37,22 @@ const CustomTemplateDetail = observer(() => {
           <Form.Item label={t("是否启用")}>
             {store.customTemplate?.active ? t("已启用") : t("已停用")}
           </Form.Item>
-          <Form.Item label={t("按运单号合并商品")}>
-            {store.customTemplate?.active ? t("是") : t("否")}
+          <Form.Item
+            name="typesetting"
+            label={t("商品展示规则")}
+            rules={[{ required: true }]}
+          >
+            {
+              find(optionsService.customsDocumentTypesetting, {
+                value: store.customTemplate?.typesetting,
+              })?.label
+            }
           </Form.Item>
           <Form.Item label={t("导出列配置")}></Form.Item>
         </div>
         <div className="flex flex-col align-middle justify-center mx-20">
           <DragableTable
+            omitMerge={store.customTemplate?.typesetting !== 2}
             readonly
             dataSource={store.templateColumns}
             handleRecordFieldChange={store.handleRecordFieldChange.bind(store)}

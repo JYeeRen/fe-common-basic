@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -80,6 +80,11 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
     }
   };
 
+  const [typesetting, setTypeSetting] = useState(store.initialValues.typesetting ?? 0);
+  useEffect(() => {
+    setTypeSetting(store.initialValues.typesetting ?? 0);
+  }, [store.initialValues.typesetting])
+
   return (
     <Container
       className={styles.container}
@@ -134,7 +139,7 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
             label={t("商品展示规则")}
             rules={[{ required: true }]}
           >
-            <Radio.Group>
+            <Radio.Group onChange={(e) => setTypeSetting(e.target.value)}>
               {optionsService.customsDocumentTypesetting.map((item) => (
                 <Radio key={item.value} value={item.value}>{item.label}</Radio>
               ))}
@@ -162,6 +167,7 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
             </Button>
           </Row>
           <DragableTable
+            omitMerge={typesetting !== 2}
             dataSource={store.templateColumns}
             handleRecordFieldChange={store.handleRecordFieldChange.bind(store)}
             setDataSource={store.setTemplateColumns.bind(store)}

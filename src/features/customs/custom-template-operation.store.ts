@@ -171,7 +171,10 @@ export class CustomTemplateOperationStore {
   async createTemplate(formvalues: CustomTemplateFormValues) {
     await net.post("/api/customsTemplate/create", {
       ...formvalues,
-      columns: this.columns,
+      columns: this.columns.map(col => ({
+        ...col,
+        isMerge: formvalues.typesetting !== 2 ? false : formvalues.typesetting,
+      })),
     });
   }
 
@@ -180,7 +183,10 @@ export class CustomTemplateOperationStore {
     await net.post("/api/customsTemplate/edit", {
       id: this.id,
       ...formvalues,
-      columns: this.columns,
+      columns: this.columns.map(col => ({
+        ...col,
+        isMerge: formvalues.typesetting !== 2 ? false : formvalues.typesetting,
+      })),
     });
   }
 

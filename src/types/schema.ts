@@ -98,6 +98,7 @@ export interface CustomTemplate {
   type: number;
   active: boolean;
   mergeOrderNumber: boolean;
+  typesetting: number;
   columns: CustomTemplateCol[];
 }
 
