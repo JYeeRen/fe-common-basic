@@ -15,13 +15,37 @@
         "zh": "人民币",
         "en": "CNY"
     },
-    "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置": {
-        "zh": "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置",
+    "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制一列进行配置": {
+        "zh": "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制一列进行配置",
         "en": "Note: The number of export column configurations is consistent with the final template export quantity. If there are fields processed according to different rules, please copy and configure the subsequent column."
+    },
+    "包裹数": {
+        "zh": "包裹数",
+        "en": "PCL"
+    },
+    "箱数": {
+        "zh": "箱数",
+        "en": "CTN"
+    },
+    "总重量": {
+        "zh": "总重量",
+        "en": "WGT"
     },
     "是否合并": {
         "zh": "是否合并",
+        "en": "PORT"
+    },
+    "航班号2": {
+        "zh": "航班号",
+        "en": "Flight Number"
+    },
+    "落地港口2": {
+        "zh": "落地港口",
         "en": "Merge"
+    },
+    "提单号3": {
+        "zh": "提单号",
+        "en": "MAWB"
     },
     "导出金额单位": {
         "zh": "导出金额单位",

@@ -146,7 +146,7 @@ function TemplateOperationComponent(props: TemplateOperationComponentProps) {
             </Radio.Group>
           </Form.Item>
           <Form.Item label={t("导出列配置")}>
-            <span style={{ color: '#4086ff' }}>{t('请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制后一列进行配置')}</span>
+            <span style={{ color: '#4086ff' }}>{t('请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制一列进行配置')}</span>
           </Form.Item>
         </div>
         <div className="flex flex-col align-middle justify-center mx-20">

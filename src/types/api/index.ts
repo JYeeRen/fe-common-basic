@@ -11,6 +11,7 @@ import { CustomsTrackStatusAPI } from "./customs-track-status.types";
 import { CustomsTrackLogAPI } from "./customs-track-log.types";
 import { PackageStatusAPI } from "./package-status.types";
 import {WarehouseAPI} from "./warehouse.ts";
+import { DataStatisticsAPI } from "./data-statistics.types.ts";
 
 export type { BackendOptions, TZ } from './options.types';
 
@@ -40,7 +41,10 @@ export interface Sources
     CustomsTrackStatusAPI,
     CustomsTrackLogAPI,
     PackageStatusAPI,
+    DataStatisticsAPI,
     WarehouseAPI
-{}
+{
+
+}
 
 export type URLs = keyof Sources;

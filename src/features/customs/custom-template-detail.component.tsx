@@ -38,7 +38,6 @@ const CustomTemplateDetail = observer(() => {
             {store.customTemplate?.active ? t("已启用") : t("已停用")}
           </Form.Item>
           <Form.Item
-            name="typesetting"
             label={t("商品展示规则")}
             rules={[{ required: true }]}
           >

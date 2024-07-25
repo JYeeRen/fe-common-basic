@@ -177,9 +177,6 @@ export function DragableTable(props: DragableTableProps) {
         dataIndex: "selectUnit",
         title: t("导出金额单位"),
         render: (selectUnit, record) => {
-          if (!selectUnit) {
-            return;
-          }
           if (readonly) {
             if (record.amountUnit === "USD") {
               return t("美元");
@@ -188,6 +185,11 @@ export function DragableTable(props: DragableTableProps) {
               return t("人民币");
             }
           }
+
+          if (!selectUnit) {
+            return;
+          }
+
           return (
             <Radio.Group
               value={record.amountUnit}

@@ -90,6 +90,8 @@ export interface CustomTemplateCol {
   interceptAfterStart?: number;
   interceptAfterEnd?: number;
   targetUnit: string;
+  isMerge?: boolean;
+  amountUnit?: string;
 }
 
 export interface CustomTemplate {
@@ -227,9 +229,9 @@ export interface PacakgeChange {
 
 export interface WarehouseReceipt {
   id: number;
-  masterWaybillNo: string,
-  bigBagNo: string,
-  tailProviderName: string,
+  masterWaybillNo: string;
+  bigBagNo: string;
+  tailProviderName: string;
   status: number;
 }
 export interface MawbStatus {
@@ -325,4 +327,19 @@ export interface ReceiptIssueLink {
   bigBagNo: string;
   tailProviderName: string;
   status: number;
+}
+
+export interface WaybillStatistics {
+  id: number;
+  port: string;
+  ata: string;
+  flightNumber: string;
+  pmc: string;
+  masterWaybillNo: string;
+  tailProviders: {
+    name: string;
+    pcl: string;
+    ctn: string;
+    wgt: string;
+  }[];
 }

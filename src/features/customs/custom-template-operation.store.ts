@@ -173,7 +173,7 @@ export class CustomTemplateOperationStore {
       ...formvalues,
       columns: this.columns.map(col => ({
         ...col,
-        isMerge: formvalues.typesetting !== 2 ? false : formvalues.typesetting,
+        isMerge: formvalues.typesetting !== 2 ? false : col.isMerge,
       })),
     });
   }
@@ -185,7 +185,7 @@ export class CustomTemplateOperationStore {
       ...formvalues,
       columns: this.columns.map(col => ({
         ...col,
-        isMerge: formvalues.typesetting !== 2 ? false : formvalues.typesetting,
+        isMerge: formvalues.typesetting !== 2 ? false : col.isMerge,
       })),
     });
   }
@@ -193,7 +193,6 @@ export class CustomTemplateOperationStore {
   formatTemplateColsFromServer(cols: Schema.CustomTemplateCol[]) {
     return cols.map((col) => {
       const target = this.templateColumnDict[col.key];
-      console.log(target);
       return {
         uuid: uuidv4(),
         ...col,

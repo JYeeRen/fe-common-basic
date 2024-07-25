@@ -36,6 +36,14 @@ const template: RouteObject[] = [
       ).default,
     }),
   },
+  {
+    path: "/customs/waybill-statistics",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/waybill-statistics.component")
+      ).default,
+    }),
+  },
 ];
 
 const trajectory: RouteObject[] = [
