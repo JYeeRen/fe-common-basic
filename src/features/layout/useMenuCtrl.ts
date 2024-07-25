@@ -35,6 +35,7 @@ const navConfig = (): TopNavItem[] => [
       "track.log",
       "track.status",
       "risk.customer",
+      "customs.master_airway_bill_data_statistics"
     ],
     sidenavs: [
       {
@@ -65,6 +66,11 @@ const navConfig = (): TopNavItem[] => [
             key: "/customs/template",
             label: t("模板维护"),
             permission: "customs.template",
+          },
+          {
+            key: "/customs/waybill-statistics",
+            label: t("提单数据统计"),
+            permission: "customs.master_airway_bill_data_statistics",
           },
         ],
       },
