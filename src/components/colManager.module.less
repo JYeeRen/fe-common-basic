@@ -1,0 +1,36 @@
+.itemWrapper {
+  display: flex;
+  justify-content: space-between;
+  
+  :global(.label) {
+    user-select: none !important;
+  }
+
+  .label {
+    display: inline-block;
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &.drop-over-downward {
+    border-bottom: 2px dashed #1890ff;
+  }
+
+  &.drop-over-upward {
+    border-top: 2px dashed #1890ff;
+  }
+}
+
+.modalBody {
+  height: 400px;
+}
+
+.transfer {
+  height: 100%;
+
+  :global(.ant-transfer-list) {
+    height: 100%;
+  }
+}

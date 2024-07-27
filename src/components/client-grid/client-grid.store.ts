@@ -2,6 +2,7 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { AnyObject } from "@types";
 import { getRowsFunc } from "./types";
 import { loading } from "@infra";
+import { TableProps } from "antd";
 
 export class ClientGridStore<T> {
   loading = false;
@@ -13,7 +14,7 @@ export class ClientGridStore<T> {
   rowData: T[] = [];
   private readonly getRows?: getRowsFunc<T> = undefined;
   queryParams: AnyObject = {};
-  orderKeys: {key: string; order: string}[] = [];
+  orderKeys: { key: string; order: string }[] = [];
 
   constructor(getRows?: getRowsFunc<T>, options?: { pagination?: boolean }) {
     this.pagination = options?.pagination ?? true;
@@ -39,7 +40,7 @@ export class ClientGridStore<T> {
     }
     const { list, total } = await this.getRows({
       page: (this.pagination ? this.page : undefined) as number,
-      size: (this.pagination? this.pageSize : undefined) as number,
+      size: (this.pagination ? this.pageSize : undefined) as number,
       orderKeys: this.orderKeys,
       ...this.queryParams,
     });
@@ -55,16 +56,28 @@ export class ClientGridStore<T> {
     this.loadData();
   }
 
-  onCommonTableChange(pagination: any, filters: any, sorter: any, extra: any) {
-    console.log(pagination, filters, sorter, extra);
-    this.orderKeys = [];
+  onCommonTableChange(...args: Parameters<Required<TableProps>["onChange"]>) {
+    const [_pagination, _filer, sorter, _extra] = args;
+    const orderKeys = [];
     if (sorter instanceof Array) {
       sorter.forEach((sort) => {
-        this.orderKeys.push({key: sort.columnKey, order: sort.order ?? ''});
+        if (sort.columnKey && sort.order) {
+          orderKeys.push({
+            key: sort.columnKey.toString(),
+            order: sort.order ?? "",
+          });
+        }
       });
     } else {
-      this.orderKeys.push({key: sorter.columnKey, order: sorter.order ?? ''});
+      if (sorter.columnKey && sorter.order) {
+        orderKeys.push({
+          key: sorter.columnKey.toString(),
+          order: sorter.order ?? "",
+        });
+      }
     }
+
+    this.orderKeys = orderKeys;
     this.loadData();
   }
 }

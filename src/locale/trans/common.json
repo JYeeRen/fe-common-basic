@@ -15,6 +15,14 @@
         "zh": "人民币",
         "en": "CNY"
     },
+    "设置尾程服务商": {
+        "zh": "设置尾程服务商",
+        "en": "Choose Last Mile Service Provider"
+    },
+    "选择需要展示的尾程服务商": {
+        "zh": "选择需要展示的尾程服务商",
+        "en": "Choose Last Mile Service Provider"
+    },
     "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制一列进行配置": {
         "zh": "请注意: 导出列配置数量与最终模板导出数量一致，如有按不同规则处理的字段列，请复制一列进行配置",
         "en": "Note: The number of export column configurations is consistent with the final template export quantity. If there are fields processed according to different rules, please copy and configure the subsequent column."
@@ -870,6 +878,10 @@
     "请选择导出列": {
         "zh": "请选择导出列",
         "en": "Please select export columns"
+    },
+    "PMC": {
+        "zh": "PMC",
+        "en": "PMC"
     },
     "保存": {
         "zh": "保存",

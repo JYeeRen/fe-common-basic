@@ -70,6 +70,7 @@ class OptionService {
   trackUploadStatusTypes: InnerOptions = [];
   receiptIssueStatusTypes: InnerOptions = [];
   customsDocumentTypesetting: InnerOptions = [];
+  providers: { key: string; label: string }[] = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -81,6 +82,13 @@ class OptionService {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,
+    },
+    providers: {
+      url: "/api/option/getTailProviders",
+      optsfrom: "providers",
+      formater: (data: { key: string; val: string }[]) => {
+        return data?.map((item) => ({ label: item.val, key: item.key })) ?? [];
+      },
     },
     customsItemInfoOtherTypes: {
       url: "/api/option/getBase",
@@ -233,7 +241,7 @@ class OptionService {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,
-    }
+    },
   } as const;
 
   constructor() {
@@ -260,7 +268,7 @@ class OptionService {
       prealertTemplates,
       permissions,
     };
-  }
+    }
 
   async init() {
     // const base = localStorage.getItem("options.base") || {};

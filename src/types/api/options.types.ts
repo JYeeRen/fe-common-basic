@@ -38,6 +38,12 @@ export interface BackendOptions {
 }
 
 export interface OptionsAPI {
+  "/api/option/getTailProviders": {
+    params?: never;
+    res: {
+      providers: { key: string; val: string }[];
+    }
+  };
   "/api/option/getBase": {
     params?: never;
     res: BackendOptions;

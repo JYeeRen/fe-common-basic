@@ -4,13 +4,16 @@ import {
   Col,
   Container,
   DatePicker,
+  EditableCell,
   FilterContainer,
   FilterTextArea,
   Form,
   Input,
+  Modal,
   QuickDatePicker,
   Row,
   Table,
+  TableColSettings,
   textareaMaxLengthRule,
 } from "@components";
 import { observer } from "mobx-react-lite";
@@ -22,59 +25,58 @@ import { CloudDownloadOutlined } from "@ant-design/icons";
 import { useMemo } from "react";
 import { dayjs } from "@infra";
 import { compact } from "lodash";
+import { R } from "./waybill-statistics.types";
 
 function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
-  const gridStore = ClientGrid.useGridStore(config.getRows);
+  const gridStore = ClientGrid.useGridStore<R>(config.getRows);
 
-  const columns = config.getColumns();
+  const setPmc = async (id: number, pmc: string) => {
+    await store.setPmc(id, pmc);
+    gridStore.loadData();
+  };
+
+  const columns = [...config.getColumns(setPmc), ...store.dynamicCols];
 
   const onFinish = (values: any) => {
-
     const {
+      masterWaybillNoList,
       dateRange,
-      noList,
-      noType,
-      customsStatusType,
-      flightDate,
-      flightDateTZ,
+      flightNumber,
       quickDate,
+      portCode,
+      tailProviderName
     } = values;
     const params = {
-      noList: compact(noList),
-      noType,
-      uploadDate: {
+      flightNumber,
+      masterWaybillNoList: compact(masterWaybillNoList),
+      ata: {
+        // zone: flightDateTZ,
         start: dateRange?.[0].format(),
         end: dateRange?.[1].format(),
       },
-      flightDate: {
-        zone: flightDateTZ,
-        start: flightDate?.[0].format(),
-        end: flightDate?.[1].format(),
-      },
-      customsStatusType,
+      portCode,
+      tailProviderName,
     };
     if (quickDate === "today") {
-      params.uploadDate.start = dayjs().startOf("day").format();
-      params.uploadDate.end = dayjs().endOf("day").format();
+      params.ata.start = dayjs().startOf("day").format();
+      params.ata.end = dayjs().endOf("day").format();
     }
     if (quickDate === "yeaterday") {
-      params.uploadDate.start = dayjs()
+      params.ata.start = dayjs()
         .subtract(1, "day")
         .startOf("day")
         .format();
-      params.uploadDate.end = dayjs().subtract(1, "day").endOf("day").format();
+      params.ata.end = dayjs().subtract(1, "day").endOf("day").format();
     }
     if (quickDate === "threeday") {
-      params.uploadDate.start = dayjs()
+      params.ata.start = dayjs()
         .subtract(3, "day")
         .startOf("day")
         .format();
-      params.uploadDate.end = dayjs().endOf("day").format();
+      params.ata.end = dayjs().endOf("day").format();
     }
-    // gridStore.setQueryParams(params);
-    console.log(params);
-  
+    gridStore.setQueryParams(params);
   };
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
@@ -112,7 +114,7 @@ function WaybillStatisticsComponent() {
           <Row justify="start">
             <Col span={24}>
               <Form.Item
-                label={t("客户上传时间")}
+                label={t("ATA")}
                 labelAlign="left"
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 20 }}
@@ -136,7 +138,7 @@ function WaybillStatisticsComponent() {
                 label={t("落地港口2")}
                 wrapperCol={{ span: 22 }}
               >
-                <Input />
+                <Input allowClear />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -145,7 +147,7 @@ function WaybillStatisticsComponent() {
                 label={t("航班号2")}
                 wrapperCol={{ span: 22 }}
               >
-                <Input />
+                <Input allowClear />
               </Form.Item>
             </Col>
           </Row>
@@ -156,7 +158,14 @@ function WaybillStatisticsComponent() {
         wrapperClassName={styles.wrapper}
         table
       >
-        <Row justify="end" style={{ padding: "0 10px" }}>
+        <Row justify="space-between" style={{ padding: "0 10px" }}>
+          <Button
+            className="operation-btn mr-4 mb-4"
+            icon={<CloudDownloadOutlined />}
+            onClick={store.showSetting.bind(store)}
+          >
+            {t("设置尾程服务商")}
+          </Button>
           <Button
             className="operation-btn mr-4 mb-4"
             icon={<CloudDownloadOutlined />}
@@ -166,6 +175,8 @@ function WaybillStatisticsComponent() {
           </Button>
         </Row>
         <Table
+          components={{ body: { cell: EditableCell } }}
+          widthFit
           bordered
           loading={gridStore.loading}
           rowSelection={{ type: "checkbox" }}
@@ -173,6 +184,7 @@ function WaybillStatisticsComponent() {
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"
+          onChange={gridStore.onCommonTableChange.bind(gridStore)}
           pagination={{
             total: gridStore.total,
             pageSize: gridStore.pageSize,
@@ -187,6 +199,13 @@ function WaybillStatisticsComponent() {
           }}
         />
       </Container>
+      <TableColSettings
+        onClose={store.hideSetting.bind(store)}
+        fieldColumns={store.setting}
+        visible={store.settingVisible}
+        setShowColumns={store.setSetting.bind(store)}
+        selectedKeys={store.selectedCols}
+      />
     </Container>
   );
 }

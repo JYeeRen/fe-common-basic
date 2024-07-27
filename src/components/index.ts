@@ -8,6 +8,8 @@ export type { AgGridTypes } from "./ag-grid";
 export { default as ClientGrid, ClientGridStore } from './client-grid';
 export type { ClientGridTypes } from './client-grid';
 
+export { TableColSettings } from './colManager';
+
 export { QuickDatePicker } from './quick-data-picker';
 
 export { Container } from "./container/container";
