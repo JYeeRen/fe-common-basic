@@ -9,7 +9,6 @@ import {
   FilterTextArea,
   Form,
   Input,
-  Modal,
   QuickDatePicker,
   Row,
   Table,
@@ -21,7 +20,7 @@ import { useStore } from "../../hooks/useStore.hook";
 import { Store } from "./waybill-statistics.store";
 import * as config from "./waybill-statistics-config";
 import styles from "./template-list.module.less";
-import { CloudDownloadOutlined } from "@ant-design/icons";
+import { CloudDownloadOutlined, FilterOutlined } from "@ant-design/icons";
 import { useMemo } from "react";
 import { dayjs } from "@infra";
 import { compact } from "lodash";
@@ -45,7 +44,7 @@ function WaybillStatisticsComponent() {
       flightNumber,
       quickDate,
       portCode,
-      tailProviderName
+      tailProviderName,
     } = values;
     const params = {
       flightNumber,
@@ -63,17 +62,11 @@ function WaybillStatisticsComponent() {
       params.ata.end = dayjs().endOf("day").format();
     }
     if (quickDate === "yeaterday") {
-      params.ata.start = dayjs()
-        .subtract(1, "day")
-        .startOf("day")
-        .format();
+      params.ata.start = dayjs().subtract(1, "day").startOf("day").format();
       params.ata.end = dayjs().subtract(1, "day").endOf("day").format();
     }
     if (quickDate === "threeday") {
-      params.ata.start = dayjs()
-        .subtract(3, "day")
-        .startOf("day")
-        .format();
+      params.ata.start = dayjs().subtract(3, "day").startOf("day").format();
       params.ata.end = dayjs().endOf("day").format();
     }
     gridStore.setQueryParams(params);
@@ -161,7 +154,7 @@ function WaybillStatisticsComponent() {
         <Row justify="space-between" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
-            icon={<CloudDownloadOutlined />}
+            icon={<FilterOutlined />}
             onClick={store.showSetting.bind(store)}
           >
             {t("设置尾程服务商")}
@@ -199,13 +192,15 @@ function WaybillStatisticsComponent() {
           }}
         />
       </Container>
-      <TableColSettings
-        onClose={store.hideSetting.bind(store)}
-        fieldColumns={store.setting}
-        visible={store.settingVisible}
-        setShowColumns={store.setSetting.bind(store)}
-        selectedKeys={store.selectedCols}
-      />
+      {store.settingVisible && (
+        <TableColSettings
+          onClose={store.hideSetting.bind(store)}
+          fieldColumns={store.setting}
+          visible={store.settingVisible}
+          setShowColumns={store.setSetting.bind(store)}
+          selectedKeys={store.selectedCols}
+        />
+      )}
     </Container>
   );
 }

@@ -47,17 +47,17 @@ export const getSubColumns = (
   return [
     {
       key: `${name}_PCL`,
-      dataIndex: [key, "tailProviders", "pcl"],
+      dataIndex: ["tailProviders", key, "pcl"],
       title: `${name}${t("包裹数")}`,
     },
     {
       key: `${name}_CTN`,
-      dataIndex: [key, "tailProviders", "ctn"],
+      dataIndex: ["tailProviders", key, "ctn"],
       title: `${name}${t("箱数")}`,
     },
     {
       key: `${name}_WGT`,
-      dataIndex: [key, "tailProviders", "wgt"],
+      dataIndex: ["tailProviders", key, "wgt"],
       title: `${name}${t("总重量")}`,
     },
   ];

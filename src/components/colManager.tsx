@@ -66,10 +66,10 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     onClose();
   };
 
-  const reset = () => {
-    const finalKeys = defaultColumns.map((it) => it.key);
-    setTargetKeys(finalKeys);
-  };
+  // const reset = () => {
+  //   const finalKeys = defaultColumns.map((it) => it.key);
+  //   setTargetKeys(finalKeys);
+  // };
 
   const moveRow = (dragIndex: number, hoverIndex: number) => {
     const clonedList = targetKeys;
@@ -86,6 +86,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
       onCancel={onClose}
       width={700}
       classNames={{ body: styles.modalBody }}
+      destroyOnClose
       footer={
         <Row justify="end">
           <Space size="middle">
@@ -112,7 +113,12 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
               moveRow={moveRow}
             />
           )}
-          titles={["Avaliable", "Selected"]}
+          locale={{
+            itemUnit: t("项"),
+            itemsUnit: t("项"),
+            searchPlaceholder: t("请输入搜索内容"),
+          }}
+          titles={[t("待选项"), t("已选项")]}
           targetKeys={targetKeys}
           onChange={(keys) => onChange(keys as string[])}
         />
@@ -149,7 +155,7 @@ const DraggableItem = ({ index, label, moveRow }: DraggableItemProps) => {
     },
   });
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [_, drag, preview] = useDrag({
     type,
     item: { index },
     collect: (monitor) => ({
