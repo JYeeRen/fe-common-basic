@@ -31,6 +31,10 @@
         "zh": "包裹数",
         "en": "PCL"
     },
+    "异常原因": {
+        "zh": "异常原因",
+        "en": "Reason"
+    },
     "箱数": {
         "zh": "箱数",
         "en": "CTN"
@@ -1866,5 +1870,41 @@
     "Bol码": {
         "zh": "Bol码",
         "en": "Bol Number"
+    },
+    "清关开始申报": {
+        "zh": "清关开始申报",
+        "en": "Customs clearance filing time"
+    },
+    "清关海关放行": {
+        "zh": "清关海关放行",
+        "en": "Customs clearance released time"
+    },
+    "入清关行仓库": {
+        "zh": "入清关行仓库",
+        "en": "Warehouse received cargo time"
+    },
+    "待交接尾程": {
+        "zh": "待交接尾程",
+        "en": "Cargo breakdown complete time"
+    },
+    "尾程交接": {
+        "zh": "尾程交接",
+        "en": "Cargo picked up or delivered time"
+    },
+    "尾程入仓": {
+        "zh": "尾程入仓",
+        "en": "Cargo transferred tolong haul vendor time"
+    },
+    "海关查验": {
+        "zh": "海关查验",
+        "en": "Cargoreguires CBP Exam"
+    },
+    "清关异常": {
+        "zh": "清关异常",
+        "en": "Cargo encounters unusual problem"
+    },
+    "清关失败": {
+        "zh": "清关失败",
+        "en": "Customs clearance failure (seizure,return, destroy, etc)"
     }
 }
