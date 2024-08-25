@@ -36,7 +36,6 @@ function TrackLogMawbComponent(props: MawbProps) {
   const gridStore = ClientGrid.useGridStore(listConfig.getRows, { initialValues });
   const columns = useMemo(() => listConfig.getColumns(), [optionsService.waybillTrackStatusList]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
     const { masterWaybillNoList, waybillStatusCode } = values;
     gridStore.setQueryParams({

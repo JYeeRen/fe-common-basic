@@ -26,7 +26,7 @@ import { compact, find } from "lodash";
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import styles from "./create-modal.module.less";
 import { convertDate, dayjs, debug } from "@infra";
-import {CopyToClipboard} from "react-copy-to-clipboard";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface FieldProps {
   store: PacageCustomsTrackStore;
@@ -38,7 +38,7 @@ const Field = observer((props: FieldProps) => {
   const [form] = Form.useForm();
 
   const initialValues = useMemo(
-    () => ({ actionCode: "cb_imcustoms_start" }),
+    () => ({ actionCode: "" }),
     []
   );
 
@@ -54,32 +54,35 @@ const Field = observer((props: FieldProps) => {
         icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
         onOk: () => resolve(true),
-        onCancel: () => resolve(false)
+        onCancel: () => resolve(false),
       });
     });
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = async () => {
-    const { actionCode, timeZone, operateTime } = form.getFieldsValue();
+    const { actionCode, timeZone, operateTime, reason } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
     const selectedDate = operateTime;
-    debug.features('选择的日期', selectedDate.format('YYYY-MM-DDTHH:mm:ssZ'))
+    debug.features("选择的日期", selectedDate.format("YYYY-MM-DDTHH:mm:ssZ"));
 
-    const targetZoneDate = convertDate(operateTime, timeZone)
+    const targetZoneDate = convertDate(operateTime, timeZone);
 
     // 全都转成 +8:00 再计算
-    const diffmins = dayjs().utcOffset(480).utcOffset(480).diff(targetZoneDate, 'm');
-    debug.features('时间差', diffmins, '分钟')
+    const diffmins = dayjs()
+      .utcOffset(480)
+      .utcOffset(480)
+      .diff(targetZoneDate, "m");
+    debug.features("时间差", diffmins, "分钟");
 
-    if (diffmins > 24 * 60 && !await confirm()) {
+    if (diffmins > 24 * 60 && !(await confirm())) {
       return;
     }
 
     store.updateCreateParams({
       timeZone: tzItem?.value ?? "",
-      operateTime: targetZoneDate.format('YYYY-MM-DDTHH:mm:ssZ'),
+      operateTime: targetZoneDate.format("YYYY-MM-DDTHH:mm:ssZ"),
       actionCode,
+      reasonCode: reason,
     });
 
     const failed = await store.addPackageTrack(store.createParams);
@@ -101,31 +104,33 @@ const Field = observer((props: FieldProps) => {
         </div>
       ),
       footer: (
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <CopyToClipboard text={failed.map(i => i.number).join('\n')}>
-              <Button
-                  key="back"
-                  onClick={() => {
-                    modal.destroy()
-                  }}
-                  style={{marginRight: '10px'}} // 添加右边距
-              >
-                {t('复制未完成单号')}
-              </Button>
-            </CopyToClipboard>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <CopyToClipboard text={failed.map((i) => i.number).join("\n")}>
             <Button
-                key="submit"
-                type="primary"
-                onClick={() => {
-                  modal.destroy();
-                }}
+              key="back"
+              onClick={() => {
+                modal.destroy();
+              }}
+              style={{ marginRight: "10px" }} // 添加右边距
             >
-              {t('确认')}
+              {t("复制未完成单号")}
             </Button>
-          </div>
+          </CopyToClipboard>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={() => {
+              modal.destroy();
+            }}
+          >
+            {t("确认")}
+          </Button>
+        </div>
       ),
     });
   };
+
+  const [action, setAction] = useState<string>("");
 
   return (
     <div className={styles.fieldContainer}>
@@ -144,11 +149,12 @@ const Field = observer((props: FieldProps) => {
           <SearchSelect
             optionKey="actionCodeList"
             allowClear={false}
-            omitKey={['all']}
+            omitKey={["all"]}
             style={{ width: "160px" }}
+            onChange={(value) => setAction(value)}
           />
         </Form.Item>
-        <Form.Item label={t("轨迹发生时间")}>
+        <Form.Item label={t("轨迹发生时间")} required>
           <Space.Compact>
             <Form.Item name="timeZone" noStyle rules={[{ required: true }]}>
               <SearchSelect
@@ -167,6 +173,15 @@ const Field = observer((props: FieldProps) => {
             </Form.Item>
           </Space.Compact>
         </Form.Item>
+        {action === 'cb_imcustoms_exception' ? (
+          <Form.Item name="reason" label={t('异常原因')} rules={[{ required: true }]}>
+            <SearchSelect
+              optionKey="reasonCodeList"
+              allowClear={false}
+              style={{ width: "160px" }}
+            />
+          </Form.Item>
+        ) : null}
       </Form>
       <Row justify="end" className="my-4">
         <Button className="mr-4" onClick={store.toogleModalVisible.bind(store)}>
@@ -197,12 +212,16 @@ const Query = observer((props: QueryProps) => {
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, {
-    autoLoad: false,
-  }, { pagination: false });
+  const gridStore = ClientGrid.useGridStore(
+    listConfig.getRows,
+    {
+      autoLoad: false,
+    },
+    { pagination: false }
+  );
 
   const columns = listConfig.getColumns(gridStore.rowData);
-  
+
   const [form] = Form.useForm();
 
   const handleQuery = () => {

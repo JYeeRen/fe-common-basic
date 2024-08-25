@@ -10,6 +10,7 @@ import { TZ } from "../types/api/options.types";
 export type InnerOptions = { value: string | number; label: string }[];
 
 export type OptionKey =
+  | "reasonCodeList"
   | "clearanceFileStatusTypes"
   | "customsTrackAddPackageNoTypes"
   | "actives"

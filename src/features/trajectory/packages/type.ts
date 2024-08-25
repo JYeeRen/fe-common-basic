@@ -27,4 +27,5 @@ export type AddPacakageTrackFormValues = {
   operateTime: string;
   timeZone: string;
   actionCode: string;
+  reasonCode?: string;
 };
