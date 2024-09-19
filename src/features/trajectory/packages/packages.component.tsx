@@ -21,7 +21,7 @@ import { PacageCustomsTrackStore } from "./packages.store";
 import { FormValues } from "./type";
 import optionsService from "@services/options.service";
 import { compact } from "lodash";
-import { PlusOutlined } from "@ant-design/icons";
+import { CloudDownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
@@ -75,13 +75,21 @@ function TrackTraceComponent() {
         </Col>
       </FilterContainer>
       <Container title={t("异常轨迹信息")} wrapperClassName={styles.wrapper}>
-      <Row justify="start" style={{ padding: "0 10px" }}>
+      <Row justify="space-between" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
             icon={<PlusOutlined />}
             onClick={store.toogleModalVisible.bind(store)}
           >
             {t("包裹信息录入")}
+          </Button>
+          <Button
+            className="operation-btn mr-4 mb-4"
+            icon={<CloudDownloadOutlined />}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onClick={store.export.bind(store, gridStore.queryParams as any)}
+          >
+            {t("导出已筛选数据")}
           </Button>
         </Row>
         <Table
