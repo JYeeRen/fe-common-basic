@@ -4,6 +4,7 @@ import {
   Button,
   ClientGrid,
   Col,
+  ColSelector,
   Container,
   FilterContainer,
   FilterTextArea,
@@ -30,7 +31,13 @@ function ClearanceOfGoodsComponent() {
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
   const handleFinish = (values?: CustomITemsQueryParams) => {
-    const { customerName, masterWaybillNoList, bigBagNoList, otherType, otherList } = values || {};
+    const {
+      customerName,
+      masterWaybillNoList,
+      bigBagNoList,
+      otherType,
+      otherList,
+    } = values || {};
     gridStore.setQueryParams({
       customerName,
       masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
@@ -43,9 +50,12 @@ function ClearanceOfGoodsComponent() {
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleExportQuery = useCallback(() => store.export(gridStore.params as any), [gridStore.params, store]);
+  const handleExportQuery = useCallback(
+    () => store.export(gridStore.params as any),
+    [gridStore.params, store]
+  );
   const handleExportAll = useCallback(() => store.export(), [store]);
-  
+
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer
@@ -54,7 +64,7 @@ function ClearanceOfGoodsComponent() {
         initialValues={{ otherType: 0 }}
         labelCol={{ span: 12 }}
         wrapperCol={{ span: 20 }}
-        rowExtend={{ style: { alignItems: 'flex-start' } }}
+        rowExtend={{ style: { alignItems: "flex-start" } }}
       >
         <Col span={6}>
           <Form.Item
@@ -102,11 +112,15 @@ function ClearanceOfGoodsComponent() {
             name="customerName"
             label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
           >
-            <Input placeholder={t('客户名称')} />
+            <Input placeholder={t("客户名称")} />
           </Form.Item>
         </Col>
       </FilterContainer>
-      <Container title={t("商品详细信息")} table>
+      <Container
+        title={t("商品详细信息")}
+        table
+        titleExtend={<ColSelector tableKey="商品详细信息" config={columns} />}
+      >
         <Row className="my-4" justify="end">
           <Button
             onClick={handleExportAll}
@@ -124,6 +138,7 @@ function ClearanceOfGoodsComponent() {
           </Button>
         </Row>
         <Table
+          tableKey="商品详细信息"
           highlight
           widthFit
           bordered

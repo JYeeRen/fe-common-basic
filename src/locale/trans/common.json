@@ -1651,6 +1651,10 @@
         "zh": "卡转目的地口岸",
         "en": "Transfer Destination Port"
     },
+    "设置列表字段": {
+        "zh": "设置列表字段",
+        "en": "Set Table Columns"
+    },
     "提单号2": {
         "zh": "提单号",
         "en": "Master Waybill No"

@@ -22,7 +22,7 @@ export function useColumnAutoWidth<T>(
       return columns;
     }
     const cols: TableColumnsType = columns.map((col) => {
-      const { dataIndex, title, width: predefWidth, filterDropdown } = col;
+      const { dataIndex, title, width: predefWidth, filterDropdown, sorter } = col;
       if (predefWidth) {
         return col;
       }
@@ -41,6 +41,9 @@ export function useColumnAutoWidth<T>(
         20;
 
       if (filterDropdown) {
+        width += 30;
+      }
+      if (sorter) {
         width += 30;
       }
       return { ...col, width };

@@ -8,7 +8,8 @@ import {
     FilterTextArea,
     Form,
     Radio, SearchSelect,
-    Table, textareaMaxLengthRule, Space, DatePicker, Button, Image
+    Table, textareaMaxLengthRule, Space, DatePicker, Button, Image,
+    ColSelector
 } from "@components";
 import styles from "./cargo-track.module.less";
 import optionsService from "@services/options.service.ts";
@@ -196,7 +197,7 @@ function CargoTrackComponent() {
                     </Form.Item>
                 </Col>
             </FilterContainer>
-            <Container title={t("货物查询")} wrapperClassName={styles.wrapper} table>
+            <Container title={t("货物查询")} wrapperClassName={styles.wrapper} table titleExtend={<ColSelector tableKey="货物查询" config={columns} />}>
                 <Row justify="end" style={{padding: "0 10px"}}>
                     <Button
                         className="operation-btn mr-4 mb-4"
@@ -207,6 +208,7 @@ function CargoTrackComponent() {
                     </Button>
                 </Row>
                 <Table
+                    tableKey="货物查询"
                     components={{body: {cell: EditableCell}}}
                     widthFit
                     bordered

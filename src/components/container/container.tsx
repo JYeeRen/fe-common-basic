@@ -16,6 +16,7 @@ interface ContainerProps extends PropsWithChildren {
   onBack?: () => void;
   wrapperClassName?: string;
   table?: boolean;
+  titleExtend?: ReactNode;
 }
 
 export function Container(props: ContainerProps) {
@@ -28,7 +29,8 @@ export function Container(props: ContainerProps) {
     onBack,
     loading = false,
     wrapperClassName,
-    table
+    table,
+    titleExtend
   } = props;
 
   const navigate = useNavigate();
@@ -39,7 +41,10 @@ export function Container(props: ContainerProps) {
     <div className={clsx("flex h-full flex-col", styles.content, { [styles.heightunset]: table }, className)}>
       <Block if={title}>
         <Row className={styles.header}>
-          <span className={styles.title}>{title}</span>
+          <span>
+            <span className={styles.title}>{title}</span>
+            {titleExtend}
+          </span>
           <Block if={backable}>
             <span className="flex align-middle cursor-pointer" onClick={onBack ?? handleback}>
               <LeftOutlined className={styles.backIcon} />
