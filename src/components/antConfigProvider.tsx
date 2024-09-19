@@ -10,6 +10,14 @@ const langs = {
   en: en_US
 };
 
+const theme = {
+  "components": {
+    "Table": {
+      "rowHoverBg": "rgba(22,119,255,0.15)"
+    }
+  }
+};
+
 export function AntConfigProvider(props: ConfigProviderProps) {
-  return <ConfigProvider {...props} locale={langs[appService.lang]} />
+  return <ConfigProvider theme={theme} {...props} locale={langs[appService.lang]} />
 }

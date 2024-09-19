@@ -113,11 +113,11 @@ function ClearanceOfGoodsComponent() {
           </Button>
         </Row>
         <Table
+          highlight
           widthFit
           bordered
           loading={gridStore.loading}
           tableLayout="auto"
-          // rowSelection={{ type: "checkbox" }}
           rowKey="itemId"
           dataSource={gridStore.rowData}
           columns={columns}

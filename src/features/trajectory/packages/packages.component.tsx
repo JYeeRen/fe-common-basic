@@ -85,6 +85,7 @@ function TrackTraceComponent() {
           </Button>
         </Row>
         <Table
+          highlight
           widthFit
           bordered
           loading={gridStore.loading}

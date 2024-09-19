@@ -215,6 +215,7 @@ function TrackTraceComponent() {
       )}
       <Container title={t("货物状态跟踪")} wrapperClassName={styles.wrapper} table>
         <Table
+          highlight
           widthFit
           bordered
           loading={gridStore.loading}
