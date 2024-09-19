@@ -21,6 +21,11 @@ export const getColumns = (
       title: t("提单号"),
     },
     {
+      key: "lhProviderName",
+      dataIndex: "lhProviderName",
+      title: t("干线服务商名称"),
+    },
+    {
       key: "transportName",
       dataIndex: "transportName",
       title: t("航班号"),

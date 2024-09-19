@@ -97,6 +97,11 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       title: t("包裹售卖国家2"),
     },
     {
+      key: "packageInfo.lhProviderName",
+      dataIndex: ["packageInfo", "lhProviderName"],
+      title: t("干线服务商名称"),
+    },
+    {
       key: "packageInfo.nextProviderName",
       dataIndex: ["packageInfo", "nextProviderName"],
       title: t("下一程服务商"),

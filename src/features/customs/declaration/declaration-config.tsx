@@ -33,6 +33,11 @@ export const getColumns = (params: {
     },
     { key: "bigBagNo", dataIndex: "bigBagNo", title: t("袋号") },
     {
+      key: "lhProviderName",
+      dataIndex: "lhProviderName",
+      title: t("干线服务商名称"),
+    },
+    {
       key: "customsStatus",
       dataIndex: "customsStatus",
       title: t("关务状态"),

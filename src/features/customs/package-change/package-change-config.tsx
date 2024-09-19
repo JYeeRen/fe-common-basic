@@ -26,6 +26,11 @@ export const getColumns = (): TableColumnsType<PacakgeChange> => {
       dataIndex: "trackingNoList",
       title: t("发生变更的包裹尾程号"),
     },
+    {
+      key: "lhProviderName",
+      dataIndex: "lhProviderName",
+      title: t("干线服务商名称"),
+    }
   ];
 };
 

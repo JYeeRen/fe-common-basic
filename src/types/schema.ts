@@ -37,6 +37,7 @@ export interface CustomItem {
     customerName: string;
   };
   packageInfo: {
+    lhProviderName: string;
     providerOrderId: string;
     declarationBillId: string;
     trackingNo: string;
