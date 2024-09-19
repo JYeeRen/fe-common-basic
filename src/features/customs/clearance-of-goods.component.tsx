@@ -6,10 +6,12 @@ import {
   Col,
   ColSelector,
   Container,
+  convertPredefinedRange,
   FilterContainer,
   FilterTextArea,
   Form,
   Input,
+  PredefinedRange,
   Row,
   SearchSelect,
   Table,
@@ -37,8 +39,10 @@ function ClearanceOfGoodsComponent() {
       bigBagNoList,
       otherType,
       otherList,
+      createTime,
     } = values || {};
     gridStore.setQueryParams({
+      createTime: convertPredefinedRange(createTime),
       customerName,
       masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
       bigBagNoList: bigBagNoList && compact(bigBagNoList),
@@ -113,6 +117,11 @@ function ClearanceOfGoodsComponent() {
             label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
           >
             <Input placeholder={t("客户名称")} />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime">
+            <PredefinedRange label={t("包裹信息获取日期")} />
           </Form.Item>
         </Col>
       </FilterContainer>
