@@ -8,6 +8,7 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Input,
   Row,
   SearchSelect,
   Table,
@@ -29,8 +30,9 @@ function ClearanceOfGoodsComponent() {
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
   const handleFinish = (values?: CustomITemsQueryParams) => {
-    const { masterWaybillNoList, bigBagNoList, otherType, otherList } = values || {};
+    const { customerName, masterWaybillNoList, bigBagNoList, otherType, otherList } = values || {};
     gridStore.setQueryParams({
+      customerName,
       masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
       bigBagNoList: bigBagNoList && compact(bigBagNoList),
       otherList: otherList && compact(otherList),
@@ -52,8 +54,9 @@ function ClearanceOfGoodsComponent() {
         initialValues={{ otherType: 0 }}
         labelCol={{ span: 12 }}
         wrapperCol={{ span: 20 }}
+        rowExtend={{ style: { alignItems: 'flex-start' } }}
       >
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="masterWaybillNoList"
             label={<span style={{ height: "30px" }}>{t("提单号")}</span>}
@@ -64,7 +67,7 @@ function ClearanceOfGoodsComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="bigBagNoList"
             label={<span style={{ height: "30px" }}>{t("袋号")}</span>}
@@ -75,7 +78,7 @@ function ClearanceOfGoodsComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <div>
             <div style={{ paddingBottom: "8px", width: "120px" }}>
               <Form.Item noStyle name="otherType">
@@ -93,6 +96,14 @@ function ClearanceOfGoodsComponent() {
               />
             </Form.Item>
           </div>
+        </Col>
+        <Col span={6}>
+          <Form.Item
+            name="customerName"
+            label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
+          >
+            <Input placeholder={t('客户名称')} />
+          </Form.Item>
         </Col>
       </FilterContainer>
       <Container title={t("商品详细信息")} table>

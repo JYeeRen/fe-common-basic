@@ -67,4 +67,5 @@ export interface CustomITemsQueryParams {
   bigBagNoList?: string[];
   otherType?: number;
   otherList?: string[];
+  customerName?: string;
 }

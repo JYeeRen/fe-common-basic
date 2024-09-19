@@ -1,4 +1,4 @@
-import { Button, Form, FormProps, Row, Space } from "antd";
+import { Button, Form, FormProps, Row, RowProps, Space } from "antd";
 import { PropsWithChildren } from "react";
 import styles from "./filter.module.less";
 import clsx from "clsx";
@@ -8,10 +8,11 @@ import { RedoOutlined, SearchOutlined } from "@ant-design/icons";
 interface FilterProps extends PropsWithChildren {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFinish?: (values?: any) => void;
+  rowExtend?: Partial<RowProps>;
 }
 
 export function FilterContainer(props: FilterProps & FormProps) {
-  const { onFinish, children, form, ...formProps } = props;
+  const { onFinish, children, form, rowExtend, ...formProps } = props;
 
   const [internalForm] = Form.useForm(form);
 
@@ -44,7 +45,7 @@ export function FilterContainer(props: FilterProps & FormProps) {
               </Space>
             </Form.Item>
           </Row>
-          <Row align="middle">{children}</Row>
+          <Row align="middle" {...rowExtend}>{children}</Row>
         </Form>
       </div>
     </div>
