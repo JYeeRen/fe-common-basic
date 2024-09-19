@@ -17,6 +17,8 @@ import { find } from "lodash";
 import { CustomsTrack } from "./type";
 
 const keymap = {
+  etd: 'etd',
+  eta: 'eta',
   ata: "ata",
   atd: "atd",
   customs_submitted: "customsSubmittedTime",

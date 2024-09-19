@@ -125,7 +125,11 @@ function TrackTraceComponent() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let failed: any[] = [];
-      if (key === "ata") {
+      if (key === 'etd') {
+        await store.setMawbEtd(record.id, tz, value);
+      } else if (key === 'eta') {
+        await store.setMawbEta(record.id, tz, value);
+      } else if (key === "ata") {
         await store.setMawbAta(record.id, tz, value);
       } else if (key === "atd") {
         await store.setMawbAtd(record.id, tz, value);

@@ -36,12 +36,38 @@ export const getColumns = (
       dataIndex: "etd",
       sorter: true,
       title: t("ETD"),
+      onCell: (record: CustomsTrack) =>
+        ({
+          record,
+          editable: true,
+          value: record.etd,
+          handleDoubleCick: () =>
+          handleDoubleCick({
+              key: "etd",
+              title: t("ETD"),
+              value: record.etd,
+              record
+            }),
+        } as any),
     },
     {
       key: "eta",
       dataIndex: "eta",
       title: t("ETA"),
       sorter: true,
+      onCell: (record: CustomsTrack) =>
+      ({
+        record,
+        editable: true,
+        value: record.ata,
+        handleDoubleCick: () =>
+        handleDoubleCick({
+            key: "eta",
+            title: t("ETA"),
+            value: record.eta,
+            record
+          }),
+      } as any),
     },
     {
       key: "ata",
