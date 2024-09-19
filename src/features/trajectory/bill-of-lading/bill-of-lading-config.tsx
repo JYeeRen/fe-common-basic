@@ -29,31 +29,35 @@ export const getColumns = (
       key: "flightDate",
       dataIndex: "flightDate",
       title: t("航班日期"),
+      sorter: true,
     },
     {
       key: "etd",
       dataIndex: "etd",
+      sorter: true,
       title: t("ETD"),
     },
     {
       key: "eta",
       dataIndex: "eta",
       title: t("ETA"),
+      sorter: true,
     },
     {
       key: "ata",
       dataIndex: "ata",
       title: t("ATA"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
       ({
         record,
         editable: true,
-        value: record.customsSubmittedTime,
+        value: record.ata,
         handleDoubleCick: () =>
         handleDoubleCick({
             key: "ata",
             title: t("ATA"),
-            value: record.customsSubmittedTime,
+            value: record.ata,
             record
           }),
       } as any),
@@ -66,12 +70,12 @@ export const getColumns = (
       ({
         record,
         editable: true,
-        value: record.customsSubmittedTime,
+        value: record.atd,
         handleDoubleCick: () =>
         handleDoubleCick({
             key: "atd",
             title: t("ATD"),
-            value: record.customsSubmittedTime,
+            value: record.atd,
             record
           }),
       } as any),
@@ -91,6 +95,7 @@ export const getColumns = (
       key: "customsSubmittedTime",
       dataIndex: "customsSubmittedTime",
       title: t("数据提交海关"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,
@@ -110,6 +115,7 @@ export const getColumns = (
       key: "customsAcceptedTime",
       dataIndex: "customsAcceptedTime",
       title: t("海关接收数据"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,
@@ -129,6 +135,7 @@ export const getColumns = (
       key: "customsReleaseTime",
       dataIndex: "customsReleaseTime",
       title: t("海关放行（整票放行）"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,
@@ -148,6 +155,7 @@ export const getColumns = (
       key: "pickedUpTime",
       dataIndex: "pickedUpTime",
       title: t("货物已提货"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,
@@ -167,6 +175,7 @@ export const getColumns = (
       key: "handedOverTime",
       dataIndex: "handedOverTime",
       title: t("货物交接尾程"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,
@@ -186,6 +195,7 @@ export const getColumns = (
       key: "customsInspection",
       dataIndex: "customsInspection",
       title: t("海关查验（整票查验）"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
         ({
           record,

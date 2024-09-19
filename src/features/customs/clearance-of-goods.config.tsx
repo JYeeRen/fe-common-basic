@@ -35,11 +35,13 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       key: "mawbInfo.etd",
       dataIndex: ["mawbInfo", "etd"],
       title: t("ETD"),
+      sorter: true
     },
     {
       key: "mawbInfo.eta",
       dataIndex: ["mawbInfo", "eta"],
       title: t("ETA"),
+      sorter: true
     },
     {
       key: "mawbInfo.customerName",
