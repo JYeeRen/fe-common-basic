@@ -81,4 +81,24 @@ export class BillOfLadingStore {
     })
     return res.failed;
   }
+  
+  @loading()
+  async setMawbEtd(id: number, tz: string, time: string) {
+    const res = await net.post('/api/customsTrack/setMawbEtd', {
+      ids: [id],
+      timeZone: tz,
+      time: time
+    })
+    return res.failed;
+  }
+
+  @loading()
+  async setMawbEta(id: number, tz: string, time: string) {
+    const res = await net.post('/api/customsTrack/setMawbEta', {
+      ids: [id],
+      timeZone: tz,
+      time: time
+    })
+    return res.failed;
+  }
 }
