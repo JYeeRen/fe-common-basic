@@ -15,6 +15,11 @@ export const getColumns = (): TableColumnsType<WarehouseReceipt> => {
             dataIndex: "bigBagNo",
             title: t("袋号")
         },
+        {
+            key: "ata",
+            dataIndex: "ata",
+            title: t("ATA"),      
+          },
     ];
 }
 

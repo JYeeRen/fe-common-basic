@@ -35,6 +35,11 @@ export const getColumns = (): TableColumnsType<PackagCustomsTrackLoge> => {
         find(optionsService.actionCodeList, { value })?.label,
     },
     {
+      key: "ata",
+      dataIndex: "ata",
+      title: t("ATA"),      
+    },
+    {
       key: "operateTime",
       dataIndex: "operateTime",
       title: t("轨迹时间（原时区）"),
