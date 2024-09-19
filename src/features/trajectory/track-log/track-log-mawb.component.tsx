@@ -120,6 +120,7 @@ function TrackLogMawbComponent(props: MawbProps) {
           </Button>
         </Row>
         <Table
+          highlight
           widthFit
           bordered
           loading={gridStore.loading}

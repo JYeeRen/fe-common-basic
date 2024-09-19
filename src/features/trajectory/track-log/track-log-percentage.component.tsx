@@ -67,6 +67,7 @@ function TrackLogMawbComponent(props: MawbProps) {
       </FilterContainer>
       <Container title={t("轨迹信息")} wrapperClassName={styles.wrapper} table>
         <Table
+          highlight
           widthFit
           bordered
           loading={gridStore.loading}
