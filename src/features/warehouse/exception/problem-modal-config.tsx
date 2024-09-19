@@ -30,6 +30,11 @@ export const getColumns = (params: {
             sorter: true,
         },
         {
+            key: "ata",
+            dataIndex: "ata",
+            title: t("ATA"),      
+        },
+        {
             key: "tailProviderName",
             dataIndex: "tailProviderName",
             title: t("尾程服务商名称"),
