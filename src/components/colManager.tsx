@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Modal, Transfer, Row, Space, Button } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { DndProvider, useDrop, useDrag } from "react-dnd";
@@ -9,7 +9,7 @@ import { t } from "@locale";
 
 type Key = string;
 
-interface Item {
+export interface Item {
   key: Key;
   label: string;
 }
@@ -22,6 +22,8 @@ interface Props<T extends Item> {
   selectedKeys?: Key[];
   showColumns?: T[];
   setShowColumns: (keys: Key[]) => void;
+  title?: string;
+  filter?: boolean;
 }
 
 export function TableColSettings<T extends Item>(props: Props<T>) {
@@ -32,6 +34,8 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     defaultColumns = [],
     selectedKeys,
     setShowColumns,
+    title,
+    filter
   } = props;
   const [targetKeys, setTargetKeys] = useState<Key[]>(selectedKeys ?? []);
 
@@ -78,11 +82,13 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     onChange(clonedList);
   };
 
+  const filterOption = useCallback((inputValue: string, option: Item) => option.label.indexOf(inputValue) > -1, []);
+
   return (
     <Modal
       maskClosable={false}
       open={visible}
-      title={t("选择需要展示的尾程服务商")}
+      title={title ?? t("选择需要展示的尾程服务商")}
       onCancel={onClose}
       width={700}
       classNames={{ body: styles.modalBody }}
@@ -104,8 +110,10 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
         <Transfer
           className={styles.transfer}
           rowKey={(record) => record.key}
-          listStyle={{ flex: 1 }}
+          listStyle={{ flex: 1, width: 300 }}
           dataSource={fieldColumns}
+          showSearch={filter}
+          filterOption={filter ? filterOption : undefined}
           render={(it) => (
             <DraggableItem
               index={targetKeys.findIndex((key) => key === it.key)}

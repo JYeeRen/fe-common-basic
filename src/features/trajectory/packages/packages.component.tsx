@@ -86,7 +86,6 @@ function TrackTraceComponent() {
           <Button
             className="operation-btn mr-4 mb-4"
             icon={<CloudDownloadOutlined />}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onClick={store.export.bind(store, gridStore.queryParams as any)}
           >
             {t("导出已筛选数据")}

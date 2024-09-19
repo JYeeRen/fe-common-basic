@@ -18,6 +18,7 @@ import {
   Modal,
   TabsProps,
   Tabs,
+  ColSelector,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
@@ -35,7 +36,7 @@ import { compact } from "lodash";
 import { convertDate, dayjs } from "@infra";
 import { UploadModal } from "./upload-modal.component";
 import { CellEditModal } from "./cell-edit-modal.component";
-import tabsStyles from './tabs.module.less';
+import tabsStyles from "./tabs.module.less";
 import clsx from "clsx";
 
 function TrackTraceComponent() {
@@ -125,9 +126,9 @@ function TrackTraceComponent() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let failed: any[] = [];
-      if (key === 'etd') {
+      if (key === "etd") {
         await store.setMawbEtd(record.id, tz, value);
-      } else if (key === 'eta') {
+      } else if (key === "eta") {
         await store.setMawbEta(record.id, tz, value);
       } else if (key === "ata") {
         await store.setMawbAta(record.id, tz, value);
@@ -424,7 +425,12 @@ function TrackTraceComponent() {
           </Row>
         </Col>
       </FilterContainer>
-      <Container title={t("航空信息")} wrapperClassName={styles.wrapper} table>
+      <Container
+        title={t("航空信息")}
+        wrapperClassName={styles.wrapper}
+        table
+        titleExtend={<ColSelector config={columns} tableKey="航空信息" />}
+      >
         <Row justify="end" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
@@ -450,6 +456,7 @@ function TrackTraceComponent() {
           </Button>
         </Row>
         <Table
+          tableKey="航空信息"
           highlight
           widthFit
           bordered

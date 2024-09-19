@@ -2,6 +2,7 @@ import {
   Button,
   ClientGrid,
   Col,
+  ColSelector,
   Container,
   FilterContainer,
   FilterTextArea,
@@ -121,6 +122,7 @@ function TrackLogPackageComponent(props: PackageProps) {
         title={t("货物状态跟踪")}
         wrapperClassName={styles.wrapper}
         table
+        titleExtend={<ColSelector tableKey="货物状态跟踪" config={columns} />}
       >
         <Row className="my-4">
           <Button
@@ -133,6 +135,7 @@ function TrackLogPackageComponent(props: PackageProps) {
           </Button>
         </Row>
         <Table
+          tableKey="货物状态跟踪"
           widthFit
           bordered
           loading={gridStore.loading}

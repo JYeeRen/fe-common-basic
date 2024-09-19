@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import {
     Button,
     ClientGrid,
-    Col, Container, EditableCell,
+    Col, ColSelector, Container, EditableCell,
     FilterContainer,
     FilterTextArea,
     Form, Modal,
@@ -106,7 +106,7 @@ function DeductionComponent() {
                     </Form.Item>
                 </Col>
             </FilterContainer>
-            <Container title={t("扣货管理")} wrapperClassName={styles.wrapper} table>
+            <Container title={t("扣货管理")} wrapperClassName={styles.wrapper} table titleExtend={<ColSelector tableKey="扣货管理" config={columns} />}>
                 <Row justify="start" style={{padding: "0 10px"}}>
                     <Button
                         className="operation-btn mr-4 mb-4"
@@ -117,6 +117,7 @@ function DeductionComponent() {
                     </Button>
                 </Row>
                 <Table
+                    tableKey="扣货管理"
                     components={{body: {cell: EditableCell}}}
                     widthFit
                     bordered

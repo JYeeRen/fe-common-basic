@@ -4,14 +4,14 @@ import {
   Table as AntTable,
   Pagination,
 } from "antd";
-import { sumBy } from "lodash";
+import { compact, keyBy, sumBy } from "lodash";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Resizable } from "re-resizable";
 import { useColumnAutoWidth } from "./useColumnAutoWidth";
 import { useHighlight } from "./useHighlight";
 import { getRowKey } from "./getRowKey";
-
+import { colConfigStore } from "./useColFilter";
 
 interface ExternalTableProps {
   widthFit?: boolean;
@@ -20,10 +20,12 @@ interface ExternalTableProps {
   enableResize?: false;
   useColWidth?: boolean;
   highlight?: boolean;
+  tableKey?: string;
 }
 
 export const Table = observer((props: TableProps & ExternalTableProps) => {
   const {
+    tableKey,
     pagination,
     scroll,
     columns: columnsDefs,
@@ -38,8 +40,13 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     ...restProps
   } = props;
 
+
+  const columnsDefsDict = useMemo(() => keyBy(columnsDefs, "key"), [columnsDefs]);
+  const colConfig = colConfigStore.getColConfig(tableKey ?? '') ?? [];
+  const filteredColumns = colConfig.length > 0 ? compact(colConfig.map(k => columnsDefsDict[k])) : columnsDefs;
+
   const columns = useColumnAutoWidth(
-    columnsDefs ?? [],
+    filteredColumns ?? [],
     dataSource as unknown[],
     widthFit ?? false
   );
