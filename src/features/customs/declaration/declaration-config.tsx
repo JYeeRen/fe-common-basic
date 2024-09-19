@@ -50,7 +50,7 @@ export const getColumns = (params: {
       dataIndex: "transportName",
       title: t("航班号"),
     },
-    { key: "flightDate", dataIndex: "flightDate", title: t("航班日期") },
+    { key: "flightDate", dataIndex: "flightDate", title: t("航班日期"), sorter: true },
     { key: "etd", dataIndex: "etd", title: t("ETD") },
     { key: "eta", dataIndex: "eta", title: t("ETA") },
     {

@@ -117,6 +117,8 @@ export interface CustomsTrackAPI {
       failed: { number: string; reason: string }[];
     };
   };
+  "/api/customsTrack/setMawbEta": CustomsTrackAPI["/api/customsTrack/setMawbAta"];
+  "/api/customsTrack/setMawbEtd": CustomsTrackAPI["/api/customsTrack/setMawbAta"];
   "/api/customsTrack/setMawbAtd": {
     params: {
       ids: number[];
