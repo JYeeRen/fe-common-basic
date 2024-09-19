@@ -1659,9 +1659,25 @@
         "zh": "提单号",
         "en": "Master Waybill No"
     },
+    "近7天": {
+        "zh": "近7天",
+        "en": "Within the last 7 days"
+    },
+    "近31天": {
+        "zh": "近31天",
+        "en": "Within the last 31 days"
+    },
     "运输名称": {
         "zh": "运输名称",
         "en": "Transport Name"
+    },
+    "包裹信息获取日期": {
+        "zh": "包裹信息获取日期",
+        "en": "Package information acquisition date"
+    },
+    "包裹信息获取时间": {
+        "zh": "包裹信息获取时间",
+        "en": "Package information acquisition time"
     },
     "起运港代码": {
         "zh": "起运港代码",

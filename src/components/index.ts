@@ -34,6 +34,8 @@ export * from './editable-date-cell.component';
 
 export { FileUpload } from './file-upload/file-upload.component';
 
+export { PredefinedRange, convertPredefinedRange } from './predefinedRange';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";
