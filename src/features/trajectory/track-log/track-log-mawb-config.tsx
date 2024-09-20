@@ -16,8 +16,30 @@ export const getColumns = (): TableColumnsType<MawbCustomsTrackLog> => {
       key: "waybillStatusCode",
       dataIndex: "waybillStatusCode",
       title: t("轨迹名称"),
-      render: (value) =>
-        find(optionsService.waybillTrackStatusList, { value })?.label,
+      render: (value) => find(optionsService.waybillTrackStatusList, { value })?.label,
+    },
+    {
+      key: "loadingType",
+      dataIndex: "loadingType",
+      title: t("装载类型"),
+      render: (value) => find(optionsService.loadingTypes, { value })?.label,
+    },
+    {
+      key: "handoverType",
+      dataIndex: "handoverType",
+      title: t("交接类型"),
+      render: (value) => find(optionsService.handoverTypes, { value })?.label,
+    },
+    {
+      key: "truckType",
+      dataIndex: "truckType",
+      title: t("卡转类型"),
+      render: (value) => find(optionsService.truckTypes, { value })?.label,
+    },
+    {
+      key: "transferDestinationPort",
+      dataIndex: "transferDestinationPort",
+      title: t("卡转目的地口岸"),
     },
     {
       key: "operateTime",

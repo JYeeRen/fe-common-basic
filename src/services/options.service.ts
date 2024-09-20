@@ -70,6 +70,9 @@ class OptionService {
   trackUploadStatusTypes: InnerOptions = [];
   receiptIssueStatusTypes: InnerOptions = [];
   customsDocumentTypesetting: InnerOptions = [];
+  loadingTypes: InnerOptions = [];
+  handoverTypes: InnerOptions = [];
+  truckTypes: InnerOptions = [];
   providers: { key: string; label: string }[] = [];
 
   customTemplateTypes = [
@@ -116,6 +119,21 @@ class OptionService {
       formater: this.id_val_formatter,
     },
     customsStatusTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    loadingTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    handoverTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    truckTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,
