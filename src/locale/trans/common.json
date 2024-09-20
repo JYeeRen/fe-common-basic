@@ -795,6 +795,10 @@
         "zh": "最多可查询50条",
         "en": "Search up to 50 items"
     },
+    "最多可查询{{n}}条，以逗号，空格或回车隔开": {
+        "zh": "最多可查询{{n}}条，以逗号，空格或回车隔开",
+        "en": " Search up to {{n}} items, separated by comma or space"
+    },
     "最多可查询50条，以逗号，空格或回车隔开": {
         "zh": "最多可查询50条，以逗号，空格或回车隔开",
         "en": " Search up to 50 items, separated by comma or space"
