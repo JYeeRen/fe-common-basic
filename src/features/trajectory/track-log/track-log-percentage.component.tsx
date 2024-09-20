@@ -33,7 +33,7 @@ function TrackLogMawbComponent(props: MawbProps) {
     []
   );
 
-  const gridStore = ClientGrid.useGridStore(listConfig.getRows, { initialValues });
+  const gridStore = ClientGrid.useGridStore(listConfig.getRows, { autoLoad: false });
   const columns = useMemo(() => listConfig.getColumns(), [optionsService.waybillTrackStatusList]);
 
   const handleFinish = useCallback((values: any = {}) => {
@@ -44,7 +44,7 @@ function TrackLogMawbComponent(props: MawbProps) {
     });
   }, []);
 
-  const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
+  const numberRules = useMemo(() => [textareaMaxLengthRule(100)], []);
 
   return (
     <Container className={clsx(styles.container, styles.subcontainer)} loading={store.loading}>
@@ -60,7 +60,7 @@ function TrackLogMawbComponent(props: MawbProps) {
             rules={numberRules}
           >
             <FilterTextArea
-              placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
+              placeholder={t("最多可查询{{n}}条，以逗号，空格或回车隔开", { n: 100})}
             />
           </Form.Item>
         </Col>
