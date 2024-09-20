@@ -19,6 +19,9 @@ import {
   TabsProps,
   Tabs,
   ColSelector,
+  PredefinedRange,
+  getTime,
+  convertPredefinedRange,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
@@ -41,7 +44,9 @@ import clsx from "clsx";
 
 function TrackTraceComponent() {
   const { store, t, navigate } = useStore(BillOfLadingStore)();
-  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows);
+  const initialValues: FormValues = useMemo(() => ({ createTime: getTime({ predefined: 31 }) }), []);
+
+  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows, { initialValues });
 
   const updateConfirm = useCallback(
     async (record: CustomsTrack, key: string) => {
@@ -173,6 +178,7 @@ function TrackTraceComponent() {
       atd,
       ataTZ,
       ata,
+      createTime,
     } = values;
 
     const params: Omit<QueryParams, "page" | "size"> = {};
@@ -219,13 +225,12 @@ function TrackTraceComponent() {
 
     gridStore.setQueryParams({
       ...params,
+      createTime: convertPredefinedRange(createTime),
       masterWaybillNoList: compact(masterWaybillNoList),
       departPortCode,
       arrivePortCode,
     });
   }, []);
-
-  const initialValues: FormValues = useMemo(() => ({}), []);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
@@ -423,6 +428,11 @@ function TrackTraceComponent() {
               </Space.Compact>
             </Form.Item>
           </Row>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
         </Col>
       </FilterContainer>
       <Container

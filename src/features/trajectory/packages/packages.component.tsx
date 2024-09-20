@@ -11,6 +11,9 @@ import {
   Table,
   Row,
   Button,
+  PredefinedRange,
+  getTime,
+  convertPredefinedRange,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as ListConfig from "./packages-config";
@@ -25,15 +28,20 @@ import { CloudDownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
-  const initialValues: FormValues = useMemo(() => ({ noType: 0, actionCode: "all" }), []);
+  const initialValues: FormValues = useMemo(() => ({
+    noType: 0,
+    actionCode: "all",
+    createTime: getTime({ predefined: 31 })
+  }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
   const { store, t } = useStore(PacageCustomsTrackStore, gridStore)();
   const columns = useMemo(() => ListConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode } = values;
+    const { noList, noType, actionCode, createTime } = values;
     gridStore.setQueryParams({
+      createTime: convertPredefinedRange(createTime),
       noList: compact(noList),
       noType: noType,
       actionCode: actionCode,
@@ -71,6 +79,11 @@ function TrackTraceComponent() {
         <Col span={12}>
           <Form.Item name="actionCode" label={t("轨迹名称")}>
             <SearchSelect optionKey="actionCodeList" />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
           </Form.Item>
         </Col>
       </FilterContainer>

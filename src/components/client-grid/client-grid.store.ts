@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { AnyObject } from "@types";
 import { getRowsFunc } from "./types";
 import { loading } from "@infra";
@@ -21,12 +21,15 @@ export class ClientGridStore<T> {
     this.getRows = getRows;
     makeAutoObservable(this);
 
-    reaction(() => this.queryParams, this.loadData.bind(this));
+    // reaction(() => this.queryParams, this.loadData.bind(this));
   }
 
-  setQueryParams(params?: AnyObject) {
+  setQueryParams(params?: AnyObject, autoQuery?: boolean) {
     this.queryParams = { ...params };
     this.page = 1;
+    if (autoQuery !== false) {
+      this.loadData();
+    }
   }
 
   get params() {

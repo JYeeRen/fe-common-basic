@@ -12,6 +12,9 @@ import {
   Table,
   EditableCell,
   textareaMaxLengthRule,
+  PredefinedRange,
+  convertPredefinedRange,
+  getTime,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declaration-config";
@@ -34,7 +37,17 @@ import { CreatePrealerttModal } from "./components/creatPrealertModal.component"
 import dayjs from "dayjs";
 
 function DeclareStatusComponent() {
+  const initialValues: CustomsDocumentFormValues = useMemo(
+    () => ({
+      noType: 0,
+      days: "today",
+      createTime: getTime({ predefined: 31 })
+    }),
+    []
+  );
+
   const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, {
+    initialValues,
     autoLoad: false,
   });
   const { store, t } = useStore(DeclrationStore, gridStore)(gridStore);
@@ -89,17 +102,13 @@ function DeclareStatusComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType } = values;
-    gridStore.setQueryParams({ noList: compact(noList), noType });
+    const { noList, noType, createTime } = values;
+    gridStore.setQueryParams({
+      noList: compact(noList),
+      noType,
+      createTime: convertPredefinedRange(createTime),
+    });
   }, []);
-
-  const initialValues: CustomsDocumentFormValues = useMemo(
-    () => ({
-      noType: 0,
-      days: "today",
-    }),
-    []
-  );
 
   const tableClassName = useCallback(
     (record: CustomsDocument) => (record.warning ? styles.warining : ""),
@@ -243,6 +252,11 @@ function DeclareStatusComponent() {
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
             />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
           </Form.Item>
         </Col>
       </FilterContainer>

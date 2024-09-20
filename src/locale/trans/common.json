@@ -787,6 +787,10 @@
         "zh": "进口 HS CODE",
         "en": "Import HS CODE"
     },
+    "数据生成时间": {
+        "zh": "数据生成时间",
+        "en": "Data generation time"
+    },
     "提单号": {
         "zh": "提单号",
         "en": "Air waybill number"

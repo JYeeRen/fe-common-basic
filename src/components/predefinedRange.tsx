@@ -5,7 +5,7 @@ import type { RangePickerProps } from "antd/es/date-picker";
 import { useEffect, useState } from "react";
 import { SearchSelect } from "./search-select";
 
-export const convertPredefinedRange = (value?: Omit<Value, 'predefined'>) => {
+export const convertPredefinedRange = (value?: Omit<Value, "predefined">) => {
   if (!value) {
     return undefined;
   }
@@ -15,8 +15,10 @@ export const convertPredefinedRange = (value?: Omit<Value, 'predefined'>) => {
   }
   return {
     ...val,
-    start: convertDate(dayjs(val.start), val.zone).format("YYYY-MM-DDTHH:mm:ssZ"),
-    end: convertDate(dayjs(val.end), val.zone).format("YYYY-MM-DDTHH:mm:ssZ")
+    start: convertDate(dayjs(val.start), val.zone).format(
+      "YYYY-MM-DDTHH:mm:ssZ"
+    ),
+    end: convertDate(dayjs(val.end), val.zone).format("YYYY-MM-DDTHH:mm:ssZ"),
   };
 };
 
@@ -41,8 +43,8 @@ export function getTime(values: any): Value | undefined {
   };
   const now = dayjs();
   if (predefined === 1) {
-    time.start = now.startOf('day').format();
-    time.end = now.endOf('day').format();
+    time.start = now.startOf("day").format();
+    time.end = now.endOf("day").format();
   }
   if (predefined === 7) {
     time.start = now.subtract(7, "day").format();
@@ -52,7 +54,7 @@ export function getTime(values: any): Value | undefined {
     time.start = now.subtract(31, "day").format();
     time.end = now.format();
   }
-  
+
   return time.start ? time : undefined;
 }
 
@@ -66,12 +68,12 @@ interface Value {
 interface PredefinedRangeProps {
   label?: string;
   value?: Value;
-  onChange?: (value: PredefinedRangeProps['value']) => void;
+  onChange?: (value: PredefinedRangeProps["value"]) => void;
 }
 
 export function PredefinedRange(props: PredefinedRangeProps) {
   const { label, value, onChange } = props;
-  const [predefined, setPredefined] = useState<number | undefined>(1);
+  const [predefined, setPredefined] = useState<number | undefined>(value?.predefined);
   const [range, setRange] = useState<RangePickerProps["value"]>();
   const [zone, setZone] = useState<number>();
 
@@ -88,56 +90,68 @@ export function PredefinedRange(props: PredefinedRangeProps) {
       newRange[1] = dayjs(value.end);
     }
     setRange(newRange);
-  }, [value]);
+    onChange?.(getTime({ zone: value?.zone, predefined: undefined, range: newRange }));
+  }, [value, onChange]);
 
   const [t] = useTranslation();
 
+  const handlerPredefinedChange = (val: number) => {
+    setRange(undefined);
+
+    if (predefined === val) {
+      onChange?.(getTime({ zone, predefined: 0, range: [] }));
+      return;
+    }
+
+    setPredefined(val);
+    const time = getTime({ zone, predefined: val, range });
+    onChange?.(time);
+  };
+
   return (
-    <Form.Item label={label ?? t("扫描时间")} style={{ minWidth: 830 }}>
-      <Form.Item noStyle>
-        <Radio.Group
-          value={predefined}
-          onChange={(event) => {
-            setPredefined(event.target.value);
-            setRange(undefined);
-            const val = getTime({ predefined: event.target.value, range });
-            onChange?.(val);
-          }}
-        >
-          <Radio.Button value={1}>{t("当天")}</Radio.Button>
-          <Radio.Button value={7}>{t("近7天")}</Radio.Button>
-          <Radio.Button value={31}>{t("近31天")}</Radio.Button>
-        </Radio.Group>
-      </Form.Item>
-      <Space.Compact style={{ marginLeft: "10px" }}>
-      <Form.Item noStyle>
-        <SearchSelect
-          optionKey="timeZones"
-          placeholder={t("选择时区")}
-          style={{ width: "200px" }}
-          onChange={zone => {
-            setZone(zone);
-            const val = getTime({ zone, predefined, range });
-            onChange?.(val);
-          }}
-          value={zone}
-        />
-      </Form.Item>
-      <Form.Item noStyle>
-        <DatePicker.RangePicker
-          // style={{ marginLeft: "10px" }}
-          showTime
-          value={range}
-          disabledDate={disabled31DaysDate}
-          onChange={(dates) => {
-            setRange(dates);
-            setPredefined(undefined);
-            const val = getTime({ zone, predefined: undefined, range: dates });
-            onChange?.(val);
-          }}
-        />
-      </Form.Item>
+    <div style={{ minWidth: "950px" }}>
+      <Form.Item label={label ?? t("扫描时间")}>
+        <Form.Item noStyle>
+          <Radio.Group value={predefined}>
+            <Radio.Button value={1} onClick={() => handlerPredefinedChange(1)}>{t("当天")}</Radio.Button>
+            <Radio.Button value={7} onClick={() => handlerPredefinedChange(7)}>{t("近7天")}</Radio.Button>
+            <Radio.Button value={31} onClick={() => handlerPredefinedChange(31)}>{t("近31天")}</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Space.Compact style={{ marginLeft: "10px" }}>
+          <Form.Item noStyle>
+            <SearchSelect
+              optionKey="timeZones"
+              placeholder={t("选择时区")}
+              style={{ width: "200px" }}
+              onChange={(zone) => {
+                setZone(zone);
+                const val = getTime({ zone, predefined, range });
+                onChange?.(val);
+              }}
+              value={zone}
+            />
+          </Form.Item>
+          <Form.Item noStyle>
+            <DatePicker.RangePicker
+              // style={{ marginLeft: "10px" }}
+              showTime
+              value={range}
+              disabledDate={disabled31DaysDate}
+              onChange={(dates) => {
+                setRange(dates);
+                setPredefined(undefined);
+                const val = getTime({
+                  zone,
+                  predefined: undefined,
+                  range: dates,
+                });
+                onChange?.(val);
+              }}
+            />
+          </Form.Item>
         </Space.Compact>
-    </Form.Item>
+      </Form.Item>
+    </div>
   );
 }
