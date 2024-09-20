@@ -13,6 +13,7 @@ import {
   Row,
   Table,
   TableColSettings,
+  TableSummary,
   textareaMaxLengthRule,
 } from "@components";
 import { observer } from "mobx-react-lite";
@@ -21,10 +22,11 @@ import { Store } from "./waybill-statistics.store";
 import * as config from "./waybill-statistics-config";
 import styles from "./template-list.module.less";
 import { CloudDownloadOutlined, FilterOutlined } from "@ant-design/icons";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { dayjs } from "@infra";
-import { compact } from "lodash";
+import { compact, get, sumBy } from "lodash";
 import { R } from "./waybill-statistics.types";
+import type { WaybillStatistics } from "./waybill-statistics.types";
 
 function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
@@ -36,6 +38,8 @@ function WaybillStatisticsComponent() {
   };
 
   const columns = [...config.getColumns(setPmc), ...store.dynamicCols];
+
+  const [pagination, setPagination] = useState(true);
 
   const onFinish = (values: any) => {
     const {
@@ -70,6 +74,7 @@ function WaybillStatisticsComponent() {
       params.ata.end = dayjs().endOf("day").format();
     }
     gridStore.setQueryParams(params);
+    setPagination(compact(masterWaybillNoList).length === 0)
   };
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
@@ -82,6 +87,29 @@ function WaybillStatisticsComponent() {
   const handleDatePickerChange = () => {
     form.setFieldValue("quickDate", undefined);
   };
+
+  const summaryRender = useCallback((pageData: readonly WaybillStatistics[]) => {
+    if (pagination) {
+      return undefined;
+    }
+    const dynamicCells = store.dynamicCols.map((col, index) => {
+      const val = sumBy(pageData, row => Number(get(row, (col as any).dataIndex) ?? ''));
+      return (<TableSummary.Cell key={col.key} index={6 + index}>{val}</TableSummary.Cell>);
+    });
+    return (
+      <TableSummary fixed>
+      <TableSummary.Row>
+        <TableSummary.Cell index={0}></TableSummary.Cell>
+        <TableSummary.Cell index={1}></TableSummary.Cell>
+        <TableSummary.Cell index={2}></TableSummary.Cell>
+        <TableSummary.Cell index={3}></TableSummary.Cell>
+        <TableSummary.Cell index={4}></TableSummary.Cell>
+        <TableSummary.Cell index={5}></TableSummary.Cell>
+        {dynamicCells}
+      </TableSummary.Row>
+    </TableSummary>
+    );
+  }, [pagination]);
 
   return (
     <Container className={styles.container} loading={store.loading}>
@@ -178,18 +206,19 @@ function WaybillStatisticsComponent() {
           columns={columns}
           size="small"
           onChange={gridStore.onCommonTableChange.bind(gridStore)}
-          pagination={{
+          pagination={pagination && {
             total: gridStore.total,
             pageSize: gridStore.pageSize,
             current: gridStore.page,
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),
           }}
+          summary={summaryRender}
         />
       </Container>
       {store.settingVisible && (

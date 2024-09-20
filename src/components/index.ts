@@ -16,7 +16,7 @@ export { Container } from "./container/container";
 export { Block } from "./block/block";
 export { SubmitButton } from "./submit-button";
 
-export { Table, ColSelector } from './table';
+export { Table, ColSelector, TableSummary } from './table';
 
 export { deleteConfirm } from './modal';
 
