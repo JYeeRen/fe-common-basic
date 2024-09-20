@@ -1,5 +1,5 @@
 import { useTranslation } from "@locale";
-import optionsService, { OptionKey } from "@services/options.service";
+import optionsService, { type OptionKey } from "@services/options.service";
 import { Select, SelectProps } from "antd";
 import { observer } from "mobx-react-lite";
 import { useCallback } from "react";

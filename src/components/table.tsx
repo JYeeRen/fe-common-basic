@@ -1,4 +1,3 @@
-import { Block } from "@components";
 import {
   TableProps,
   Table as AntTable,
@@ -10,6 +9,7 @@ import { get, sumBy } from "lodash";
 import { observer } from "mobx-react-lite";
 import { useMemo, useState } from "react";
 import { Resizable } from "re-resizable";
+import { Block } from "./block/block";
 
 function getTextWidth(text: string) {
   const canvas = document.createElement("canvas");
