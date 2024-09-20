@@ -2,7 +2,8 @@ import { Schema, Sources } from "@types";
 
 export type CustomsTrack = Schema.PackageCustomsTrack;
 
-export type QueryParams = Sources["/api/customsTrack/findPackageList"]["params"];
+export type QueryParams =
+  Sources["/api/customsTrack/findPackageList"]["params"];
 
 export interface FormValues {
   noList?: string[];
@@ -12,15 +13,15 @@ export interface FormValues {
 }
 
 export type Package = Pick<
-Schema.PackageCustomsTrack,
-| 'masterWaybillNo'
-| "id"
-| "bigBagNo"
-| "providerOrderId"
-| "declarationBillId"
-| "trackingNo"
-| "nextProviderName"
->
+  Schema.PackageCustomsTrack,
+  | "masterWaybillNo"
+  | "id"
+  | "bigBagNo"
+  | "providerOrderId"
+  | "declarationBillId"
+  | "trackingNo"
+  | "nextProviderName"
+>;
 
 export type AddPacakageTrackFormValues = {
   ids: number[];
@@ -28,4 +29,8 @@ export type AddPacakageTrackFormValues = {
   timeZone: string;
   actionCode: string;
   reasonCode?: string;
+  loadingType?: string;
+  handoverType?: string;
+  truckType?: string;
+  transferDestinationPort?: string;
 };

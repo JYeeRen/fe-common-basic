@@ -39,6 +39,9 @@ export type OptionKey =
   | "trackUploadStatusTypes"
   | "deductionStatusTypes"
   | "customsDocumentTypesetting"
+  | "loadingTypes"
+  | "handoverTypes"
+  | "truckTypes"
   | "receiptIssueStatusTypes";
 
 class OptionService {
@@ -127,17 +130,17 @@ class OptionService {
     loadingTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
-      formater: this.id_val_formatter,
+      formater: this.code_name_formater,
     },
     handoverTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
-      formater: this.id_val_formatter,
+      formater: this.code_name_formater,
     },
     truckTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
-      formater: this.id_val_formatter,
+      formater: this.code_name_formater,
     },
     customsTrackAddPackageNoTypes: {
       url: "/api/option/getBase",

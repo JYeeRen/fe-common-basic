@@ -6,6 +6,7 @@ import {
   DatePicker,
   FilterTextArea,
   Form,
+  Input,
   Modal,
   ModalProps,
   Radio,
@@ -60,7 +61,16 @@ const Field = observer((props: FieldProps) => {
   }, []);
 
   const handleFinish = async () => {
-    const { actionCode, timeZone, operateTime, reason } = form.getFieldsValue();
+    const {
+      actionCode,
+      timeZone,
+      operateTime,
+      reason,
+      loadingType,
+      handoverType,
+      truckType,
+      transferDestinationPort
+    } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
     const selectedDate = operateTime;
     debug.features("选择的日期", selectedDate.format("YYYY-MM-DDTHH:mm:ssZ"));
@@ -83,6 +93,10 @@ const Field = observer((props: FieldProps) => {
       operateTime: targetZoneDate.format("YYYY-MM-DDTHH:mm:ssZ"),
       actionCode,
       reasonCode: reason,
+      loadingType,
+      handoverType,
+      truckType,
+      transferDestinationPort
     });
 
     const failed = await store.addPackageTrack(store.createParams);
@@ -158,6 +172,7 @@ const Field = observer((props: FieldProps) => {
           <Space.Compact>
             <Form.Item name="timeZone" noStyle rules={[{ required: true }]}>
               <SearchSelect
+                placeholder=""
                 optionKey="timeZones"
                 allowClear={false}
                 style={{ width: "160px" }}
@@ -176,11 +191,43 @@ const Field = observer((props: FieldProps) => {
         {action === 'cb_imcustoms_exception' ? (
           <Form.Item name="reason" label={t('异常原因')} rules={[{ required: true }]}>
             <SearchSelect
+              placeholder=""
               optionKey="reasonCodeList"
               allowClear={false}
               style={{ width: "160px" }}
             />
           </Form.Item>
+        ) : null}
+        {action === 'cb_imcustoms_start' ? (
+          <>
+            <Form.Item name="loadingType" label={t('装载类型')} rules={[{ required: true }]}>
+              <SearchSelect
+                placeholder=""
+                optionKey="loadingTypes"
+                allowClear={false}
+                style={{ width: "160px" }}
+              />
+            </Form.Item>
+            <Form.Item name="handoverType" label={t('交接类型')} rules={[{ required: true }]}>
+              <SearchSelect
+                placeholder=""
+                optionKey="handoverTypes"
+                allowClear={false}
+                style={{ width: "160px" }}
+              />
+            </Form.Item>
+            <Form.Item name="truckType" label={t('卡转类型')} rules={[{ required: true }]}>
+              <SearchSelect
+                placeholder=""
+                optionKey="truckTypes"
+                allowClear={false}
+                style={{ width: "160px" }}
+              />
+            </Form.Item>
+            <Form.Item name="transferDestinationPort" label={t('卡转目的地口岸')} rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+          </>
         ) : null}
       </Form>
       <Row justify="end" className="my-4">
