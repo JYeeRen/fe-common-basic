@@ -3,12 +3,15 @@ import {
   ClientGrid,
   Col,
   Container,
+  convertPredefinedRange,
   DatePicker,
   EditableCell,
   FilterContainer,
   FilterTextArea,
   Form,
+  getTime,
   Input,
+  PredefinedRange,
   QuickDatePicker,
   Row,
   Table,
@@ -30,7 +33,12 @@ import type { WaybillStatistics } from "./waybill-statistics.types";
 
 function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
-  const gridStore = ClientGrid.useGridStore<R>(config.getRows);
+
+  const initialValues = useMemo(() => ({
+    createTime: getTime({ predefined: 31 })
+  }), []);
+
+  const gridStore = ClientGrid.useGridStore<R>(config.getRows, { initialValues });
 
   const setPmc = async (id: number, pmc: string) => {
     await store.setPmc(id, pmc);
@@ -49,8 +57,10 @@ function WaybillStatisticsComponent() {
       quickDate,
       portCode,
       tailProviderName,
+      createTime,
     } = values;
     const params = {
+      createTime: convertPredefinedRange(createTime),
       flightNumber,
       masterWaybillNoList: compact(masterWaybillNoList),
       ata: {
@@ -115,7 +125,7 @@ function WaybillStatisticsComponent() {
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer
         form={form}
-        initialValues={{}}
+        initialValues={initialValues}
         onFinish={onFinish}
         layout="vertical"
       >
@@ -172,6 +182,11 @@ function WaybillStatisticsComponent() {
               </Form.Item>
             </Col>
           </Row>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
         </Col>
       </FilterContainer>
       <Container

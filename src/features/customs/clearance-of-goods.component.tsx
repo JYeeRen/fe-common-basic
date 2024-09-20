@@ -10,6 +10,7 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  getTime,
   Input,
   PredefinedRange,
   Row,
@@ -28,7 +29,9 @@ import { compact } from "lodash";
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
 
-  const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows);
+  const initialValues = { otherType: 0, createTime: getTime({ predefined: 31 }) };
+
+  const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows, { initialValues });
 
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
@@ -65,7 +68,7 @@ function ClearanceOfGoodsComponent() {
       <FilterContainer
         layout="vertical"
         onFinish={handleFinish}
-        initialValues={{ otherType: 0 }}
+        initialValues={initialValues}
         labelCol={{ span: 12 }}
         wrapperCol={{ span: 20 }}
         rowExtend={{ style: { alignItems: "flex-start" } }}
