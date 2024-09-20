@@ -39,6 +39,9 @@ export type OptionKey =
   | "trackUploadStatusTypes"
   | "deductionStatusTypes"
   | "customsDocumentTypesetting"
+  | "loadingTypes"
+  | "handoverTypes"
+  | "truckTypes"
   | "receiptIssueStatusTypes";
 
 class OptionService {
@@ -71,6 +74,9 @@ class OptionService {
   trackUploadStatusTypes: InnerOptions = [];
   receiptIssueStatusTypes: InnerOptions = [];
   customsDocumentTypesetting: InnerOptions = [];
+  loadingTypes: InnerOptions = [];
+  handoverTypes: InnerOptions = [];
+  truckTypes: InnerOptions = [];
   providers: { key: string; label: string }[] = [];
 
   customTemplateTypes = [
@@ -120,6 +126,21 @@ class OptionService {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,
+    },
+    loadingTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
+    },
+    handoverTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
+    },
+    truckTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.code_name_formater,
     },
     customsTrackAddPackageNoTypes: {
       url: "/api/option/getBase",

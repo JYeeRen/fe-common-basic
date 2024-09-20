@@ -1639,6 +1639,22 @@
         "zh": "设置列表字段",
         "en": "Set Table Columns"
     },
+    "装载类型": {
+        "zh": "装载类型",
+        "en": "Loading Type"
+    },
+    "交接类型": {
+        "zh": "交接类型",
+        "en": "Handover Type"
+    },
+    "卡转类型": {
+        "zh": "卡转类型",
+        "en": "Truck Type"
+    },
+    "卡转目的地口岸": {
+        "zh": "卡转目的地口岸",
+        "en": "Transfer Destination Port"
+    },
     "提单号2": {
         "zh": "提单号",
         "en": "Master Waybill No"
@@ -1674,6 +1690,10 @@
     "运单号2": {
         "zh": "运单号",
         "en": "Provider Order Id"
+    },
+    "干线服务商名称": {
+        "zh": "干线服务商名称",
+        "en": "Lh Provider Name"
     },
     "订单号2": {
         "zh": "订单号",
