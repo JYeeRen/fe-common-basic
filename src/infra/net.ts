@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import localStorage from "@services/localStorage";
 import { URLs, Sources, ApiSuccess, ApiRes } from "@types";
 import { ServerError } from "./error";
-import dayjs from "./dayjs";
+import dayjs from "./djs";
 import appService from "@services/app.service";
 import { t } from "@locale";
 

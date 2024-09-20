@@ -1,15 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import { debug } from './debug';
 import { find } from 'lodash';
 import optionsService from '@services/options.service';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
-export default dayjs;
-
+import type { Dayjs } from 'dayjs';
+import dayjs from './djs';
 
 export const convertDate = (date: Dayjs, timeZone: string) => {
   if (!timeZone) {

@@ -1,4 +1,3 @@
-import { Block } from "@components";
 import {
   TableProps,
   Table as AntTable,
@@ -12,6 +11,7 @@ import { useColumnAutoWidth } from "./useColumnAutoWidth";
 import { useHighlight } from "./useHighlight";
 import { getRowKey } from "./getRowKey";
 import { colConfigStore } from "./useColFilter";
+import { Block } from "../block/block";
 
 interface ExternalTableProps {
   widthFit?: boolean;

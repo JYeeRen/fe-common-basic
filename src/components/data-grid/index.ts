@@ -1,14 +1,14 @@
-import InternalDataGrid from './DataGrid';
-import { useAsyncData } from './useAsyncData';
+// import InternalDataGrid from './DataGrid';
+// import { useAsyncData } from './useAsyncData';
 
-export type { ColSchema as GridColumn, DataEditorRef } from './type';
+// export type { ColSchema as GridColumn, DataEditorRef } from './type';
 
-type InternalDataGridType = typeof InternalDataGrid;
-type CompoundedComponent = InternalDataGridType & {
-  useAsyncData: typeof useAsyncData;
-}
+// type InternalDataGridType = typeof InternalDataGrid;
+// type CompoundedComponent = InternalDataGridType & {
+//   useAsyncData: typeof useAsyncData;
+// }
 
-const DataGrid = InternalDataGrid as CompoundedComponent;
-DataGrid.useAsyncData = useAsyncData;
+// const DataGrid = InternalDataGrid as CompoundedComponent;
+// DataGrid.useAsyncData = useAsyncData;
 
-export default DataGrid;
+// export default DataGrid;
