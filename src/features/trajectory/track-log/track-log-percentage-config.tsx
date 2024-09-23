@@ -11,6 +11,12 @@ export const getColumns = (): TableColumnsType<MawbStatus> => {
       title: t("提单号"),
     },
     {
+      key: "ata",
+      dataIndex: "ata",
+      title: t("ATA"),
+      sorter: true
+    },
+    {
       key: "imcustomsStartRate",
       dataIndex: "imcustomsStartRate",
       title: t("清关开始申报"),
