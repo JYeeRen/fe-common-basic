@@ -241,7 +241,10 @@ function WaybillStatisticsComponent() {
           onClose={store.hideSetting.bind(store)}
           fieldColumns={store.setting}
           visible={store.settingVisible}
-          setShowColumns={store.setSetting.bind(store)}
+          setShowColumns={async (keys) => {
+            await store.setSetting(keys);
+            await gridStore.loadData();
+          }}
           selectedKeys={store.selectedCols}
         />
       )}
