@@ -60,6 +60,7 @@ function TrackLogMawbComponent(props: MawbProps) {
             rules={numberRules}
           >
             <FilterTextArea
+              max={100}
               placeholder={t("最多可查询{{n}}条，以逗号，空格或回车隔开", { n: 100})}
             />
           </Form.Item>
