@@ -150,6 +150,7 @@ function ClearanceOfGoodsComponent() {
           </Button>
         </Row>
         <Table
+          useColWidth
           tableKey="商品详细信息"
           highlight
           widthFit

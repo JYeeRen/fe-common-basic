@@ -18,7 +18,8 @@ export const getColumns = (): TableColumnsType<WarehouseReceipt> => {
         {
             key: "ata",
             dataIndex: "ata",
-            title: t("ATA"),      
+            title: t("ATA"),     
+            sorter: true 
           },
     ];
 }

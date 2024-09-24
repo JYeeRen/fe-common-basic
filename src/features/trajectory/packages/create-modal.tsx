@@ -151,8 +151,8 @@ const Field = observer((props: FieldProps) => {
       <Form
         form={form}
         initialValues={initialValues}
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
         onFinish={handleFinish}
       >
         <Form.Item
@@ -164,7 +164,7 @@ const Field = observer((props: FieldProps) => {
             optionKey="actionCodeList"
             allowClear={false}
             omitKey={["all"]}
-            style={{ width: "160px" }}
+            style={{ width: "100%" }}
             onChange={(value) => setAction(value)}
           />
         </Form.Item>
@@ -198,7 +198,7 @@ const Field = observer((props: FieldProps) => {
             />
           </Form.Item>
         ) : null}
-        {action === 'cb_imcustoms_start' ? (
+        {action === 'cb_import_customs_inbound' ? (
           <>
             <Form.Item name="loadingType" label={t('装载类型')} rules={[{ required: true }]}>
               <SearchSelect

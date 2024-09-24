@@ -8,6 +8,11 @@ import { find } from "lodash";
 export const getColumns = (): TableColumnsType<PackagCustomsTrackLoge> => {
   return [
     {
+      key: "masterWaybillNo",
+      dataIndex: "masterWaybillNo",
+      title: t("提单号"),
+    },
+    {
       key: "bigBagNo",
       dataIndex: "bigBagNo",
       title: t("袋号"),
@@ -35,24 +40,33 @@ export const getColumns = (): TableColumnsType<PackagCustomsTrackLoge> => {
         find(optionsService.actionCodeList, { value })?.label,
     },
     {
+      key: "nextProviderName",
+      dataIndex: "nextProviderName",
+      title: t("末端服务商"),
+    },
+    {
       key: "ata",
       dataIndex: "ata",
-      title: t("ATA"),      
+      title: t("ATA"),
+      sorter: true
     },
     {
       key: "operateTime",
       dataIndex: "operateTime",
       title: t("轨迹时间（原时区）"),
+      sorter: true
     },
     {
       key: "operateTimeCn",
       dataIndex: "operateTimeCn",
       title: t("轨迹时间（中国）"),
+      sorter: true
     },
     {
       key: "createdTimeCn",
       dataIndex: "createdTimeCn",
       title: t("录入时间（中国）"),
+      sorter: true
     },
     { key: "userName", dataIndex: "userName", title: t("录入人员") },
     {
