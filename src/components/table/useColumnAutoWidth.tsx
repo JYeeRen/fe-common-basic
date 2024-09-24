@@ -2,13 +2,14 @@ import { TableColumnsType, TableColumnType } from "antd";
 import { get } from "lodash";
 import { useMemo } from "react";
 
-function getTextWidth(text: string) {
+function getTextWidth(text: string = '') {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
   if (!context) return;
   context.font = "16px Arial";
   const textmetrics = context.measureText(text);
-  return textmetrics.width;
+  let width = textmetrics.width;
+  return width;
 }
 
 
@@ -22,7 +23,7 @@ export function useColumnAutoWidth<T>(
       return columns;
     }
     const cols: TableColumnsType = columns.map((col) => {
-      const { dataIndex, title, width: predefWidth, filterDropdown } = col;
+      const { dataIndex, title, width: predefWidth, filterDropdown, sorter } = col;
       if (predefWidth) {
         return col;
       }
@@ -41,7 +42,10 @@ export function useColumnAutoWidth<T>(
         20;
 
       if (filterDropdown) {
-        width += 30;
+        width += 22;
+      }
+      if (sorter) {
+        width += 22;
       }
       return { ...col, width };
     });

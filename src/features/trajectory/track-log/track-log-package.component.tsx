@@ -6,6 +6,7 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Input,
   Radio,
   Row,
   SearchSelect,
@@ -50,9 +51,10 @@ function TrackLogPackageComponent(props: PackageProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode, uploadStatus } = values;
+    const { noList, noType, actionCode, uploadStatus, nextProviderName } = values;
     setgSelectedRowKeys([]);
     gridStore.setQueryParams({
+      nextProviderName,
       noList: compact(noList),
       noType: noType,
       actionCode: actionCode,
@@ -102,16 +104,21 @@ function TrackLogPackageComponent(props: PackageProps) {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col span={16}>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item name="actionCode" label={t("轨迹名称")}>
                 <SearchSelect optionKey="actionCodeList" />
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item name="uploadStatus" label={t("接收状态")}>
                 <SearchSelect optionKey="trackUploadStatusTypes" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="nextProviderName" label={t("末端服务商")}>
+                <Input placeholder="" />
               </Form.Item>
             </Col>
           </Row>
@@ -133,6 +140,7 @@ function TrackLogPackageComponent(props: PackageProps) {
           </Button>
         </Row>
         <Table
+          useColWidth
           widthFit
           bordered
           loading={gridStore.loading}
@@ -161,6 +169,7 @@ function TrackLogPackageComponent(props: PackageProps) {
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),
           }}
+          onChange={gridStore.onCommonTableChange.bind(gridStore)}
         />
       </Container>
     </Container>

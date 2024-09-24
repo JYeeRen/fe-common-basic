@@ -113,6 +113,7 @@ function ClearanceOfGoodsComponent() {
           </Button>
         </Row>
         <Table
+          useColWidth
           highlight
           widthFit
           bordered

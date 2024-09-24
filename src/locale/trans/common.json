@@ -15,6 +15,10 @@
         "zh": "人民币",
         "en": "CNY"
     },
+    "末端服务商": {
+        "zh": "末端服务商",
+        "en": "Next Provider Name"
+    },
     "设置尾程服务商": {
         "zh": "设置尾程服务商",
         "en": "Choose Last Mile Service Provider"

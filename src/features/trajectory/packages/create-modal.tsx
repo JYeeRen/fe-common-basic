@@ -198,7 +198,7 @@ const Field = observer((props: FieldProps) => {
             />
           </Form.Item>
         ) : null}
-        {action === 'cb_imcustoms_start' ? (
+        {action === 'cb_import_customs_inbound' ? (
           <>
             <Form.Item name="loadingType" label={t('装载类型')} rules={[{ required: true }]}>
               <SearchSelect
