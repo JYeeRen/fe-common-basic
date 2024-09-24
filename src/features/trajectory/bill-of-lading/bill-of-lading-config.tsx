@@ -75,6 +75,25 @@ export const getColumns = (
       } as any),
     },
     {
+      key: "atd",
+      dataIndex: "atd",
+      title: t("ATD"),
+      sorter: true,
+      onCell: (record: CustomsTrack) =>
+      ({
+        record,
+        editable: true,
+        value: record.atd,
+        handleDoubleCick: () =>
+        handleDoubleCick({
+            key: "atd",
+            title: t("ATD"),
+            value: record.atd,
+            record
+          }),
+      } as any),
+    },
+    {
       key: "ata",
       dataIndex: "ata",
       title: t("ATA"),
@@ -89,24 +108,6 @@ export const getColumns = (
             key: "ata",
             title: t("ATA"),
             value: record.ata,
-            record
-          }),
-      } as any),
-    },
-    {
-      key: "atd",
-      dataIndex: "atd",
-      title: t("ATD"),
-      onCell: (record: CustomsTrack) =>
-      ({
-        record,
-        editable: true,
-        value: record.atd,
-        handleDoubleCick: () =>
-        handleDoubleCick({
-            key: "atd",
-            title: t("ATD"),
-            value: record.atd,
             record
           }),
       } as any),

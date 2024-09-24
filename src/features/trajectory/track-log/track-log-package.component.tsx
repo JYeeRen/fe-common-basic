@@ -2,6 +2,7 @@ import {
   Button,
   ClientGrid,
   Col,
+  ColSelector,
   Container,
   FilterContainer,
   FilterTextArea,
@@ -128,6 +129,7 @@ function TrackLogPackageComponent(props: PackageProps) {
         title={t("货物状态跟踪")}
         wrapperClassName={styles.wrapper}
         table
+        titleExtend={<ColSelector tableKey="货物状态跟踪" config={columns} />}
       >
         <Row className="my-4">
           <Button
@@ -141,6 +143,7 @@ function TrackLogPackageComponent(props: PackageProps) {
         </Row>
         <Table
           useColWidth
+          tableKey="货物状态跟踪"
           widthFit
           bordered
           loading={gridStore.loading}
@@ -164,7 +167,7 @@ function TrackLogPackageComponent(props: PackageProps) {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

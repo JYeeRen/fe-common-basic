@@ -22,9 +22,10 @@ function useGridStore<T>(getRows?: getRowsFunc<T>, options?: UseGridStoreOptions
   const gridStore = useMemo(() => new ClientGrid.GridStore(getRows, gridStoreOptions), []);
   useEffect(() => {
     if (initialValues) {
-      gridStore.setQueryParams(initialValues);
+      gridStore.setQueryParams(initialValues, autoLoad);
     }
-    if (autoLoad) {
+    // set initialValues 会触发 reaction，所以不需要再手动调用 loadData
+    if (!initialValues && autoLoad) {
       gridStore.loadData?.();
     }
   }, []);

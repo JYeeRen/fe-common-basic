@@ -791,6 +791,10 @@
         "zh": "进口 HS CODE",
         "en": "Import HS CODE"
     },
+    "数据生成时间": {
+        "zh": "数据生成时间",
+        "en": "Data generation time"
+    },
     "提单号": {
         "zh": "提单号",
         "en": "Air waybill number"
@@ -798,6 +802,10 @@
     "最多可查询50条": {
         "zh": "最多可查询50条",
         "en": "Search up to 50 items"
+    },
+    "最多可查询{{n}}条，以逗号，空格或回车隔开": {
+        "zh": "最多可查询{{n}}条，以逗号，空格或回车隔开",
+        "en": " Search up to {{n}} items, separated by comma or space"
     },
     "最多可查询50条，以逗号，空格或回车隔开": {
         "zh": "最多可查询50条，以逗号，空格或回车隔开",
@@ -1655,13 +1663,33 @@
         "zh": "卡转目的地口岸",
         "en": "Transfer Destination Port"
     },
+    "设置列表字段": {
+        "zh": "设置列表字段",
+        "en": "Set Table Columns"
+    },
     "提单号2": {
         "zh": "提单号",
         "en": "Master Waybill No"
     },
+    "近7天": {
+        "zh": "近7天",
+        "en": "Within the last 7 days"
+    },
+    "近31天": {
+        "zh": "近31天",
+        "en": "Within the last 31 days"
+    },
     "运输名称": {
         "zh": "运输名称",
         "en": "Transport Name"
+    },
+    "包裹信息获取日期": {
+        "zh": "包裹信息获取日期",
+        "en": "Package information acquisition date"
+    },
+    "包裹信息获取时间": {
+        "zh": "包裹信息获取时间",
+        "en": "Package information acquisition time"
     },
     "起运港代码": {
         "zh": "起运港代码",

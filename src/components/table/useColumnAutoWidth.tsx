@@ -47,6 +47,9 @@ export function useColumnAutoWidth<T>(
       if (sorter) {
         width += 22;
       }
+      if (sorter) {
+        width += 30;
+      }
       return { ...col, width };
     });
     return cols;

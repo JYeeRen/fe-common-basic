@@ -16,6 +16,9 @@ import {
   Table,
   EditableCell,
   textareaMaxLengthRule,
+  PredefinedRange,
+  convertPredefinedRange,
+  getTime,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declare-status-config";
@@ -80,7 +83,20 @@ function QuickDatePicker(
 }
 
 function DeclareStatusComponent() {
-  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, { autoLoad: false });
+
+  const initialValues: CustomsStatusFormValues = useMemo(
+    () => ({
+      noType: 0,
+      days: "today",
+      createTime: getTime({ predefined: 31 })
+    }),
+    []
+  );
+
+  const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, {
+    initialValues,
+    autoLoad: false,
+  });
   const { store, t, navigate } = useStore(
     BillOfLadingStore,
     gridStore
@@ -94,8 +110,9 @@ function DeclareStatusComponent() {
     if (store.warning) {
       Modal.warning({
         title: t("警告！"),
-        content:
-          t("有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！"),
+        content: t(
+          "有单号处于货物已起飞，但相关清关预报资料未完成状态，请注意及时查看！"
+        ),
         okText: t("去查看"),
         icon: <ExclamationCircleOutlined style={{ color: "red" }} />,
         okButtonProps: { danger: true },
@@ -125,6 +142,7 @@ function DeclareStatusComponent() {
       flightDate,
       flightDateTZ,
       quickDate,
+      createTime
     } = values;
     const params = {
       noList: compact(noList),
@@ -139,6 +157,7 @@ function DeclareStatusComponent() {
         end: flightDate?.[1].format(),
       },
       customsStatusType,
+      createTime: convertPredefinedRange(createTime),
     };
     if (quickDate === "today") {
       params.uploadDate.start = dayjs().startOf("day").format();
@@ -160,14 +179,6 @@ function DeclareStatusComponent() {
     }
     gridStore.setQueryParams(params);
   }, []);
-
-  const initialValues: CustomsStatusFormValues = useMemo(
-    () => ({
-      noType: 0,
-      days: "today",
-    }),
-    []
-  );
 
   const tableClassName = useCallback(
     (record: CustomsStatus) => (record.warning ? styles.warining : ""),
@@ -216,7 +227,11 @@ function DeclareStatusComponent() {
               </Radio.Group>
             </Form.Item>
           </div>
-          <Form.Item name="noList" wrapperCol={{ span: 22 }} rules={numberRules}>
+          <Form.Item
+            name="noList"
+            wrapperCol={{ span: 22 }}
+            rules={numberRules}
+          >
             <FilterTextArea
               style={{ width: "100%", height: 75, resize: "none" }}
               placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
@@ -278,6 +293,11 @@ function DeclareStatusComponent() {
             </Col>
           </Row>
         </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
+        </Col>
       </FilterContainer>
       <Container title={t("提单列表")} wrapperClassName={styles.wrapper} table>
         <Row justify="space-between" style={{ padding: "0 10px" }}>
@@ -330,7 +350,7 @@ function DeclareStatusComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

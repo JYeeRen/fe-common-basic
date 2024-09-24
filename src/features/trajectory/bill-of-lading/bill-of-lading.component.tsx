@@ -18,6 +18,10 @@ import {
   Modal,
   TabsProps,
   Tabs,
+  ColSelector,
+  PredefinedRange,
+  getTime,
+  convertPredefinedRange,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
@@ -35,12 +39,14 @@ import { compact } from "lodash";
 import { convertDate, dayjs } from "@infra";
 import { UploadModal } from "./upload-modal.component";
 import { CellEditModal } from "./cell-edit-modal.component";
-import tabsStyles from './tabs.module.less';
+import tabsStyles from "./tabs.module.less";
 import clsx from "clsx";
 
 function TrackTraceComponent() {
   const { store, t, navigate } = useStore(BillOfLadingStore)();
-  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows);
+  const initialValues: FormValues = useMemo(() => ({ createTime: getTime({ predefined: 31 }) }), []);
+
+  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows, { initialValues });
 
   const updateConfirm = useCallback(
     async (record: CustomsTrack, key: string) => {
@@ -125,9 +131,9 @@ function TrackTraceComponent() {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let failed: any[] = [];
-      if (key === 'etd') {
+      if (key === "etd") {
         await store.setMawbEtd(record.id, tz, value);
-      } else if (key === 'eta') {
+      } else if (key === "eta") {
         await store.setMawbEta(record.id, tz, value);
       } else if (key === "ata") {
         await store.setMawbAta(record.id, tz, value);
@@ -172,6 +178,7 @@ function TrackTraceComponent() {
       atd,
       ataTZ,
       ata,
+      createTime,
     } = values;
 
     const params: Omit<QueryParams, "page" | "size"> = {};
@@ -218,13 +225,12 @@ function TrackTraceComponent() {
 
     gridStore.setQueryParams({
       ...params,
+      createTime: convertPredefinedRange(createTime),
       masterWaybillNoList: compact(masterWaybillNoList),
       departPortCode,
       arrivePortCode,
     });
   }, []);
-
-  const initialValues: FormValues = useMemo(() => ({}), []);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
@@ -423,8 +429,18 @@ function TrackTraceComponent() {
             </Form.Item>
           </Row>
         </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
+        </Col>
       </FilterContainer>
-      <Container title={t("航空信息")} wrapperClassName={styles.wrapper} table>
+      <Container
+        title={t("航空信息")}
+        wrapperClassName={styles.wrapper}
+        table
+        titleExtend={<ColSelector config={columns} tableKey="航空信息" />}
+      >
         <Row justify="end" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
@@ -450,6 +466,7 @@ function TrackTraceComponent() {
           </Button>
         </Row>
         <Table
+          tableKey="航空信息"
           highlight
           widthFit
           bordered
@@ -467,7 +484,7 @@ function TrackTraceComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

@@ -5,6 +5,7 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Input,
   Modal,
   SearchSelect,
   Table,
@@ -38,8 +39,9 @@ function ClearanceComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = (values: any) => {
-    const { masterWaybillNoList, status } = values || {};
+    const { masterWaybillNoList, status, customerName } = values || {};
     gridStore.setQueryParams({
+      customerName,
       masterWaybillNoList: compact(masterWaybillNoList),
       status,
     });
@@ -119,12 +121,20 @@ function ClearanceComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col span={6}>
           <Form.Item
             name="status"
             label={<span style={{ height: "30px" }}>{t("回传状态")}</span>}
           >
             <SearchSelect optionKey="clearanceFileStatusTypes" />
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item
+            name="customerName"
+            label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
+          >
+            <Input placeholder="" />
           </Form.Item>
         </Col>
       </FilterContainer>
@@ -149,7 +159,7 @@ function ClearanceComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

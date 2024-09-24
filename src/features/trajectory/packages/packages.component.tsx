@@ -11,6 +11,9 @@ import {
   Table,
   Row,
   Button,
+  PredefinedRange,
+  getTime,
+  convertPredefinedRange,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as ListConfig from "./packages-config";
@@ -21,19 +24,24 @@ import { PacageCustomsTrackStore } from "./packages.store";
 import { FormValues } from "./type";
 import optionsService from "@services/options.service";
 import { compact } from "lodash";
-import { PlusOutlined } from "@ant-design/icons";
+import { CloudDownloadOutlined, PlusOutlined } from "@ant-design/icons";
 import { CreateModal } from "./create-modal";
 
 function TrackTraceComponent() {
-  const initialValues: FormValues = useMemo(() => ({ noType: 0, actionCode: "all" }), []);
+  const initialValues: FormValues = useMemo(() => ({
+    noType: 0,
+    actionCode: "all",
+    createTime: getTime({ predefined: 31 })
+  }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
   const { store, t } = useStore(PacageCustomsTrackStore, gridStore)();
   const columns = useMemo(() => ListConfig.getColumns(), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode } = values;
+    const { noList, noType, actionCode, createTime } = values;
     gridStore.setQueryParams({
+      createTime: convertPredefinedRange(createTime),
       noList: compact(noList),
       noType: noType,
       actionCode: actionCode,
@@ -73,15 +81,27 @@ function TrackTraceComponent() {
             <SearchSelect optionKey="actionCodeList" />
           </Form.Item>
         </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
+        </Col>
       </FilterContainer>
       <Container title={t("异常轨迹信息")} wrapperClassName={styles.wrapper}>
-      <Row justify="start" style={{ padding: "0 10px" }}>
+      <Row justify="space-between" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
             icon={<PlusOutlined />}
             onClick={store.toogleModalVisible.bind(store)}
           >
             {t("包裹信息录入")}
+          </Button>
+          <Button
+            className="operation-btn mr-4 mb-4"
+            icon={<CloudDownloadOutlined />}
+            onClick={store.export.bind(store, gridStore.queryParams as any)}
+          >
+            {t("导出已筛选数据")}
           </Button>
         </Row>
         <Table
@@ -101,7 +121,7 @@ function TrackTraceComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

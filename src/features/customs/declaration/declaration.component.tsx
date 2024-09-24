@@ -12,6 +12,9 @@ import {
   Table,
   EditableCell,
   textareaMaxLengthRule,
+  PredefinedRange,
+  convertPredefinedRange,
+  getTime,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as declareStatusConfig from "./declaration-config";
@@ -34,7 +37,17 @@ import { CreatePrealerttModal } from "./components/creatPrealertModal.component"
 import dayjs from "dayjs";
 
 function DeclareStatusComponent() {
+  const initialValues: CustomsDocumentFormValues = useMemo(
+    () => ({
+      noType: 0,
+      days: "today",
+      createTime: getTime({ predefined: 31 })
+    }),
+    []
+  );
+
   const gridStore = ClientGrid.useGridStore(declareStatusConfig.getRows, {
+    initialValues,
     autoLoad: false,
   });
   const { store, t } = useStore(DeclrationStore, gridStore)(gridStore);
@@ -89,17 +102,13 @@ function DeclareStatusComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType } = values;
-    gridStore.setQueryParams({ noList: compact(noList), noType });
+    const { noList, noType, createTime } = values;
+    gridStore.setQueryParams({
+      noList: compact(noList),
+      noType,
+      createTime: convertPredefinedRange(createTime),
+    });
   }, []);
-
-  const initialValues: CustomsDocumentFormValues = useMemo(
-    () => ({
-      noType: 0,
-      days: "today",
-    }),
-    []
-  );
 
   const tableClassName = useCallback(
     (record: CustomsDocument) => (record.warning ? styles.warining : ""),
@@ -245,6 +254,11 @@ function DeclareStatusComponent() {
             />
           </Form.Item>
         </Col>
+        <Col span={24}>
+          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            <PredefinedRange label={t("数据生成时间")} />
+          </Form.Item>
+        </Col>
       </FilterContainer>
       <Container
         title={t("清关单证制作")}
@@ -309,7 +323,7 @@ function DeclareStatusComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

@@ -4,10 +4,15 @@ import {
   Button,
   ClientGrid,
   Col,
+  ColSelector,
   Container,
+  convertPredefinedRange,
   FilterContainer,
   FilterTextArea,
   Form,
+  getTime,
+  Input,
+  PredefinedRange,
   Row,
   SearchSelect,
   Table,
@@ -24,13 +29,24 @@ import { compact } from "lodash";
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
 
-  const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows);
+  const initialValues = { otherType: 0, createTime: getTime({ predefined: 31 }) };
+
+  const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows, { initialValues });
 
   const columns = useMemo(() => CustomItemConfig.getGridColumns(), []);
 
   const handleFinish = (values?: CustomITemsQueryParams) => {
-    const { masterWaybillNoList, bigBagNoList, otherType, otherList } = values || {};
+    const {
+      customerName,
+      masterWaybillNoList,
+      bigBagNoList,
+      otherType,
+      otherList,
+      createTime,
+    } = values || {};
     gridStore.setQueryParams({
+      createTime: convertPredefinedRange(createTime),
+      customerName,
       masterWaybillNoList: masterWaybillNoList && compact(masterWaybillNoList),
       bigBagNoList: bigBagNoList && compact(bigBagNoList),
       otherList: otherList && compact(otherList),
@@ -41,19 +57,23 @@ function ClearanceOfGoodsComponent() {
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleExportQuery = useCallback(() => store.export(gridStore.params as any), [gridStore.params, store]);
+  const handleExportQuery = useCallback(
+    () => store.export(gridStore.params as any),
+    [gridStore.params, store]
+  );
   const handleExportAll = useCallback(() => store.export(), [store]);
-  
+
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer
         layout="vertical"
         onFinish={handleFinish}
-        initialValues={{ otherType: 0 }}
+        initialValues={initialValues}
         labelCol={{ span: 12 }}
         wrapperCol={{ span: 20 }}
+        rowExtend={{ style: { alignItems: "flex-start" } }}
       >
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="masterWaybillNoList"
             label={<span style={{ height: "30px" }}>{t("提单号")}</span>}
@@ -64,7 +84,7 @@ function ClearanceOfGoodsComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="bigBagNoList"
             label={<span style={{ height: "30px" }}>{t("袋号")}</span>}
@@ -75,7 +95,7 @@ function ClearanceOfGoodsComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <div>
             <div style={{ paddingBottom: "8px", width: "120px" }}>
               <Form.Item noStyle name="otherType">
@@ -94,8 +114,25 @@ function ClearanceOfGoodsComponent() {
             </Form.Item>
           </div>
         </Col>
+        <Col span={6}>
+          <Form.Item
+            name="customerName"
+            label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
+          >
+            <Input placeholder={t("客户名称")} />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item name="createTime">
+            <PredefinedRange label={t("包裹信息获取日期")} />
+          </Form.Item>
+        </Col>
       </FilterContainer>
-      <Container title={t("商品详细信息")} table>
+      <Container
+        title={t("商品详细信息")}
+        table
+        titleExtend={<ColSelector tableKey="商品详细信息" config={columns} />}
+      >
         <Row className="my-4" justify="end">
           <Button
             onClick={handleExportAll}
@@ -114,6 +151,7 @@ function ClearanceOfGoodsComponent() {
         </Row>
         <Table
           useColWidth
+          tableKey="商品详细信息"
           highlight
           widthFit
           bordered
@@ -130,7 +168,7 @@ function ClearanceOfGoodsComponent() {
             showTotal: (total) => t("共{{total}}条", { total }),
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: [10, 30, 50, 100, 200, 500],
+            pageSizeOptions: [50, 100, 200, 500],
             defaultPageSize: 50,
             size: "default",
             onChange: gridStore.onTableChange.bind(gridStore),

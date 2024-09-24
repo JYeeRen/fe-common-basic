@@ -1,6 +1,6 @@
 import { loading, net } from "@infra";
 import { makeAutoObservable } from "mobx";
-import { AddPacakageTrackFormValues, CustomsTrack } from "./type";
+import { AddPacakageTrackFormValues, CustomsTrack, QueryParams } from "./type";
 import { ClientGridStore } from "@components";
 
 export class PacageCustomsTrackStore {
@@ -44,5 +44,10 @@ export class PacageCustomsTrackStore {
   async addPackageTrack(params: AddPacakageTrackFormValues) {
     const { failed } =await net.post('/api/customsTrack/addPackageTrack', params);
     return failed;
+  }
+
+  @loading()
+  async export(params: QueryParams) {
+    await net.download("/api/customsTrack/exportPackageTrack", params);
   }
 }

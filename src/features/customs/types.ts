@@ -63,8 +63,14 @@ export interface TemplateColOption {
 }
 
 export interface CustomITemsQueryParams {
+  createTime?: {
+    zone: string;
+    start: string;
+    end: string;
+  };
   masterWaybillNoList?: string[];
   bigBagNoList?: string[];
   otherType?: number;
   otherList?: string[];
+  customerName?: string;
 }

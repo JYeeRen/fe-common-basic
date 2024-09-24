@@ -2,9 +2,9 @@ import { t } from '@locale';
 import type { FormRule } from 'antd';
 // import { compact } from 'lodash';
 
-export const textareaMaxLengthRule = (): FormRule => ({
+export const textareaMaxLengthRule = (max = 50): FormRule => ({
   // transform: (value: string) => compact(value.split(/,|\n+|\r+|\s+/)),
   type: 'array',
-  max: 50,
+  max,
   message: t('最多可查询50条')
 });
