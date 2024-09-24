@@ -64,6 +64,30 @@ export const getColumns = (params: {
             sorter: true,
         },
         {
+            key: "ata",
+            dataIndex: "ata",
+            title: t("ATA"),
+            sorter: true,
+        },
+        {
+            key: "receiptTimeDiff",
+            dataIndex: "receiptTimeDiff",
+            title: t("ATA-入库时间差"),
+            sorter: true,
+        },
+        {
+            key: "outboundTimeDiff",
+            dataIndex: "outboundTimeDiff",
+            title: t("ATA-出库时间差"),
+            sorter: true,
+        },
+        {
+            key: "receiptOutboundTimeDiff",
+            dataIndex: "receiptOutboundTimeDiff",
+            title: t("入库-出库时间差"),
+            sorter: true,
+        },
+        {
             key: "tailProviderName",
             dataIndex: "tailProviderName",
             title: t("尾程服务商名称"),

@@ -226,6 +226,30 @@ const Warehouse: RouteObject[] = [
   },
 ]
 
+const BaseInfo: RouteObject[] = [
+  {
+    path: "/baseinfo/vendor/list",
+    lazy: async () => ({
+      Component: (await import("@features/baseinfo/vendor/vendor-info.component"))
+        .default,
+    }),
+  },
+  {
+    path: "/baseinfo/vendor/create",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/prediction/prediction.component"))
+        .default,
+    }),
+  },
+  {
+    path: "/baseinfo/vendor/edit/:id",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/prediction/prediction.component"))
+        .default,
+    }),
+  },
+]
+
 export const routesConfig: RouteObject[] = [
   {
     path: "/",
@@ -249,8 +273,16 @@ export const routesConfig: RouteObject[] = [
         Component: Welcome,
       },
       {
+        path: "/baseinfo",
+        Component: Welcome,
+      },
+      {
         path: "/warehouse",
         children: [...Warehouse],
+      },
+      {
+        path: "/baseinfo",
+        children: [...BaseInfo],
       },
       {
         path: "/customs",

@@ -42,7 +42,8 @@ export type OptionKey =
   | "loadingTypes"
   | "handoverTypes"
   | "truckTypes"
-  | "receiptIssueStatusTypes";
+  | "receiptIssueStatusTypes"
+  | "trailProviders";
 
 class OptionService {
   clearanceFileStatusTypes: InnerOptions = [];
@@ -78,6 +79,7 @@ class OptionService {
   handoverTypes: InnerOptions = [];
   truckTypes: InnerOptions = [];
   providers: { key: string; label: string }[] = [];
+  trailProviders: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -264,6 +266,12 @@ class OptionService {
       optsfrom: "base",
       formater: this.id_val_formatter,
     },
+    trailProviders: {
+      url: "/api/warehouse/option/getTailProviders",
+      dataGetter: "providers",
+      optsfrom: "trailProviders",
+      formater: this.id_val_formatter,
+    },
   } as const;
 
   constructor() {
@@ -278,17 +286,20 @@ class OptionService {
       "/api/option/getPrealertTemplates"
     );
     const permissions = await net.post("/api/option/getPermissions");
+    const trailProviders = await net.post("/api/warehouse/option/getTailProviders");
     localStorage.setItem("options.base", base);
     localStorage.setItem("options.roles", roles);
     localStorage.setItem("options.customsTemplates", customsTemplates);
     localStorage.setItem("options.prealertTemplates", prealertTemplates);
     localStorage.setItem("options.permissions", permissions);
+    localStorage.setItem("options.trailProviders", trailProviders);
     return {
       base,
       roles,
       customsTemplates,
       prealertTemplates,
       permissions,
+      trailProviders,
     };
     }
 

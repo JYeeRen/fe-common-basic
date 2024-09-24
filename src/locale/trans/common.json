@@ -1934,5 +1934,53 @@
     "清关失败": {
         "zh": "清关失败",
         "en": "Customs clearance failure (seizure,return, destroy, etc)"
+    },
+    "ATA-入库时间差": {
+        "zh": "ATA-入库时间差",
+        "en": "ATA-inbound time difference"
+    },
+    "ATA-出库时间差": {
+        "zh": "ATA-出库时间差",
+        "en": "ATA-outbound time difference"
+    },
+    "入库-出库时间差": {
+        "zh": "入库-出库时间差",
+        "en": "Inbound-outbound time difference"
+    },
+    "基础资料管理": {
+        "zh": "基础资料管理",
+        "en": "Basic Data Management"
+    },
+    "Vendor信息库": {
+        "zh": "Vendor信息库",
+        "en": "Vendor Information Library"
+    },
+    "公司名称": {
+        "zh": "公司名称",
+        "en": "Company Name"
+    },
+    "地址": {
+        "zh": "地址",
+        "en": "Address"
+    },
+    "联系方式": {
+        "zh": "联系方式",
+        "en": "Contact Detail"
+    },
+    "邮箱": {
+        "zh": "邮箱",
+        "en": "Email"
+    },
+    "公司类型": {
+        "zh": "公司类型",
+        "en": "Company Type"
+    },
+    "尾程商子名称": {
+        "zh": "尾程商子名称",
+        "en": "Long haul vendor name"
+    },
+    "落地口岸": {
+        "zh": "落地口岸",
+        "en": "Landing Port"
     }
 }
