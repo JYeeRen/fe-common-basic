@@ -44,7 +44,7 @@ function ProblemComponent() {
       status: 0,
       palletCode: "",
       remark: "",
-      createTime: getTime({ predefined: 31 }),
+      createTime: getTime({ predefined: 7 }),
     }),
     []
   );

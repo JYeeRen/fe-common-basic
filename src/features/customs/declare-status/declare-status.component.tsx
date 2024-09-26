@@ -88,7 +88,7 @@ function DeclareStatusComponent() {
     () => ({
       noType: 0,
       days: "today",
-      createTime: getTime({ predefined: 31 })
+      createTime: getTime({ predefined: 7 })
     }),
     []
   );

@@ -35,7 +35,7 @@ function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
 
   const initialValues = useMemo(() => ({
-    createTime: getTime({ predefined: 31 })
+    createTime: getTime({ predefined: 7 })
   }), []);
 
   const gridStore = ClientGrid.useGridStore<R>(config.getRows, { initialValues });

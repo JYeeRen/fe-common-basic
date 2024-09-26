@@ -29,7 +29,7 @@ import { compact } from "lodash";
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
 
-  const initialValues = { otherType: 0, createTime: getTime({ predefined: 31 }) };
+  const initialValues = { otherType: 0, createTime: getTime({ predefined: 7 }) };
 
   const gridStore = ClientGrid.useGridStore(CustomItemConfig.getRows, { initialValues });
 

@@ -38,7 +38,7 @@ import { CloudDownloadOutlined } from "@ant-design/icons";
 function CargoTrackComponent() {
   const initialValues: WarehouseCargoTrackFormValues = useMemo(
     () => ({
-      createTime: getTime({ predefined: 31 }),
+      createTime: getTime({ predefined: 7 }),
       noList: [],
       noType: 0,
       receiptStatus: 0,
