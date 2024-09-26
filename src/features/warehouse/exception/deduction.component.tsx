@@ -37,7 +37,7 @@ function DeductionComponent() {
       noType: 0,
       receiptStatus: 0,
       deductionStatus: 0,
-      createTime: getTime({ predefined: 31 }),
+      createTime: getTime({ predefined: 7 }),
     }),
     []
   );

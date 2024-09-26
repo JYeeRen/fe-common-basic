@@ -38,10 +38,7 @@ const Field = observer((props: FieldProps) => {
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
-  const initialValues = useMemo(
-    () => ({ actionCode: "" }),
-    []
-  );
+  const initialValues = useMemo(() => ({ actionCode: "" }), []);
 
   const confirm = useCallback(async (): Promise<boolean> => {
     return await new Promise((resolve) => {
@@ -69,7 +66,7 @@ const Field = observer((props: FieldProps) => {
       loadingType,
       handoverType,
       truckType,
-      transferDestinationPort
+      transferDestinationPort,
     } = form.getFieldsValue();
     const tzItem = find(optionsService.timeZones, { value: timeZone });
     const selectedDate = operateTime;
@@ -96,7 +93,7 @@ const Field = observer((props: FieldProps) => {
       loadingType,
       handoverType,
       truckType,
-      transferDestinationPort
+      transferDestinationPort,
     });
 
     const failed = await store.addPackageTrack(store.createParams);
@@ -188,8 +185,12 @@ const Field = observer((props: FieldProps) => {
             </Form.Item>
           </Space.Compact>
         </Form.Item>
-        {action === 'cb_imcustoms_exception' ? (
-          <Form.Item name="reason" label={t('异常原因')} rules={[{ required: true }]}>
+        {action === "cb_imcustoms_exception" ? (
+          <Form.Item
+            name="reason"
+            label={t("异常原因")}
+            rules={[{ required: true }]}
+          >
             <SearchSelect
               placeholder=""
               optionKey="reasonCodeList"
@@ -198,9 +199,13 @@ const Field = observer((props: FieldProps) => {
             />
           </Form.Item>
         ) : null}
-        {action === 'cb_import_customs_inbound' ? (
+        {action === "cb_import_customs_inbound" ? (
           <>
-            <Form.Item name="loadingType" label={t('装载类型')} rules={[{ required: true }]}>
+            <Form.Item
+              name="loadingType"
+              label={t("装载类型")}
+              rules={[{ required: true }]}
+            >
               <SearchSelect
                 placeholder=""
                 optionKey="loadingTypes"
@@ -208,7 +213,11 @@ const Field = observer((props: FieldProps) => {
                 style={{ width: "160px" }}
               />
             </Form.Item>
-            <Form.Item name="handoverType" label={t('交接类型')} rules={[{ required: true }]}>
+            <Form.Item
+              name="handoverType"
+              label={t("交接类型")}
+              rules={[{ required: true }]}
+            >
               <SearchSelect
                 placeholder=""
                 optionKey="handoverTypes"
@@ -216,7 +225,11 @@ const Field = observer((props: FieldProps) => {
                 style={{ width: "160px" }}
               />
             </Form.Item>
-            <Form.Item name="truckType" label={t('卡转类型')} rules={[{ required: true }]}>
+            <Form.Item
+              name="truckType"
+              label={t("卡转类型")}
+              rules={[{ required: true }]}
+            >
               <SearchSelect
                 placeholder=""
                 optionKey="truckTypes"
@@ -224,8 +237,19 @@ const Field = observer((props: FieldProps) => {
                 style={{ width: "160px" }}
               />
             </Form.Item>
-            <Form.Item name="transferDestinationPort" label={t('卡转目的地口岸')} rules={[{ required: true }]}>
+            {/* <Form.Item name="transferDestinationPort" label={t('卡转目的地口岸')} rules={[{ required: true }]}>
               <Input />
+            </Form.Item> */}
+            <Form.Item noStyle dependencies={["truckType"]}>
+              {() => (
+                <Form.Item
+                  required={form.getFieldValue("truckType") === "Y"}
+                  label={t("卡转目的地口岸")}
+                  name="transferDestinationPort"
+                >
+                  <Input />
+                </Form.Item>
+              )}
             </Form.Item>
           </>
         ) : null}

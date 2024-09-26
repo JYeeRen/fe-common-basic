@@ -23,14 +23,15 @@ export const convertPredefinedRange = (value?: Omit<Value, "predefined">) => {
 };
 
 export const disabled31DaysDate: DatePickerProps["disabledDate"] = (
-  current,
-  { from }
+  // current,
+  // { from }
 ) => {
-  if (from) {
-    return Math.abs(current.diff(from, "days")) >= 31;
-  }
-
   return false;
+  // if (from) {
+  //   return Math.abs(current.diff(from, "days")) >= 31;
+  // }
+
+  // return false;
 };
 
 export function getTime(values: any): Value | undefined {
@@ -90,7 +91,6 @@ export function PredefinedRange(props: PredefinedRangeProps) {
       newRange[1] = dayjs(value.end);
     }
     setRange(newRange);
-    onChange?.(getTime({ zone: value?.zone, predefined: undefined, range: newRange }));
   }, [value, onChange]);
 
   const [t] = useTranslation();

@@ -31,7 +31,7 @@ function TrackTraceComponent() {
   const initialValues: FormValues = useMemo(() => ({
     noType: 0,
     actionCode: "all",
-    createTime: getTime({ predefined: 31 })
+    createTime: getTime({ predefined: 7 })
   }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
   const { store, t } = useStore(PacageCustomsTrackStore, gridStore)();
