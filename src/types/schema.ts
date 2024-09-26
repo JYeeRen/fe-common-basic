@@ -351,7 +351,7 @@ export interface VendorInfo {
   address: string;
   contactDetails: string;
   email: string;
-  type: number;
+  typeList: number[];
   tailProviders: string[];
   portCode: string;
   remarks: string;

@@ -43,7 +43,9 @@ export type OptionKey =
   | "handoverTypes"
   | "truckTypes"
   | "receiptIssueStatusTypes"
-  | "trailProviders";
+  | "trailProviders"
+  | "vendorTypes"
+  | "portCodes";
 
 class OptionService {
   clearanceFileStatusTypes: InnerOptions = [];
@@ -80,6 +82,8 @@ class OptionService {
   truckTypes: InnerOptions = [];
   providers: { key: string; label: string }[] = [];
   trailProviders: InnerOptions = [];
+  vendorTypes: InnerOptions = [];
+  portCodes: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -272,6 +276,19 @@ class OptionService {
       optsfrom: "trailProviders",
       formater: this.id_val_formatter,
     },
+    vendorTypes: {
+      url: "/api/warehouse/option/getVendorTypes",
+      dataGetter: "vendorTypes",
+      optsfrom: "vendorTypes",
+      formater: this.id_val_formatter,
+    },
+    portCodes: {
+      url: "/api/warehouse/option/getPortCodes",
+      optsfrom: "portCodes",
+      formater: (data: string[]) => {
+        return data?.map((item) => ({ label: item, value: item })) ?? [];
+      },
+    }
   } as const;
 
   constructor() {
@@ -287,12 +304,16 @@ class OptionService {
     );
     const permissions = await net.post("/api/option/getPermissions");
     const trailProviders = await net.post("/api/warehouse/option/getTailProviders");
+    const vendorTypes = await net.post("/api/warehouse/option/getVendorTypes");
+    const portCodes = await net.post("/api/warehouse/option/getPortCodes");
     localStorage.setItem("options.base", base);
     localStorage.setItem("options.roles", roles);
     localStorage.setItem("options.customsTemplates", customsTemplates);
     localStorage.setItem("options.prealertTemplates", prealertTemplates);
     localStorage.setItem("options.permissions", permissions);
     localStorage.setItem("options.trailProviders", trailProviders);
+    localStorage.setItem("options.vendorTypes", vendorTypes);
+    localStorage.setItem("options.portCodes", portCodes);
     return {
       base,
       roles,
@@ -300,6 +321,8 @@ class OptionService {
       prealertTemplates,
       permissions,
       trailProviders,
+      vendorTypes,
+      portCodes,
     };
     }
 

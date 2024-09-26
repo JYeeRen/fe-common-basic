@@ -12,6 +12,8 @@ interface LocalValues {
   "options.prealertTemplates"?: Sources["/api/option/getPrealertTemplates"]["res"];
   "options.permissions"?: Sources["/api/option/getPermissions"]["res"];
   "options.trailProviders"?: Sources["/api/warehouse/option/getTailProviders"]["res"];
+  "options.vendorTypes"?: Sources["/api/warehouse/option/getVendorTypes"]["res"];
+  "options.portCodes"?: Sources["/api/warehouse/option/getPortCodes"]["res"];
   "table.col.config"?: Record<string, string[]>;
 }
 

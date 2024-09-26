@@ -9,15 +9,19 @@ import {
   Modal,
   Row,
   SearchSelect,
-  Table
+  Table,
+  Dropdown,
+  Col,
 } from "@components";
 import styles from "./vendor-info.module.less";
-import { PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import * as VendorInfoConfig from "@features/baseinfo/vendor/vendor-info.config.tsx";
 import { useStore } from "@hooks";
 import { VendorInfoStore } from "@features/baseinfo/vendor/vendor-info.store.ts";
 import { useCallback, useEffect, useMemo } from "react";
 import { VendorInfoFormValues } from "@features/baseinfo/vendor/vendor-info.type.ts";
+import optionsService from "@services/options.service.ts";
+import { MenuProps } from "antd";
 
 function VendorInfoComponent() {
   const gridStore = ClientGrid.useGridStore(VendorInfoConfig.getRows, { autoLoad: false });
@@ -28,8 +32,9 @@ function VendorInfoComponent() {
   }, [store]);
 
   const handleFinish = useCallback((values: any = {}) => {
-    const { name, type, active } = values;
-    gridStore.setQueryParams({ name, type, active });
+    const { name, vendorType, active } = values;
+    gridStore.setQueryParams({ name, type: vendorType, active });
+    store.setSelectedRowKeys([]);
   }, []);
 
   const initialValues: VendorInfoFormValues = useMemo(
@@ -42,11 +47,11 @@ function VendorInfoComponent() {
   );
 
   const handleCreate = () => {
-    navigate("/warehouse/prediction/create");
+    navigate("/baseinfo/vendor/create");
   };
 
   const handleEdit = useCallback(({ id }: { id: number }) => {
-    navigate(`/warehouse/prediction/edit/${id}`)
+    navigate(`/baseinfo/vendor/edit/${id}`)
   }, []);
 
   const handleDelete = useCallback(({ id }: { id: number }) => {
@@ -71,6 +76,20 @@ function VendorInfoComponent() {
     return colDefs;
   }, []);
 
+  const items = optionsService.actives
+    .filter((item) => item.value !== 0)
+    .map((item) => ({ label: item.label, key: item.value })) ?? [];
+
+  const onMenuClick: MenuProps['onClick'] = async (e) => {
+    const ids = store.selectedRowKeys;
+    if (e.key == '1') {
+      await store.setActive(ids, true);
+    } else if (e.key == '2') {
+      await store.setActive(ids, false);
+    }
+    store.setSelectedRowKeys([]);
+  };
+
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
@@ -85,12 +104,12 @@ function VendorInfoComponent() {
             />
           </Form.Item>
           <Form.Item
-            name="type"
+            name="vendorType"
             label={t("公司类型")}
             style={{ width: "250px" }}
           >
             <SearchSelect
-              optionKey="trailProviders"
+              optionKey="vendorTypes"
             />
           </Form.Item>
           <Form.Item
@@ -106,13 +125,25 @@ function VendorInfoComponent() {
       </FilterContainer>
       <Container title={t("Vendor信息库")} wrapperClassName={styles.wrapper} table>
         <Row justify="start" style={{ padding: "0 10px" }}>
-          <Button
-            className="operation-btn mr-4 mb-4"
-            icon={<PlusOutlined />}
-            onClick={handleCreate}
-          >
-            {t("新增")}
-          </Button>
+          <Col>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<PlusOutlined />}
+              onClick={handleCreate}
+            >
+              {t("新增")}
+            </Button>
+          </Col>
+          <Col>
+            <Dropdown.Button
+              className="operation-btn mr-4 mb-4"
+              icon={<EditOutlined />}
+              menu={{ items, onClick: onMenuClick }}
+              disabled={store.selectedRowKeys.length === 0}
+            >
+              {t('启用/禁用')}
+            </Dropdown.Button>
+          </Col>
         </Row>
         <Table
           components={{ body: { cell: EditableCell } }}

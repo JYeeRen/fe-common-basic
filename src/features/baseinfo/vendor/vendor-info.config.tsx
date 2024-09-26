@@ -4,6 +4,8 @@ import { t } from "@locale";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { net } from "@infra";
 import { VendorInfoQueryParam } from "@features/baseinfo/vendor/vendor-info.type.ts";
+import { find } from "lodash";
+import optionsService from "@services/options.service.ts";
 
 export const getColumns = (params: {
   operation: {
@@ -44,16 +46,30 @@ export const getColumns = (params: {
       sorter: true,
     },
     {
-      key: "type",
-      dataIndex: "type",
+      key: "typeList",
+      dataIndex: "typeList",
       title: t("公司类型"),
       sorter: true,
+      render: (value) => {
+        let str = '';
+        value.forEach((item: number) => {
+          str += find(optionsService.vendorTypes, { value: item })?.label + ' ';
+        });
+        return str;
+      },
     },
     {
       key: "tailProviders",
       dataIndex: "tailProviders",
       title: t("尾程商子名称"),
       sorter: true,
+      render: (value) => {
+        let str = '';
+        value.forEach((item: string) => {
+          str += item + ' ';
+        });
+        return str;
+      },
     },
     {
       key: "portCode",
@@ -66,6 +82,9 @@ export const getColumns = (params: {
       dataIndex: "active",
       title: t("启用状态"),
       sorter: true,
+      render: (value) => {
+        return find(optionsService.actives, { value })?.label;
+      },
     },
     {
       key: "remarks",

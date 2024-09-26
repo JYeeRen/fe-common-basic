@@ -237,14 +237,14 @@ const BaseInfo: RouteObject[] = [
   {
     path: "/baseinfo/vendor/create",
     lazy: async () => ({
-      Component: (await import("@features/warehouse/prediction/prediction.component"))
+      Component: (await import("@features/baseinfo/vendor/vendor-info-create.component"))
         .default,
     }),
   },
   {
     path: "/baseinfo/vendor/edit/:id",
     lazy: async () => ({
-      Component: (await import("@features/warehouse/prediction/prediction.component"))
+      Component: (await import("@features/baseinfo/vendor/vendor-info-edit.component"))
         .default,
     }),
   },

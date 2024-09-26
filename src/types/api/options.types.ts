@@ -68,4 +68,12 @@ export interface OptionsAPI {
     params?: never;
     res: { providers: { id: number; val: string }[] };
   };
+  "/api/warehouse/option/getVendorTypes": {
+    params?: never;
+    res: { vendorTypes: { id: number; val: string }[] };
+  };
+  "/api/warehouse/option/getPortCodes": {
+    params?: never;
+    res: { portCodes: string[] };
+  }
 }

@@ -210,6 +210,15 @@ const PredictionAddComponent = observer(() => {
                                 >
                                     <Input placeholder={t("托盘码")}/>
                                 </Form.Item>
+                                <Form.Item
+                                  name="tailProviderId"
+                                  label={t("尾程服务商")}
+                                  rules={[{required: true}]}
+                                >
+                                    <SearchSelect
+                                      optionKey="trailProviders"
+                                    />
+                                </Form.Item>
                             </Form>
                         </Container>
                     </Col>

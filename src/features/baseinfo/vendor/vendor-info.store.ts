@@ -35,4 +35,10 @@ export class VendorInfoStore {
     await net.post("/api/warehouse/vendor/delete", { id: id });
     await this.gridStore.loadData();
   }
+
+  @loading()
+  async setActive(ids: number[], active: boolean) {
+    await net.post("/api/warehouse/vendor/setActive", { ids, active });
+    await this.gridStore.loadData();
+  }
 }
