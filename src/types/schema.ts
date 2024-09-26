@@ -344,3 +344,16 @@ export interface WaybillStatistics {
     wgt: string;
   }[];
 }
+
+export interface VendorInfo {
+  id: number;
+  name: string;
+  address: string;
+  contactDetails: string;
+  email: string;
+  type: number;
+  tailProviders: string[];
+  portCode: string;
+  remarks: string;
+  active: number;
+}

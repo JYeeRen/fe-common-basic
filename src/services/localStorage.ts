@@ -11,6 +11,7 @@ interface LocalValues {
   "options.customsTemplates"?: Sources["/api/option/getCustomsTemplates"]["res"];
   "options.prealertTemplates"?: Sources["/api/option/getPrealertTemplates"]["res"];
   "options.permissions"?: Sources["/api/option/getPermissions"]["res"];
+  "options.trailProviders"?: Sources["/api/warehouse/option/getTailProviders"]["res"];
   "table.col.config"?: Record<string, string[]>;
 }
 

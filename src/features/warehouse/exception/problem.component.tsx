@@ -69,6 +69,7 @@ function ProblemComponent() {
       receiptTimeZone,
       receiptTimeData,
       createTime,
+      tailProviderName,
     } = values;
     const receiptTime = {
       createTime: convertPredefinedRange(createTime),
@@ -93,6 +94,7 @@ function ProblemComponent() {
       palletCode,
       remark,
       receiptTime,
+      tailProviderName,
     });
   }, []);
 
@@ -126,7 +128,7 @@ function ProblemComponent() {
   return (
     <Container className={styles.container} loading={store.loading}>
       <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
-        <Col>
+        <Col span={24}>
           <Row style={{ paddingBottom: "8px" }}>
             <div>
               <Form.Item noStyle name="type">
@@ -191,6 +193,15 @@ function ProblemComponent() {
               style={{ width: "300px" }}
             >
               <Input />
+            </Form.Item>
+            <Form.Item
+              name="tailProviderName"
+              label={t("尾程服务商名称")}
+              style={{ width: "350px" }}
+            >
+              <SearchSelect
+                optionKey="trailProviders"
+              />
             </Form.Item>
           </Row>
         </Col>

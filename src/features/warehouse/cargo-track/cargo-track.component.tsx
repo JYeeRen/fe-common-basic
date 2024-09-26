@@ -78,6 +78,7 @@ function CargoTrackComponent() {
       outboundTimeZone,
       outboundTimeData,
       createTime,
+      tailProviderName,
     } = values;
 
     const receiptTime = {
@@ -120,6 +121,7 @@ function CargoTrackComponent() {
       deductionStatus,
       receiptTime,
       outboundTime,
+      tailProviderName,
     });
   }, []);
 
@@ -193,6 +195,14 @@ function CargoTrackComponent() {
               />
             </Form.Item>
           </Row>
+          <Form.Item
+            name="tailProviderName"
+            label={t("尾程服务商名称")}
+          >
+            <SearchSelect
+              optionKey="trailProviders"
+            />
+          </Form.Item>
           <Form.Item
             label={t("入库时间")}
             labelAlign="right"

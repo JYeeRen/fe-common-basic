@@ -12,6 +12,7 @@ import { CustomsTrackLogAPI } from "./customs-track-log.types";
 import { PackageStatusAPI } from "./package-status.types";
 import {WarehouseAPI} from "./warehouse.ts";
 import { DataStatisticsAPI } from "./data-statistics.types.ts";
+import { BaseInfoAPI } from "./baseinfo.ts";
 
 export type { BackendOptions, TZ } from './options.types';
 
@@ -42,7 +43,8 @@ export interface Sources
     CustomsTrackLogAPI,
     PackageStatusAPI,
     DataStatisticsAPI,
-    WarehouseAPI
+    WarehouseAPI,
+    BaseInfoAPI
 {
 
 }

@@ -64,4 +64,8 @@ export interface OptionsAPI {
     params?: never;
     res: { templates: { id: number; val: string }[] };
   };
+  "/api/warehouse/option/getTailProviders": {
+    params?: never;
+    res: { providers: { id: number; val: string }[] };
+  };
 }

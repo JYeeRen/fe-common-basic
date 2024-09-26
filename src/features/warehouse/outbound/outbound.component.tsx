@@ -29,7 +29,7 @@ function OutboundComponent() {
     }, [store]);
 
     const handleFinish = useCallback((values: any = {}) => {
-        const {noList, noType, timezone, date} = values;
+        const {noList, noType, timezone, date, tailProviderName} = values;
         const receiptTime = {
             zone: timezone,
             start: date && date.length > 0 ? convertDate(date[0], timezone).format(
@@ -39,7 +39,7 @@ function OutboundComponent() {
                 "YYYY-MM-DDTHH:mm:ssZ"
             ) : "",
         };
-        gridStore.setQueryParams({noList: compact(noList), noType, receiptTime});
+        gridStore.setQueryParams({noList: compact(noList), noType, receiptTime, tailProviderName});
     }, []);
 
     const handleEdit = (value: WarehouseOutbound) => {
@@ -124,6 +124,14 @@ function OutboundComponent() {
                             </Form.Item>
                         </Space.Compact>
                     </Form.Item>
+                  <Form.Item
+                    name="tailProviderName"
+                    label={t("尾程服务商名称")}
+                  >
+                    <SearchSelect
+                      optionKey="trailProviders"
+                    />
+                  </Form.Item>
                 </Col>
             </FilterContainer>
             <Container title={t("出库预报")} wrapperClassName={styles.wrapper} table>

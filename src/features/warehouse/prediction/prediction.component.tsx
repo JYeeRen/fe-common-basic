@@ -7,7 +7,7 @@ import {
     FilterTextArea,
     Form, Modal,
     Radio,
-    Row, Table, textareaMaxLengthRule
+    Row, SearchSelect, Table, textareaMaxLengthRule
 } from "@components";
 import styles from "./prediction.module.less";
 import optionsService from "@services/options.service.ts";
@@ -29,8 +29,8 @@ function PredictionComponent() {
     }, [store]);
 
     const handleFinish = useCallback((values: any = {}) => {
-        const {noList, noType} = values;
-        gridStore.setQueryParams({noList: compact(noList), noType});
+        const {noList, noType, tailProviderName} = values;
+        gridStore.setQueryParams({noList: compact(noList), noType, tailProviderName});
     }, []);
 
     const initialValues: WarehouseReceiptFormValues = useMemo(
@@ -101,6 +101,15 @@ function PredictionComponent() {
                         />
                     </Form.Item>
                 </Col>
+                <Form.Item
+                  name="tailProviderName"
+                  label={t("尾程服务商名称")}
+                  style={{ width: "350px" }}
+                >
+                    <SearchSelect
+                      optionKey="trailProviders"
+                    />
+                </Form.Item>
             </FilterContainer>
             <Container title={t("入库预报")} wrapperClassName={styles.wrapper} table>
                 <Row justify="start" style={{padding: "0 10px"}}>

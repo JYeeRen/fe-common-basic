@@ -197,6 +197,26 @@ const navConfig = (): TopNavItem[] => [
         ]
       },
     ],
+  },
+  {
+    key: "baseinfo",
+    label: t("基础资料管理"),
+    permissions: [
+      "warehouse.vendor",
+    ],
+    sidenavs: [
+      {
+        key: "/baseinfo/vendor",
+        label: t("基础资料管理"),
+        children: [
+          {
+            key: "/baseinfo/vendor/list",
+            label: t("Vendor信息库"),
+            permission: "warehouse.vendor"
+          },
+        ]
+      },
+    ],
   }
 ];
 
