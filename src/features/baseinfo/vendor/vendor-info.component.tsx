@@ -12,6 +12,7 @@ import {
   Table,
   Dropdown,
   Col,
+  Input,
 } from "@components";
 import styles from "./vendor-info.module.less";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
@@ -99,9 +100,7 @@ function VendorInfoComponent() {
             label={t("尾程服务商名称")}
             style={{ width: "350px" }}
           >
-            <SearchSelect
-              optionKey="trailProviders"
-            />
+            <Input />
           </Form.Item>
           <Form.Item
             name="vendorType"
