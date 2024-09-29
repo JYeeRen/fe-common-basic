@@ -45,7 +45,8 @@ export type OptionKey =
   | "receiptIssueStatusTypes"
   | "trailProviders"
   | "vendorTypes"
-  | "portCodes";
+  | "portCodes"
+  | "activeDisable";
 
 class OptionService {
   clearanceFileStatusTypes: InnerOptions = [];
@@ -84,6 +85,7 @@ class OptionService {
   trailProviders: InnerOptions = [];
   vendorTypes: InnerOptions = [];
   portCodes: InnerOptions = [];
+  activeDisable: InnerOptions = [];
 
   customTemplateTypes = [
     { value: 1, label: "清关文件模板" },
@@ -288,7 +290,12 @@ class OptionService {
       formater: (data: string[]) => {
         return data?.map((item) => ({ label: item, value: item })) ?? [];
       },
-    }
+    },
+    activeDisable: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
   } as const;
 
   constructor() {
@@ -324,7 +331,7 @@ class OptionService {
       vendorTypes,
       portCodes,
     };
-    }
+  }
 
   async init() {
     // const base = localStorage.getItem("options.base") || {};

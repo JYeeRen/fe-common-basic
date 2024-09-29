@@ -77,7 +77,7 @@ function VendorInfoComponent() {
     return colDefs;
   }, []);
 
-  const items = optionsService.actives
+  const items = optionsService.activeDisable
     .filter((item) => item.value !== 0)
     .map((item) => ({ label: item.label, key: item.value })) ?? [];
 
@@ -117,7 +117,7 @@ function VendorInfoComponent() {
             style={{ width: "250px" }}
           >
             <SearchSelect
-              optionKey="actives"
+              optionKey="activeDisable"
             />
           </Form.Item>
         </Row>

@@ -83,7 +83,7 @@ export const getColumns = (params: {
       title: t("启用状态"),
       sorter: true,
       render: (value) => {
-        return find(optionsService.actives, { value })?.label;
+        return find(optionsService.activeDisable, { value })?.label;
       },
     },
     {
