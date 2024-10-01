@@ -7,7 +7,7 @@ import {
   Modal,
   Space,
   SubmitButton,
-  DatePicker,
+  DatePicker, SearchSelect,
 } from "@components";
 import { useTranslation } from "@locale";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +45,7 @@ function PredictionOperationComponent(props: IPredictionOperation) {
 
   const handleFinish = async (values: any) => {
     values.ata = dayjs(values.ata).format();
+    values.tailProviderName = values.tailProviderName.label;
     await store.handleSubmit(values);
     navigate(-1);
   };
@@ -109,7 +110,10 @@ function PredictionOperationComponent(props: IPredictionOperation) {
           name="tailProviderName"
           rules={[{ required: true }]}
         >
-          <Input placeholder={t("请填写尾程服务商名称")} />
+          <SearchSelect
+            optionKey="trailProvidersNoPort"
+            labelInValue
+          />
         </Form.Item>
         <Form.Item
           label={t("客户名称")}

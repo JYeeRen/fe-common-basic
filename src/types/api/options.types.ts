@@ -65,7 +65,9 @@ export interface OptionsAPI {
     res: { templates: { id: number; val: string }[] };
   };
   "/api/warehouse/option/getTailProviders": {
-    params?: never;
+    params?: {
+      disablePortCode?: boolean;
+    };
     res: { providers: { id: number; val: string }[] };
   };
   "/api/warehouse/option/getVendorTypes": {

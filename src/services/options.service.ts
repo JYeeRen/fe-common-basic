@@ -44,6 +44,7 @@ export type OptionKey =
   | "truckTypes"
   | "receiptIssueStatusTypes"
   | "trailProviders"
+  | "trailProvidersNoPort"
   | "vendorTypes"
   | "portCodes"
   | "activeDisable";
@@ -83,6 +84,7 @@ class OptionService {
   truckTypes: InnerOptions = [];
   providers: { key: string; label: string }[] = [];
   trailProviders: InnerOptions = [];
+  trailProvidersNoPort: InnerOptions = [];
   vendorTypes: InnerOptions = [];
   portCodes: InnerOptions = [];
   activeDisable: InnerOptions = [];
@@ -278,6 +280,12 @@ class OptionService {
       optsfrom: "trailProviders",
       formater: this.id_val_formatter,
     },
+    trailProvidersNoPort: {
+      url: "/api/warehouse/option/getTailProviders",
+      dataGetter: "providers",
+      optsfrom: "trailProvidersNoPort",
+      formater: this.id_val_formatter,
+    },
     vendorTypes: {
       url: "/api/warehouse/option/getVendorTypes",
       dataGetter: "vendorTypes",
@@ -310,7 +318,8 @@ class OptionService {
       "/api/option/getPrealertTemplates"
     );
     const permissions = await net.post("/api/option/getPermissions");
-    const trailProviders = await net.post("/api/warehouse/option/getTailProviders");
+    const trailProviders = await net.post("/api/warehouse/option/getTailProviders", {disablePortCode: false});
+    const trailProvidersNoPort = await net.post("/api/warehouse/option/getTailProviders", {disablePortCode: true});
     const vendorTypes = await net.post("/api/warehouse/option/getVendorTypes");
     const portCodes = await net.post("/api/warehouse/option/getPortCodes");
     localStorage.setItem("options.base", base);
@@ -319,6 +328,7 @@ class OptionService {
     localStorage.setItem("options.prealertTemplates", prealertTemplates);
     localStorage.setItem("options.permissions", permissions);
     localStorage.setItem("options.trailProviders", trailProviders);
+    localStorage.setItem("options.trailProvidersNoPort", trailProvidersNoPort);
     localStorage.setItem("options.vendorTypes", vendorTypes);
     localStorage.setItem("options.portCodes", portCodes);
     return {
@@ -328,6 +338,7 @@ class OptionService {
       prealertTemplates,
       permissions,
       trailProviders,
+      trailProvidersNoPort,
       vendorTypes,
       portCodes,
     };

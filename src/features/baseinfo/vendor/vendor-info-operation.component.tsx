@@ -131,7 +131,7 @@ function VendorInfoOperationComponent(props: IVendorInfoOperation) {
                     <Form.Item
                       {...field}
                       name={[field.name]}
-                      rules={[{ required: true, message: '请输入Tail Provider' }]}
+                      rules={[{ required: true, message: t("请填写") + t("尾程商子名称") }]}
                     >
                       <Input placeholder={t('子名称') + index} />
                     </Form.Item>
