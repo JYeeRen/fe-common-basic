@@ -2022,5 +2022,9 @@
     "注意：单次手动入库只支持同一尾程服务商的货物进入同一托盘，如需为不同尾程服务商货物入库，请分开多次操作": {
         "zh": "注意：单次手动入库只支持同一尾程服务商的货物进入同一托盘，如需为不同尾程服务商货物入库，请分开多次操作",
         "en": "Note: Manual entry only supports the entry of goods of the same long haul vendor into the same pallet at a time. If you need to enter goods of different long haul vendors, please enter them separately."
+    },
+    "新增": {
+        "zh": "新增",
+        "en": "Add"
     }
 }

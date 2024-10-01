@@ -30,7 +30,9 @@ function PredictionOperationComponent(props: IPredictionOperation) {
 
   useEffect(() => {
     const values = JSON.parse(JSON.stringify(store.initialValues));
-    values.ata = dayjs(values.ata);
+    if (values.ata) {
+      values.ata = dayjs(values.ata);
+    }
     form.setFieldsValue(values);
   }, [form, store.initialValues]);
 
