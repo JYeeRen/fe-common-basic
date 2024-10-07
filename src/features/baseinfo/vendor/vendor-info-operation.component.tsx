@@ -32,6 +32,7 @@ function VendorInfoOperationComponent(props: IVendorInfoOperation) {
 
   const handleFinish = async (values: VendorInfo) => {
     await store.handleSubmit(values);
+    optionsService.init();
     navigate(-1);
   };
 
