@@ -359,3 +359,10 @@ export interface VendorInfo {
   remarks: string;
   active: number;
 }
+
+export interface UldInfo {
+  id: number;
+  code: string;
+  creator: string;
+  creatorTime: string;
+}

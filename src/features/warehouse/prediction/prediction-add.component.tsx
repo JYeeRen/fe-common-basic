@@ -116,6 +116,7 @@ const PredictionAddComponent = observer(() => {
       receiptTimeZone,
       receiptTimeData,
       palletCode,
+      tailProviderId,
     } = form.getFieldsValue();
 
     const bigBagIds = gridStore.rowData.map(row => row.id);
@@ -126,6 +127,7 @@ const PredictionAddComponent = observer(() => {
         "YYYY-MM-DDTHH:mm:ssZ"
       ) : "",
       palletCode,
+      tailProviderId,
     }
 
     const res = await store.doInBound(formData);

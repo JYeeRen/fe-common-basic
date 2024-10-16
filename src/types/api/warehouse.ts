@@ -214,6 +214,7 @@ export interface WarehouseAPI {
             bigBagIds: number[],
             receiptTime: string,
             palletCode: string,
+            tailProviderId: number,
         };
         res: {
             failed: { number: string, reason: string }[];
@@ -227,5 +228,26 @@ export interface WarehouseAPI {
             id: number;
         };
         res: { url: string; fileName: string };
+    }
+
+    "/api/warehouse/unitLoadDevice/findList": {
+        params: ListParams & {
+            codes?: string[];
+        };
+        res: ListRes<Schema.UldInfo>;
+    }
+
+    "/api/warehouse/unitLoadDevice/downloadPhoto": {
+        params: {
+            id: number;
+        };
+        res: { urlList: string[] };
+    }
+
+    "/api/warehouse/unitLoadDevice/delete": {
+        params: {
+            ids: number[];
+        };
+        res: never;
     }
 }

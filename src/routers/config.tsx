@@ -224,6 +224,13 @@ const Warehouse: RouteObject[] = [
           .default,
     }),
   },
+  {
+    path: "/warehouse/uld/info",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/uld/uld-manage.component"))
+        .default,
+    }),
+  },
 ]
 
 const BaseInfo: RouteObject[] = [

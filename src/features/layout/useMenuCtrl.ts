@@ -140,6 +140,7 @@ const navConfig = (): TopNavItem[] => [
       "warehouse.track",
       "warehouse.pallet",
       "warehouse.receipt_issue",
+      "warehouse.uld",
     ],
     sidenavs: [
       {
@@ -193,6 +194,17 @@ const navConfig = (): TopNavItem[] => [
             key: "/warehouse/pallet/info",
             label: t("托盘信息管理"),
             permission: "warehouse.pallet"
+          }
+        ]
+      },
+      {
+        key: "/warehouse/uld",
+        label: t("ULD管理"),
+        children: [
+          {
+            key: "/warehouse/uld/info",
+            label: t("ULD管理"),
+            permission: "warehouse.uld"
           }
         ]
       },

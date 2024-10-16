@@ -2026,5 +2026,29 @@
     "新增": {
         "zh": "新增",
         "en": "Add"
+    },
+    "ULD": {
+        "zh": "ULD",
+        "en": "ULD"
+    },
+    "创建人": {
+        "zh": "创建人",
+        "en": "Creator"
+    },
+    "创建时间": {
+        "zh": "创建时间",
+        "en": "Create Time"
+    },
+    "航空板照片": {
+        "zh": "航空板照片",
+        "en": "Aircraft Board Photo"
+    },
+    "ULD管理": {
+        "zh": "ULD管理",
+        "en": "ULD Management"
+    },
+    "批量删除": {
+        "zh": "批量删除",
+        "en": "Batch Delete"
     }
 }
