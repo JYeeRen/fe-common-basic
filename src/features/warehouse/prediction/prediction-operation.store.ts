@@ -14,6 +14,7 @@ export class PredictionOperationStore {
     customerName: "",
     ata: dayjs().format(),
     status: 0,
+    arrivePortCode: "",
   }
 
   constructor() {

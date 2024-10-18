@@ -2094,5 +2094,9 @@
     "所选问题件由此口岸录入，此字段不可修改": {
         "zh": "所选问题件由此口岸录入，此字段不可修改",
         "en": "The selected problem item is entered by this port, this field cannot be modified"
+    },
+    "图片查看": {
+        "zh": "图片查看",
+        "en": "Picture View"
     }
 }
