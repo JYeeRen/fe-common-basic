@@ -117,6 +117,7 @@ const PredictionAddComponent = observer(() => {
       receiptTimeData,
       palletCode,
       tailProviderId,
+      arrivePortCode,
     } = form.getFieldsValue();
 
     const bigBagIds = gridStore.rowData.map(row => row.id);
@@ -128,6 +129,7 @@ const PredictionAddComponent = observer(() => {
       ) : "",
       palletCode,
       tailProviderId,
+      arrivePortCode,
     }
 
     const res = await store.doInBound(formData);
@@ -219,6 +221,15 @@ const PredictionAddComponent = observer(() => {
                 >
                   <SearchSelect
                     optionKey="trailProviders"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="arrivePortCode"
+                  label={t("入库口岸")}
+                  rules={[{ required: true }]}
+                >
+                  <SearchSelect
+                    optionKey="portCodes"
                   />
                 </Form.Item>
               </Form>

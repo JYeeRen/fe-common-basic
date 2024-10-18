@@ -149,7 +149,7 @@ function PredictionComponent() {
                     bordered
                     loading={gridStore.loading}
                     rowSelection={{
-                        hideSelectAll: true,
+                        hideSelectAll: false,
                         type: "checkbox",
                         onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
                         selectedRowKeys: store.selectedRowKeys,

@@ -86,6 +86,21 @@ export const ProblemCreateModalComponent = observer((props: IProblemCreateModal)
                     >
                         <Input placeholder={t("请填写尾程服务商名称")}/>
                     </Form.Item>
+                    <Form.Item
+                      label={t("尾程服务商名称")}
+                      name="tailProviderName"
+                      rules={[{required: true}]}
+                    >
+                        <Input placeholder={t("请填写尾程服务商名称")}/>
+                    </Form.Item>
+                    <Form.Item
+                      label={t("入库口岸")}
+                      name="arrivePortCode"
+                      rules={[{ required: true }]}
+                    >
+                        <Input disabled/>
+                        <span style={{color: "red"}}>{t("所选问题件由此口岸录入，此字段不可修改")}</span>
+                    </Form.Item>
                 </Form>
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                     <Button

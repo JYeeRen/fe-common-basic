@@ -215,6 +215,7 @@ export interface WarehouseAPI {
             receiptTime: string,
             palletCode: string,
             tailProviderId: number,
+            arrivePortCode: string,
         };
         res: {
             failed: { number: string, reason: string }[];

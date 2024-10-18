@@ -131,6 +131,15 @@ function PredictionOperationComponent(props: IPredictionOperation) {
             style={{ marginLeft: "10px" }}
           />
         </Form.Item>
+        <Form.Item
+          name="arrivePortCode"
+          label={t("入库口岸")}
+          rules={[{ required: true }]}
+        >
+          <SearchSelect
+            optionKey="portCodes"
+          />
+        </Form.Item>
         <Block if={!!store.id}>
           <Form.Item>
             <span className={styles.tips}>

@@ -236,6 +236,7 @@ export interface WarehouseReceipt {
   customerName: string;
   ata: string;
   status: number;
+  arrivePortCode: string;
 }
 export interface MawbStatus {
   id: number;
@@ -322,6 +323,7 @@ export interface ReceiptIssue {
   remark: string;
   waybillPhotoFile: boolean;
   status: number;
+  arrivePortCode: string;
 }
 
 export interface ReceiptIssueLink {
