@@ -25,7 +25,7 @@ const navConfig = (): TopNavItem[] => [
     key: "customs",
     label: t("关务风控"),
     permissions: [
-      // "customs.item",
+      "customs.package_status",
       "customs.item",
       "customs.status",
       "customs.document",
@@ -45,7 +45,7 @@ const navConfig = (): TopNavItem[] => [
           {
             key: "/customs/package-change",
             label: t("包裹变动状态"),
-            // permission: "customs.item",
+            permission: "customs.package_status",
           },
           {
             key: "/customs/clearance-of-goods",
@@ -116,7 +116,7 @@ const navConfig = (): TopNavItem[] => [
   {
     key: "pm",
     label: t("权限管理"),
-    permissions: ["admin.account", "admin.role"],
+    permissions: ["admin.subscription_email", "admin.account", "admin.role"],
     sidenavs: [
       {
         key: "/pm/accounts",
@@ -127,6 +127,11 @@ const navConfig = (): TopNavItem[] => [
         key: "/pm/roles",
         label: t("角色管理"),
         permission: "admin.role",
+      },
+      {
+        key: "/pm/subscription-email",
+        label: t("邮箱管理"),
+        permission: "admin.subscription_email",
       },
     ],
   },

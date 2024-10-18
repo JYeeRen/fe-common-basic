@@ -13,6 +13,8 @@ import { PackageStatusAPI } from "./package-status.types";
 import {WarehouseAPI} from "./warehouse.ts";
 import { DataStatisticsAPI } from "./data-statistics.types.ts";
 import { BaseInfoAPI } from "./baseinfo.ts";
+import { UserSettingAPI } from "./userSetting.types.ts";
+import { SubEmailAPI } from "./subEmail.types.ts";
 
 export type { BackendOptions, TZ } from './options.types';
 
@@ -32,6 +34,8 @@ export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
 export interface Sources
   extends AccountAPI,
     RoleAPI,
+    SubEmailAPI,
+    UserSettingAPI,
     OptionsAPI,
     CustomsItemAPI,
     CustomTemplateAPI,

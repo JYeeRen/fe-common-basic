@@ -173,21 +173,6 @@ export const getColumns = (rows: Package[]): TableColumnsType<Package> => {
       },
     },
     {
-      key: "providerOrderId",
-      dataIndex: "providerOrderId",
-      title: t("运单号"),
-      ...getColumnSearchProps(
-        chain(rows)
-          .map("providerOrderId")
-          .uniq()
-          .compact()
-          .value()
-      ),
-      onFilter: (value, record) => {
-        return record.providerOrderId === value;
-      },
-    },
-    {
       key: "trackingNo",
       dataIndex: "trackingNo",
       title: t("尾程单号"),
@@ -200,6 +185,21 @@ export const getColumns = (rows: Package[]): TableColumnsType<Package> => {
       ),
       onFilter: (value, record) => {
         return record.trackingNo === value;
+      },
+    },
+    {
+      key: "providerOrderId",
+      dataIndex: "providerOrderId",
+      title: t("运单号"),
+      ...getColumnSearchProps(
+        chain(rows)
+          .map("providerOrderId")
+          .uniq()
+          .compact()
+          .value()
+      ),
+      onFilter: (value, record) => {
+        return record.providerOrderId === value;
       },
     },
     {

@@ -290,7 +290,7 @@ function TrackTraceComponent() {
               <Input />
             </Form.Item>
           </Row>
-          <Row>
+          {/* <Row>
             <Form.Item
               labelCol={{ span: 5 }}
               wrapperCol={{ span: 17 }}
@@ -301,7 +301,7 @@ function TrackTraceComponent() {
             >
               <Input />
             </Form.Item>
-          </Row>
+          </Row> */}
         </Col>
         <Col span={14}>
           <Row>

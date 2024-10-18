@@ -113,6 +113,13 @@ const roles: RouteObject[] = [
     }),
   },
   {
+    path: "/pm/subscription-email",
+    lazy: async () => ({
+      Component: (await import("@features/pm/subscription-email/subscription-email.component"))
+        .default,
+    }),
+  },
+  {
     path: "/pm/roles/create",
     lazy: async () => ({
       Component: (

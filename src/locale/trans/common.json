@@ -51,6 +51,14 @@
         "zh": "是否合并",
         "en": "PORT"
     },
+    "是否确认删除选择的收件人，删除后对应邮箱将无法收到邮件提醒。": {
+        "zh": "是否确认删除选择的收件人，删除后对应邮箱将无法收到邮件提醒。",
+        "en": "Are you sure you want to delete the selected recipients? After deletion, the corresponding email addresses will no longer receive email notifications."
+    },
+    "邮箱管理": {
+        "zh": "邮箱管理",
+        "en": "Subscription Email"
+    },
     "航班号2": {
         "zh": "航班号",
         "en": "Flight Number"
@@ -1103,13 +1111,29 @@
         "zh": "是否确认将账号 {{account}} 的密码重置为初始密码？",
         "en": "Are you sure you want to reset the password for account {{account}} to the default password?"
     },
+    "邮箱格式不正确": {
+        "zh": "邮箱格式不正确",
+        "en": "Invalid email format"
+    },
     "账号状态": {
         "zh": "账号状态",
         "en": "Account status"
     },
+    "收件邮箱": {
+        "zh": "收件邮箱",
+        "en": "Email"
+    },
+    "新增邮箱": {
+        "zh": "新增邮箱",
+        "en": "Add email"
+    },
     "用户删除成功": {
         "zh": "用户删除成功",
         "en": "User delete success"
+    },
+    "删除成功": {
+        "zh": "删除成功",
+        "en": "Delete success"
     },
     "新增账号": {
         "zh": "新增账号",
@@ -1898,6 +1922,18 @@
     "司机联系方式": {
         "zh": "司机联系方式",
         "en": "Driver Phone Number"
+    },
+    " 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？ 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？": {
+        "zh": " 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？ 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？",
+        "en": "Upon confirmation, all system data will switch to the data of the selected port. Do you confirm the switch of the port?"
+    },
+    "口岸选择": {
+        "zh": "口岸选择",
+        "en": "Port"
+    },
+    "全部口岸数据": {
+        "zh": "全部口岸数据",
+        "en": "All"
     },
     "Bol码": {
         "zh": "Bol码",
