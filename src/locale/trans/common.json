@@ -2098,5 +2098,9 @@
     "图片查看": {
         "zh": "图片查看",
         "en": "Picture View"
+    },
+    "所属口岸": {
+        "zh": "所属口岸",
+        "en": "Belonging Port"
     }
 }

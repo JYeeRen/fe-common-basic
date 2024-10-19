@@ -18,13 +18,13 @@ import {
   ColSelector,
   PredefinedRange,
   convertPredefinedRange,
-  getTime,
+  getTime, Modal,
 } from "@components";
 import styles from "./cargo-track.module.less";
 import optionsService from "@services/options.service.ts";
 import * as CargoTrackConfig from "./cargo-track-config.tsx";
 import { useStore } from "@hooks";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { compact } from "lodash";
 import {
   CargoTrack,
@@ -62,6 +62,8 @@ function CargoTrackComponent() {
     autoLoad: false,
   });
   const { store, t } = useStore(CargoTrackStore, gridStore)(gridStore);
+  const [ImgVisible, setImgVisible] = useState(false);
+  const [ImgUrl, setImgUrl] = useState<string[]>([]);
 
   useEffect(() => {
     store.gridStore.loadData();
@@ -87,14 +89,14 @@ function CargoTrackComponent() {
       start:
         receiptTimeData && receiptTimeData.length > 0
           ? convertDate(receiptTimeData[0], receiptTimeZone).format(
-              "YYYY-MM-DDTHH:mm:ssZ"
-            )
+            "YYYY-MM-DDTHH:mm:ssZ"
+          )
           : "",
       end:
         receiptTimeData && receiptTimeData.length > 0
           ? convertDate(receiptTimeData[1], receiptTimeZone).format(
-              "YYYY-MM-DDTHH:mm:ssZ"
-            )
+            "YYYY-MM-DDTHH:mm:ssZ"
+          )
           : "",
     };
 
@@ -103,14 +105,14 @@ function CargoTrackComponent() {
       start:
         outboundTimeData && outboundTimeData.length > 0
           ? convertDate(outboundTimeData[0], outboundTimeZone).format(
-              "YYYY-MM-DDTHH:mm:ssZ"
-            )
+            "YYYY-MM-DDTHH:mm:ssZ"
+          )
           : "",
       end:
         outboundTimeData && outboundTimeData.length > 0
           ? convertDate(outboundTimeData[1], outboundTimeZone).format(
-              "YYYY-MM-DDTHH:mm:ssZ"
-            )
+            "YYYY-MM-DDTHH:mm:ssZ"
+          )
           : "",
     };
 
@@ -127,9 +129,11 @@ function CargoTrackComponent() {
 
   const handleShow = useCallback(async (value: CargoTrack) => {
     const res = await store.getImageUrl({ id: value.id });
-    store.imageUrl = res.url;
-    store.setImageVisible(true);
+    setImgUrl(res.urlList);
+    setImgVisible(true);
   }, []);
+
+  const handleCancel = () => setImgVisible(false);
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
@@ -256,7 +260,7 @@ function CargoTrackComponent() {
             labelCol={{ span: 2 }}
             wrapperCol={{ span: 22 }}
           >
-            <PredefinedRange label={t("数据生成时间")} />
+            <PredefinedRange label={t("数据生成时间")}/>
           </Form.Item>
         </Col>
       </FilterContainer>
@@ -264,12 +268,12 @@ function CargoTrackComponent() {
         title={t("货物查询")}
         wrapperClassName={styles.wrapper}
         table
-        titleExtend={<ColSelector tableKey="货物查询" config={columns} />}
+        titleExtend={<ColSelector tableKey="货物查询" config={columns}/>}
       >
         <Row justify="end" style={{ padding: "0 10px" }}>
           <Button
             className="operation-btn mr-4 mb-4"
-            icon={<CloudDownloadOutlined />}
+            icon={<CloudDownloadOutlined/>}
             onClick={store.export.bind(store, gridStore.queryParams as any)}
           >
             {t("导出已筛选数据")}
@@ -306,18 +310,36 @@ function CargoTrackComponent() {
           onChange={gridStore.onCommonTableChange.bind(gridStore)}
         />
       </Container>
-      <Image
-        width={200}
-        height={200}
-        style={{ display: "none" }}
-        src={store.imageUrl}
-        fallback="data:image/png;base64,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"
-        preview={{
-          visible: store.imageVisible,
-          src: store.imageUrl,
-          onVisibleChange: (value) => store.setImageVisible(value),
-        }}
-      />
+      <Modal
+        onCancel={handleCancel}
+        title={t("图片查看")}
+        footer={null}
+        visible={ImgVisible}
+      >
+        <div className={styles.prevImgContainer}>
+          <Image.PreviewGroup
+            preview={{
+              onVisibleChange: (value: boolean) => {
+                if (value == false) {
+                  setImgVisible(true);
+                }
+              },
+            }}
+          >
+            {ImgUrl.map((imageUrl, index) => (
+              <Image
+                key={index}
+                src={imageUrl}
+                alt=""
+                width={100}
+                height={100}
+                className={styles.prevImg}
+                onClick={() => setImgVisible(false)}
+              />
+            ))}
+          </Image.PreviewGroup>
+        </div>
+      </Modal>
     </Container>
   );
 }

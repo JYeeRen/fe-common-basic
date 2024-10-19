@@ -367,4 +367,5 @@ export interface UldInfo {
   code: string;
   creator: string;
   creatorTime: string;
+  arrivePortCode: string;
 }

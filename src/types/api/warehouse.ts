@@ -188,7 +188,7 @@ export interface WarehouseAPI {
         params: {
             id: number;
         };
-        res: { url: string; fileName: string };
+        res: { urlList: string[] };
     }
 
     "/api/warehouse/receiptIssue/link": {
@@ -228,7 +228,7 @@ export interface WarehouseAPI {
         params: {
             id: number;
         };
-        res: { url: string; fileName: string };
+        res: { urlList: string[] };
     }
 
     "/api/warehouse/unitLoadDevice/findList": {

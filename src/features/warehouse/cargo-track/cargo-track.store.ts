@@ -1,49 +1,39 @@
-import {ClientGridStore} from "@components";
-import {WarehouseReceipt} from "@features/warehouse/prediction/type.ts";
-import {makeAutoObservable, reaction} from "mobx";
-import {QueryParams} from "@features/trajectory/bill-of-lading/type.ts";
-import {loading, net} from "@infra";
+import { ClientGridStore } from "@components";
+import { WarehouseReceipt } from "@features/warehouse/prediction/type.ts";
+import { makeAutoObservable, reaction } from "mobx";
+import { QueryParams } from "@features/trajectory/bill-of-lading/type.ts";
+import { loading, net } from "@infra";
 
 export class CargoTrackStore {
-    loading = false;
+  loading = false;
 
-    gridStore: ClientGridStore<WarehouseReceipt>;
+  gridStore: ClientGridStore<WarehouseReceipt>;
 
-    selectedRowKeys: number[] = [];
+  selectedRowKeys: number[] = [];
 
-    imageUrl = "error";
+  constructor(_options: unknown, gridStore: ClientGridStore<WarehouseReceipt>) {
+    makeAutoObservable(this);
+    this.gridStore = gridStore;
 
-    imageVisible = false;
+    reaction(
+      () => this.gridStore.rowData,
+      () => {
+        this.setSelectedRowKeys([]);
+      }
+    );
+  }
 
-    constructor(_options: unknown, gridStore: ClientGridStore<WarehouseReceipt>) {
-        makeAutoObservable(this);
-        this.gridStore = gridStore;
+  setSelectedRowKeys(keys: number[]) {
+    this.selectedRowKeys = keys;
+  }
 
-        reaction(
-            () => this.gridStore.rowData,
-            () => {
-                this.setSelectedRowKeys([]);
-            }
-        );
-    }
+  @loading()
+  async export(params: QueryParams) {
+    await net.download("/api/warehouse/track/export", params);
+  }
 
-    setSelectedRowKeys(keys: number[]) {
-        this.selectedRowKeys = keys;
-    }
-
-    setImageVisible(status: boolean) {
-        this.imageVisible = status;
-        if (!status)
-            this.imageUrl = "error";
-    }
-
-    @loading()
-    async export(params: QueryParams) {
-        await net.download("/api/warehouse/track/export", params);
-    }
-
-    @loading()
-    async getImageUrl(params: { id: number }) {
-        return await net.post("/api/warehouse/track/downloadPhoto", params);
-    }
+  @loading()
+  async getImageUrl(params: { id: number }) {
+    return await net.post("/api/warehouse/track/downloadPhoto", params);
+  }
 }
