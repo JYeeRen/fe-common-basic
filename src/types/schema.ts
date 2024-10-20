@@ -233,11 +233,13 @@ export interface WarehouseReceipt {
   masterWaybillNo: string;
   bigBagNo: string;
   tailProviderName: string;
+  tailProviderId: number;
   customerName: string;
   ata: string;
   status: number;
   arrivePortCode: string;
 }
+
 export interface MawbStatus {
   id: number;
   masterWaybillNo: string;

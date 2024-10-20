@@ -68,7 +68,7 @@ export interface OptionsAPI {
     params?: {
       disablePortCode?: boolean;
     };
-    res: { providers: { id: number; val: string }[] };
+    res: { providers: { id: number; val: string; portCode: string }[] };
   };
   "/api/warehouse/option/getVendorTypes": {
     params?: never;
