@@ -204,7 +204,9 @@ export interface WarehouseAPI {
             issueId: number,
             masterWaybillNo: string,
             bigBagNo: string,
-            tailProviderName: string,
+            tailProviderId: string,
+            customerName: string,
+            ata: string,
         };
         res: never;
     }

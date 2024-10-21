@@ -2102,5 +2102,13 @@
     "所属口岸": {
         "zh": "所属口岸",
         "en": "Belonging Port"
+    },
+    "注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商": {
+        "zh": "注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商",
+        "en": "Note: The warehousing port is consistent with the selected long haul vendor port, and manual input is not supported. If there is an error, please check the selected long haul vendor."
+    },
+    "Tips: 数据检索仅查找当前选择的问题件所属口岸的提单数据": {
+        "zh": "Tips: 数据检索仅查找当前选择的问题件所属口岸的提单数据",
+        "en": "Tips: Data retrieval only searches for bill of lading data of the current selected problem item port"
     }
 }

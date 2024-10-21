@@ -321,11 +321,13 @@ export interface ReceiptIssue {
   bigBagNo: string;
   receiptTime: string;
   tailProviderName: string;
+  tailProviderId: number;
   palletCode: string;
   remark: string;
   waybillPhotoFile: boolean;
   status: number;
   arrivePortCode: string;
+  ata: string;
 }
 
 export interface ReceiptIssueLink {
@@ -334,6 +336,8 @@ export interface ReceiptIssueLink {
   bigBagNo: string;
   tailProviderName: string;
   status: number;
+  arrivePortCode: string;
+  ata: string;
 }
 
 export interface WaybillStatistics {
