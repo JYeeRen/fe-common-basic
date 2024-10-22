@@ -93,8 +93,8 @@ function PredictionOperationComponent(props: IPredictionOperation) {
       onBack={handleBack}
     >
       <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        // labelCol={{ span: 4 }}
+        // wrapperCol={{ span: 14 }}
         form={form}
         className={styles.form}
         onFinish={handleFinish}
@@ -145,12 +145,13 @@ function PredictionOperationComponent(props: IPredictionOperation) {
           name="arrivePort"
           rules={[{ required: true }]}
         >
-          <Input disabled/>
+          <Input disabled>
+          </Input>
         </Form.Item>
         <Form.Item>
-            <span className={styles.tips2}>
-              {t("注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商")}
-            </span>
+          <span className={styles.tips2}>
+            {t("注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商")}
+          </span>
         </Form.Item>
         <Block if={!!store.id}>
           <Form.Item>
