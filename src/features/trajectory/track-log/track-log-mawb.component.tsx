@@ -126,7 +126,7 @@ function TrackLogMawbComponent(props: MawbProps) {
           loading={gridStore.loading}
           rowSelection={{
             type: "checkbox",
-            hideSelectAll: true,
+            hideSelectAll: false,
             onChange: (keys) => setgSelectedRowKeys(keys),
             selectedRowKeys,
             getCheckboxProps: (row) => ({

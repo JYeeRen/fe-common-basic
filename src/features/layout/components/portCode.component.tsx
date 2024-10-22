@@ -25,7 +25,8 @@ class PortCodeStore {
 
   async setPortCode(portCode: string) {
     await net.post("/api/userSetting/setPortCode", { portCode });
-    await this.getPortCode();
+    window.location.reload();
+    // await this.getPortCode();
   }
 }
 

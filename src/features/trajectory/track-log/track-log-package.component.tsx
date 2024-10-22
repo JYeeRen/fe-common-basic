@@ -149,7 +149,7 @@ function TrackLogPackageComponent(props: PackageProps) {
           loading={gridStore.loading}
           rowSelection={{
             type: "checkbox",
-            hideSelectAll: true,
+            hideSelectAll: false,
             onChange: (keys) => setgSelectedRowKeys(keys),
             selectedRowKeys,
             getCheckboxProps: (row) => ({
