@@ -194,7 +194,7 @@ const navConfig = (): TopNavItem[] => [
     ],
   },
   {
-    key: "basic_information",
+    key: "baseinfo",
     label: t("基础资料管理"),
     permissions: [
       "basic_information.vendor",
