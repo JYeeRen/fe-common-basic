@@ -114,28 +114,6 @@ const navConfig = (): TopNavItem[] => [
     ],
   },
   {
-    key: "pm",
-    label: t("权限管理"),
-    permissions: ["admin.subscription_email", "admin.account", "admin.role"],
-    sidenavs: [
-      {
-        key: "/pm/accounts",
-        label: t("账号管理"),
-        permission: "admin.account",
-      },
-      {
-        key: "/pm/roles",
-        label: t("角色管理"),
-        permission: "admin.role",
-      },
-      {
-        key: "/pm/subscription-email",
-        label: t("邮箱管理"),
-        permission: "admin.subscription_email",
-      },
-    ],
-  },
-  {
     key: "warehouse",
     label: t("仓库管理"),
     permissions: [
@@ -234,7 +212,29 @@ const navConfig = (): TopNavItem[] => [
         ]
       },
     ],
-  }
+  },
+  {
+    key: "pm",
+    label: t("权限管理"),
+    permissions: ["admin.subscription_email", "admin.account", "admin.role"],
+    sidenavs: [
+      {
+        key: "/pm/accounts",
+        label: t("账号管理"),
+        permission: "admin.account",
+      },
+      {
+        key: "/pm/roles",
+        label: t("角色管理"),
+        permission: "admin.role",
+      },
+      {
+        key: "/pm/subscription-email",
+        label: t("邮箱管理"),
+        permission: "admin.subscription_email",
+      },
+    ],
+  },
 ];
 
 export const useMenuCtrl = () => {
