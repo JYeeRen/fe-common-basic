@@ -1639,9 +1639,9 @@
         "zh": "生成托盘",
         "en": "Generate Pallet"
     },
-    "批量打印已选项": {
-        "zh": "批量打印已选项",
-        "en": "Batch Print Selected"
+    "托盘码打印": {
+        "zh": "托盘码打印",
+        "en": "Print Pallet Code"
     },
     "新增托盘": {
         "zh": "新增托盘",

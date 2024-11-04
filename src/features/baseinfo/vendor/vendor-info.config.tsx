@@ -66,8 +66,9 @@ export const getColumns = (params: {
       render: (value) => {
         let str = '';
         value.forEach((item: string) => {
-          str += item + ' ';
+          str += item + ', ';
         });
+        str = str.slice(0, -2);
         return str;
       },
     },
@@ -100,19 +101,19 @@ export const getColumns = (params: {
         const operations = [
           {
             key: "edit",
-            icon: <EditOutlined />,
+            icon: <EditOutlined/>,
             onClick: () => operation.edit?.(data),
             label: t("编辑"),
           },
           {
             key: "cancel",
-            icon: <DeleteOutlined />,
+            icon: <DeleteOutlined/>,
             onClick: () => operation.delete?.(data),
             label: t("删除"),
           },
         ];
 
-        return (<OperationButtons items={operations} />);
+        return (<OperationButtons items={operations}/>);
       },
     },
   ];
