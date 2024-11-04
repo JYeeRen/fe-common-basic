@@ -9,6 +9,10 @@ export interface SubEmailAPI {
     params: { ids: number[] };
     res?: never;
   }
+  "/api/subscriptionEmail/setTypes": {
+    params: { ids: number[]; types: number[] };
+    res?: never;
+  }
   "/api/subscriptionEmail/findList": {
     params: { page: number; size: number };
     res: ListRes<{

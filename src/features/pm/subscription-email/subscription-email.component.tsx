@@ -1,11 +1,12 @@
 import { Button, ClientGrid, Container, Modal, App, Table } from "@components";
 import { observer } from "mobx-react-lite";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import * as roleListConfig from "./subscription-email-config";
 import { useTranslation } from "@locale";
 import { useMemo, useState } from "react";
 import { EmailStore } from "./subscription-email.store";
 import { CreateModal } from "./subscription-email-create";
+import { SetModal } from "./subscription-email-set";
 
 function RoleList() {
   const { notification } = App.useApp();
@@ -46,6 +47,12 @@ function RoleList() {
     gridStore.loadData();
   };
 
+  const handleSet = async (types: number[]) => {
+    await store.setTypes(selectedRowKeys, types);
+    store.hideSet();
+    gridStore.loadData();
+  };
+
   const operation = (
     <>
       <Button
@@ -63,6 +70,15 @@ function RoleList() {
       >
         {t("删除")}
       </Button>
+      <Button
+        disabled={selectedRowKeys.length === 0}
+        className="operation-btn"
+        style={{ marginLeft: '5px' }}
+        icon={<EditOutlined />}
+        onClick={store.showSet.bind(store)}
+      >
+        {t("配置邮件权限")}
+      </Button>
     </>
   );
 
@@ -72,6 +88,12 @@ function RoleList() {
         <CreateModal
           onCancel={store.hideCreate.bind(store)}
           onCreate={handleCreate}
+        />
+      )}
+      {store.setVisible && (
+        <SetModal
+          onCancel={store.hideSet.bind(store)}
+          onSave={handleSet}
         />
       )}
       <Table

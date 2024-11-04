@@ -10,6 +10,7 @@ import { TZ } from "../types/api/options.types";
 export type InnerOptions = { value: string | number; label: string }[];
 
 export type OptionKey =
+  | "subscriptionEmailTypes"
   | "reasonCodeList"
   | "clearanceFileStatusTypes"
   | "customsTrackAddPackageNoTypes"
@@ -51,6 +52,7 @@ export type OptionKey =
   | "activeDisable";
 
 class OptionService {
+  subscriptionEmailTypes: InnerOptions = [];
   clearanceFileStatusTypes: InnerOptions = [];
   actives: InnerOptions = [];
   customsItemInfoOtherTypes: InnerOptions = [];
@@ -110,6 +112,11 @@ class OptionService {
       },
     },
     customsItemInfoOtherTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    subscriptionEmailTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,

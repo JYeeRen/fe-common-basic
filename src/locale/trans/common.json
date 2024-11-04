@@ -1927,6 +1927,26 @@
         "zh": " 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？ 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？",
         "en": "Upon confirmation, all system data will switch to the data of the selected port. Do you confirm the switch of the port?"
     },
+    "当前口岸": {
+        "zh": "当前口岸",
+        "en": "Curret"
+    },
+    "待切换口岸": {
+        "zh": "待切换口岸",
+        "en": "Switch to"
+    },
+    "配置邮件权限": {
+        "zh": "配置邮件权限",
+        "en": "Subscription"
+    },
+    "可接收邮件类型": {
+        "zh": "可接收邮件类型",
+        "en": "Subscription types"
+    },
+    "邮件权限": {
+        "zh": "邮件权限",
+        "en": "Email subscription"
+    },
     "口岸选择": {
         "zh": "口岸选择",
         "en": "Port"

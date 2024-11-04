@@ -52,8 +52,8 @@ function PortCodeComponent() {
           <>
             <p>{t("确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？")}</p>
             <p style={{ height: '10px' }}></p>
-            <p>当前口岸: {itemDict[store.portCode].label}</p>
-            <p>待切换口岸: {itemDict[key].label}</p>
+            <p>{t('当前口岸')}: {itemDict[store.portCode].label}</p>
+            <p>{t('待切换口岸')}: {itemDict[key].label}</p>
           </>
         ),
         okText: t("确认"),
