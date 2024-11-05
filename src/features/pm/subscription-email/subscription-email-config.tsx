@@ -17,7 +17,7 @@ export const getColumns = (): TableColumnsType<Role> => {
       key: "types",
       dataIndex: "types",
       title: t("邮件权限"),
-      render: (value: string[]) => value.map(type => find(optionsService.customsItemInfoOtherTypes, { value: type })?.label).join(','),
+      render: (value: string[]) => value.map(type => find(optionsService.subscriptionEmailTypes, { value: type })?.label).join(','),
     }
   ];
 };
