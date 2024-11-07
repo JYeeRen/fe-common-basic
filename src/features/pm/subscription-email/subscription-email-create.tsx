@@ -4,7 +4,7 @@ import { Button, Form, Input, Modal, ModalProps, Row, SubmitButton } from "@comp
 export function CreateModal(props: ModalProps & { onCreate: (email: string) => Promise<void> }) {
   const [t] = useTranslation();
   const [form] = Form.useForm();
-  const { onOk, onCreate, onCancel, ...resetProps } = props;
+  const { open, onOk, onCreate, onCancel, ...resetProps } = props;
 
   const handleFinish = () => {
     const { email } = form.getFieldsValue();
@@ -15,11 +15,12 @@ export function CreateModal(props: ModalProps & { onCreate: (email: string) => P
 
   return (
     <Modal
-      open={true}
+      open={open}
       title={t("新增邮箱")}
       footer={null}
       maskClosable={false}
       width={600}
+      onCancel={onCancel}
       destroyOnClose
       {...resetProps}
     >
@@ -43,7 +44,7 @@ export function CreateModal(props: ModalProps & { onCreate: (email: string) => P
         <Row justify="end" className="my-4">
           <Button
             className="mr-4"
-            onClick={props.onCancel}
+            onClick={onCancel}
           >
             {t("取消")}
           </Button>

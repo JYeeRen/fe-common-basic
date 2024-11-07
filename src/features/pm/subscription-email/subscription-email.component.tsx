@@ -86,12 +86,14 @@ function RoleList() {
     <Container title={t("邮箱管理")} operation={operation} table>
       {store.createVisible && (
         <CreateModal
+          open={store.createVisible}
           onCancel={store.hideCreate.bind(store)}
           onCreate={handleCreate}
         />
       )}
       {store.setVisible && (
         <SetModal
+          open={store.setVisible}
           onCancel={store.hideSet.bind(store)}
           onSave={handleSet}
         />

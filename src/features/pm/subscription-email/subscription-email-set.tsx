@@ -5,7 +5,7 @@ import optionsService from "@services/options.service";
 export function SetModal(props: ModalProps & { onSave: (types: number[]) => Promise<void> }) {
   const [t] = useTranslation();
   const [form] = Form.useForm();
-  const { onSave, onCancel, ...resetProps } = props;
+  const { open, onSave, onCancel, ...resetProps } = props;
 
   const handleFinish = () => {
     const { types } = form.getFieldsValue();
@@ -14,11 +14,12 @@ export function SetModal(props: ModalProps & { onSave: (types: number[]) => Prom
 
   return (
     <Modal
-      open={true}
+      open={open}
       title={t("配置邮件权限")}
       footer={null}
       maskClosable={false}
       width={600}
+      onCancel={onCancel}
       destroyOnClose
       {...resetProps}
     >
@@ -37,7 +38,7 @@ export function SetModal(props: ModalProps & { onSave: (types: number[]) => Prom
         <Row justify="end" className="my-4">
           <Button
             className="mr-4"
-            onClick={props.onCancel}
+            onClick={onCancel}
           >
             {t("取消")}
           </Button>
