@@ -1935,6 +1935,10 @@
         "zh": "待切换口岸",
         "en": "Switch to"
     },
+    "生成BOL": {
+        "zh": "生成BOL",
+        "en": "Print BOL"
+    },
     "配置邮件权限": {
         "zh": "配置邮件权限",
         "en": "Subscription"

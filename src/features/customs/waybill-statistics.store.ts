@@ -1,6 +1,6 @@
 import { loading, net } from "@infra";
 import { makeAutoObservable, runInAction } from "mobx";
-import { QueryParams } from "./waybill-statistics.types";
+import { QueryParams, DownloadParams } from "./waybill-statistics.types";
 import optionsService from "@services/options.service";
 import { compact, flatten, keyBy } from "lodash";
 import { getSubColumns } from "./waybill-statistics-config";
@@ -8,6 +8,7 @@ import { getSubColumns } from "./waybill-statistics-config";
 export class Store {
   loading = false;
   settingVisible = false;
+  bolVisible = false;
 
   selectedCols: string[] = [];
 
@@ -28,6 +29,14 @@ export class Store {
     this.settingVisible = true;
   }
 
+  showBOL() {
+    this.bolVisible = true;
+  }
+
+  hideBOL() {
+    this.bolVisible = false;
+  }
+
   @loading()
   async setPmc(id: number, pmc: string) {
     await net.post("/api/dataStatistics/setPmc", { id, pmc });
@@ -38,6 +47,14 @@ export class Store {
     const { providerNames } = await net.post("/api/dataStatistics/getSetting");
     runInAction(() => {
       this.selectedCols = providerNames;
+    });
+  }
+
+  @loading()
+  async downloadBOL(params: DownloadParams) {
+    await net.download('/api/dataStatistics/exportBillOfLading', params);
+    runInAction(() => {
+      this.hideBOL();
     });
   }
 

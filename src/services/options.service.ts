@@ -49,9 +49,13 @@ export type OptionKey =
   | "portNameByTail"
   | "vendorTypes"
   | "portCodes"
+  | "vendorCarriers"
+  | "vendorTailProviders"
   | "activeDisable";
 
 class OptionService {
+  vendorCarriers: InnerOptions = [];
+  vendorTailProviders: InnerOptions = [];
   subscriptionEmailTypes: InnerOptions = [];
   clearanceFileStatusTypes: InnerOptions = [];
   actives: InnerOptions = [];
@@ -114,6 +118,18 @@ class OptionService {
     customsItemInfoOtherTypes: {
       url: "/api/option/getBase",
       optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    vendorCarriers: {
+      url: "/api/option/getVendorCarriers",
+      optsfrom: "vendors",
+      dataGetter: "vendors",
+      formater: this.id_val_formatter,
+    },
+    vendorTailProviders: {
+      url: "/api/option/getVendorTailProviders",
+      optsfrom: "vendors",
+      dataGetter: "vendors",
       formater: this.id_val_formatter,
     },
     subscriptionEmailTypes: {
