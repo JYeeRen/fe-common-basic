@@ -51,12 +51,12 @@ function TrackTraceComponent() {
   const updateConfirm = useCallback(
     async (record: CustomsTrack, key: string) => {
       const typeDict: Record<string, string> = {
-        customs_submitted: t("数据提交海关"),
-        customs_accepted: t("海关接收数据"),
-        customs_release: t("海关放行（整票放行）"),
-        picked_up: t("货物已提货"),
-        handed_over: t("货物交接尾程"),
-        customs_inspection: t("海关查验（整票查验）"),
+        2: t("数据提交海关"),
+        3: t("海关接收数据"),
+        5: t("海关放行（整票放行）"),
+        1: t("货物已提货"),
+        6: t("货物交接尾程"),
+        4: t("海关查验（整票查验）"),
       };
 
       return new Promise((resolve) => {
