@@ -87,7 +87,7 @@ export interface CustomsTrackAPI {
     params: {
       ids: number[];
       operateTime: string;
-      waybillStatusCode: string;
+      status: string;
       timeZone: string;
     };
     res: { failed: { number: string; reason: string }[] };

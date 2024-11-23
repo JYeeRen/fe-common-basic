@@ -38,7 +38,7 @@ function TrackLogMawbComponent(props: MawbProps) {
   const initialValues: MawbFormValues = useMemo(
     () => ({
       masterWaybillNoList: [],
-      waybillStatusCode: "all",
+      status: 0,
       uploadStatus: 0,
     }),
     []
@@ -54,11 +54,11 @@ function TrackLogMawbComponent(props: MawbProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { masterWaybillNoList, waybillStatusCode, uploadStatus } = values;
+    const { masterWaybillNoList, status, uploadStatus } = values;
     setgSelectedRowKeys([]);
     gridStore.setQueryParams({
       masterWaybillNoList: compact(masterWaybillNoList),
-      waybillStatusCode: waybillStatusCode,
+      status: status,
       uploadStatus,
     });
   }, []);
@@ -96,8 +96,8 @@ function TrackLogMawbComponent(props: MawbProps) {
         <Col span={12}>
           <Row>
             <Col span={24}>
-              <Form.Item name="waybillStatusCode" label={t("轨迹名称")}>
-                <SearchSelect optionKey="waybillTrackStatusList" />
+              <Form.Item name="status" label={t("轨迹名称")}>
+                <SearchSelect optionKey="waybillStatus" />
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -120,6 +120,7 @@ function TrackLogMawbComponent(props: MawbProps) {
           </Button>
         </Row>
         <Table
+          useColWidth={false}
           highlight
           widthFit
           bordered
