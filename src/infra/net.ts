@@ -88,6 +88,25 @@ class Net {
     return data.data;
   }
 
+  async clientDownload(downloadUrl: string, fileName: string) {
+    if (!downloadUrl) throw new Error('导出失败');
+
+    const res = await axios.get(downloadUrl, {
+      responseType: "blob",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+    const blob = res.data;
+    if (!(blob instanceof Blob)) throw new Error("blob");
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName || t('未命名的文件');
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+
   async download<URL extends URLs, R = Sources[URL]["res"]>(
     url: URL,
     ...[body, config]: OptionalParams<URL>
@@ -105,23 +124,8 @@ class Net {
       fileName: string;
       url: string;
     };
+    await this.clientDownload(downloadUrl, fileName);
 
-    if (!downloadUrl) throw new Error('导出失败');
-
-    const res = await axios.get(downloadUrl, {
-      responseType: "blob",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-    const blob = res.data;
-    if (!(blob instanceof Blob)) throw new Error("blob");
-
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName || t('未命名的文件');
-    link.click();
-    window.URL.revokeObjectURL(link.href);
   }
 
   private async request<T>(

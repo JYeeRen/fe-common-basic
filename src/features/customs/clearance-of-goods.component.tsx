@@ -17,14 +17,17 @@ import {
   SearchSelect,
   Table,
   textareaMaxLengthRule,
+  UploadModal,
 } from "@components";
 import { ClearanceOfGoodsStore } from "./clearance-of-goods.store";
 import * as CustomItemConfig from "./clearance-of-goods.config";
 import styles from "./clerance-of-goods.module.less";
-import { CloudDownloadOutlined } from "@ant-design/icons";
+import { CloudDownloadOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import { useCallback, useMemo } from "react";
 import { CustomITemsQueryParams } from "./types";
 import { compact } from "lodash";
+import { uploadCols } from "./clearance-of-goods.upload-cols";
+import localStorage from "@services/localStorage";
 
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
@@ -65,6 +68,15 @@ function ClearanceOfGoodsComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
+      <UploadModal
+        loading={store.loading}
+        open={store.uploadVisible}
+        title={t("批量上传")}
+        onDownload={store.downLoadTemplate.bind(store)}
+        onClose={store.hideUploadModal.bind(store)}
+        onUpload={store.upload.bind(store)}
+        tableHeaders={uploadCols.map(c => c[localStorage.getItem('lang')])}
+      />
       <FilterContainer
         layout="vertical"
         onFinish={handleFinish}
@@ -133,7 +145,15 @@ function ClearanceOfGoodsComponent() {
         table
         titleExtend={<ColSelector tableKey="商品详细信息" config={columns} />}
       >
-        <Row className="my-4" justify="end">
+        <Row className="my-4" justify="space-between">
+        <Button
+            onClick={store.showUploadModal.bind(store)}
+            className="operation-btn mr-4"
+            icon={<CloudUploadOutlined />}
+          >
+            {t("批量上传")}
+          </Button>
+          <span>
           <Button
             onClick={handleExportAll}
             className="operation-btn mr-4"
@@ -148,6 +168,7 @@ function ClearanceOfGoodsComponent() {
           >
             {t("导出已筛选商品信息")}
           </Button>
+          </span>
         </Row>
         <Table
           useColWidth

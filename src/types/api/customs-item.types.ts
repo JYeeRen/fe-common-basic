@@ -1,4 +1,4 @@
-import { Schema } from "@types";
+import { ImportRes, Schema } from "@types";
 import { ListParams, ListRes } from "./common.types";
 
 export interface CustomsItemAPI {
@@ -22,6 +22,17 @@ export interface CustomsItemAPI {
       fileName: string;
       url: string;
     };
+  };
+  "/api/customsItem/downloadTemplate": {
+    params?: never;
+    res: {
+      fileName: string;
+      url: string;
+    };
+  };
+  "/api/customsItem/import": {
+    params: FormData;
+    res: ImportRes;
   };
 }
 

@@ -11,7 +11,7 @@ function Root() {
     <AntConfigProvider>
       <AntApp style={{ width: "100%", height: "100%" }}>
         <Watermark
-          content={`${watermarkContent}${ENV ?? ''}`}
+          content={`${watermarkContent ?? ''}${ENV ?? ''}`}
           style={{ width: "100%", height: "100%" }}
           font={{ color: "#f0f0f0" }}
         >
