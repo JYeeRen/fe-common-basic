@@ -51,6 +51,8 @@ export type OptionKey =
   | "portCodes"
   | "vendorCarriers"
   | "vendorTailProviders"
+  | "waybillStatus"
+  | "packageStatus"
   | "activeDisable";
 
 class OptionService {
@@ -68,6 +70,8 @@ class OptionService {
   templateTypes: InnerOptions = [];
   templateColumns: BackendOptions["templateColumns"] = [];
   unitTypes: InnerOptions = [];
+  waybillStatus: InnerOptions = [];
+  packageStatus: InnerOptions = [];
   actionCodeList: InnerOptions = [];
   reasonCodeList: InnerOptions = [];
   waybillTrackStatusList: InnerOptions = [];
@@ -133,6 +137,16 @@ class OptionService {
       formater: this.id_val_formatter,
     },
     subscriptionEmailTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    waybillStatus: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    packageStatus: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,
