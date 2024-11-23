@@ -34,11 +34,11 @@ export const getColumns = (): TableColumnsType<CustomsTrack> => {
       title: t("订单号"),
     },
     {
-      key: "actionCode",
-      dataIndex: "actionCode",
+      key: "status",
+      dataIndex: "status",
       title: t("轨迹名称"),
       render: (value) =>
-        find(optionsService.actionCodeList, { value })?.label,
+        find(optionsService.packageStatus, { value })?.label,
     },
     {
       key: "operateTime",

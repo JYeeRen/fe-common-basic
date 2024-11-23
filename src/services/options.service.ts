@@ -53,6 +53,7 @@ export type OptionKey =
   | "vendorTailProviders"
   | "waybillStatus"
   | "packageStatus"
+  | "packageReason"
   | "activeDisable";
 
 class OptionService {
@@ -63,6 +64,7 @@ class OptionService {
   actives: InnerOptions = [];
   customsItemInfoOtherTypes: InnerOptions = [];
   mawbStatuses: InnerOptions = [];
+  packageReason: InnerOptions = [];
   packageStatuses: InnerOptions = [];
   customsStatusNoTypes: InnerOptions = [];
   customsStatusTypes: InnerOptions = [];
@@ -147,6 +149,11 @@ class OptionService {
       formater: this.id_val_formatter,
     },
     packageStatus: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    packageReason: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,

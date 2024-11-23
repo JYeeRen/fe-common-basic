@@ -9,11 +9,11 @@ export class PacageCustomsTrackStore {
   createModalVisible = false;
   gridStore: ClientGridStore<CustomsTrack>;
 
-  createParams: AddPacakageTrackFormValues = {
+  createParams: Partial<AddPacakageTrackFormValues> = {
     ids: [],
     operateTime: '',
     timeZone: '',
-    actionCode: '',
+    // status: '',
   };
 
   constructor(_: unknown, gridStore: ClientGridStore<CustomsTrack>) {
@@ -28,7 +28,7 @@ export class PacageCustomsTrackStore {
         ids: [],
         operateTime: '',
         timeZone: '',
-        actionCode: '',
+        // status: '',
       };
     }
   }
