@@ -1,6 +1,6 @@
 import { net } from "@infra";
 import { t } from "@locale";
-import { TableColumnsType } from "@components";
+import { TableColumnsType, TableColumnType } from "@components";
 import { PackagCustomsTrackLoge, PackageQueryParams } from "./type";
 import optionsService from "@services/options.service";
 import { find } from "lodash";
@@ -33,12 +33,13 @@ export const getColumns = (): TableColumnsType<PackagCustomsTrackLoge> => {
       title: t("订单号"),
     },
     {
-      key: "actionCode",
-      dataIndex: "actionCode",
+      key: "status",
+      dataIndex: "status",
       title: t("轨迹名称"),
+      renderWidth: true,
       render: (value) =>
-        find(optionsService.actionCodeList, { value })?.label,
-    },
+        find(optionsService.packageStatus, { value })?.label,
+    } as TableColumnType<any>,
     {
       key: "nextProviderName",
       dataIndex: "nextProviderName",

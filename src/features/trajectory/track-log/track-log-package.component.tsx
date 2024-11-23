@@ -42,7 +42,7 @@ function TrackLogPackageComponent(props: PackageProps) {
   );
 
   const initialValues: PackageFormValues = useMemo(
-    () => ({ noType: 0, actionCode: "all" }),
+    () => ({ noType: 0, status: 0 }),
     []
   );
 
@@ -52,13 +52,13 @@ function TrackLogPackageComponent(props: PackageProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode, uploadStatus, nextProviderName } = values;
+    const { noList, noType, status, uploadStatus, nextProviderName } = values;
     setgSelectedRowKeys([]);
     gridStore.setQueryParams({
       nextProviderName,
       noList: compact(noList),
       noType: noType,
-      actionCode: actionCode,
+      status: status,
       uploadStatus,
     });
   }, []);
@@ -108,8 +108,8 @@ function TrackLogPackageComponent(props: PackageProps) {
         <Col span={16}>
           <Row>
             <Col span={12}>
-              <Form.Item name="actionCode" label={t("轨迹名称")}>
-                <SearchSelect optionKey="actionCodeList" />
+              <Form.Item name="status" label={t("轨迹名称")}>
+                <SearchSelect optionKey="packageStatus" />
               </Form.Item>
             </Col>
             <Col span={12}>
