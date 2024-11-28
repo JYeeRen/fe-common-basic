@@ -28,6 +28,7 @@ import { CustomITemsQueryParams } from "./types";
 import { compact } from "lodash";
 import { uploadCols } from "./clearance-of-goods.upload-cols";
 import localStorage from "@services/localStorage";
+import i18next from "i18next";
 
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
@@ -75,7 +76,7 @@ function ClearanceOfGoodsComponent() {
         onDownload={store.downLoadTemplate.bind(store)}
         onClose={store.hideUploadModal.bind(store)}
         onUpload={store.upload.bind(store)}
-        tableHeaders={uploadCols.map(c => c[localStorage.getItem('lang')])}
+        tableHeaders={uploadCols.map(c => (c as any)[i18next.language])}
       />
       <FilterContainer
         layout="vertical"

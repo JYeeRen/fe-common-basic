@@ -42,7 +42,7 @@ export function init() {
     .init({
       debug: true,
       lng: localStorage.getItem("lang") as Lng || "zh",
-      fallbackLng: "zh-CN",
+      fallbackLng: "zh",
       ns: ["common"],
       defaultNS: "common",
       resources: resources,
