@@ -19,6 +19,7 @@ export function showUploadResult(
   const columns: TableColumnsType<any> = headers.map(
     (name, idx) => ({
       key: `row[${idx.toString()}]`,
+      dataIndex: `row[${idx.toString()}]`,
       title: name,
       render: (_, row) => `${row.row[idx] ?? ''}`,
     })
@@ -55,7 +56,7 @@ export function showUploadResult(
             rowKey={() => v4()}
             minHeight={72 + 15}
             maxHeight={400}
-            columns={[...columns, { key: "reason", title: t("失败原因") }]}
+            columns={[...columns, { key: "reason", title: t("失败原因"), dataIndex: 'reason' }]}
           />
         </Block>
       </>
