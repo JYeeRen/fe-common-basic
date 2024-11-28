@@ -27,7 +27,6 @@ import { useCallback, useMemo } from "react";
 import { CustomITemsQueryParams } from "./types";
 import { compact } from "lodash";
 import { uploadCols } from "./clearance-of-goods.upload-cols";
-import localStorage from "@services/localStorage";
 import i18next from "i18next";
 
 function ClearanceOfGoodsComponent() {

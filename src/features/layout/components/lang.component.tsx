@@ -8,7 +8,7 @@ function LangComponent() {
   const items: MenuProps["items"] = [
     {
       label: "中文",
-      key: "zh-CN",
+      key: "zh",
     },
     {
       label: "English",
@@ -17,7 +17,7 @@ function LangComponent() {
   ];
 
   const handlerItemClick: MenuItemProps['onClick'] = ({ key }) => {
-    appService.setLang(key as 'en' | 'zh-CN');
+    appService.setLang(key as 'en' | 'zh');
     changeLanguage(key);
   };
 
