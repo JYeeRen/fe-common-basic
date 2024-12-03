@@ -48,6 +48,6 @@ export class PacageCustomsTrackStore {
 
   @loading()
   async export(params: QueryParams) {
-    await net.download("/api/customsTrack/findPackageList", params);
+    await net.download("/api/customsTrack/exportPackageTrack", params);
   }
 }

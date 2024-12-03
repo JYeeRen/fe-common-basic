@@ -12,10 +12,11 @@ interface FilterTextAreaProps
   extends Omit<TextAreaProps, "onChange" | "value"> {
   value?: string[];
   onChange?: (value: string[]) => void;
+  max?: number;
 }
 
 export const FilterTextArea = (props: FilterTextAreaProps) => {
-  const { value, onChange, ...restProps } = props;
+  const { value, onChange, max =50, ...restProps } = props;
   const [internalValue, setInternalValue] = useState(value);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export const FilterTextArea = (props: FilterTextAreaProps) => {
       {...restProps}
       count={{
         show: true,
-        max: 50,
+        max,
         strategy: (value: string) => (value ? value.split("\n").length : 0),
       }}
     />

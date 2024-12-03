@@ -233,6 +233,8 @@ export interface WarehouseReceipt {
   masterWaybillNo: string;
   bigBagNo: string;
   tailProviderName: string;
+  customerName: string;
+  ata: string;
   status: number;
 }
 export interface MawbStatus {
@@ -343,4 +345,24 @@ export interface WaybillStatistics {
     ctn: string;
     wgt: string;
   }[];
+}
+
+export interface VendorInfo {
+  id: number;
+  name: string;
+  address: string;
+  contactDetails: string;
+  email: string;
+  typeList: number[];
+  tailProviders: string[];
+  portCode: string;
+  remarks: string;
+  active: number;
+}
+
+export interface UldInfo {
+  id: number;
+  code: string;
+  creator: string;
+  creatorTime: string;
 }

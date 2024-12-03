@@ -27,7 +27,7 @@ export const getColumns = (operatons: Operation): TableColumnsType<Clearance> =>
     {
       key: "customerName",
       dataIndex: "customerName",
-      title: t("客户名称")
+      title: t("客户名称"),
     },
     {
       key: "status",

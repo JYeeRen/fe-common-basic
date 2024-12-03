@@ -15,6 +15,10 @@
         "zh": "人民币",
         "en": "CNY"
     },
+    "末端服务商": {
+        "zh": "末端服务商",
+        "en": "Next Provider Name"
+    },
     "设置尾程服务商": {
         "zh": "设置尾程服务商",
         "en": "Choose Last Mile Service Provider"
@@ -1663,6 +1667,10 @@
         "zh": "卡转目的地口岸",
         "en": "Transfer Destination Port"
     },
+    "设置列表字段": {
+        "zh": "设置列表字段",
+        "en": "Set Table Columns"
+    },
     "提单号2": {
         "zh": "提单号",
         "en": "Master Waybill No"
@@ -1934,5 +1942,117 @@
     "清关失败": {
         "zh": "清关失败",
         "en": "Customs clearance failure (seizure,return, destroy, etc)"
+    },
+    "ATA-入库时间差": {
+        "zh": "ATA-入库时间差",
+        "en": "ATA-inbound time difference"
+    },
+    "ATA-出库时间差": {
+        "zh": "ATA-出库时间差",
+        "en": "ATA-outbound time difference"
+    },
+    "入库-出库时间差": {
+        "zh": "入库-出库时间差",
+        "en": "Inbound-outbound time difference"
+    },
+    "基础资料管理": {
+        "zh": "基础资料管理",
+        "en": "Basic Data Management"
+    },
+    "Vendor信息库": {
+        "zh": "Vendor信息库",
+        "en": "Vendor Information Library"
+    },
+    "公司名称": {
+        "zh": "公司名称",
+        "en": "Company Name"
+    },
+    "地址": {
+        "zh": "地址",
+        "en": "Address"
+    },
+    "联系方式": {
+        "zh": "联系方式",
+        "en": "Contact Detail"
+    },
+    "邮箱": {
+        "zh": "邮箱",
+        "en": "Email"
+    },
+    "公司类型": {
+        "zh": "公司类型",
+        "en": "Company Type"
+    },
+    "尾程商子名称": {
+        "zh": "尾程商子名称",
+        "en": "Long haul vendor name"
+    },
+    "落地口岸": {
+        "zh": "落地口岸",
+        "en": "Landing Port"
+    },
+    "请填写": {
+        "zh": "请填写",
+        "en": "Please enter the"
+    },
+    "子名称": {
+        "zh": "子名称",
+        "en": "Sub Name"
+    },
+    "添加一条": {
+        "zh": "添加一条",
+        "en": "Add a line"
+    },
+    "注意: 尾程商本名也请添加一条对应的子名称。如: 公司名称UPS, 请添加一个子名称为UPS。不区分大小写。": {
+        "zh": "注意: 尾程商本名也请添加一条对应的子名称。如: 公司名称UPS, 请添加一个子名称为UPS。不区分大小写。",
+        "en": "Note: The main name of the long haul vendor should also add a corresponding sub name. For example, the company name UPS, please add a sub name of UPS. Case insensitive."
+    },
+    "必填项": {
+        "zh": "必填项",
+        "en": "Required"
+    },
+    "请添加至少一条子名称": {
+        "zh": "请添加至少一条子名称",
+        "en": "Please add at least one sub name"
+    },
+    "启用/禁用": {
+        "zh": "启用/禁用",
+        "en": "Enable/Disable"
+    },
+    "到港时间": {
+        "zh": "到港时间",
+        "en": "Arrival Time"
+    },
+    "注意：单次手动入库只支持同一尾程服务商的货物进入同一托盘，如需为不同尾程服务商货物入库，请分开多次操作": {
+        "zh": "注意：单次手动入库只支持同一尾程服务商的货物进入同一托盘，如需为不同尾程服务商货物入库，请分开多次操作",
+        "en": "Note: Manual entry only supports the entry of goods of the same long haul vendor into the same pallet at a time. If you need to enter goods of different long haul vendors, please enter them separately."
+    },
+    "新增": {
+        "zh": "新增",
+        "en": "Add"
+    },
+    "ULD": {
+        "zh": "ULD",
+        "en": "ULD"
+    },
+    "创建人": {
+        "zh": "创建人",
+        "en": "Creator"
+    },
+    "创建时间": {
+        "zh": "创建时间",
+        "en": "Create Time"
+    },
+    "航空板照片": {
+        "zh": "航空板照片",
+        "en": "Aircraft Board Photo"
+    },
+    "ULD管理": {
+        "zh": "ULD管理",
+        "en": "ULD Management"
+    },
+    "批量删除": {
+        "zh": "批量删除",
+        "en": "Batch Delete"
     }
 }

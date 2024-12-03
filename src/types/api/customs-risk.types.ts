@@ -11,4 +11,8 @@ export interface CustomsRiskAPI {
     };
     res: ListRes<Schema.CustomsRisk>;
   };
+  "/api/customsRisk/export": {
+    params: CustomsRiskAPI["/api/customsRisk/findList"]["params"];
+    res: any;
+  };
 }

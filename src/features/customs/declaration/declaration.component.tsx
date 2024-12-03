@@ -41,7 +41,7 @@ function DeclareStatusComponent() {
     () => ({
       noType: 0,
       days: "today",
-      createTime: getTime({ predefined: 31 })
+      uploadDate: getTime({ predefined: 7 })
     }),
     []
   );
@@ -102,11 +102,11 @@ function DeclareStatusComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, createTime } = values;
+    const { noList, noType, uploadDate } = values;
     gridStore.setQueryParams({
       noList: compact(noList),
       noType,
-      createTime: convertPredefinedRange(createTime),
+      uploadDate: convertPredefinedRange(uploadDate),
     });
   }, []);
 
@@ -255,7 +255,7 @@ function DeclareStatusComponent() {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+          <Form.Item name="uploadDate" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
             <PredefinedRange label={t("数据生成时间")} />
           </Form.Item>
         </Col>

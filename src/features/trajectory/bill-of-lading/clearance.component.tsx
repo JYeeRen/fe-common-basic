@@ -121,7 +121,7 @@ function ClearanceComponent() {
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="status"
             label={<span style={{ height: "30px" }}>{t("回传状态")}</span>}
@@ -129,12 +129,12 @@ function ClearanceComponent() {
             <SearchSelect optionKey="clearanceFileStatusTypes" />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item
             name="customerName"
             label={<span style={{ height: "30px" }}>{t("客户名称")}</span>}
           >
-            <Input />
+            <Input placeholder="" />
           </Form.Item>
         </Col>
       </FilterContainer>

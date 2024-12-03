@@ -140,6 +140,7 @@ const navConfig = (): TopNavItem[] => [
       "warehouse.track",
       "warehouse.pallet",
       "warehouse.receipt_issue",
+      "warehouse.uld",
     ],
     sidenavs: [
       {
@@ -194,6 +195,37 @@ const navConfig = (): TopNavItem[] => [
             label: t("托盘信息管理"),
             permission: "warehouse.pallet"
           }
+        ]
+      },
+      {
+        key: "/warehouse/uld",
+        label: t("ULD管理"),
+        children: [
+          {
+            key: "/warehouse/uld/info",
+            label: t("ULD管理"),
+            permission: "warehouse.uld"
+          }
+        ]
+      },
+    ],
+  },
+  {
+    key: "baseinfo",
+    label: t("基础资料管理"),
+    permissions: [
+      "warehouse.vendor",
+    ],
+    sidenavs: [
+      {
+        key: "/baseinfo/vendor",
+        label: t("基础资料管理"),
+        children: [
+          {
+            key: "/baseinfo/vendor/list",
+            label: t("Vendor信息库"),
+            permission: "warehouse.vendor"
+          },
         ]
       },
     ],

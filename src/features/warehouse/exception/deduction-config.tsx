@@ -30,7 +30,8 @@ export const getColumns = (params: {
         {
             key: "ata",
             dataIndex: "ata",
-            title: t("ATA"),      
+            title: t("ATA"),    
+            sorter: true,  
         },
         {
             key: "receiptStatus",

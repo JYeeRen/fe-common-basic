@@ -78,6 +78,7 @@ export const getColumns = (
       key: "atd",
       dataIndex: "atd",
       title: t("ATD"),
+      sorter: true,
       onCell: (record: CustomsTrack) =>
       ({
         record,

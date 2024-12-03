@@ -224,6 +224,37 @@ const Warehouse: RouteObject[] = [
           .default,
     }),
   },
+  {
+    path: "/warehouse/uld/info",
+    lazy: async () => ({
+      Component: (await import("@features/warehouse/uld/uld-manage.component"))
+        .default,
+    }),
+  },
+]
+
+const BaseInfo: RouteObject[] = [
+  {
+    path: "/baseinfo/vendor/list",
+    lazy: async () => ({
+      Component: (await import("@features/baseinfo/vendor/vendor-info.component"))
+        .default,
+    }),
+  },
+  {
+    path: "/baseinfo/vendor/create",
+    lazy: async () => ({
+      Component: (await import("@features/baseinfo/vendor/vendor-info-create.component"))
+        .default,
+    }),
+  },
+  {
+    path: "/baseinfo/vendor/edit/:id",
+    lazy: async () => ({
+      Component: (await import("@features/baseinfo/vendor/vendor-info-edit.component"))
+        .default,
+    }),
+  },
 ]
 
 export const routesConfig: RouteObject[] = [
@@ -249,8 +280,16 @@ export const routesConfig: RouteObject[] = [
         Component: Welcome,
       },
       {
+        path: "/baseinfo",
+        Component: Welcome,
+      },
+      {
         path: "/warehouse",
         children: [...Warehouse],
+      },
+      {
+        path: "/baseinfo",
+        children: [...BaseInfo],
       },
       {
         path: "/customs",

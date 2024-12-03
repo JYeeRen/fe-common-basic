@@ -11,6 +11,6 @@ export class CustomerInfoListStore {
 
   @loading()
   async export(params: CustomerQueryParams) {
-    await net.download("/api/customsRisk/findList", params);
+    await net.download("/api/customsRisk/export", params);
   }
 }

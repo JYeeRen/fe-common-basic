@@ -35,7 +35,7 @@ function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
 
   const initialValues = useMemo(() => ({
-    createTime: getTime({ predefined: 31 })
+    createTime: getTime({ predefined: 7 })
   }), []);
 
   const gridStore = ClientGrid.useGridStore<R>(config.getRows, { initialValues });
@@ -102,13 +102,18 @@ function WaybillStatisticsComponent() {
     if (pagination) {
       return undefined;
     }
+
+    if (store.dynamicCols.length === 0) {
+      return undefined;
+    }    
+
     const dynamicCells = store.dynamicCols.map((col, index) => {
       const val = sumBy(pageData, row => Number(get(row, (col as any).dataIndex) ?? ''));
       return (<TableSummary.Cell key={col.key} index={6 + index}>{val}</TableSummary.Cell>);
     });
     return (
       <TableSummary fixed>
-      <TableSummary.Row>
+      <TableSummary.Row style={{ backgroundColor: '#ffff006e' }}>
         <TableSummary.Cell index={0}></TableSummary.Cell>
         <TableSummary.Cell index={1}></TableSummary.Cell>
         <TableSummary.Cell index={2}></TableSummary.Cell>
@@ -214,6 +219,7 @@ function WaybillStatisticsComponent() {
           components={{ body: { cell: EditableCell } }}
           widthFit
           bordered
+          minHeight={30}
           loading={gridStore.loading}
           rowSelection={{ type: "checkbox" }}
           rowKey="id"
@@ -241,7 +247,10 @@ function WaybillStatisticsComponent() {
           onClose={store.hideSetting.bind(store)}
           fieldColumns={store.setting}
           visible={store.settingVisible}
-          setShowColumns={store.setSetting.bind(store)}
+          setShowColumns={async (keys) => {
+            await store.setSetting(keys);
+            await gridStore.loadData();
+          }}
           selectedKeys={store.selectedCols}
         />
       )}

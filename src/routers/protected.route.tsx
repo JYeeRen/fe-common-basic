@@ -50,6 +50,11 @@ const routerPermission: Record<string, string> = {
   "/warehouse/exception/deduction": "warehouse.deduction",
   "/warehouse/pallet/info": "warehouse.pallet",
   "/warehouse/exception/problem": "warehouse.receipt_issue",
+  "/warehouse/uld/info": "warehouse.uld",
+  // 基础资料更新
+  "/baseinfo/vendor/list": "warehouse.vendor",
+  "/baseinfo/vendor/create": "warehouse.vendor",
+  "/baseinfo/vendor/edit/:id": "warehouse.vendor",
 };
 
 export function ProtectedRoute(props: PropsWithChildren) {

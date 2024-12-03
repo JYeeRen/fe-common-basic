@@ -1,3 +1,4 @@
+import { Block } from "@components";
 import {
   TableProps,
   Table as AntTable,
@@ -11,12 +12,13 @@ import { useColumnAutoWidth } from "./useColumnAutoWidth";
 import { useHighlight } from "./useHighlight";
 import { getRowKey } from "./getRowKey";
 import { colConfigStore } from "./useColFilter";
-import { Block } from "../block/block";
 
 interface ExternalTableProps {
   widthFit?: boolean;
   autoHeight?: boolean;
+  tableHeight?: number
   maxHeight?: number;
+  minHeight?: number;
   enableResize?: false;
   useColWidth?: boolean;
   highlight?: boolean;
@@ -32,6 +34,8 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
     dataSource,
     widthFit,
     enableResize,
+    tableHeight,
+    minHeight,
     // autoHeight = true,
     // maxHeight = 250,
     rowKey,
@@ -68,7 +72,7 @@ export const Table = observer((props: TableProps & ExternalTableProps) => {
       }}
       maxWidth="100%"
       minWidth="100%"
-      minHeight={300}
+      minHeight={minHeight ?? 300}
       defaultSize={{
         width: "100%",
         height: "auto",

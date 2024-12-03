@@ -44,7 +44,7 @@ import clsx from "clsx";
 
 function TrackTraceComponent() {
   const { store, t, navigate } = useStore(BillOfLadingStore)();
-  const initialValues: FormValues = useMemo(() => ({ createTime: getTime({ predefined: 31 }) }), []);
+  const initialValues: FormValues = useMemo(() => ({ createTime: getTime({ predefined: 7 }) }), []);
 
   const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows, { initialValues });
 

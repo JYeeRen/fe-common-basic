@@ -10,6 +10,10 @@ export interface CustomsTrackAPI {
     };
     res: ListRes<Schema.PackageCustomsTrack>;
   };
+  "/api/customsTrack/exportPackageTrack": {
+    params: CustomsTrackAPI['/api/customsTrack/findPackageList']['params'];
+    res: { url: string; fileName: string };
+  };
   "/api/customsTrack/findMawbList": {
     params: ListParams & {
       masterWaybillNoList?: string[];
