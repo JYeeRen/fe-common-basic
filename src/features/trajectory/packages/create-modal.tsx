@@ -243,9 +243,10 @@ const Field = observer((props: FieldProps) => {
             <Form.Item noStyle dependencies={["truckType"]}>
               {() => (
                 <Form.Item
-                  required={form.getFieldValue("truckType") === "Y"}
+                  // required={form.getFieldValue("truckType") === "Y"}
                   label={t("卡转目的地口岸")}
                   name="transferDestinationPort"
+                  rules={[{ required: form.getFieldValue("truckType") === "Y" }]}
                 >
                   <Input />
                 </Form.Item>

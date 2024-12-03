@@ -22,6 +22,7 @@ import {compact} from "lodash";
 import optionsService from "@services/options.service.ts";
 import {ReceiptIssueLink, WarehouseProblemFormValues} from "@features/warehouse/exception/type.ts";
 import {ProblemCreateModalComponent} from "@features/warehouse/exception/problem-create-modal.component.tsx";
+import styles from "@features/warehouse/prediction/prediction-operation.module.less";
 
 interface IProblemModal {
     mainStore: ProblemStore,
@@ -35,12 +36,14 @@ export const ProblemModalComponent = observer((props: IProblemModal) => {
     const {store} = useStore(ProblemModalStore, gridStore)(gridStore);
 
     useEffect(() => {
-        store.gridStore.loadData();
+      // gridStore.setQueryParams({arrivePortCode: mainStore.problemLinkSelected?.arrivePortCode});
+      // store.gridStore.loadData();
     }, [store]);
 
     const handleFinish = useCallback((values: any = {}) => {
+        if (!mainStore.problemLinkSelected) return;
         const {noList, noType} = values;
-        gridStore.setQueryParams({noList: compact(noList), noType});
+        gridStore.setQueryParams({noList: compact(noList), noType, arrivePortCode: mainStore.problemLinkSelected?.arrivePortCode});
     }, []);
 
     const handleLink = async (value: ReceiptIssueLink) => {
@@ -94,7 +97,7 @@ export const ProblemModalComponent = observer((props: IProblemModal) => {
             footer={null}
             afterOpenChange={handleFinish}>
             <FilterContainer onFinish={handleFinish} initialValues={initialValues}>
-                <Col span={12}>
+                <Col span={24}>
                     <div style={{paddingBottom: "8px"}}>
                         <Form.Item noStyle name="noType">
                             <Radio.Group>
@@ -116,6 +119,11 @@ export const ProblemModalComponent = observer((props: IProblemModal) => {
                             placeholder={t("最多可查询50条，以逗号，空格或回车隔开")}
                         />
                     </Form.Item>
+                  <Form.Item>
+                    <span className={styles.tips2}>
+                      {t("Tips: 数据检索仅查找当前选择的问题件所属口岸的提单数据")}
+                    </span>
+                  </Form.Item>
                 </Col>
             </FilterContainer>
             <Table

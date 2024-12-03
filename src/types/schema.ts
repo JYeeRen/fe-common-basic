@@ -233,10 +233,13 @@ export interface WarehouseReceipt {
   masterWaybillNo: string;
   bigBagNo: string;
   tailProviderName: string;
+  tailProviderId: number;
   customerName: string;
   ata: string;
   status: number;
+  arrivePortCode: string;
 }
+
 export interface MawbStatus {
   id: number;
   masterWaybillNo: string;
@@ -318,10 +321,13 @@ export interface ReceiptIssue {
   bigBagNo: string;
   receiptTime: string;
   tailProviderName: string;
+  tailProviderId: number;
   palletCode: string;
   remark: string;
   waybillPhotoFile: boolean;
   status: number;
+  arrivePortCode: string;
+  ata: string;
 }
 
 export interface ReceiptIssueLink {
@@ -330,6 +336,8 @@ export interface ReceiptIssueLink {
   bigBagNo: string;
   tailProviderName: string;
   status: number;
+  arrivePortCode: string;
+  ata: string;
 }
 
 export interface WaybillStatistics {
@@ -365,4 +373,5 @@ export interface UldInfo {
   code: string;
   creator: string;
   creatorTime: string;
+  arrivePortCode: string;
 }

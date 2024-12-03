@@ -188,7 +188,7 @@ export interface WarehouseAPI {
         params: {
             id: number;
         };
-        res: { url: string; fileName: string };
+        res: { urlList: string[] };
     }
 
     "/api/warehouse/receiptIssue/link": {
@@ -204,7 +204,9 @@ export interface WarehouseAPI {
             issueId: number,
             masterWaybillNo: string,
             bigBagNo: string,
-            tailProviderName: string,
+            tailProviderId: string,
+            customerName: string,
+            ata: string,
         };
         res: never;
     }
@@ -215,6 +217,7 @@ export interface WarehouseAPI {
             receiptTime: string,
             palletCode: string,
             tailProviderId: number,
+            arrivePortCode: string,
         };
         res: {
             failed: { number: string, reason: string }[];
@@ -227,7 +230,7 @@ export interface WarehouseAPI {
         params: {
             id: number;
         };
-        res: { url: string; fileName: string };
+        res: { urlList: string[] };
     }
 
     "/api/warehouse/unitLoadDevice/findList": {

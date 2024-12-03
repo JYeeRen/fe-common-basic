@@ -10,10 +10,12 @@ export class PredictionOperationStore {
     id: 0,
     masterWaybillNo: "",
     bigBagNo: "",
+    tailProviderId: NaN,
     tailProviderName: "",
     customerName: "",
     ata: dayjs().format(),
     status: 0,
+    arrivePortCode: "",
   }
 
   constructor() {

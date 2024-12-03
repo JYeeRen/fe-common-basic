@@ -42,6 +42,11 @@ export const getColumns = (params: {
             sorter: true,
         },
         {
+            key: "arrivePortCode",
+            dataIndex: "arrivePortCode",
+            title: t("落地口岸"),
+        },
+        {
             key: "status",
             dataIndex: "status",
             title: t("货物状态"),

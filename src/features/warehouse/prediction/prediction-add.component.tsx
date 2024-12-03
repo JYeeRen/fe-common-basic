@@ -15,6 +15,7 @@ import { isEqual } from "lodash";
 import { InBoundRes } from "@features/warehouse/prediction/type.ts";
 import { convertDate } from "@infra";
 import { useLocation } from "react-router-dom";
+import optionsService from "@services/options.service.ts";
 
 const PredictionAddComponent = observer(() => {
   const gridStore = ClientGrid.useGridStore(PredictionAddConfig.getRows, { autoLoad: false });
@@ -117,6 +118,7 @@ const PredictionAddComponent = observer(() => {
       receiptTimeData,
       palletCode,
       tailProviderId,
+      arrivePortCode,
     } = form.getFieldsValue();
 
     const bigBagIds = gridStore.rowData.map(row => row.id);
@@ -128,6 +130,7 @@ const PredictionAddComponent = observer(() => {
       ) : "",
       palletCode,
       tailProviderId,
+      arrivePortCode,
     }
 
     const res = await store.doInBound(formData);
@@ -140,95 +143,15 @@ const PredictionAddComponent = observer(() => {
     form.setFieldsValue(initialValues);
   };
 
-<<<<<<< HEAD
-    return (
-        <Container
-            className={styles.container}
-            title={t('手动入库信息完善')}
-            loading={store.loading}
-            backable
-            onBack={handleBack}>
-            <Col>
-                <Row>
-                    <Col span={12}>
-                        <Container title={t("选中的待入库包裹列表")}>
-                            <Table
-                                components={{body: {cell: EditableCell}}}
-                                widthFit
-                                bordered
-                                loading={gridStore.loading}
-                                rowKey="id"
-                                dataSource={gridStore.rowData}
-                                columns={columns}
-                                size="small"
-                                pagination={{
-                                    total: gridStore.total,
-                                    pageSize: gridStore.pageSize,
-                                    current: gridStore.page,
-                                    showTotal: (total) => t("共{{total}}条", {total}),
-                                    showQuickJumper: true,
-                                    showSizeChanger: true,
-                                    pageSizeOptions: [50, 100, 200, 500],
-                                    defaultPageSize: 50,
-                                    size: "default",
-                                    onChange: gridStore.onTableChange.bind(gridStore),
-                                }}
-                            />
-                        </Container>
-                    </Col>
-                    <Col span={12}>
-                        <Container title={t("请完善包裹信息")}>
-                            <Form
-                                labelCol={{span: 4}}
-                                wrapperCol={{span: 14}}
-                                form={form}
-                                className={styles.form}
-                                onFinish={onConfirm}>
-                                <Form.Item
-                                    label={t("入库时间")}
-                                    name="receiptTimeData"
-                                    rules={[{required: true}]}
-                                >
-                                    <Space.Compact>
-                                        <Form.Item name="receiptTimeZone" noStyle>
-                                            <SearchSelect
-                                                optionKey="timeZones"
-                                                placeholder={t("选择时区")}
-                                                style={{width: "200px"}}
-                                            />
-                                        </Form.Item>
-                                        <Form.Item name="receiptTimeData" noStyle>
-                                            <DatePicker
-                                                showTime
-                                                style={{width: "300px"}}
-                                                placeholder={t("请选择时间")}
-                                            />
-                                        </Form.Item>
-                                    </Space.Compact>
-                                </Form.Item>
-                                <Form.Item
-                                    label={t("托盘码")}
-                                    name="palletCode"
-                                    rules={[{required: true}]}
-                                >
-                                    <Input placeholder={t("托盘码")}/>
-                                </Form.Item>
-                            </Form>
-                        </Container>
-                    </Col>
-                </Row>
-                <Row justify="end" className="my-4">
-                    <SubmitButton form={form} onClick={onConfirm} style={{marginRight: "8px"}}>
-                        {t("提交")}
-                    </SubmitButton>
-                    <Button className="mr-4" onClick={onReset}>
-                        {t("重置")}
-                    </Button>
-                </Row>
-            </Col>
-        </Container>
-    );
-=======
+  const handleTailChange = (value: any) => {
+    if (!value) {
+      form.setFieldValue('arrivePort', '');
+      return;
+    }
+    const obj = optionsService.portNameByTail.find((item: any) => item.value === value);
+    form.setFieldValue('arrivePort', obj?.label);
+  };
+
   return (
     <Container
       className={styles.container}
@@ -267,8 +190,8 @@ const PredictionAddComponent = observer(() => {
           <Col span={12}>
             <Container title={t("请完善包裹信息")}>
               <Form
-                labelCol={{ span: 4 }}
-                wrapperCol={{ span: 14 }}
+                // labelCol={{ span: 4 }}
+                // wrapperCol={{ span: 14 }}
                 form={form}
                 className={styles.form}
                 onFinish={onConfirm}>
@@ -299,7 +222,7 @@ const PredictionAddComponent = observer(() => {
                   name="palletCode"
                   rules={[{ required: true }]}
                 >
-                  <Input placeholder={t("托盘码")} />
+                  <Input placeholder={t("托盘码")}/>
                 </Form.Item>
                 <Form.Item
                   name="tailProviderId"
@@ -308,7 +231,20 @@ const PredictionAddComponent = observer(() => {
                 >
                   <SearchSelect
                     optionKey="trailProviders"
+                    onChange={handleTailChange}
                   />
+                </Form.Item>
+                <Form.Item
+                  label={t("入库口岸")}
+                  name="arrivePort"
+                  rules={[{ required: true }]}
+                >
+                  <Input disabled/>
+                </Form.Item>
+                <Form.Item>
+                  <span style={{ color: "red" }}>
+                    {t("注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商")}
+                  </span>
                 </Form.Item>
               </Form>
               <span style={{ color: "red" }}>
@@ -328,7 +264,6 @@ const PredictionAddComponent = observer(() => {
       </Col>
     </Container>
   );
->>>>>>> github/feat-4.2
 })
 
 export default PredictionAddComponent;

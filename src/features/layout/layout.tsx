@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite";
 import { useMenuCtrl } from "./useMenuCtrl";
 import styles from "./layout.module.less";
 import optionsService from "@services/options.service";
+import { PortCode } from "./components/portCode.component";
 
 const { Header, Content, Sider } = Layout;
 
@@ -46,6 +47,7 @@ const MainLayout = observer(() => {
           }}
           selectedKeys={[topnav]}
         />
+        <PortCode />
         <Lang />
         <UserInfo />
       </Header>

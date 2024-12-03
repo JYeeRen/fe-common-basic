@@ -24,18 +24,6 @@ export const getColumns = (params: {
       sorter: true,
     },
     {
-      key: "creator",
-      dataIndex: "creator",
-      title: t("创建人"),
-      sorter: true,
-    },
-    {
-      key: "createTime",
-      dataIndex: "createTime",
-      title: t("创建时间"),
-      sorter: true,
-    },
-    {
       key: 'operation',
       title: t('航空板照片'),
       width: 200,
@@ -51,6 +39,24 @@ export const getColumns = (params: {
 
         return (<OperationButtons items={operations}/>);
       },
+    },
+    {
+      key: "arrivePortCode",
+      dataIndex: "arrivePortCode",
+      title: t("所属口岸"),
+      sorter: true,
+    },
+    {
+      key: "creator",
+      dataIndex: "creator",
+      title: t("创建人"),
+      sorter: true,
+    },
+    {
+      key: "createTime",
+      dataIndex: "createTime",
+      title: t("创建时间"),
+      sorter: true,
     },
   ];
 }

@@ -168,7 +168,7 @@ function WaybillStatisticsComponent() {
             </Col>
           </Row>
           <Row>
-            <Col span={12}>
+            {/* <Col span={12}>
               <Form.Item
                 name="portCode"
                 label={t("落地港口2")}
@@ -176,7 +176,7 @@ function WaybillStatisticsComponent() {
               >
                 <Input allowClear />
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col span={12}>
               <Form.Item
                 name="flightNumber"

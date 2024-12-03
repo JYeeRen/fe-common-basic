@@ -52,9 +52,9 @@ const routerPermission: Record<string, string> = {
   "/warehouse/exception/problem": "warehouse.receipt_issue",
   "/warehouse/uld/info": "warehouse.uld",
   // 基础资料更新
-  "/baseinfo/vendor/list": "warehouse.vendor",
-  "/baseinfo/vendor/create": "warehouse.vendor",
-  "/baseinfo/vendor/edit/:id": "warehouse.vendor",
+  "/baseinfo/vendor/list": "basic_information.vendor",
+  "/baseinfo/vendor/create": "basic_information.vendor",
+  "/baseinfo/vendor/edit/:id": "basic_information.vendor",
 };
 
 export function ProtectedRoute(props: PropsWithChildren) {

@@ -45,6 +45,7 @@ export type OptionKey =
   | "receiptIssueStatusTypes"
   | "trailProviders"
   | "trailProvidersNoPort"
+  | "portNameByTail"
   | "vendorTypes"
   | "portCodes"
   | "activeDisable";
@@ -85,6 +86,7 @@ class OptionService {
   providers: { key: string; label: string }[] = [];
   trailProviders: InnerOptions = [];
   trailProvidersNoPort: InnerOptions = [];
+  portNameByTail: InnerOptions = [];
   vendorTypes: InnerOptions = [];
   portCodes: InnerOptions = [];
   activeDisable: InnerOptions = [];
@@ -286,6 +288,14 @@ class OptionService {
       optsfrom: "trailProvidersNoPort",
       formater: this.id_val_formatter,
     },
+    portNameByTail: {
+      url: "/api/warehouse/option/getTailProviders",
+      dataGetter: "providers",
+      optsfrom: "trailProviders",
+      formater: (data: any) => {
+        return data?.map((item: any) => ({ label: item.portCode, value: item.id })) ?? [];
+      },
+    },
     vendorTypes: {
       url: "/api/warehouse/option/getVendorTypes",
       dataGetter: "vendorTypes",
@@ -318,8 +328,8 @@ class OptionService {
       "/api/option/getPrealertTemplates"
     );
     const permissions = await net.post("/api/option/getPermissions");
-    const trailProviders = await net.post("/api/warehouse/option/getTailProviders", {disablePortCode: false});
-    const trailProvidersNoPort = await net.post("/api/warehouse/option/getTailProviders", {disablePortCode: true});
+    const trailProviders = await net.post("/api/warehouse/option/getTailProviders", { disablePortCode: false });
+    const trailProvidersNoPort = await net.post("/api/warehouse/option/getTailProviders", { disablePortCode: true });
     const vendorTypes = await net.post("/api/warehouse/option/getVendorTypes");
     const portCodes = await net.post("/api/warehouse/option/getPortCodes");
     localStorage.setItem("options.base", base);

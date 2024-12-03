@@ -16,6 +16,7 @@ import { PredictionOperationStore } from "@features/warehouse/prediction/predict
 import styles from "./prediction-operation.module.less";
 import { observer } from "mobx-react-lite";
 import { dayjs } from "@infra";
+import optionsService from "@services/options.service.ts";
 
 interface IPredictionOperation {
   title: string;
@@ -45,7 +46,6 @@ function PredictionOperationComponent(props: IPredictionOperation) {
 
   const handleFinish = async (values: any) => {
     values.ata = dayjs(values.ata).format();
-    values.tailProviderName = values.tailProviderName.label;
     await store.handleSubmit(values);
     navigate(-1);
   };
@@ -75,6 +75,15 @@ function PredictionOperationComponent(props: IPredictionOperation) {
     }
   };
 
+  const handleTailChange = (value: any) => {
+    if (!value) {
+      form.setFieldValue('arrivePort', '');
+      return;
+    }
+    const obj = optionsService.portNameByTail.find((item: any) => item.value === value);
+    form.setFieldValue('arrivePort', obj?.label);
+  };
+
   return (
     <Container
       className={styles.container}
@@ -84,8 +93,8 @@ function PredictionOperationComponent(props: IPredictionOperation) {
       onBack={handleBack}
     >
       <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        // labelCol={{ span: 4 }}
+        // wrapperCol={{ span: 14 }}
         form={form}
         className={styles.form}
         onFinish={handleFinish}
@@ -96,23 +105,23 @@ function PredictionOperationComponent(props: IPredictionOperation) {
           name="masterWaybillNo"
           rules={[{ required: true }]}
         >
-          <Input placeholder={t("请填写提单号")} disabled={!!store.id} />
+          <Input placeholder={t("请填写提单号")} disabled={!!store.id}/>
         </Form.Item>
         <Form.Item
           label={t("袋号")}
           name="bigBagNo"
           rules={[{ required: true }]}
         >
-          <Input placeholder={t("请填写袋号")} disabled={!!store.id} />
+          <Input placeholder={t("请填写袋号")} disabled={!!store.id}/>
         </Form.Item>
         <Form.Item
           label={t("尾程服务商名称")}
-          name="tailProviderName"
+          name="tailProviderId"
           rules={[{ required: true }]}
         >
           <SearchSelect
-            optionKey="trailProvidersNoPort"
-            labelInValue
+            optionKey="trailProviders"
+            onChange={handleTailChange}
           />
         </Form.Item>
         <Form.Item
@@ -120,7 +129,7 @@ function PredictionOperationComponent(props: IPredictionOperation) {
           name="customerName"
           rules={[{ required: true }]}
         >
-          <Input placeholder={t("请填写") + t("客户名称")} />
+          <Input placeholder={t("请填写") + t("客户名称")}/>
         </Form.Item>
         <Form.Item
           label={t("到港时间")}
@@ -130,6 +139,19 @@ function PredictionOperationComponent(props: IPredictionOperation) {
             showTime
             style={{ marginLeft: "10px" }}
           />
+        </Form.Item>
+        <Form.Item
+          label={t("入库口岸")}
+          name="arrivePort"
+          rules={[{ required: true }]}
+        >
+          <Input disabled>
+          </Input>
+        </Form.Item>
+        <Form.Item>
+          <span className={styles.tips2}>
+            {t("注意：入库口岸与所选尾程商口岸一致，不支持手动输入。若有误，请检查所选尾程服务商")}
+          </span>
         </Form.Item>
         <Block if={!!store.id}>
           <Form.Item>

@@ -37,13 +37,13 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       title: t("包裹信息获取时间"),
     },
     {
-      key: "mawbInfo.etd",
+      key: "etd",
       dataIndex: ["mawbInfo", "etd"],
       title: t("ETD"),
       sorter: true
     },
     {
-      key: "mawbInfo.eta",
+      key: "eta",
       dataIndex: ["mawbInfo", "eta"],
       title: t("ETA"),
       sorter: true

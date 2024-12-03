@@ -7,16 +7,18 @@ import {
   FilterContainer,
   FilterTextArea,
   Form,
+  Modal,
   Row,
   Table,
-  textareaMaxLengthRule
+  textareaMaxLengthRule,
+  Image
 } from "@components";
 import * as UldManageConfig from "@features/warehouse/uld/uld-manage.config.tsx";
 import { useStore } from "@hooks";
 import { UldManageStore } from "@features/warehouse/uld/uld-manage.store.ts";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { compact } from "lodash";
-import { UldInfoFormValues } from "@features/warehouse/uld/uld-manage.type.ts";
+import { UldInfo, UldInfoFormValues } from "@features/warehouse/uld/uld-manage.type.ts";
 import styles from "@features/warehouse/uld/uld-manage.module.less";
 import { DeleteOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
@@ -24,6 +26,8 @@ import { observer } from "mobx-react-lite";
 function UldManageComponent() {
   const gridStore = ClientGrid.useGridStore(UldManageConfig.getRows, { autoLoad: false });
   const { store, t } = useStore(UldManageStore, gridStore)(gridStore);
+  const [ImgVisible, setImgVisible] = useState(false);
+  const [ImgUrl, setImgUrl] = useState<string[]>([]);
 
   useEffect(() => {
     store.gridStore.loadData();
@@ -34,12 +38,24 @@ function UldManageComponent() {
     gridStore.setQueryParams({ codes: compact(codes) });
   }, []);
 
-  const handleShow = useCallback(() => {
-
+  const handleShow = useCallback(async (data: UldInfo) => {
+    const res = await store.showInfo(data.id);
+    setImgUrl(res.urlList);
+    setImgVisible(true);
   }, []);
 
-  const handleDelete = useCallback(() => {
+  const handleCancel = () => setImgVisible(false);
 
+  const handleDelete = useCallback(() => {
+    Modal.confirm({
+      title: t("操作确认"),
+      content: t(
+        "警告！一旦确认继续，数据将永久删除，此操作不可恢复，请谨慎操作。"
+      ),
+      okText: t("确认删除"),
+      cancelText: t("取消"),
+      onOk: () => store.delete(store.selectedRowKeys),
+    });
   }, []);
 
   const initialValues: UldInfoFormValues = useMemo(
@@ -77,6 +93,7 @@ function UldManageComponent() {
             className="operation-btn mr-4 mb-4"
             icon={<DeleteOutlined/>}
             onClick={handleDelete}
+            disabled={store.selectedRowKeys.length === 0}
           >
             {t("批量删除")}
           </Button>
@@ -87,7 +104,7 @@ function UldManageComponent() {
           bordered
           loading={gridStore.loading}
           rowSelection={{
-            hideSelectAll: true,
+            hideSelectAll: false,
             type: "checkbox",
             onChange: (keys) => store.setSelectedRowKeys(keys as number[]),
             selectedRowKeys: store.selectedRowKeys,
@@ -111,6 +128,36 @@ function UldManageComponent() {
           onChange={gridStore.onCommonTableChange.bind(gridStore)}
         />
       </Container>
+      <Modal
+        onCancel={handleCancel}
+        title={t("图片查看")}
+        footer={null}
+        visible={ImgVisible}
+      >
+        <div className={styles.prevImgContainer}>
+          <Image.PreviewGroup
+            preview={{
+              onVisibleChange: (value: boolean) => {
+                if (value == false) {
+                  setImgVisible(true);
+                }
+              },
+            }}
+          >
+            {ImgUrl.map((imageUrl, index) => (
+              <Image
+                key={index}
+                src={imageUrl}
+                alt=""
+                width={100}
+                height={100}
+                className={styles.prevImg}
+                onClick={() => setImgVisible(false)}
+              />
+            ))}
+          </Image.PreviewGroup>
+        </div>
+      </Modal>
     </Container>
   )
 }
