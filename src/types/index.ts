@@ -5,3 +5,10 @@ export * from './api';
 
 export type AnyObject = Record<PropertyKey, any>;
 
+export interface ImportRes {
+  fileName: string;
+  url: string;
+  total: number;
+  success: number;
+  rejected: { rowIndex: number, row: string[], reason: string }[];
+}

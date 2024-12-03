@@ -124,7 +124,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "customsSubmittedTime",
+      key: "2",
       dataIndex: "customsSubmittedTime",
       title: t("数据提交海关"),
       sorter: true,
@@ -135,7 +135,7 @@ export const getColumns = (
           value: record.customsSubmittedTime,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "customs_submitted",
+              key: "2",
               title: t("数据提交海关"),
               value: record.customsSubmittedTime,
               record
@@ -144,7 +144,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "customsAcceptedTime",
+      key: "3",
       dataIndex: "customsAcceptedTime",
       title: t("海关接收数据"),
       sorter: true,
@@ -155,7 +155,7 @@ export const getColumns = (
           value: record.customsAcceptedTime,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "customs_accepted",
+              key: "3",
               title: t("海关接收数据"),
               value: record.customsAcceptedTime,
               record
@@ -164,7 +164,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "customsReleaseTime",
+      key: "5",
       dataIndex: "customsReleaseTime",
       title: t("海关放行（整票放行）"),
       sorter: true,
@@ -175,7 +175,7 @@ export const getColumns = (
           value: record.customsReleaseTime,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "customs_release",
+              key: "5",
               title: t("海关放行（整票放行）"),
               value: record.customsReleaseTime,
               record
@@ -184,7 +184,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "pickedUpTime",
+      key: "1",
       dataIndex: "pickedUpTime",
       title: t("货物已提货"),
       sorter: true,
@@ -195,7 +195,7 @@ export const getColumns = (
           value: record.pickedUpTime,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "picked_up",
+              key: "1",
               title: t("货物已提货"),
               value: record.pickedUpTime,
               record
@@ -204,7 +204,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "handedOverTime",
+      key: "6",
       dataIndex: "handedOverTime",
       title: t("货物交接尾程"),
       sorter: true,
@@ -215,7 +215,7 @@ export const getColumns = (
           value: record.handedOverTime,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "handed_over",
+              key: "6",
               title: t("货物交接尾程"),
               value: record.handedOverTime,
               record
@@ -224,7 +224,7 @@ export const getColumns = (
     },
     {
       width: 230,
-      key: "customsInspection",
+      key: "4",
       dataIndex: "customsInspection",
       title: t("海关查验（整票查验）"),
       sorter: true,
@@ -235,7 +235,7 @@ export const getColumns = (
           value: record.customsInspection,
           handleDoubleCick: () =>
           handleDoubleCick({
-              key: "customs_inspection",
+              key: "4",
               title: t("海关查验（整票查验）"),
               value: record.customsInspection,
               record

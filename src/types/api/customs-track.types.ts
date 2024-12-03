@@ -6,7 +6,7 @@ export interface CustomsTrackAPI {
     params: ListParams & {
       noList?: string[];
       noType?: number;
-      actionCode?: string;
+      status?: number;
     };
     res: ListRes<Schema.PackageCustomsTrack>;
   };
@@ -75,7 +75,7 @@ export interface CustomsTrackAPI {
       ids: number[];
       operateTime: string;
       timeZone: string;
-      actionCode: string;
+      status: number;
     };
     res: { failed: { number: string; reason: string }[] };
   };
@@ -87,7 +87,7 @@ export interface CustomsTrackAPI {
     params: {
       ids: number[];
       operateTime: string;
-      waybillStatusCode: string;
+      status: string;
       timeZone: string;
     };
     res: { failed: { number: string; reason: string }[] };

@@ -2,6 +2,8 @@ import { TableColumnsType } from "@components";
 import { net } from "@infra";
 import { t } from "@locale";
 import { Role } from "./types";
+import { find } from "lodash";
+import optionsService from "@services/options.service";
 
 export const getColumns = (): TableColumnsType<Role> => {
   return [
@@ -9,6 +11,13 @@ export const getColumns = (): TableColumnsType<Role> => {
       key: "email",
       dataIndex: "email",
       title: t("收件邮箱"),
+      width: 300,
+    },
+    {
+      key: "types",
+      dataIndex: "types",
+      title: t("邮件权限"),
+      render: (value: string[]) => value.map(type => find(optionsService.subscriptionEmailTypes, { value: type })?.label).join(','),
     }
   ];
 };

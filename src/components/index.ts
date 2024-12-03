@@ -36,6 +36,8 @@ export { FileUpload } from './file-upload/file-upload.component';
 
 export { PredefinedRange, getTime, convertPredefinedRange } from './predefinedRange';
 
+export { UploadModal } from './uploadModal/uploadModal.component';
+
 // antd begin
 export type { Breakpoint } from "antd";
 export type { GetProps, GetRef, GetProp } from "antd";

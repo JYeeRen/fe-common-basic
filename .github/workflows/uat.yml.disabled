@@ -1,0 +1,64 @@
+name: uat
+
+on:
+  push:
+    branches:
+      - feat-v2.1
+  pull_request:
+    types: [ closed ]
+    branches: [ "main" ]
+env:
+  version: '0.0.1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 🏗 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: 🗂️ Install dependencies
+        run: pnpm i
+
+      - name: 🔨 Build
+        env:
+          VITE_ENV: 迭代6
+          VITE_BACKEND_HOST: "//rt-dev.rntlogistic-us.com:8081/"
+        run: pnpm uat
+        
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: zippex
+          path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: zippex
+          path: ./zippex
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: ./zippex
+          target: /www/wwwroot

@@ -27,8 +27,8 @@ export type AddPacakageTrackFormValues = {
   ids: number[];
   operateTime: string;
   timeZone: string;
-  actionCode: string;
-  reasonCode?: string;
+  status: number;
+  reason?: string;
   loadingType?: string;
   handoverType?: string;
   truckType?: string;

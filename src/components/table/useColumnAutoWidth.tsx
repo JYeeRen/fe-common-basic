@@ -30,10 +30,15 @@ export function useColumnAutoWidth<T>(
 
       const titleWidth = getTextWidth(title as string);
 
+      let idx = 0;
       const maxValue = dataSource.reduce((acc, row) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const value = get(row, dataIndex as any) ?? "";
+        let value = get(row, dataIndex as any) ?? "";
+        if ((col as any).renderWidth) {
+          value = col.render?.(value, row, idx) ?? '';
+        }
         acc = acc.length > value.length ? acc : value;
+        idx += 1;
         return acc;
       }, "");
 

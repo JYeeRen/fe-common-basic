@@ -73,7 +73,7 @@ export const ColumnSelectModal = observer((props: ColumnSelectModalProps) => {
           }}
           titles={[t("待选项"), t("已选项")]}
           onChange={handleChange}
-          render={(item) => item[({ en: 'enName', 'zh-CN': 'cnName'} as const)[appService.lang]]}
+          render={(item) => item[({ en: 'enName', 'zh': 'cnName' } as const)[appService.lang]]}
         />
       </div>
     </Modal>

@@ -3,7 +3,7 @@ import { User } from "./types";
 import { Sources } from "@types";
 
 interface LocalValues {
-  lang: 'zh-CN' | 'en';
+  lang: 'zh' | 'en';
   authToken?: string;
   user?: User;
   "options.base"?: Sources["/api/option/getBase"]["res"];

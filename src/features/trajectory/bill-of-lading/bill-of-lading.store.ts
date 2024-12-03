@@ -44,7 +44,7 @@ export class BillOfLadingStore {
     const { failed } = await net.post("/api/customsTrack/addMawbTrack", {
       ids: [id],
       timeZone: tz,
-      waybillStatusCode: key,
+      status: key,
       operateTime: value,
 
     });

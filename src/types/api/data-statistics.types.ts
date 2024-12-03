@@ -1,7 +1,18 @@
 import * as Schema from "../schema";
-import { ListParams, ListRes } from "./common.types";
+import { File, ListParams, ListRes } from "./common.types";
 
 export interface DataStatisticsAPI {
+  "/api/dataStatistics/exportBillOfLading": {
+    params: {
+      ids: number[];
+      date: string;
+      shipFromName: string;
+      shipFromAddress: string;
+      shipToVendorId: number;
+      carrierVendorId: number;
+    };
+    res: File;
+  };
   "/api/dataStatistics/getSetting": {
     params?: never;
     res: {

@@ -38,6 +38,18 @@ export interface BackendOptions {
 }
 
 export interface OptionsAPI {
+  "/api/option/getVendorCarriers": {
+    params?: never;
+    res: {
+      vendors: { id: number; val: string; postCode: string }[];
+    }
+  };
+  "/api/option/getVendorTailProviders": {
+    params?: never;
+    res: {
+      vendors: { id: number; val: string; postCode: string }[];
+    }
+  };
   "/api/option/getTailProviders": {
     params?: never;
     res: {

@@ -4,6 +4,7 @@ import { TableColumnsType } from "@components";
 import { MawbCustomsTrackLog, MawbQueryParams } from "./type";
 import optionsService from "@services/options.service";
 import { find } from "lodash";
+import { ColumnType } from "antd/es/table";
 
 export const getColumns = (): TableColumnsType<MawbCustomsTrackLog> => {
   return [
@@ -13,11 +14,12 @@ export const getColumns = (): TableColumnsType<MawbCustomsTrackLog> => {
       title: t("提单号"),
     },
     {
-      key: "waybillStatusCode",
-      dataIndex: "waybillStatusCode",
+      key: "status",
+      dataIndex: "status",
       title: t("轨迹名称"),
-      render: (value) => find(optionsService.waybillTrackStatusList, { value })?.label,
-    },
+      renderWidth: true,
+      render: (value) => find(optionsService.waybillStatus, { value })?.label,
+    } as ColumnType<MawbCustomsTrackLog>,
     {
       key: "loadingType",
       dataIndex: "loadingType",

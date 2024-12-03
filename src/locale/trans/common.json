@@ -1639,9 +1639,9 @@
         "zh": "生成托盘",
         "en": "Generate Pallet"
     },
-    "批量打印已选项": {
-        "zh": "批量打印已选项",
-        "en": "Batch Print Selected"
+    "托盘码打印": {
+        "zh": "托盘码打印",
+        "en": "Print Pallet Code"
     },
     "新增托盘": {
         "zh": "新增托盘",
@@ -1931,6 +1931,30 @@
         "zh": " 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？ 确认后，全系统数据将切换为选中口岸的数据，是否确认切换口岸？",
         "en": "Upon confirmation, all system data will switch to the data of the selected port. Do you confirm the switch of the port?"
     },
+    "当前口岸": {
+        "zh": "当前口岸",
+        "en": "Curret"
+    },
+    "待切换口岸": {
+        "zh": "待切换口岸",
+        "en": "Switch to"
+    },
+    "生成BOL": {
+        "zh": "生成BOL",
+        "en": "Print BOL"
+    },
+    "配置邮件权限": {
+        "zh": "配置邮件权限",
+        "en": "Subscription"
+    },
+    "可接收邮件类型": {
+        "zh": "可接收邮件类型",
+        "en": "Subscription types"
+    },
+    "邮件权限": {
+        "zh": "邮件权限",
+        "en": "Email subscription"
+    },
     "口岸选择": {
         "zh": "口岸选择",
         "en": "Port"
@@ -1961,7 +1985,7 @@
     },
     "尾程交接": {
         "zh": "尾程交接",
-        "en": "Cargo picked up or delivered time"
+        "en": "Handed over"
     },
     "尾程入仓": {
         "zh": "尾程入仓",
@@ -2118,5 +2142,65 @@
     "确认撤销": {
         "zh": "确认撤销",
         "en": "Confirm Cancel"
+    },
+    "批量上传": {
+        "zh": "批量上传",
+        "en": "Confirm Cancel"
+    },
+    "第1步": {
+        "zh": "第1步",
+        "en": "Step 1"
+    },
+    "第2步": {
+        "zh": "第2步",
+        "en": "Step 2"
+    },
+    "表格模板": {
+        "zh": "表格模板",
+        "en": "Template"
+    },
+    "失败数据如下，请检查后重新上传：": {
+        "zh": "失败数据如下，请检查后重新上传：",
+        "en": "Please check the following failed data and re-upload:"
+    },
+    "下载失败数据表格": {
+        "zh": "下载失败数据表格",
+        "en": "Download the failed data table"
+    },
+    "失败原因": {
+        "zh": "失败原因",
+        "en": "Cause of Failure"
+    },
+    "点击下载空的": {
+        "zh": "点击下载空的",
+        "en": "Click to download empty"
+    },
+    "拖拽到此或点击上传表格": {
+        "zh": "拖拽到此或点击上传表格",
+        "en": "Drag here or click to upload the form"
+    },
+    "支持格式：xls、xlsx": {
+        "zh": "支持格式：xls、xlsx",
+        "en": "Support formats: xls, xlsx"
+    },
+    "未上传数据：{{n}}条。": {
+        "zh": "未上传数据：{{n}}条。",
+        "en": "Unuploaded Data: {{n}} items."
+    },
+    "上传数据：{{n}}条。": {
+        "zh": "上传数据：{{n}}条。",
+        "en": "Uploaded data: {{n}} items."
+    },
+    "上传成功：{{n}}条。": {
+        "zh": "上传成功：{{n}}条。",
+        "en": "Upload successful: {{n}} items."
+    },
+    "上传失败：{{n}}条。": {
+        "zh": "上传失败：{{n}}条。",
+        "en": "Upload failed: {{n}} items."
+    },
+    "完成上传数据：{{n}}条。": {
+        "zh": "完成上传数据：{{n}}条。",
+        "en": "Uploaded successfully: {{n}} items."
     }
 }

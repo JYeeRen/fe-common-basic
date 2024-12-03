@@ -10,6 +10,7 @@ import { TZ } from "../types/api/options.types";
 export type InnerOptions = { value: string | number; label: string }[];
 
 export type OptionKey =
+  | "subscriptionEmailTypes"
   | "reasonCodeList"
   | "clearanceFileStatusTypes"
   | "customsTrackAddPackageNoTypes"
@@ -48,13 +49,22 @@ export type OptionKey =
   | "portNameByTail"
   | "vendorTypes"
   | "portCodes"
+  | "vendorCarriers"
+  | "vendorTailProviders"
+  | "waybillStatus"
+  | "packageStatus"
+  | "packageReason"
   | "activeDisable";
 
 class OptionService {
+  vendorCarriers: InnerOptions = [];
+  vendorTailProviders: InnerOptions = [];
+  subscriptionEmailTypes: InnerOptions = [];
   clearanceFileStatusTypes: InnerOptions = [];
   actives: InnerOptions = [];
   customsItemInfoOtherTypes: InnerOptions = [];
   mawbStatuses: InnerOptions = [];
+  packageReason: InnerOptions = [];
   packageStatuses: InnerOptions = [];
   customsStatusNoTypes: InnerOptions = [];
   customsStatusTypes: InnerOptions = [];
@@ -62,6 +72,8 @@ class OptionService {
   templateTypes: InnerOptions = [];
   templateColumns: BackendOptions["templateColumns"] = [];
   unitTypes: InnerOptions = [];
+  waybillStatus: InnerOptions = [];
+  packageStatus: InnerOptions = [];
   actionCodeList: InnerOptions = [];
   reasonCodeList: InnerOptions = [];
   waybillTrackStatusList: InnerOptions = [];
@@ -110,6 +122,38 @@ class OptionService {
       },
     },
     customsItemInfoOtherTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    vendorCarriers: {
+      url: "/api/option/getVendorCarriers",
+      optsfrom: "vendors",
+      dataGetter: "vendors",
+      formater: this.id_val_formatter,
+    },
+    vendorTailProviders: {
+      url: "/api/option/getVendorTailProviders",
+      optsfrom: "vendors",
+      dataGetter: "vendors",
+      formater: this.id_val_formatter,
+    },
+    subscriptionEmailTypes: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    waybillStatus: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    packageStatus: {
+      url: "/api/option/getBase",
+      optsfrom: "base",
+      formater: this.id_val_formatter,
+    },
+    packageReason: {
       url: "/api/option/getBase",
       optsfrom: "base",
       formater: this.id_val_formatter,

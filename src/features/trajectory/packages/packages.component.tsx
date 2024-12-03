@@ -30,7 +30,7 @@ import { CreateModal } from "./create-modal";
 function TrackTraceComponent() {
   const initialValues: FormValues = useMemo(() => ({
     noType: 0,
-    actionCode: "all",
+    status: 0,
     createTime: getTime({ predefined: 7 })
   }), []);
   const gridStore = ClientGrid.useGridStore(ListConfig.getRows, { initialValues });
@@ -39,12 +39,12 @@ function TrackTraceComponent() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFinish = useCallback((values: any = {}) => {
-    const { noList, noType, actionCode, createTime } = values;
+    const { noList, noType, status, createTime } = values;
     gridStore.setQueryParams({
       createTime: convertPredefinedRange(createTime),
       noList: compact(noList),
       noType: noType,
-      actionCode: actionCode,
+      status: status,
     });
   }, [gridStore]);
 
@@ -77,8 +77,8 @@ function TrackTraceComponent() {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="actionCode" label={t("轨迹名称")}>
-            <SearchSelect optionKey="actionCodeList" />
+          <Form.Item name="status" label={t("轨迹名称")}>
+            <SearchSelect optionKey="packageStatus" />
           </Form.Item>
         </Col>
         <Col span={24}>

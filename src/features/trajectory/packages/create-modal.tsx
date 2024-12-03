@@ -38,7 +38,7 @@ const Field = observer((props: FieldProps) => {
   const [t] = useTranslation();
   const [form] = Form.useForm();
 
-  const initialValues = useMemo(() => ({ actionCode: "" }), []);
+  const initialValues = useMemo(() => ({ status: "" }), []);
 
   const confirm = useCallback(async (): Promise<boolean> => {
     return await new Promise((resolve) => {
@@ -59,7 +59,7 @@ const Field = observer((props: FieldProps) => {
 
   const handleFinish = async () => {
     const {
-      actionCode,
+      status,
       timeZone,
       operateTime,
       reason,
@@ -88,15 +88,15 @@ const Field = observer((props: FieldProps) => {
     store.updateCreateParams({
       timeZone: tzItem?.value ?? "",
       operateTime: targetZoneDate.format("YYYY-MM-DDTHH:mm:ssZ"),
-      actionCode,
-      reasonCode: reason,
+      status,
+      reason,
       loadingType,
       handoverType,
       truckType,
       transferDestinationPort,
     });
 
-    const failed = await store.addPackageTrack(store.createParams);
+    const failed = await store.addPackageTrack(store.createParams as any);
     if (failed.length === 0) {
       store.toogleModalVisible();
       store.gridStore.loadData();
@@ -141,7 +141,7 @@ const Field = observer((props: FieldProps) => {
     });
   };
 
-  const [action, setAction] = useState<string>("");
+  const [action, setAction] = useState<number | undefined>();
 
   return (
     <div className={styles.fieldContainer}>
@@ -154,13 +154,13 @@ const Field = observer((props: FieldProps) => {
       >
         <Form.Item
           label={t("轨迹名称")}
-          name="actionCode"
+          name="status"
           rules={[{ required: true }]}
         >
           <SearchSelect
-            optionKey="actionCodeList"
+            optionKey="packageStatus"
             allowClear={false}
-            omitKey={["all"]}
+            omitKey={[0]}
             style={{ width: "100%" }}
             onChange={(value) => setAction(value)}
           />
@@ -172,7 +172,7 @@ const Field = observer((props: FieldProps) => {
                 placeholder=""
                 optionKey="timeZones"
                 allowClear={false}
-                style={{ width: "160px" }}
+                style={{ width: "200px" }}
               />
             </Form.Item>
             <Form.Item name="operateTime" noStyle rules={[{ required: true }]}>
@@ -185,7 +185,7 @@ const Field = observer((props: FieldProps) => {
             </Form.Item>
           </Space.Compact>
         </Form.Item>
-        {action === "cb_imcustoms_exception" ? (
+        {action === 8 ? (
           <Form.Item
             name="reason"
             label={t("异常原因")}
@@ -193,13 +193,12 @@ const Field = observer((props: FieldProps) => {
           >
             <SearchSelect
               placeholder=""
-              optionKey="reasonCodeList"
+              optionKey="packageReason"
               allowClear={false}
-              style={{ width: "160px" }}
             />
           </Form.Item>
         ) : null}
-        {action === "cb_import_customs_inbound" ? (
+        {action === 1 ? (
           <>
             <Form.Item
               name="loadingType"

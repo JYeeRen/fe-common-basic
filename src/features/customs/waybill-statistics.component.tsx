@@ -24,15 +24,18 @@ import { useStore } from "../../hooks/useStore.hook";
 import { Store } from "./waybill-statistics.store";
 import * as config from "./waybill-statistics-config";
 import styles from "./template-list.module.less";
-import { CloudDownloadOutlined, FilterOutlined } from "@ant-design/icons";
+import { CloudDownloadOutlined, FilterOutlined, PrinterOutlined } from "@ant-design/icons";
 import { useCallback, useMemo, useState } from "react";
 import { dayjs } from "@infra";
 import { compact, get, sumBy } from "lodash";
 import { R } from "./waybill-statistics.types";
 import type { WaybillStatistics } from "./waybill-statistics.types";
+import { WaybillStatisticsBOLModal } from "./waybill-statistics.bol.modal";
 
 function WaybillStatisticsComponent() {
   const { store, t } = useStore(Store)();
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
 
   const initialValues = useMemo(() => ({
     createTime: getTime({ predefined: 7 })
@@ -85,6 +88,7 @@ function WaybillStatisticsComponent() {
     }
     gridStore.setQueryParams(params);
     setPagination(compact(masterWaybillNoList).length === 0)
+    setSelectedRowKeys([]);
   };
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
@@ -128,6 +132,13 @@ function WaybillStatisticsComponent() {
 
   return (
     <Container className={styles.container} loading={store.loading}>
+      <WaybillStatisticsBOLModal
+        loading={store.loading}
+        open={store.bolVisible}
+        onConfirm={store.downloadBOL.bind(store)}
+        onCancel={store.hideBOL.bind(store)}
+        rows={compact(selectedRowKeys.map(id => gridStore.rowData.find(row => row.id === id)))}
+      />
       <FilterContainer
         form={form}
         initialValues={initialValues}
@@ -200,13 +211,23 @@ function WaybillStatisticsComponent() {
         table
       >
         <Row justify="space-between" style={{ padding: "0 10px" }}>
-          <Button
-            className="operation-btn mr-4 mb-4"
-            icon={<FilterOutlined />}
-            onClick={store.showSetting.bind(store)}
-          >
-            {t("设置尾程服务商")}
-          </Button>
+          <span>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<FilterOutlined />}
+              onClick={store.showSetting.bind(store)}
+            >
+              {t("设置尾程服务商")}
+            </Button>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<PrinterOutlined />}
+              onClick={store.showBOL.bind(store)}
+              disabled={selectedRowKeys.length === 0}
+            >
+              {t("生成BOL")}
+            </Button>
+          </span>
           <Button
             className="operation-btn mr-4 mb-4"
             icon={<CloudDownloadOutlined />}
@@ -221,7 +242,11 @@ function WaybillStatisticsComponent() {
           bordered
           minHeight={30}
           loading={gridStore.loading}
-          rowSelection={{ type: "checkbox" }}
+          rowSelection={{
+            type: "checkbox",
+            selectedRowKeys,
+            onChange: (selected) => setSelectedRowKeys(selected as number[])
+          }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}

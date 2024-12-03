@@ -6,14 +6,14 @@ export interface CustomsTrackLogAPI {
     params: ListParams & {
       noList?: string[];
       noType?: number;
-      actionCode?: string;
+      status?: string;
     };
     res: ListRes<Schema.PackagCustomsTrackLog>;
   };
   "/api/customsTrackLog/findMawbList": {
     params: ListParams & {
       masterWaybillNoList?: string[];
-      waybillStatusCode?: string;
+      status?: string;
     };
     res: ListRes<Schema.MawbCustomsTrackLog>;
   };
