@@ -198,7 +198,7 @@ const Field = observer((props: FieldProps) => {
             />
           </Form.Item>
         ) : null}
-        {action === 1 ? (
+        {action === 3 ? (
           <>
             <Form.Item
               name="loadingType"
