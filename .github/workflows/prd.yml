@@ -6,9 +6,9 @@ on:
       - 'release-*'
 env:
   REGISTRY: registry-intl.us-west-1.aliyuncs.com
-  REPO: rt-customs/frontend-dev
+  REPO: rt-customs/frontend-normal
   BUILD_MODE: prd
-  # BACKEND_HOST: //service-zippex-dev.rntlogistic-us.com
+  BACKEND_HOST: //service-rt-normal.rntlogistic-us.com
   # VERSION_TAG: prd
 
 jobs:
