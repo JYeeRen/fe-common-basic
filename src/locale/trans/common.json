@@ -2155,6 +2155,10 @@
         "zh": "第2步",
         "en": "Step 2"
     },
+    "第3步": {
+        "zh": "第3步",
+        "en": "Step 3"
+    },
     "表格模板": {
         "zh": "表格模板",
         "en": "Template"
@@ -2166,6 +2170,18 @@
     "下载失败数据表格": {
         "zh": "下载失败数据表格",
         "en": "Download the failed data table"
+    },
+    "请选择ETA、ETD时区": {
+        "zh": "请选择ETA、ETD时区",
+        "en": "Please select the ETA and ETD time zone"
+    },
+    "ETD时区": {
+        "zh": "ETD时区",
+        "en": "ETD Time Zone"
+    },
+    "ETA时区": {
+        "zh": "ETA时区",
+        "en": "ETA Time Zone"
     },
     "失败原因": {
         "zh": "失败原因",

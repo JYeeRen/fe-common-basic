@@ -16,8 +16,7 @@ import {
   Row,
   SearchSelect,
   Table,
-  textareaMaxLengthRule,
-  UploadModal,
+  textareaMaxLengthRule
 } from "@components";
 import { ClearanceOfGoodsStore } from "./clearance-of-goods.store";
 import * as CustomItemConfig from "./clearance-of-goods.config";
@@ -28,6 +27,7 @@ import { CustomITemsQueryParams } from "./types";
 import { compact } from "lodash";
 import { uploadCols } from "./clearance-of-goods.upload-cols";
 import i18next from "i18next";
+import { UploadModal } from "./clearance-of-goods.upload";
 
 function ClearanceOfGoodsComponent() {
   const { t, store } = useStore(ClearanceOfGoodsStore)();
