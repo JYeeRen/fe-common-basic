@@ -65,7 +65,6 @@ export const authProvider: AuthProvider = {
     localStorage.setItem("user", userInfo);
     authProvider.isAuthenticated = true;
     authProvider.resetPwd = userInfo.resetPwd;
-    authProvider.resetPwd = true;
     authProvider.username = username;
     authProvider.expireIn = expireIn;
 
