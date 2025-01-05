@@ -35,6 +35,7 @@ export default function Format() {
 
     setState(null);
     setError(null);
+    setResFile(null);
   
     const file = fileList[0];
     if (!file.originFileObj) {
