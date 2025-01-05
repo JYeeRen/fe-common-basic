@@ -1,5 +1,6 @@
 import { loading, net } from "@infra";
-import { makeAutoObservable } from "mobx";
+import { authProvider } from "@services/auth.service";
+import { makeAutoObservable, runInAction } from "mobx";
 
 export class ChangePasswdStore {
   loading = false;
@@ -11,5 +12,8 @@ export class ChangePasswdStore {
   @loading()
   async changePasswd({ oldPassword, newPassword }: { oldPassword: string, newPassword: string }) {
     await net.post('/api/account/changePassword', { oldPassword, newPassword });
+    runInAction(() => {
+      authProvider.resetPwd = false;
+    });
   }
 }
