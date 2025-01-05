@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function Format() {
   const [t] = useTranslation();
-
+  const [loading, setLoading] = useState(false); 
   const [state, setState] = useState<boolean | null>(null);
   const [resFile, setResFile] = useState<{
     fileName: string;
@@ -20,7 +20,7 @@ export default function Format() {
     if (!resFile) {
       return;
     }
-    net.download(resFile.url as any, resFile.fileName);
+    net.clientDownload(resFile.url as any, resFile.fileName);
   };
 
   const handleUpload: UploadProps["onChange"] = async ({ fileList }) => {
@@ -30,7 +30,12 @@ export default function Format() {
       setResFile(null);
       return;
     }
+
+    setLoading(true);
+
     setState(null);
+    setError(null);
+  
     const file = fileList[0];
     if (!file.originFileObj) {
       return;
@@ -49,11 +54,13 @@ export default function Format() {
         setState(false);
         setError(err.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Container title={t("格式处理工具")}>
+    <Container title={t("格式处理工具")} loading={loading}>
       <div className={styles.container} style={{ width: "600px" }}>
         <div style={{ marginBottom: "10px" }}>
           <Upload.Dragger
