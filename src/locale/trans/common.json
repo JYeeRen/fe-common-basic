@@ -2159,6 +2159,38 @@
         "zh": "第3步",
         "en": "Step 3"
     },
+    "请上传需要处理的excel": {
+        "zh": "请上传需要处理的excel",
+        "en": "Please upload the excel to be processed"
+    },
+    "点击下载": {
+        "zh": "点击下载",
+        "en": "Click to download"
+    },
+    "处理后的表格": {
+        "zh": "处理后的表格",
+        "en": "Processed Table"
+    },
+    "处理结果": {
+        "zh": "处理结果",
+        "en": "Processing Result"
+    },
+    "处理成功": {
+        "zh": "处理成功",
+        "en": "Processing Successful"
+    },
+    "处理失败": {
+        "zh": "处理失败",
+        "en": "Processing Failed"
+    },
+    "工具箱": {
+        "zh": "工具箱",
+        "en": "Toolbox"
+    },
+    "格式处理工具": {
+        "zh": "格式处理工具",
+        "en": "Format Tool"
+    },
     "表格模板": {
         "zh": "表格模板",
         "en": "Template"

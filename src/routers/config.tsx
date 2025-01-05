@@ -104,6 +104,17 @@ const rm: RouteObject[] = [
   },
 ];
 
+const toolbox: RouteObject[] = [
+  {
+    path: "/customs/tools/format",
+    lazy: async () => ({
+      Component: (
+        await import("@features/customs/toolbox/format/format.component")
+      ).default,
+    }),
+  }
+];
+
 const roles: RouteObject[] = [
   {
     path: "/pm/roles",
@@ -342,6 +353,7 @@ export const routesConfig: RouteObject[] = [
           ...template,
           ...trajectory,
           ...rm,
+          ...toolbox
         ],
       },
       {

@@ -111,6 +111,17 @@ const navConfig = (): TopNavItem[] => [
           },
         ],
       },
+      {
+        key: "/customs/tools",
+        label: t("工具箱"),
+        children: [
+          {
+            key: "/customs/tools/format",
+            label: t("格式处理工具"),
+            // permission: "risk.customer",
+          },
+        ],
+      },
     ],
   },
   {

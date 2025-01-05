@@ -15,6 +15,7 @@ import { DataStatisticsAPI } from "./data-statistics.types.ts";
 import { BaseInfoAPI } from "./baseinfo.ts";
 import { UserSettingAPI } from "./userSetting.types.ts";
 import { SubEmailAPI } from "./subEmail.types.ts";
+import { ToolsAPI } from "./tools.types.ts";
 
 export type { BackendOptions, TZ } from './options.types';
 
@@ -48,6 +49,7 @@ export interface Sources
     PackageStatusAPI,
     DataStatisticsAPI,
     WarehouseAPI,
+    ToolsAPI,
     BaseInfoAPI
 {
 
