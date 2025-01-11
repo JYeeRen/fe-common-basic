@@ -10,6 +10,7 @@ import { useStore } from "@hooks";
 import { ChangePasswdStore } from "./change-passwd.store";
 import { observer } from "mobx-react-lite";
 import styles from "./change-passwd.module.less";
+import { RuleObject } from "antd/es/form";
 
 function ChangePasswdComponent() {
   const { store, t, navigate } = useStore(ChangePasswdStore)();
@@ -19,6 +20,30 @@ function ChangePasswdComponent() {
   const onFinish = async (values: { oldPassword: string; newPassword: string }) => {
     await store.changePasswd(values);
     navigate("/", { replace: true });
+  };
+
+  const passwordValidator = (_: RuleObject, value: string) => {
+    if (!value) {
+      return Promise.reject(t('请输入密码'));
+    }
+  
+    const lengthValid = /^.{8,20}$/.test(value);
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  
+    const typesCount = [hasUpperCase, hasLowerCase, hasNumber, hasSpecialChar].filter(Boolean).length;
+  
+    if (!lengthValid) {
+      return Promise.reject(t('密码长度需为8-20位'));
+    }
+  
+    if (typesCount < 2) {
+      return Promise.reject(t('密码需至少包含两种不同类型的字符（大写字母、小写字母、数字、符号）'));
+    }
+  
+    return Promise.resolve();
   };
 
   return (
@@ -39,7 +64,9 @@ function ChangePasswdComponent() {
         <Form.Item
           name="newPassword"
           label={t("新密码")}
-          rules={[{ required: true }]}
+          rules={[
+            { validator: passwordValidator }
+          ]}
         >
           <Input.Password />
         </Form.Item>

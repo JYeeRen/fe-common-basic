@@ -4,6 +4,7 @@ import { t } from "@locale";
 import { useLocation } from "react-router-dom";
 import { debug } from "@infra";
 import appService from "@services/app.service";
+import { authProvider } from "@services/auth.service";
 
 interface SideNavItem {
   key: string;
@@ -108,6 +109,17 @@ const navConfig = (): TopNavItem[] => [
             key: "/customs/rm/customer",
             label: t("客户信息"),
             permission: "risk.customer",
+          },
+        ],
+      },
+      {
+        key: "/customs/tools",
+        label: t("工具箱"),
+        children: [
+          {
+            key: "/customs/tools/format",
+            label: t("格式处理工具"),
+            // permission: "risk.customer",
           },
         ],
       },
@@ -264,6 +276,7 @@ export const useMenuCtrl = () => {
 
   const topnavs = useMemo(() => {
     return config
+      .filter(() => !authProvider.resetPwd)
       .filter((item) => {
         if (localStorage.getItem("user")?.isManager) {
           return true;
@@ -274,7 +287,7 @@ export const useMenuCtrl = () => {
         return item.permissions?.some((item) => permissionDict[item]);
       })
       .map(({ key, label }) => ({ key, label }));
-  }, [config, permissionDict]);
+  }, [authProvider.resetPwd, config, permissionDict]);
 
   const sidenavs = useMemo(() => {
     const originItems =

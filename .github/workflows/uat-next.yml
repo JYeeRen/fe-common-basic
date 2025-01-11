@@ -1,0 +1,60 @@
+name: dev
+
+on:
+  push:
+    branches: 
+      - feat-8
+env:
+  REGISTRY: registry-intl.us-west-1.aliyuncs.com
+  REPO: rt-customs/frontend-dev
+  BUILD_MODE: uat
+  # BACKEND_HOST: //service-zippex-dev.rntlogistic-us.com
+  VERSION_TAG: 迭代8
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Alibaba Cloud Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: zhanglong_gz@163.com
+          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # - name: Extract version from branch
+      #   if: startsWith(github.ref, 'refs/heads/feat-')
+      #   id: extract_branch_version
+      #   run: echo "VERSION_TAG=${GITHUB_REF#refs/heads/feat-}" >> $GITHUB_ENV
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.REPO }}:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          build-args: |
+            BUILD_MODE=${{ env.BUILD_MODE }}
+            BACKEND_HOST=${{ env.BACKEND_HOST }}
+            WATERMARK_CONTENT=${{ env.VERSION_TAG }}

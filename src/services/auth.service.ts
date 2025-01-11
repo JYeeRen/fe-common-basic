@@ -23,6 +23,7 @@ interface AuthProvider {
   isAuthenticated: boolean;
   username: null | string;
   expireIn: number;
+  resetPwd: boolean;
   expired(): void;
   init(): void;
   signin(credential: {
@@ -38,6 +39,7 @@ interface AuthProvider {
 export const authProvider: AuthProvider = {
   isAuthenticated: false,
   username: null,
+  resetPwd: false,
   expireIn: 0,
 
   expired() {
@@ -62,6 +64,7 @@ export const authProvider: AuthProvider = {
     localStorage.setItem("authToken", token);
     localStorage.setItem("user", userInfo);
     authProvider.isAuthenticated = true;
+    authProvider.resetPwd = userInfo.resetPwd;
     authProvider.username = username;
     authProvider.expireIn = expireIn;
 
@@ -73,6 +76,7 @@ export const authProvider: AuthProvider = {
     localStorage.setItem("user", {
       userId: 0,
       username: "",
+      resetPwd: false,
       permissions: [],
       isManager: false,
       expireIn: 0,

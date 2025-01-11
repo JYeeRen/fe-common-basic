@@ -61,6 +61,12 @@ export function ProtectedRoute(props: PropsWithChildren) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(()=> {
+    if (authProvider.resetPwd && location.pathname !== "/change-passwd") {
+      navigate("/change-passwd", { replace: true });
+    }
+  }, [location.pathname]);
+
   const routes = useMemo(() => Object.keys(routerPermission), []);
   useEffect(() => {
     debug.infra("ProtectedRoute", "location change");

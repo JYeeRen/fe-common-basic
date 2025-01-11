@@ -6,6 +6,7 @@ import 'dayjs/locale/en';
 import appService from "@services/app.service";
 
 const langs = {
+  'zh-CN': zh_CN,
   'zh': zh_CN,
   en: en_US
 };

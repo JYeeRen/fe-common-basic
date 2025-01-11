@@ -5,6 +5,7 @@ export interface AccountAPI {
   "/api/account/login": {
     params: { account: string; password: string };
     res: {
+      resetPwd: boolean;
       userId: number;
       type: string;
       token: string;
