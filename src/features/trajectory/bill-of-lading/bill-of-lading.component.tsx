@@ -27,7 +27,7 @@ import {
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
 import styles from "./bill-of-lading.module.less";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./bill-of-lading.store";
 import { CustomsTrack, FormValues, QueryParams } from "./type";
