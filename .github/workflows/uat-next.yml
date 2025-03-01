@@ -5,11 +5,13 @@ on:
     branches: 
       - feat-8
 env:
-  REGISTRY: registry-intl.us-west-1.aliyuncs.com
+  REGISTRY: 047719650035.dkr.ecr.us-east-1.amazonaws.com
   REPO: rt-customs/frontend-dev
   BUILD_MODE: uat
   # BACKEND_HOST: //service-zippex-dev.rntlogistic-us.com
   VERSION_TAG: 迭代8
+  ECS_CLUSTER: rt-customs_dev
+  ECS_SERVICE: frontend
 
 jobs:
   build-and-push:
@@ -25,12 +27,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Alibaba Cloud Registry
-        uses: docker/login-action@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          registry: ${{ env.REGISTRY }}
-          username: zhanglong_gz@163.com
-          password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
+          aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ECR_ACCESS_KEY_SECRET }}
+          aws-region: 'us-east-1'
+
+      - name: Login in ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -58,3 +63,12 @@ jobs:
             BUILD_MODE=${{ env.BUILD_MODE }}
             BACKEND_HOST=${{ env.BACKEND_HOST }}
             WATERMARK_CONTENT=${{ env.VERSION_TAG }}
+
+      - name: Re-deploy ECS services
+        run: |
+          for service in ${{ env.ECS_SERVICE }}; do
+            aws ecs update-service \
+              --cluster ${{ env.ECS_CLUSTER }} \
+              --service ${service} \
+              --force-new-deployment || echo "❌ $service failed to re-deploy"
+          done
