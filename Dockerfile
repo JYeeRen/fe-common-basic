@@ -2,7 +2,8 @@
 FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN corepack enable pnpm
+RUN COREPACK_INTEGRITY_KEYS=0 corepack prepare pnpm@8.10.2 --activate
 
 # 依赖拉取
 FROM base AS prod-fetch
