@@ -13,8 +13,18 @@ export class BillOfLadingStore {
     record: CustomsTrack;
   } = undefined;
 
+  midUpload = false;
+
   constructor() {
     makeAutoObservable(this);
+  }
+
+  showMidUpload() {
+    this.midUpload = true;
+  }
+
+  hideMidUpload() {
+    this.midUpload = false;
   }
 
   setEditingCell(editingCell?: BillOfLadingStore['editingCell']) {
@@ -100,5 +110,15 @@ export class BillOfLadingStore {
       time: time
     })
     return res.failed;
+  }
+
+  @loading()
+  async downloadMID(waybillId: number) {
+    await net.download("/api/packageMidCode/download", { waybillId });
+  }
+
+  @loading()
+  async uploadMID(data: FormData) {
+    return await net.post('/api/packageMidCode/upload', data);
   }
 }

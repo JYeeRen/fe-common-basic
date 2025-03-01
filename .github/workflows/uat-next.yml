@@ -3,13 +3,13 @@ name: dev
 on:
   push:
     branches: 
-      - feat-8
+      - feat-9
 env:
   REGISTRY: registry-intl.us-west-1.aliyuncs.com
   REPO: rt-customs/frontend-dev
   BUILD_MODE: uat
   # BACKEND_HOST: //service-zippex-dev.rntlogistic-us.com
-  VERSION_TAG: 迭代8
+  VERSION_TAG: 迭代9
 
 jobs:
   build-and-push:

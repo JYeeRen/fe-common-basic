@@ -17,10 +17,22 @@ export interface DataStatisticsAPI {
     params?: never;
     res: {
       providerNames: string[];
+      provider: {
+        name: string;
+        ids: number[];
+        others: Record<string, number[]>;
+      }
     };
   };
   "/api/dataStatistics/setSetting": {
-    params: { providerNames: string[] };
+    params: {
+      providerNames: string[];
+      provider: {
+        name: string;
+        ids: number[];
+        others: Record<string, number[]>;
+      }
+    };
     res: never;
   };
   "/api/dataStatistics/findList": {

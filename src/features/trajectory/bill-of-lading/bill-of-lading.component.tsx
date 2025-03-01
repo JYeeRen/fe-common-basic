@@ -22,11 +22,12 @@ import {
   PredefinedRange,
   getTime,
   convertPredefinedRange,
+  TableColumnsType,
 } from "@components";
 import { observer } from "mobx-react-lite";
 import * as BillOfLadingConfig from "./bill-of-lading-config";
 import styles from "./bill-of-lading.module.less";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useStore } from "@hooks";
 import { BillOfLadingStore } from "./bill-of-lading.store";
 import { CustomsTrack, FormValues, QueryParams } from "./type";
@@ -41,12 +42,19 @@ import { UploadModal } from "./upload-modal.component";
 import { CellEditModal } from "./cell-edit-modal.component";
 import tabsStyles from "./tabs.module.less";
 import clsx from "clsx";
+import MidUploadModal from "./mid-upload.modal";
+
 
 function TrackTraceComponent() {
   const { store, t, navigate } = useStore(BillOfLadingStore)();
-  const initialValues: FormValues = useMemo(() => ({ createTime: getTime({ predefined: 7 }) }), []);
+  const initialValues: FormValues = useMemo(
+    () => ({ createTime: getTime({ predefined: 7 }) }),
+    []
+  );
 
-  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows, { initialValues });
+  const gridStore = ClientGrid.useGridStore(BillOfLadingConfig.getRows, {
+    initialValues,
+  });
 
   const updateConfirm = useCallback(
     async (record: CustomsTrack, key: string) => {
@@ -157,8 +165,8 @@ function TrackTraceComponent() {
     }
   };
 
-  const columns = useMemo(
-    () => BillOfLadingConfig.getColumns(store.setEditingCell.bind(store)),
+  const columns = useMemo<TableColumnsType<CustomsTrack>>(
+    () => [...BillOfLadingConfig.getColumns(store.setEditingCell.bind(store))],
     [store]
   );
 
@@ -234,11 +242,25 @@ function TrackTraceComponent() {
 
   const numberRules = useMemo(() => [textareaMaxLengthRule()], []);
 
+  const handleDownloadMID = async () => {
+    if (gridStore.rowData.length !== 1) {
+      Modal.error({
+        title: t("提示"),
+        content: t("仅支持下载单条提单的MID数据，请筛选后重试"),
+      });
+      return;
+    }
+    await store.downloadMID(gridStore.rowData[0].id);
+  };
+
   const children = (
     <Container
       className={clsx(tabsStyles.subcontainer, tabsStyles.container)}
       loading={store.loading}
     >
+      <MidUploadModal
+        store={store}
+      />
       {Boolean(store.editingCell) && (
         <CellEditModal
           open={Boolean(store.editingCell)}
@@ -430,7 +452,11 @@ function TrackTraceComponent() {
           </Row>
         </Col>
         <Col span={24}>
-          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+          <Form.Item
+            name="createTime"
+            labelCol={{ span: 2 }}
+            wrapperCol={{ span: 22 }}
+          >
             <PredefinedRange label={t("数据生成时间")} />
           </Form.Item>
         </Col>
@@ -441,35 +467,60 @@ function TrackTraceComponent() {
         table
         titleExtend={<ColSelector config={columns} tableKey="航空信息" />}
       >
-        <Row justify="end" style={{ padding: "0 10px" }}>
-          <Button
-            className="operation-btn mr-4 mb-4"
-            icon={<CloudDownloadOutlined />}
-            onClick={store.downloadTemplate.bind(store)}
-          >
-            {t("下载批量上传模板")}
-          </Button>
-          <Button
-            className="operation-btn mr-4 mb-4"
-            icon={<CloudDownloadOutlined />}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onClick={store.export.bind(store, gridStore.queryParams as any)}
-          >
-            {t("导出已筛选数据")}
-          </Button>
-          <Button
-            className="operation-btn"
-            icon={<CloudUploadOutlined />}
-            onClick={store.showUploadModal.bind(store)}
-          >
-            {t("批量添加轨迹时间")}
-          </Button>
+        <Row justify="space-between" style={{ padding: "0 10px" }}>
+          <span>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<CloudDownloadOutlined />}
+              onClick={handleDownloadMID}
+            >
+              {t("下载MID")}
+            </Button>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<CloudUploadOutlined />}
+              onClick={store.showMidUpload.bind(store)}
+            >
+              {t("回传MID")}
+            </Button>
+          </span>
+          <span>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<CloudDownloadOutlined />}
+              onClick={store.downloadTemplate.bind(store)}
+            >
+              {t("下载批量上传模板")}
+            </Button>
+            <Button
+              className="operation-btn mr-4 mb-4"
+              icon={<CloudDownloadOutlined />}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onClick={store.export.bind(store, gridStore.queryParams as any)}
+            >
+              {t("导出已筛选数据")}
+            </Button>
+            <Button
+              className="operation-btn"
+              icon={<CloudUploadOutlined />}
+              onClick={store.showUploadModal.bind(store)}
+            >
+              {t("批量添加轨迹时间")}
+            </Button>
+          </span>
         </Row>
         <Table
           tableKey="航空信息"
           highlight
           widthFit
           bordered
+          // rowSelection={{
+          //   type: "checkbox",
+          //   onChange: (keys) => {
+          //     setSelectedRow(keys as number[]);
+          //   },
+          //   selectedRowKeys: selectedRow as unknown as Key[],
+          // }}
           loading={gridStore.loading}
           rowKey="id"
           dataSource={gridStore.rowData}

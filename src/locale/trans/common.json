@@ -15,9 +15,17 @@
         "zh": "人民币",
         "en": "CNY"
     },
+    "时区": {
+        "zh": "时区",
+        "en": "TimeZone"
+    },
     "末端服务商": {
         "zh": "末端服务商",
         "en": "Next Provider Name"
+    },
+    "快捷组": {
+        "zh": "快捷组",
+        "en": "Quick Group"
     },
     "设置尾程服务商": {
         "zh": "设置尾程服务商",
@@ -2147,6 +2155,10 @@
         "zh": "批量上传",
         "en": "Confirm Cancel"
     },
+    "提示": {
+        "zh": "提示",
+        "en": "Notice"
+    },
     "第1步": {
         "zh": "第1步",
         "en": "Step 1"
@@ -2159,9 +2171,37 @@
         "zh": "第3步",
         "en": "Step 3"
     },
+    "仅支持下载单条提单的MID数据，请筛选后重试": {
+        "zh": "仅支持下载单条提单的MID数据，请筛选后重试",
+        "en": "Maximum batch download of MID data for 50 bills of lading. Please filter and try again."
+    },
     "请上传需要处理的excel": {
         "zh": "请上传需要处理的excel",
         "en": "Please upload the excel to be processed"
+    },
+    "同时保存为常用选项组": {
+        "zh": "同时保存为常用选项组",
+        "en": "Save as a frequently"
+    },
+    "未命名": {
+        "zh": "未命名",
+        "en": "unknown"
+    },
+    "请输入组名": {
+        "zh": "请输入组名",
+        "en": "Please enter the group name"
+    },
+    "最近保存": {
+        "zh": "最近保存",
+        "en": "Recently Saved"
+    },
+    "下载MID": {
+        "zh": "下载MID",
+        "en": "Download MID"
+    },
+    "回传MID": {
+        "zh": "回传MID",
+        "en": "Upload MID"
     },
     "点击下载": {
         "zh": "点击下载",

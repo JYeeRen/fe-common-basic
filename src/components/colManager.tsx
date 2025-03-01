@@ -1,13 +1,25 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Modal, Transfer, Row, Space, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import {
+  Modal,
+  Transfer,
+  Row,
+  Space,
+  Button,
+  Form,
+  Checkbox,
+  Input,
+  Collapse,
+  Tag,
+} from "antd";
+import { CaretRightOutlined, MenuOutlined } from "@ant-design/icons";
 import { DndProvider, useDrop, useDrag } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./colManager.module.less";
 import clsx from "clsx";
 import { t } from "@locale";
+import { v4 } from "uuid";
 
-type Key = string;
+type Key = string | number;
 
 export interface Item {
   key: Key;
@@ -21,9 +33,15 @@ interface Props<T extends Item> {
   defaultColumns?: T[];
   selectedKeys?: Key[];
   showColumns?: T[];
-  setShowColumns: (keys: Key[]) => void;
+  setShowColumns: (
+    keys: Key[],
+    short?: { name: string; shorts: Record<string, Key[]> }
+  ) => void;
   title?: string;
   filter?: boolean;
+  saveShort?: boolean;
+  shortName?: string;
+  shorts?: Record<string | number, Key[]>;
 }
 
 export function TableColSettings<T extends Item>(props: Props<T>) {
@@ -35,9 +53,16 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     selectedKeys,
     setShowColumns,
     title,
-    filter
+    saveShort = false,
+    shorts: _shorts,
+    shortName: _shortName,
+    filter,
   } = props;
   const [targetKeys, setTargetKeys] = useState<Key[]>(selectedKeys ?? []);
+
+  const [saveAsShort, setSaveAsShort] = useState(_shortName ? true : false);
+
+  const [shorts, setShorts] = useState(_shorts ?? {});
 
   useEffect(() => {
     setTargetKeys(selectedKeys ?? []);
@@ -46,6 +71,8 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
   const onChange = (nextTargetKeys: Key[]) => {
     setTargetKeys(Array.from(new Set(nextTargetKeys)));
   };
+
+  const [shortName, setShortName] = useState(_shortName ?? "");
 
   const onOk = () => {
     let mapping: Record<string, string> = {};
@@ -66,7 +93,13 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
       finalColumns = defaultColumns;
     }
 
-    setShowColumns(targetKeys);
+    setShowColumns(
+      targetKeys,
+      {
+        name: saveAsShort ? shortName || `${t("快捷组")}${Object.keys(shorts).length + 1}` : '',
+        shorts: shorts ?? {},
+      }
+    );
     onClose();
   };
 
@@ -82,7 +115,10 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     onChange(clonedList);
   };
 
-  const filterOption = useCallback((inputValue: string, option: Item) => option.label.indexOf(inputValue) > -1, []);
+  const filterOption = useCallback(
+    (inputValue: string, option: Item) => option.label.indexOf(inputValue) > -1,
+    []
+  );
 
   return (
     <Modal
@@ -96,9 +132,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
       footer={
         <Row justify="end">
           <Space size="middle">
-            <Button onClick={onClose}>
-              {t("取消")}
-            </Button>
+            <Button onClick={onClose}>{t("取消")}</Button>
             <Button type="primary" onClick={onOk}>
               {t("保存")}
             </Button>
@@ -131,6 +165,68 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
           onChange={(keys) => onChange(keys as string[])}
         />
       </DndProvider>
+      {saveShort && (
+        <>
+          <Row justify="end">
+            <Form.Item
+              style={{ margin: "10px 0" }}
+              label={
+                <Checkbox
+                  checked={saveAsShort}
+                  onChange={(e) => setSaveAsShort(e.target.checked)}
+                >
+                  {t("同时保存为常用选项组")}
+                </Checkbox>
+              }
+            >
+              <Input
+                style={{ width: "200px" }}
+                disabled={!saveAsShort}
+                placeholder={t("请输入组名")}
+                value={shortName}
+                onChange={(e) => setShortName(e.target.value)}
+              />
+            </Form.Item>
+          </Row>
+          <Collapse
+            bordered={false}
+            defaultActiveKey={["1"]}
+            expandIcon={({ isActive }) => (
+              <CaretRightOutlined rotate={isActive ? 90 : 0} />
+            )}
+            items={[
+              {
+                key: "1",
+                label: t("最近保存"),
+                children: (
+                  <>
+                    {Object.entries(shorts ?? {}).map(([name, value]) => (
+                      <Tag
+                        key={v4()}
+                        style={{ padding: "2px 10px" }}
+                        closable
+                        onClick={() => {
+                          onChange(value);
+                          setShortName(name);
+                        }}
+                        onClose={() => {
+                          const newShorts = { ...shorts };
+                          delete newShorts[name];
+                          setShorts(newShorts);
+                        }}
+                      >
+                        <span style={{ cursor: "pointer" }}>
+                          {name}({value.length})
+                        </span>
+                      </Tag>
+                    ))}
+                  </>
+                ),
+              },
+            ]}
+          />
+        </>
+      )}
     </Modal>
   );
 }

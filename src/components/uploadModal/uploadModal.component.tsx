@@ -7,6 +7,7 @@ import { ImportRes } from "@types";
 import { showUploadResult } from "./showUploadResult";
 import { useTranslation } from "@locale";
 import localStorage from "@services/localStorage";
+import { ReactNode } from "react";
 
 interface UploadModalProps extends UploadProps {
   open: boolean;
@@ -19,6 +20,8 @@ interface UploadModalProps extends UploadProps {
   onUpload: (data: FormData) => Promise<ImportRes>;
   tableHeaders: string[];
   onUploadFinsih?: () => void;
+  showDownload?: boolean;
+  step1?: ReactNode;
 }
 
 function UploadModalComponent(props: UploadModalProps) {
@@ -33,6 +36,7 @@ function UploadModalComponent(props: UploadModalProps) {
     onUpload,
     tableHeaders,
     onUploadFinsih,
+    step1,
     ...uploadProps
   } = props;
 
@@ -61,13 +65,17 @@ function UploadModalComponent(props: UploadModalProps) {
     >
       <Spin spinning={loading}>
         <div className={styles.container}>
-          <div className={styles.step}>
-            <p>{t("第1步")}</p>
-            <p className={styles.desc}>
-              {t("点击下载空的")}
-              <a style={{ color: '#4a69de' }} onClick={onDownload}>{t("表格模板")}</a>
-            </p>
-          </div>
+          {step1 ?? (
+            <div className={styles.step}>
+              <p>{t("第1步")}</p>
+              <p className={styles.desc}>
+                {t("点击下载空的")}
+                <a style={{ color: "#4a69de" }} onClick={onDownload}>
+                  {t("表格模板")}
+                </a>
+              </p>
+            </div>
+          )}
 
           <Upload.Dragger
             {...uploadProps}
@@ -77,7 +85,9 @@ function UploadModalComponent(props: UploadModalProps) {
             accept=".xlsx,.xls"
             multiple={false}
             // action={`${baseURL}/api/employees/importEmployee`}
-            headers={{ Authorization: `Bearer ${localStorage.getItem("authToken")}` }}
+            headers={{
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            }}
           >
             <Row justify="start">
               <p>{t("第2步")}</p>
