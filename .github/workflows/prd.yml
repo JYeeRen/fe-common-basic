@@ -10,8 +10,8 @@ env:
   BUILD_MODE: prd
   BACKEND_HOST: //service-rt-normal.rntlogistic-us.com
   # VERSION_TAG: prd
-  ECS_CLUSTER: rt-customs_prod
-  ECS_SERVICE: frontend
+#  ECS_CLUSTER: rt-customs_prod
+#  ECS_SERVICE: frontend
 
 jobs:
   build-and-push:
@@ -64,11 +64,11 @@ jobs:
             BUILD_MODE=${{ env.BUILD_MODE }}
             BACKEND_HOST=${{ env.BACKEND_HOST }}
 
-      - name: Re-deploy ECS services
-        run: |
-          for service in ${{ env.ECS_SERVICE }}; do
-            aws ecs update-service \
-              --cluster ${{ env.ECS_CLUSTER }} \
-              --service ${service} \
-              --force-new-deployment || echo "❌ $service failed to re-deploy"
-          done
+#      - name: Re-deploy ECS services
+#        run: |
+#          for service in ${{ env.ECS_SERVICE }}; do
+#            aws ecs update-service \
+#              --cluster ${{ env.ECS_CLUSTER }} \
+#              --service ${service} \
+#              --force-new-deployment || echo "❌ $service failed to re-deploy"
+#          done
