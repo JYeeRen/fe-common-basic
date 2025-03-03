@@ -50,6 +50,10 @@ jobs:
       #   id: extract_branch_version
       #   run: echo "VERSION_TAG=${GITHUB_REF#refs/heads/feat-}" >> $GITHUB_ENV
 
+      - name: Get current commit hash
+        id: get-hash
+        run: echo "VERSION_TAG=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
