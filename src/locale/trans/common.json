@@ -2173,7 +2173,7 @@
     },
     "仅支持下载单条提单的MID数据，请筛选后重试": {
         "zh": "仅支持下载单条提单的MID数据，请筛选后重试",
-        "en": "Maximum batch download of MID data for 50 bills of lading. Please filter and try again."
+        "en": "The system only supports downloading MID data for a single bill of lading. Please filter and try again."
     },
     "请上传需要处理的excel": {
         "zh": "请上传需要处理的excel",
