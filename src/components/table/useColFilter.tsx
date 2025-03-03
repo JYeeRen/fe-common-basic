@@ -77,7 +77,7 @@ export const ColSelector = (props: ColSelectorProps) => {
           visible={visible}
           onClose={onClose}
           selectedKeys={selectedKeys}
-          setShowColumns={setShowColumns}
+          setShowColumns={(keys) => setShowColumns(keys as string[])}
         />
       )}
     </>

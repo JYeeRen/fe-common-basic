@@ -3,13 +3,13 @@ name: dev
 on:
   push:
     branches: 
-      - feat-8
+      - feat-9
 env:
   REGISTRY: 047719650035.dkr.ecr.us-east-1.amazonaws.com
   REPO: rt-customs/frontend-dev
   BUILD_MODE: uat
   # BACKEND_HOST: //service-zippex-dev.rntlogistic-us.com
-  VERSION_TAG: 迭代8
+  VERSION_TAG: 迭代9
   ECS_CLUSTER: rt-customs_dev
   ECS_SERVICE: frontend
 
@@ -49,6 +49,10 @@ jobs:
       #   if: startsWith(github.ref, 'refs/heads/feat-')
       #   id: extract_branch_version
       #   run: echo "VERSION_TAG=${GITHUB_REF#refs/heads/feat-}" >> $GITHUB_ENV
+
+      - name: Get current commit hash
+        id: get-hash
+        run: echo "VERSION_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v6

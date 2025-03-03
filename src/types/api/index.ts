@@ -16,6 +16,7 @@ import { BaseInfoAPI } from "./baseinfo.ts";
 import { UserSettingAPI } from "./userSetting.types.ts";
 import { SubEmailAPI } from "./subEmail.types.ts";
 import { ToolsAPI } from "./tools.types.ts";
+import { PackageMidCodeAPI } from "./packageMidCode.types.ts";
 
 export type { BackendOptions, TZ } from './options.types';
 
@@ -39,6 +40,7 @@ export interface Sources
     UserSettingAPI,
     OptionsAPI,
     CustomsItemAPI,
+    PackageMidCodeAPI,
     CustomTemplateAPI,
     CustomsRiskAPI,
     CustomsStatusAPI,

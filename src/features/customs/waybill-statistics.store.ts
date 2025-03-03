@@ -10,10 +10,23 @@ export class Store {
   settingVisible = false;
   bolVisible = false;
 
-  selectedCols: string[] = [];
+  selectedCols: number[] = [];
+  provider: {
+    ids: number[];
+    name: string;
+    others: Record<string, number[]>;
+  } = {
+    ids: [],
+    name: "",
+    others: {},
+  };
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  get vendorTailProviders() {
+    return optionsService.vendorTailProviders ?? [];
   }
 
   @loading()
@@ -44,15 +57,22 @@ export class Store {
 
   @loading()
   async getSetting() {
-    const { providerNames } = await net.post("/api/dataStatistics/getSetting");
+    const { provider } = await net.post(
+      "/api/dataStatistics/getSetting"
+    );
     runInAction(() => {
-      this.selectedCols = providerNames;
+      this.selectedCols = provider.ids;
+      this.provider = provider ?? {
+        ids: [],
+        name: "",
+        others: {},
+      };
     });
   }
 
   @loading()
   async downloadBOL(params: DownloadParams) {
-    await net.download('/api/dataStatistics/exportBillOfLading', params);
+    await net.download("/api/dataStatistics/exportBillOfLading", params);
     runInAction(() => {
       this.hideBOL();
     });
@@ -63,7 +83,7 @@ export class Store {
       flatten(
         this.selectedCols.map((key) => {
           const item = this.settingDict[key];
-          return item && getSubColumns(key, item.label);
+          return item && getSubColumns(key.toString(), item.label);
         })
       )
     );
@@ -73,15 +93,19 @@ export class Store {
     return keyBy(this.setting, "key");
   }
 
-  get setting() {
-    return optionsService.providers;
+  get setting(): { key: number; label: string }[] {
+    return optionsService.vendorTailProviders.map((item) => ({
+      key: item.value as number,
+      label: item.label,
+    }));
   }
 
   @loading()
-  async setSetting(selectedCols: string[]) {
-    this.selectedCols = selectedCols;
+  async setSetting(selectedCols: string[], provider: Store["provider"]) {
+    this.selectedCols = provider.ids;
     await net.post("/api/dataStatistics/setSetting", {
       providerNames: selectedCols,
+      provider,
     });
   }
 

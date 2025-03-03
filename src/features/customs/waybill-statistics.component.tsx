@@ -24,7 +24,11 @@ import { useStore } from "../../hooks/useStore.hook";
 import { Store } from "./waybill-statistics.store";
 import * as config from "./waybill-statistics-config";
 import styles from "./template-list.module.less";
-import { CloudDownloadOutlined, FilterOutlined, PrinterOutlined } from "@ant-design/icons";
+import {
+  CloudDownloadOutlined,
+  FilterOutlined,
+  PrinterOutlined,
+} from "@ant-design/icons";
 import { useCallback, useMemo, useState } from "react";
 import { dayjs } from "@infra";
 import { compact, get, sumBy } from "lodash";
@@ -37,11 +41,16 @@ function WaybillStatisticsComponent() {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
 
-  const initialValues = useMemo(() => ({
-    createTime: getTime({ predefined: 7 })
-  }), []);
+  const initialValues = useMemo(
+    () => ({
+      createTime: getTime({ predefined: 7 }),
+    }),
+    []
+  );
 
-  const gridStore = ClientGrid.useGridStore<R>(config.getRows, { initialValues });
+  const gridStore = ClientGrid.useGridStore<R>(config.getRows, {
+    initialValues,
+  });
 
   const setPmc = async (id: number, pmc: string) => {
     await store.setPmc(id, pmc);
@@ -87,7 +96,7 @@ function WaybillStatisticsComponent() {
       params.ata.end = dayjs().endOf("day").format();
     }
     gridStore.setQueryParams(params);
-    setPagination(compact(masterWaybillNoList).length === 0)
+    setPagination(compact(masterWaybillNoList).length === 0);
     setSelectedRowKeys([]);
   };
 
@@ -102,33 +111,42 @@ function WaybillStatisticsComponent() {
     form.setFieldValue("quickDate", undefined);
   };
 
-  const summaryRender = useCallback((pageData: readonly WaybillStatistics[]) => {
-    if (pagination) {
-      return undefined;
-    }
+  const summaryRender = useCallback(
+    (pageData: readonly WaybillStatistics[]) => {
+      if (pagination) {
+        return undefined;
+      }
 
-    if (store.dynamicCols.length === 0) {
-      return undefined;
-    }    
+      if (store.dynamicCols.length === 0) {
+        return undefined;
+      }
 
-    const dynamicCells = store.dynamicCols.map((col, index) => {
-      const val = sumBy(pageData, row => Number(get(row, (col as any).dataIndex) ?? ''));
-      return (<TableSummary.Cell key={col.key} index={6 + index}>{val}</TableSummary.Cell>);
-    });
-    return (
-      <TableSummary fixed>
-      <TableSummary.Row style={{ backgroundColor: '#ffff006e' }}>
-        <TableSummary.Cell index={0}></TableSummary.Cell>
-        <TableSummary.Cell index={1}></TableSummary.Cell>
-        <TableSummary.Cell index={2}></TableSummary.Cell>
-        <TableSummary.Cell index={3}></TableSummary.Cell>
-        <TableSummary.Cell index={4}></TableSummary.Cell>
-        <TableSummary.Cell index={5}></TableSummary.Cell>
-        {dynamicCells}
-      </TableSummary.Row>
-    </TableSummary>
-    );
-  }, [pagination]);
+      const dynamicCells = store.dynamicCols.map((col, index) => {
+        const val = sumBy(pageData, (row) =>
+          Number(get(row, (col as any).dataIndex) ?? "")
+        );
+        return (
+          <TableSummary.Cell key={col.key} index={6 + index}>
+            {val}
+          </TableSummary.Cell>
+        );
+      });
+      return (
+        <TableSummary fixed>
+          <TableSummary.Row style={{ backgroundColor: "#ffff006e" }}>
+            <TableSummary.Cell index={0}></TableSummary.Cell>
+            <TableSummary.Cell index={1}></TableSummary.Cell>
+            <TableSummary.Cell index={2}></TableSummary.Cell>
+            <TableSummary.Cell index={3}></TableSummary.Cell>
+            <TableSummary.Cell index={4}></TableSummary.Cell>
+            <TableSummary.Cell index={5}></TableSummary.Cell>
+            {dynamicCells}
+          </TableSummary.Row>
+        </TableSummary>
+      );
+    },
+    [pagination]
+  );
 
   return (
     <Container className={styles.container} loading={store.loading}>
@@ -137,7 +155,11 @@ function WaybillStatisticsComponent() {
         open={store.bolVisible}
         onConfirm={store.downloadBOL.bind(store)}
         onCancel={store.hideBOL.bind(store)}
-        rows={compact(selectedRowKeys.map(id => gridStore.rowData.find(row => row.id === id)))}
+        rows={compact(
+          selectedRowKeys.map((id) =>
+            gridStore.rowData.find((row) => row.id === id)
+          )
+        )}
       />
       <FilterContainer
         form={form}
@@ -200,7 +222,11 @@ function WaybillStatisticsComponent() {
           </Row>
         </Col>
         <Col span={24}>
-          <Form.Item name="createTime" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+          <Form.Item
+            name="createTime"
+            labelCol={{ span: 2 }}
+            wrapperCol={{ span: 22 }}
+          >
             <PredefinedRange label={t("数据生成时间")} />
           </Form.Item>
         </Col>
@@ -245,38 +271,73 @@ function WaybillStatisticsComponent() {
           rowSelection={{
             type: "checkbox",
             selectedRowKeys,
-            onChange: (selected) => setSelectedRowKeys(selected as number[])
+            onChange: (selected) => setSelectedRowKeys(selected as number[]),
           }}
           rowKey="id"
           dataSource={gridStore.rowData}
           columns={columns}
           size="small"
           onChange={gridStore.onCommonTableChange.bind(gridStore)}
-          pagination={pagination && {
-            total: gridStore.total,
-            pageSize: gridStore.pageSize,
-            current: gridStore.page,
-            showTotal: (total) => t("共{{total}}条", { total }),
-            showQuickJumper: true,
-            showSizeChanger: true,
-            pageSizeOptions: [50, 100, 200, 500],
-            defaultPageSize: 50,
-            size: "default",
-            onChange: gridStore.onTableChange.bind(gridStore),
-          }}
+          pagination={
+            pagination && {
+              total: gridStore.total,
+              pageSize: gridStore.pageSize,
+              current: gridStore.page,
+              showTotal: (total) => t("共{{total}}条", { total }),
+              showQuickJumper: true,
+              showSizeChanger: true,
+              pageSizeOptions: [50, 100, 200, 500],
+              defaultPageSize: 50,
+              size: "default",
+              onChange: gridStore.onTableChange.bind(gridStore),
+            }
+          }
           summary={summaryRender}
         />
       </Container>
       {store.settingVisible && (
         <TableColSettings
+          loading={store.loading}
+          saveShort
           onClose={store.hideSetting.bind(store)}
           fieldColumns={store.setting}
           visible={store.settingVisible}
-          setShowColumns={async (keys) => {
-            await store.setSetting(keys);
+          setShowColumns={async (keys, short) => {
+            const newKeys = keys.filter((k) => store.settingDict[k]);
+            const providerNames = newKeys.map(
+              (k) => store.settingDict[k].label
+            );
+            const newOthers = { ...short?.shorts } as Record<string, number[]>;
+            if (short?.name) {
+              newOthers[short.name] = newKeys as number[];
+            }
+            const provider = {
+              ...store.provider,
+              name: short?.name ?? "",
+              ids: newKeys.map((k) => Number(k)),
+              others: newOthers,
+            };
+            await store.setSetting(providerNames, provider);
+            await store.getSetting();
             await gridStore.loadData();
           }}
-          selectedKeys={store.selectedCols}
+          selectedKeys={store.provider.ids}
+          shortName={store.provider.name}
+          shorts={store.provider.others}
+          onShortClose={async (name) => {
+            const newOthers = { ...store.provider.others };
+            delete newOthers[name];
+            const providerNames = store.provider.ids.map(
+              (k) => store.settingDict[k].label
+            );
+            await store.setSetting(providerNames, {
+              ...store.provider,
+              name: store.provider.name,
+              ids: store.provider.ids,
+              others: newOthers,
+            });
+            await store.getSetting();
+          }}
         />
       )}
     </Container>
