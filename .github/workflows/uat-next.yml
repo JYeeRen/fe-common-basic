@@ -52,7 +52,7 @@ jobs:
 
       - name: Get current commit hash
         id: get-hash
-        run: echo "VERSION_TAG=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        run: echo "VERSION_TAG=$(GITHUB_SHA::7)" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v6
