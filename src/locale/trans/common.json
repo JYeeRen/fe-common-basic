@@ -2175,6 +2175,10 @@
         "zh": "仅支持下载单条提单的MID数据，请筛选后重试",
         "en": "The system only supports downloading MID data for a single bill of lading. Please filter and try again."
     },
+    "快捷组名称重复": {
+        "zh": "快捷组名称重复",
+        "en": "Quick Group Name Already Exists"
+    },
     "请上传需要处理的excel": {
         "zh": "请上传需要处理的excel",
         "en": "Please upload the excel to be processed"

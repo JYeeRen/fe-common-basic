@@ -10,6 +10,7 @@ import {
   Input,
   Collapse,
   Tag,
+  message,
 } from "antd";
 import { CaretRightOutlined, MenuOutlined } from "@ant-design/icons";
 import { DndProvider, useDrop, useDrag } from "react-dnd";
@@ -27,6 +28,7 @@ export interface Item {
 }
 
 interface Props<T extends Item> {
+  loading?: boolean;
   visible: boolean;
   onClose?: () => void;
   fieldColumns?: T[];
@@ -42,10 +44,12 @@ interface Props<T extends Item> {
   saveShort?: boolean;
   shortName?: string;
   shorts?: Record<string | number, Key[]>;
+  onShortClose?: (name: string) => Promise<void>;
 }
 
 export function TableColSettings<T extends Item>(props: Props<T>) {
   const {
+    loading,
     visible,
     onClose = () => void 0,
     fieldColumns = [],
@@ -57,6 +61,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     shorts: _shorts,
     shortName: _shortName,
     filter,
+    onShortClose
   } = props;
   const [targetKeys, setTargetKeys] = useState<Key[]>(selectedKeys ?? []);
 
@@ -65,6 +70,9 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
   const [shorts, setShorts] = useState(_shorts ?? {});
 
   useEffect(() => {
+    if (visible) {
+      return;
+    }
     setTargetKeys(selectedKeys ?? []);
   }, [selectedKeys]);
 
@@ -91,6 +99,11 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
 
     if (!finalColumns.length) {
       finalColumns = defaultColumns;
+    }
+
+    if (saveAsShort && shorts[shortName]) {
+      message.error(t('快捷组名称重复'))
+      return;
     }
 
     setShowColumns(
@@ -132,8 +145,8 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
       footer={
         <Row justify="end">
           <Space size="middle">
-            <Button onClick={onClose}>{t("取消")}</Button>
-            <Button type="primary" onClick={onOk}>
+            <Button disabled={loading} onClick={onClose}>{t("取消")}</Button>
+            <Button disabled={loading} type="primary" onClick={onOk}>
               {t("保存")}
             </Button>
           </Space>
@@ -142,6 +155,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
     >
       <DndProvider backend={HTML5Backend}>
         <Transfer
+          disabled={loading}
           className={styles.transfer}
           rowKey={(record) => record.key}
           listStyle={{ flex: 1, width: 300 }}
@@ -172,6 +186,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
               style={{ margin: "10px 0" }}
               label={
                 <Checkbox
+                  disabled={loading}
                   checked={saveAsShort}
                   onChange={(e) => setSaveAsShort(e.target.checked)}
                 >
@@ -181,7 +196,7 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
             >
               <Input
                 style={{ width: "200px" }}
-                disabled={!saveAsShort}
+                disabled={!saveAsShort || loading}
                 placeholder={t("请输入组名")}
                 value={shortName}
                 onChange={(e) => setShortName(e.target.value)}
@@ -209,10 +224,11 @@ export function TableColSettings<T extends Item>(props: Props<T>) {
                           onChange(value);
                           setShortName(name);
                         }}
-                        onClose={() => {
+                        onClose={async () => {
                           const newShorts = { ...shorts };
                           delete newShorts[name];
                           setShorts(newShorts);
+                          await onShortClose?.(name);
                         }}
                       >
                         <span style={{ cursor: "pointer" }}>

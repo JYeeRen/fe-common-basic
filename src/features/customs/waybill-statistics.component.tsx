@@ -297,6 +297,7 @@ function WaybillStatisticsComponent() {
       </Container>
       {store.settingVisible && (
         <TableColSettings
+          loading={store.loading}
           saveShort
           onClose={store.hideSetting.bind(store)}
           fieldColumns={store.setting}
@@ -312,7 +313,7 @@ function WaybillStatisticsComponent() {
             }
             const provider = {
               ...store.provider,
-              name: short?.name ?? '',
+              name: short?.name ?? "",
               ids: newKeys.map((k) => Number(k)),
               others: newOthers,
             };
@@ -323,6 +324,20 @@ function WaybillStatisticsComponent() {
           selectedKeys={store.provider.ids}
           shortName={store.provider.name}
           shorts={store.provider.others}
+          onShortClose={async (name) => {
+            const newOthers = { ...store.provider.others };
+            delete newOthers[name];
+            const providerNames = store.provider.ids.map(
+              (k) => store.settingDict[k].label
+            );
+            await store.setSetting(providerNames, {
+              ...store.provider,
+              name: store.provider.name,
+              ids: store.provider.ids,
+              others: newOthers,
+            });
+            await store.getSetting();
+          }}
         />
       )}
     </Container>
