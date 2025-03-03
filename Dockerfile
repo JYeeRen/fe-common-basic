@@ -22,9 +22,6 @@ COPY --from=prod-deps /app/node_modules /app/node_modules
 WORKDIR /app
 COPY . .
 
-RUN echo "VITE_COMMIT_HASH=$(git rev-parse HEAD)" >> .env
-RUN echo "VITE_COMMIT_MSG=$(git log -1 --pretty=%B)" >> .env
-
 ARG BUILD_MODE
 ARG BACKEND_HOST
 ARG WATERMARK_CONTENT
