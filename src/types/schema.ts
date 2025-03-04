@@ -348,6 +348,7 @@ export interface WaybillStatistics {
   pmc: string;
   masterWaybillNo: string;
   tailProviders: {
+    id: number;
     name: string;
     pcl: string;
     ctn: string;

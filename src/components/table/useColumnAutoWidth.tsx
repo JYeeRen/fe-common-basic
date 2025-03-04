@@ -19,6 +19,7 @@ export function useColumnAutoWidth<T>(
   enable = false
 ) {
   const colWithWidth = useMemo(() => {
+
     if (!enable) {
       return columns;
     }

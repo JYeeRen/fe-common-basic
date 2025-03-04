@@ -70,6 +70,7 @@ interface PredefinedRangeProps {
   label?: string;
   value?: Value;
   onChange?: (value: PredefinedRangeProps["value"]) => void;
+  needConfirm?: boolean;
 }
 
 export function PredefinedRange(props: PredefinedRangeProps) {
@@ -136,6 +137,7 @@ export function PredefinedRange(props: PredefinedRangeProps) {
             <DatePicker.RangePicker
               // style={{ marginLeft: "10px" }}
               showTime
+              needConfirm={props.needConfirm}
               value={range}
               disabledDate={disabled31DaysDate}
               onChange={(dates) => {
