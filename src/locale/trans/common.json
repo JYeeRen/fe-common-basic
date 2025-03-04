@@ -1991,6 +1991,10 @@
         "zh": "待交接尾程",
         "en": "Cargo breakdown complete time"
     },
+    "未找到对应尾程商列表": {
+        "zh": "未找到对应尾程商列表",
+        "en": "Not found list"
+    },
     "尾程交接": {
         "zh": "尾程交接",
         "en": "Handed over"

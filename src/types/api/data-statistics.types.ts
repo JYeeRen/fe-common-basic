@@ -50,6 +50,7 @@ export interface DataStatisticsAPI {
     };
     res: ListRes<Schema.WaybillStatistics> & {
       orderKeys: { key: string; order: string }[];
+      notFindList: string[];
     };
   };
   "/api/dataStatistics/export": {

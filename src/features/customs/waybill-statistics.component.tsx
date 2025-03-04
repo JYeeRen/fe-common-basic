@@ -74,24 +74,24 @@ function WaybillStatisticsComponent() {
     const params = {
       createTime: convertPredefinedRange(createTime),
       flightNumber,
-      masterWaybillNoList: compact(masterWaybillNoList),
-      ata: {
+      masterWaybillNoList: compact(masterWaybillNoList).length > 0 ? compact(masterWaybillNoList) : undefined,
+      ata: dateRange?.length > 0 ? {
         // zone: flightDateTZ,
         start: dateRange?.[0].format(),
         end: dateRange?.[1].format(),
-      },
+      } : undefined,
       portCode,
       tailProviderName,
     };
-    if (quickDate === "today") {
+    if (quickDate === "today" && params.ata) {
       params.ata.start = dayjs().startOf("day").format();
       params.ata.end = dayjs().endOf("day").format();
     }
-    if (quickDate === "yeaterday") {
+    if (quickDate === "yeaterday" && params.ata) {
       params.ata.start = dayjs().subtract(1, "day").startOf("day").format();
       params.ata.end = dayjs().subtract(1, "day").endOf("day").format();
     }
-    if (quickDate === "threeday") {
+    if (quickDate === "threeday" && params.ata) {
       params.ata.start = dayjs().subtract(3, "day").startOf("day").format();
       params.ata.end = dayjs().endOf("day").format();
     }
@@ -195,7 +195,7 @@ function WaybillStatisticsComponent() {
                   />
                 </Form.Item>
                 <Form.Item name="dateRange" noStyle>
-                  <DatePicker.RangePicker onChange={handleDatePickerChange} />
+                  <DatePicker.RangePicker needConfirm={false} onChange={handleDatePickerChange} />
                 </Form.Item>
               </Form.Item>
             </Col>
@@ -227,7 +227,7 @@ function WaybillStatisticsComponent() {
             labelCol={{ span: 2 }}
             wrapperCol={{ span: 22 }}
           >
-            <PredefinedRange label={t("数据生成时间")} />
+            <PredefinedRange needConfirm={false} label={t("数据生成时间")} />
           </Form.Item>
         </Col>
       </FilterContainer>
@@ -265,6 +265,7 @@ function WaybillStatisticsComponent() {
         <Table
           components={{ body: { cell: EditableCell } }}
           widthFit
+          useColWidth
           bordered
           minHeight={30}
           loading={gridStore.loading}

@@ -1,9 +1,8 @@
 import { net } from "@infra";
 import { t } from "@locale";
 import { QueryParams, WaybillStatistics } from "./waybill-statistics.types";
-import { TableColumnsType } from "@components";
-import optionsService from "@services/options.service";
-import { find, keyBy } from "lodash";
+import { Modal, TableColumnsType } from "@components";
+import { keyBy } from "lodash";
 
 export const getColumns = (setPmc: (id: number, value: string) => void): TableColumnsType<WaybillStatistics> => {
   return [
@@ -18,9 +17,7 @@ export const getColumns = (setPmc: (id: number, value: string) => void): TableCo
     {
       key: "flightNumber",
       dataIndex: "flightNumber",
-      title: t("航班号2"),
-      render: (value) =>
-        find(optionsService.customTemplateTypes, { value })?.label,
+      title: t("航班号2")
     },
     {
       key: "PMC",
@@ -67,8 +64,22 @@ export const getRows = async (params: QueryParams) => {
   const list = (data.list || []).map((row) => {
     return {
       ...row,
-      tailProviders: keyBy(row.tailProviders, "name"),
+      tailProviders: keyBy(row.tailProviders, "id"),
     };
   });
+
+  if (data.notFindList.length > 0) {
+    Modal.error({
+      title: t('未找到对应尾程商列表'),
+      content: (
+        <div>
+          {data.notFindList.map((item) => (
+            <div key={item}>{item}</div>
+          ))}
+        </div>
+      )
+    });
+  }
+
   return { ...data, list };
 };
