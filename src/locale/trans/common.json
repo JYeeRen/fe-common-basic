@@ -2175,6 +2175,14 @@
         "zh": "第3步",
         "en": "Step 3"
     },
+    "制作失败": {
+        "zh": "制作失败",
+        "en": "Production Failed"
+    },
+    "制作失败的提单号如下：": {
+        "zh": "制作失败的提单号如下：",
+        "en": "The waybill numbers for which production failed are as follows:"
+    },
     "仅支持下载单条提单的MID数据，请筛选后重试": {
         "zh": "仅支持下载单条提单的MID数据，请筛选后重试",
         "en": "The system only supports downloading MID data for a single bill of lading. Please filter and try again."

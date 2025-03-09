@@ -24,11 +24,13 @@ export interface ApiError {
   code: number;
   data: unknown;
   msg?: string;
+  traceId: string;
 }
 
 export interface ApiSuccess<T = unknown> {
   code: 0;
   data: T;
+  traceId: string;
 }
 
 export type ApiRes<T = unknown> = ApiSuccess<T> | ApiError;
