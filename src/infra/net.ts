@@ -179,7 +179,7 @@ class Net {
 
   private responseInterceptor(response: AxiosResponse<ApiRes>): AxiosResponse {
     if (response.data.code !== 0) {
-      throw new ServerError(response.data);
+      throw new ServerError(response.data, response.data.traceId);
     }
     if (response.data === null) {
       throw new ServerError(response.data);

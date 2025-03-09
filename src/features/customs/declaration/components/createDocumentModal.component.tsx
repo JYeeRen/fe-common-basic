@@ -14,6 +14,7 @@ import { observer } from "mobx-react-lite";
 import type { DeclrationStore } from "../declaration.store";
 import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { v4 } from "uuid";
 
 interface CreateDocumentModalProps {
   store: DeclrationStore;
@@ -190,9 +191,7 @@ const CheckDocument = observer((props: CheckDocumentProps) => {
               )}
             </Row>
             <Row justify="center" className="my-5">
-              {t(
-                "已起飞的提单确认提交后无法修改。"
-              )}
+              {t("已起飞的提单确认提交后无法修改。")}
             </Row>
           </Block>
           <Block if={!store.hasTakeOf}>
@@ -271,7 +270,21 @@ export const CreateDocumentModal = observer(
     const [step, setSetp] = useState(1);
 
     const createCustomFile = async (templateId: number) => {
-      await store.createCustomFile(templateId);
+      const failed = await store.createCustomFile(templateId);
+      if (failed && failed.length > 0) {
+        Modal.error({
+          title: t("制作失败"),
+          content: (
+            <div>
+              <p>{t("制作失败的提单号如下：")}</p>
+              {failed.map((row) => (
+                <p key={v4()}>{`${row.number} ${row.reason}`}</p>
+              ))}
+            </div>
+          ),
+        });
+        return;
+      }
       setSetp(2);
     };
 
