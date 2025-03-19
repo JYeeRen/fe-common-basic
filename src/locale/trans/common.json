@@ -2306,5 +2306,77 @@
     "完成上传数据：{{n}}条。": {
         "zh": "完成上传数据：{{n}}条。",
         "en": "Uploaded successfully: {{n}} items."
+    },
+    "提单申报模式": {
+        "zh": "提单申报模式",
+        "en": "MAWB Declaration Mode"
+    },
+    "包裹申报模式": {
+        "zh": "包裹申报模式",
+        "en": "Package Declaration Mode"
+    },
+    "商品材质": {
+        "zh": "商品材质",
+        "en": "Material"
+    },
+    "商品织造方式": {
+        "zh": "商品织造方式",
+        "en": "Weaving Method"
+    },
+    "产品代码（FDA）": {
+        "zh": "产品代码（FDA）",
+        "en": "Product Code (FDA)"
+    },
+    "认证书号码": {
+        "zh": "认证书号码",
+        "en": "Registration Number"
+    },
+    "设备列表号码": {
+        "zh": "设备列表号码",
+        "en": "Device Listing Number"
+    },
+    "木种所属科目": {
+        "zh": "木种所属科目",
+        "en": "Plant Scientific Genus Name"
+    },
+    "木种所属树种": {
+        "zh": "木种所属树种",
+        "en": "Plant Scientific Species Name"
+    },
+    "木材采伐的国家": {
+        "zh": "木材采伐的国家",
+        "en": "Country Of Harvest"
+    },
+    "生产商名称": {
+        "zh": "生产商名称",
+        "en": "Manufacturer Name"
+    },
+    "生产厂家地址（省份）": {
+        "zh": "生产厂家地址（省份）",
+        "en": "Manufacturer Province"
+    },
+    "生产厂家地址（城市）": {
+        "zh": "生产厂家地址（城市）",
+        "en": "Manufacturer City"
+    },
+    "生产厂家地址（详细地址）": {
+        "zh": "生产厂家地址（详细地址）",
+        "en": "Manufacturer Detailed Address"
+    },
+    "生产商邮编": {
+        "zh": "生产商邮编",
+        "en": "Manufacturer Postal Code"
+    },
+    "生产厂家邮箱": {
+        "zh": "生产厂家邮箱",
+        "en": "Manufacturer Email"
+    },
+    "生产厂家电话": {
+        "zh": "生产厂家电话",
+        "en": "Manufacturer Phone"
+    },
+    "生产商MID编码": {
+        "zh": "生产商MID编码",
+        "en": "Manufacturer MID Code"
     }
 }

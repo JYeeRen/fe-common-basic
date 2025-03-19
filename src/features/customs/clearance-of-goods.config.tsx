@@ -334,5 +334,95 @@ export const getGridColumns = (): TableColumnsType<CustomItem> => {
       dataIndex: ["packageItemInfo", "taxMark"],
       title: t("税标"),
     },
+    {
+      key: 'mawbInfo_declarationMode',
+      title: t("提单申报模式"),
+      dataIndex: ['mawbInfo', 'declarationMode'],
+      },
+    {
+      key: 'packageInfo_declarationMode',
+      title: t("包裹申报模式"),
+      dataIndex: ['packageInfo', 'declarationMode'],
+      },
+    {
+      key: 'material',
+      title: t("商品材质"),
+      dataIndex: ['packageItemInfo', 'material'],
+      },
+    {
+      key: 'weavingMethod',
+      title: t("商品织造方式"),
+      dataIndex: ['packageItemInfo', 'weavingMethod'],
+      },
+    {
+      key: 'productCode',
+      title: t("产品代码（FDA）"),
+      dataIndex: ['packageItemInfo', 'productCode'],
+      },
+    {
+      key: 'registrationNumber',
+      title: t("认证书号码"),
+      dataIndex: ['packageItemInfo', 'registrationNumber'],
+      },
+    {
+      key: 'deviceListingNumber',
+      title: t("设备列表号码"),
+      dataIndex: ['packageItemInfo', 'deviceListingNumber'],
+      },
+    {
+      key: 'plantScientificGenusName',
+      title: t("木种所属科目"),
+      dataIndex: ['packageItemInfo', 'plantScientificGenusName'],
+      },
+    {
+      key: 'plantScientificSpeciesName',
+      title: t("木种所属树种"),
+      dataIndex: ['packageItemInfo', 'plantScientificSpeciesName'],
+      },
+    {
+      key: 'countryOfHarvest',
+      title: t("木材采伐的国家"),
+      dataIndex: ['packageItemInfo', 'countryOfHarvest'],
+      },
+    {
+      key: 'manufactureName',
+      title: t("生产商名称"),
+      dataIndex: ['packageItemInfo', 'manufactureName'],
+      },
+    {
+      key: 'manufactureProvince',
+      title: t("生产厂家地址（省份）"),
+      dataIndex: ['packageItemInfo', 'manufactureProvince'],
+      },
+    {
+      key: 'manufactureCity',
+      title: t("生产厂家地址（城市）"),
+      dataIndex: ['packageItemInfo', 'manufactureCity'],
+      },
+    {
+      key: 'manufactureDetailedAddress',
+      title: t("生产厂家地址（详细地址）"),
+      dataIndex: ['packageItemInfo', 'manufactureDetailedAddress'],
+      },
+    {
+      key: 'manufacturePostcode',
+      title: t("生产商邮编"),
+      dataIndex: ['packageItemInfo', 'manufacturePostcode'],
+      },
+    {
+      key: 'manufactureEmail',
+      title: t("生产厂家邮箱"),
+      dataIndex: ['packageItemInfo', 'manufactureEmail'],
+      },
+    {
+      key: 'manufacturePhone',
+      title: t("生产厂家电话"),
+      dataIndex: ['packageItemInfo', 'manufacturePhone'],
+      },
+    {
+      key: 'manufactureMidCode',
+      title: t("生产商MID编码"),
+      dataIndex: ['packageItemInfo', 'manufactureMidCode'],
+    },
   ];
 };
